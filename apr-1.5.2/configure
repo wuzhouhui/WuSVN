@@ -29602,7 +29602,7 @@ fi
     PACKAGE='$PACKAGE'
     VERSION='$VERSION'
     TIMESTAMP='$TIMESTAMP'
-    RM='$RM'
+    RM='$RM -f'
     ofile='$ofile'
 
 
