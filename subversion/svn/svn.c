@@ -1619,7 +1619,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "  deprecated in favor of running 'svn resolve --accept working'.\n"),
     {opt_targets, 'R', opt_depth, 'q'} },
 
-  { "revert", svn_cl__revert, {0}, N_
+  { "revert", svn_cl__revert, {"rv"}, N_
     ("Restore pristine working copy state (undo local changes).\n"
      "usage: revert PATH...\n"
      "\n"
