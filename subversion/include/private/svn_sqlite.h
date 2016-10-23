@@ -129,6 +129,9 @@ svn_sqlite__open(svn_sqlite__db_t **db, const char *path,
                  apr_int32_t timeout,
                  apr_pool_t *result_pool, apr_pool_t *scratch_pool);
 
+svn_error_t *
+svn_sqlite__open_file(svn_sqlite__db_t *, const char *, apr_pool_t *);
+
 /* Explicitly close the connection in DB. */
 svn_error_t *
 svn_sqlite__close(svn_sqlite__db_t *db);

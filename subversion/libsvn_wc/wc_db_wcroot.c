@@ -38,8 +38,6 @@
 
 #include "svn_private_config.h"
 
-#define SVN_IGNORE_FILE ".svnignore"
-
 /* ### Same values as wc_db.c */
 #define SDB_FILE  "wc.db"
 #define UNKNOWN_WC_ID ((apr_int64_t) -1)
