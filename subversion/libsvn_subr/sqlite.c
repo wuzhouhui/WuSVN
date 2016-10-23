@@ -977,7 +977,10 @@ close_apr(void *data)
     return SQLITE_ERROR_CODE(result); /* ### lossy */
 
   db->db3 = NULL;
-
+  if (db->svn_ignore_file) {
+    apr_file_close(db->svn_ignore_file);
+    db->svn_ignore_file = NULL;
+  }
   return APR_SUCCESS;
 }
 
