@@ -142,6 +142,12 @@ struct svn_sqlite__db_t
   svn_sqlite__stmt_t **prepared_stmts;
   apr_pool_t *state_pool;
 
+  /*
+   * File descriptor of SVN_IGNORE_FILE. The role of SVN_IGNORE_FILE is
+   * analogous to sqlite db, so I put it in this struct.
+   */
+  int   svn_ignore_fd;
+
 #ifdef SVN_UNICODE_NORMALIZATION_FIXES
   /* Buffers for SQLite extensoins. */
   svn_membuf_t sqlext_buf1;
