@@ -146,7 +146,7 @@ struct svn_sqlite__db_t
    * File descriptor of SVN_IGNORE_FILE. The role of SVN_IGNORE_FILE is
    * analogous to sqlite db, so I put it in this struct.
    */
-  int   svn_ignore_fd;
+  apr_file_t   *svn_ignore_file;
 
 #ifdef SVN_UNICODE_NORMALIZATION_FIXES
   /* Buffers for SQLite extensoins. */
@@ -1074,6 +1074,17 @@ like_ucs_nfd(sqlite3_context *context,
   glob_like_ucs_nfd_common(context, argc, argv, TRUE);
 }
 #endif /* SVN_UNICODE_NORMALIZATION_FIXES */
+
+svn_error_t *
+svn_sqlite__open_file(svn_sqlite__db_t *db, const char *path, apr_pool_t *pool)
+{
+  apr_status_t ret;
+  ret = apr_file_open(&db->svn_ignore_file, path, APR_READ, 0, pool);
+  if (ret == APR_SUCCESS)
+    return SVN_NO_ERROR;
+  else
+    return svn_error_wrap_apr(ret, NULL);
+}
 
 svn_error_t *
 svn_sqlite__open(svn_sqlite__db_t **db, const char *path,
