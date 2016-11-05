@@ -32,6 +32,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <assert.h>
+#include <stdio.h>
 
 #include <apr_env.h>
 #include <apr_errno.h>
@@ -492,38 +493,8 @@ svn_cl__get_log_message(const char **log_msg,
 
       if (! message)
         {
-          const char *reply;
-          SVN_ERR(svn_cmdline_prompt_user2
-                  (&reply,
-                   _("\nLog message unchanged or not specified\n"
-                     "(a)bort, (c)ontinue, (e)dit:\n"), NULL, pool));
-          if (reply)
-            {
-              int letter = apr_tolower(reply[0]);
-
-              /* If the user chooses to abort, we cleanup the
-                 temporary file and exit the loop with a NULL
-                 message. */
-              if ('a' == letter)
-                {
-                  SVN_ERR(svn_io_remove_file2(lmb->tmpfile_left, FALSE, pool));
-                  *tmp_file = lmb->tmpfile_left = NULL;
-                  break;
-                }
-
-              /* If the user chooses to continue, we make an empty
-                 message, which will cause us to exit the loop.  We
-                 also cleanup the temporary file. */
-              if ('c' == letter)
-                {
-                  SVN_ERR(svn_io_remove_file2(lmb->tmpfile_left, FALSE, pool));
-                  *tmp_file = lmb->tmpfile_left = NULL;
-                  message = svn_stringbuf_create_empty(pool);
-                }
-
-              /* If the user chooses anything else, the loop will
-                 continue on the NULL message. */
-            }
+          fprintf(stdout, "Aborting commit due to empty commit message.\n");
+          break;
         }
     }
 
