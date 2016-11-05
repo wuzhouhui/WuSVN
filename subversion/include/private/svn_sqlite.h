@@ -162,6 +162,11 @@ svn_error_t *
 svn_sqlite__get_statement(svn_sqlite__stmt_t **stmt, svn_sqlite__db_t *db,
                           int stmt_idx);
 
+svn_error_t *
+read_svn_ignore(svn_sqlite__db_t *sdb,
+		char **res,
+		apr_pool_t *result_pool,
+		apr_pool_t *scratch_pool);
 
 /* ---------------------------------------------------------------------
 

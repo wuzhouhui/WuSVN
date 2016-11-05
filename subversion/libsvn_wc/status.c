@@ -914,6 +914,13 @@ collect_ignore_patterns(apr_array_header_t **patterns,
                                  result_pool);
     }
 
+    {
+      const char *str = get_private(db);
+      if (str)
+        svn_cstring_split_append(*patterns, str, "\n\r", FALSE,
+                                 result_pool);
+    }
+
   for (i = 0; i < inherited_props->nelts; i++)
     {
       svn_prop_inherited_item_t *elt = APR_ARRAY_IDX(
