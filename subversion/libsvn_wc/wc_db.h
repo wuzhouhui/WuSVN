@@ -2242,6 +2242,8 @@ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
                                 apr_pool_t *result_pool,
                                 apr_pool_t *scratch_pool);
 
+void *get_private(svn_wc__db_t *);
+
 /* Read a BASE node's inherited property information.
 
    Set *IPROPS to to a depth-first ordered array of

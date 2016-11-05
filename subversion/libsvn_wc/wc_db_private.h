@@ -66,6 +66,7 @@ struct svn_wc__db_t {
 
   /* As we grow the state of this DB, allocate that state here. */
   apr_pool_t *state_pool;
+  void	*private;
 };
 
 

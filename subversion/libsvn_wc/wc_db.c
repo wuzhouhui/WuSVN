@@ -10854,6 +10854,11 @@ db_read_inherited_props(apr_array_header_t **inherited_props,
   return SVN_NO_ERROR;
 }
 
+void *get_private(svn_wc__db_t *db)
+{
+  return db->private;
+}
+
 svn_error_t *
 svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
                                 apr_hash_t **actual_props,
@@ -10877,6 +10882,11 @@ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
                                               wcroot, local_relpath, propname,
                                               result_pool, scratch_pool),
                       wcroot);
+  if (strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
+    return SVN_NO_ERROR;
+  else
+    read_svn_ignore(wcroot->sdb, (char **)&db->private, result_pool,
+		    scratch_pool);
 
   return SVN_NO_ERROR;
 }

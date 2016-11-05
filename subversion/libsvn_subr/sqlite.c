@@ -1620,3 +1620,26 @@ svn_sqlite__result_error(svn_sqlite__context_t *sctx, const char *msg, int num)
 {
   sqlite3_result_error(sctx->context, msg, num);
 }
+
+svn_error_t *
+read_svn_ignore(svn_sqlite__db_t *sdb,
+		char **res,
+		apr_pool_t *result_pool,
+		apr_pool_t *scratch_pool)
+{
+  if (!sdb->svn_ignore_file)
+    return SVN_NO_ERROR;
+
+  apr_file_t *file = sdb->svn_ignore_file;
+  apr_off_t offset = 0;
+  char buf[4096] = { 0 };
+  apr_size_t size = sizeof(buf) - 1;
+
+  *res = NULL;
+  apr_file_seek(file, APR_SET, &offset);
+  if (apr_file_read(file, buf, &size) == APR_SUCCESS) {
+    *res = apr_pstrdup(result_pool, buf);
+    return SVN_NO_ERROR;
+  } else
+    return (svn_error_t *)-1;
+}
