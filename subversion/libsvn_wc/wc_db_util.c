@@ -49,6 +49,8 @@
 
 WC_QUERIES_SQL_DECLARE_STATEMENTS(statements);
 
+#define SVN_IGNORE_FILE ".svnignore"
+
 
 
 /* */
@@ -122,10 +124,12 @@ svn_wc__db_util_open_db(svn_sqlite__db_t **sdb,
 {
   const char *sdb_abspath = svn_wc__adm_child(dir_abspath, sdb_fname,
                                               scratch_pool);
+  const char *ign_abspath = svn_dirent_join_many(scratch_pool, dir_abspath,
+		  SVN_IGNORE_FILE, SVN_VA_NULL);
+  svn_node_kind_t kind;
 
   if (smode != svn_sqlite__mode_rwcreate)
     {
-      svn_node_kind_t kind;
 
       /* A file stat is much cheaper then a failed database open handled
          by SQLite. */
@@ -141,6 +145,9 @@ svn_wc__db_util_open_db(svn_sqlite__db_t **sdb,
   SVN_ERR(svn_sqlite__open(sdb, sdb_abspath, smode,
                            my_statements ? my_statements : statements,
                            0, NULL, timeout, result_pool, scratch_pool));
+  SVN_ERR(svn_io_check_path(ign_abspath, &kind, scratch_pool));
+  if (kind == svn_node_file)
+    SVN_ERR(svn_sqlite__open_file(*sdb, ign_abspath, result_pool));
 
   if (exclusive)
     SVN_ERR(svn_sqlite__exec_statements(*sdb, STMT_PRAGMA_LOCKING_MODE));

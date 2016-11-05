@@ -142,6 +142,12 @@ struct svn_sqlite__db_t
   svn_sqlite__stmt_t **prepared_stmts;
   apr_pool_t *state_pool;
 
+  /*
+   * File descriptor of SVN_IGNORE_FILE. The role of SVN_IGNORE_FILE is
+   * analogous to sqlite db, so I put it in this struct.
+   */
+  apr_file_t   *svn_ignore_file;
+
 #ifdef SVN_UNICODE_NORMALIZATION_FIXES
   /* Buffers for SQLite extensoins. */
   svn_membuf_t sqlext_buf1;
@@ -978,7 +984,10 @@ close_apr(void *data)
     return SQLITE_ERROR_CODE(result); /* ### lossy */
 
   db->db3 = NULL;
-
+  if (db->svn_ignore_file) {
+    apr_file_close(db->svn_ignore_file);
+    db->svn_ignore_file = NULL;
+  }
   return APR_SUCCESS;
 }
 
@@ -1075,6 +1084,17 @@ like_ucs_nfd(sqlite3_context *context,
   glob_like_ucs_nfd_common(context, argc, argv, TRUE);
 }
 #endif /* SVN_UNICODE_NORMALIZATION_FIXES */
+
+svn_error_t *
+svn_sqlite__open_file(svn_sqlite__db_t *db, const char *path, apr_pool_t *pool)
+{
+  apr_status_t ret;
+  ret = apr_file_open(&db->svn_ignore_file, path, APR_READ, 0, pool);
+  if (ret == APR_SUCCESS)
+    return SVN_NO_ERROR;
+  else
+    return svn_error_wrap_apr(ret, NULL);
+}
 
 svn_error_t *
 svn_sqlite__open(svn_sqlite__db_t **db, const char *path,
@@ -1605,4 +1625,27 @@ void
 svn_sqlite__result_error(svn_sqlite__context_t *sctx, const char *msg, int num)
 {
   sqlite3_result_error(sctx->context, msg, num);
+}
+
+svn_error_t *
+read_svn_ignore(svn_sqlite__db_t *sdb,
+		char **res,
+		apr_pool_t *result_pool,
+		apr_pool_t *scratch_pool)
+{
+  if (!sdb->svn_ignore_file)
+    return SVN_NO_ERROR;
+
+  apr_file_t *file = sdb->svn_ignore_file;
+  apr_off_t offset = 0;
+  char buf[4096] = { 0 };
+  apr_size_t size = sizeof(buf) - 1;
+
+  *res = NULL;
+  apr_file_seek(file, APR_SET, &offset);
+  if (apr_file_read(file, buf, &size) == APR_SUCCESS) {
+    *res = apr_pstrdup(result_pool, buf);
+    return SVN_NO_ERROR;
+  } else
+    return (svn_error_t *)-1;
 }
