@@ -71,6 +71,8 @@
 
 #include "win32_crashrpt.h"
 
+#define SVN_CLIENT_EDITOR "vi"
+
 #if defined(WIN32) && defined(_MSC_VER) && (_MSC_VER < 1400)
 /* Before Visual Studio 2005, the C runtime didn't handle encodings for the
    for the stdio output handling. */
