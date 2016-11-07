@@ -548,7 +548,6 @@ svn_ ## TYPE ## _swig_rb_closed(VALUE self)
 %typemap(in) apr_pool_t *pool "";
 %typemap(default) apr_pool_t *pool(apr_pool_t *_global_pool) {
     _global_pool = $1 = svn_swig_pl_make_pool (ST(items-1));
-    SPAGAIN;
 }
 #endif
 #ifdef SWIGRUBY
@@ -936,24 +935,15 @@ svn_ ## TYPE ## _swig_rb_closed(VALUE self)
 #ifdef SWIGPERL
 %typemap(in) svn_stream_t * {
     svn_swig_pl_make_stream (&$1, $input);
-    SPAGAIN;
 }
 
 %typemap(out) svn_stream_t * {
-    SV* tmp;
-    PUTBACK;
-    tmp = svn_swig_pl_from_stream ($1);
-    SPAGAIN;
-    $result = tmp;
+    $result = svn_swig_pl_from_stream ($1);
     argvi++;
 }
 
 %typemap(argout) svn_stream_t ** {
-    SV *tmp;
-    PUTBACK;
-    tmp = svn_swig_pl_from_stream(*$1);
-    SPAGAIN;
-    %append_output(tmp);
+  %append_output(svn_swig_pl_from_stream(*$1));
 }
 #endif
 
@@ -1126,11 +1116,7 @@ svn_ ## TYPE ## _swig_rb_closed(VALUE self)
 }
 
 %typemap(argout) unsigned char *result_digest {
-    SV *tmp;
-    PUTBACK;
-    tmp = svn_swig_pl_from_md5($1);
-    SPAGAIN;
-    %append_output(tmp);
+    %append_output(svn_swig_pl_from_md5($1));
 }
 #endif
 
@@ -1185,10 +1171,8 @@ svn_ ## TYPE ## _swig_rb_closed(VALUE self)
 %typemap(in) svn_opt_revision_t * 
   (svn_opt_revision_t rev, apr_pool_t *_global_pool = NULL)
 {
-  if (_global_pool == NULL) {
+  if (_global_pool == NULL)
     _global_pool = svn_swig_pl_make_pool((SV *)NULL);
-    SPAGAIN;
-  }
   $1 = svn_swig_pl_set_revision(&rev, $input, TRUE, _global_pool);
 }
 #endif

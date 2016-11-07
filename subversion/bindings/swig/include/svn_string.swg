@@ -90,7 +90,6 @@ typedef struct svn_string_t svn_string_t;
 %typemap(in) svn_stringbuf_t * {
     apr_size_t len;
     char *buf;
-    apr_pool_t *pool;
 
     if (!SvOK($input)) {
         $1 = NULL;
@@ -98,9 +97,8 @@ typedef struct svn_string_t svn_string_t;
         buf = SvPV($input, len);
         /* Another case of ugly pool handling, this should use the current
            default pool, or make a new one if it doesn't exist yet */
-        pool = svn_swig_pl_make_pool ((SV *)NULL);
-        SPAGAIN;
-        $1 = svn_stringbuf_ncreate(buf,len, pool);
+        $1 = svn_stringbuf_ncreate(buf,len,
+                                   svn_swig_pl_make_pool ((SV *)NULL));
     } else {
         croak("Not a string");
     }

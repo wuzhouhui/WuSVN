@@ -72,12 +72,13 @@ send_response(const dav_svn_repos *repos,
               svn_fs_root_t *root,
               const char *path,
               svn_boolean_t is_dir,
-              dav_svn__output *output,
+              ap_filter_t *output,
               apr_bucket_brigade *bb,
               apr_pool_t *pool)
 {
   const char *href;
   const char *vsn_url;
+  apr_status_t status;
   svn_revnum_t rev_to_use;
 
   href = dav_svn__build_uri(repos, DAV_SVN__BUILD_URI_PUBLIC,
@@ -85,7 +86,7 @@ send_response(const dav_svn_repos *repos,
   rev_to_use = dav_svn__get_safe_cr(root, path, pool);
   vsn_url = dav_svn__build_uri(repos, DAV_SVN__BUILD_URI_VERSION,
                                rev_to_use, path, FALSE /* add_href */, pool);
-  SVN_ERR(dav_svn__brigade_putstrs(bb, output,
+  status = ap_fputstrs(output, bb,
                        "<D:response>" DEBUG_CR
                        "<D:href>",
                        apr_xml_quote_string(pool, href, 1),
@@ -102,7 +103,9 @@ send_response(const dav_svn_repos *repos,
                        "<D:status>HTTP/1.1 200 OK</D:status>" DEBUG_CR
                        "</D:propstat>" DEBUG_CR
                        "</D:response>" DEBUG_CR,
-                       SVN_VA_NULL));
+                       NULL);
+  if (status != APR_SUCCESS)
+    return svn_error_wrap_apr(status, "Can't write response to output");
 
   return SVN_NO_ERROR;
 }
@@ -112,7 +115,7 @@ static svn_error_t *
 do_resources(const dav_svn_repos *repos,
              svn_fs_root_t *root,
              svn_revnum_t revision,
-             dav_svn__output *output,
+             ap_filter_t *output,
              apr_bucket_brigade *bb,
              apr_pool_t *pool)
 {
@@ -206,7 +209,7 @@ do_resources(const dav_svn_repos *repos,
 */
 
 dav_error *
-dav_svn__merge_response(dav_svn__output *output,
+dav_svn__merge_response(ap_filter_t *output,
                         const dav_svn_repos *repos,
                         svn_revnum_t new_rev,
                         const char *post_commit_err,
@@ -222,6 +225,7 @@ dav_svn__merge_response(dav_svn__output *output,
   svn_string_t *creationdate, *creator_displayname;
   const char *post_commit_err_elem = NULL,
              *post_commit_header_info = NULL;
+  apr_status_t status;
 
   serr = svn_fs_revision_root(&root, repos->fs, new_rev, pool);
   if (serr != NULL)
@@ -232,8 +236,7 @@ dav_svn__merge_response(dav_svn__output *output,
                                   repos->pool);
     }
 
-  bb = apr_brigade_create(pool,
-                          dav_svn__output_get_bucket_alloc(output));
+  bb = apr_brigade_create(pool, output->c->bucket_alloc);
 
   /* prep some strings */
 
@@ -283,7 +286,7 @@ dav_svn__merge_response(dav_svn__output *output,
     }
 
 
-  serr = dav_svn__brigade_putstrs(bb, output,
+  status = ap_fputstrs(output, bb,
                      DAV_XML_HEADER DEBUG_CR
                      "<D:merge-response xmlns:D=\"DAV:\"",
                      post_commit_header_info,
@@ -302,47 +305,44 @@ dav_svn__merge_response(dav_svn__output *output,
                      "<D:resourcetype><D:baseline/></D:resourcetype>" DEBUG_CR,
                      post_commit_err_elem, DEBUG_CR
                      "<D:version-name>", rev, "</D:version-name>" DEBUG_CR,
-                     SVN_VA_NULL);
-  if (serr != NULL)
-    return dav_svn__convert_err(serr, HTTP_INTERNAL_SERVER_ERROR,
-                                "Could not write output",
-                                repos->pool);
+                     NULL);
+  if (status != APR_SUCCESS)
+    return dav_svn__new_error(repos->pool, HTTP_INTERNAL_SERVER_ERROR, 0,
+                              "Could not write output");
 
   if (creationdate)
     {
-      serr = dav_svn__brigade_putstrs(bb, output,
+      status = ap_fputstrs(output, bb,
                          "<D:creationdate>",
                          apr_xml_quote_string(pool, creationdate->data, 1),
                          "</D:creationdate>" DEBUG_CR,
-                         SVN_VA_NULL);
-      if (serr != NULL)
-        return dav_svn__convert_err(serr, HTTP_INTERNAL_SERVER_ERROR,
-                                    "Could not write output",
-                                    repos->pool);
+                         NULL);
+      if (status != APR_SUCCESS)
+        return dav_svn__new_error(repos->pool, HTTP_INTERNAL_SERVER_ERROR, 0,
+                                  "Could not write output");
     }
   if (creator_displayname)
     {
-      serr = dav_svn__brigade_putstrs(bb, output,
+      status = ap_fputstrs(output, bb,
                          "<D:creator-displayname>",
                          apr_xml_quote_string(pool,
                                               creator_displayname->data, 1),
                          "</D:creator-displayname>" DEBUG_CR,
-                         SVN_VA_NULL);
-      if (serr != NULL)
-        return dav_svn__convert_err(serr, HTTP_INTERNAL_SERVER_ERROR,
-                                    "Could not write output",
-                                    repos->pool);
+                         NULL);
+      if (status != APR_SUCCESS)
+        return dav_svn__new_error(repos->pool, HTTP_INTERNAL_SERVER_ERROR, 0,
+                                  "Could not write output");
     }
-  serr = dav_svn__brigade_putstrs(bb, output,
+  status = ap_fputstrs(output, bb,
                      "</D:prop>" DEBUG_CR
                      "<D:status>HTTP/1.1 200 OK</D:status>" DEBUG_CR
                      "</D:propstat>" DEBUG_CR
                      "</D:response>" DEBUG_CR,
-                     SVN_VA_NULL);
-  if (serr != NULL)
-    return dav_svn__convert_err(serr, HTTP_INTERNAL_SERVER_ERROR,
-                                "Could not write output",
-                                repos->pool);
+
+                     NULL);
+  if (status != APR_SUCCESS)
+    return dav_svn__new_error(repos->pool, HTTP_INTERNAL_SERVER_ERROR, 0,
+                              "Could not write output");
 
   /* ONLY have dir_delta drive the editor if the caller asked us to
      generate a full MERGE response.  svn clients can ask us to
@@ -371,20 +371,18 @@ dav_svn__merge_response(dav_svn__output *output,
     }
 
   /* wrap up the merge response */
-  serr = dav_svn__brigade_puts(bb, output,
-                               "</D:updated-set>" DEBUG_CR
-                               "</D:merge-response>" DEBUG_CR);
-  if (serr != NULL)
-    return dav_svn__convert_err(serr, HTTP_INTERNAL_SERVER_ERROR,
-                                "Could not write output",
-                                repos->pool);
+  status = ap_fputs(output, bb,
+                  "</D:updated-set>" DEBUG_CR
+                  "</D:merge-response>" DEBUG_CR);
+  if (status != APR_SUCCESS)
+    return dav_svn__new_error(repos->pool, HTTP_INTERNAL_SERVER_ERROR, 0,
+                              "Could not write output");
 
   /* send whatever is left in the brigade */
-  serr = dav_svn__output_pass_brigade(output, bb);
-  if (serr != NULL)
-    return dav_svn__convert_err(serr, HTTP_INTERNAL_SERVER_ERROR,
-                                "Could not write output",
-                                repos->pool);
+  status = ap_pass_brigade(output, bb);
+  if (status != APR_SUCCESS)
+    return dav_svn__new_error(repos->pool, HTTP_INTERNAL_SERVER_ERROR, 0,
+                              "Could not write output");
 
   return NULL;
 }

@@ -50,7 +50,7 @@ struct log_receiver_baton
   apr_bucket_brigade *bb;
 
   /* where to deliver the output */
-  dav_svn__output *output;
+  ap_filter_t *output;
 
   /* Whether we've written the <S:log-report> header.  Allows for lazy
      writes to support mod_dav-based error handling. */
@@ -297,17 +297,25 @@ log_receiver(void *baton,
   lrb->result_count++;
   if (lrb->result_count == lrb->next_forced_flush)
     {
-      apr_bucket *bkt;
+      apr_status_t apr_err;
 
-      /* Compared to using ap_filter_flush(), which we use in other place
+      /* This flush is similar to that in dav_svn__final_flush_or_error().
+
+         Compared to using ap_filter_flush(), which we use in other place
          this adds a flush frame before flushing the brigade, to make output
          filters perform a flush as well */
 
       /* No brigade empty check. We want output filters to flush anyway */
-      bkt = apr_bucket_flush_create(
-                dav_svn__output_get_bucket_alloc(lrb->output));
-      APR_BRIGADE_INSERT_TAIL(lrb->bb, bkt);
-      SVN_ERR(dav_svn__output_pass_brigade(lrb->output, lrb->bb));
+      apr_err = ap_fflush(lrb->output, lrb->bb);
+      if (apr_err)
+        return svn_error_create(apr_err, NULL, NULL);
+
+      /* Check for an aborted connection, just like our brigade write
+         helper functions, since the brigade functions don't appear to
+         be return useful errors when the connection is dropped. */
+      if (lrb->output->c->aborted)
+        return svn_error_create(SVN_ERR_APMOD_CONNECTION_ABORTED,
+                                NULL, NULL);
 
       if (lrb->result_count < 256)
         lrb->next_forced_flush = lrb->next_forced_flush * 4;
@@ -320,7 +328,7 @@ log_receiver(void *baton,
 dav_error *
 dav_svn__log_report(const dav_resource *resource,
                     const apr_xml_doc *doc,
-                    dav_svn__output *output)
+                    ap_filter_t *output)
 {
   svn_error_t *serr;
   dav_error *derr = NULL;
@@ -452,7 +460,7 @@ dav_svn__log_report(const dav_resource *resource,
 
   /* Build log receiver baton */
   lrb.bb = apr_brigade_create(resource->pool,  /* not the subpool! */
-                              dav_svn__output_get_bucket_alloc(output));
+                              output->c->bucket_alloc);
   lrb.output = output;
   lrb.needs_header = TRUE;
   lrb.stack_depth = 0;
