@@ -1,0 +1,289 @@
+diff -uprN subversion-1.8.16/subversion/include/private/svn_sqlite.h subversion-1.8.16.new/subversion/include/private/svn_sqlite.h
+--- subversion-1.8.16/subversion/include/private/svn_sqlite.h	2015-03-13 12:00:58.000000000 +0800
++++ subversion-1.8.16.new/subversion/include/private/svn_sqlite.h	2016-12-02 13:41:01.721363002 +0800
+@@ -125,6 +125,9 @@ svn_sqlite__open(svn_sqlite__db_t **db,
+                  int latest_schema, const char * const *upgrade_sql,
+                  apr_pool_t *result_pool, apr_pool_t *scratch_pool);
+ 
++svn_error_t *
++svn_sqlite__open_file(svn_sqlite__db_t *, const char *, apr_pool_t *);
++
+ /* Explicitly close the connection in DB. */
+ svn_error_t *
+ svn_sqlite__close(svn_sqlite__db_t *db);
+@@ -150,6 +153,11 @@ svn_error_t *
+ svn_sqlite__get_statement(svn_sqlite__stmt_t **stmt, svn_sqlite__db_t *db,
+                           int stmt_idx);
+ 
++svn_error_t *
++read_svn_ignore(svn_sqlite__db_t *sdb,
++		char **res,
++		apr_pool_t *result_pool,
++		apr_pool_t *scratch_pool);
+ 
+ /* ---------------------------------------------------------------------
+ 
+diff -uprN subversion-1.8.16/subversion/include/svn_config.h subversion-1.8.16.new/subversion/include/svn_config.h
+--- subversion-1.8.16/subversion/include/svn_config.h	2014-01-24 10:28:47.000000000 +0800
++++ subversion-1.8.16.new/subversion/include/svn_config.h	2016-12-02 13:41:01.725363002 +0800
+@@ -180,9 +180,7 @@ typedef struct svn_config_t svn_config_t
+   "*.rej *~ #*# .#* .*.swp .DS_Store"
+ #endif
+ 
+-#define SVN_CONFIG_DEFAULT_GLOBAL_IGNORES \
+-  SVN_CONFIG__DEFAULT_GLOBAL_IGNORES_LINE_1 " " \
+-  SVN_CONFIG__DEFAULT_GLOBAL_IGNORES_LINE_2
++#define SVN_CONFIG_DEFAULT_GLOBAL_IGNORES ""
+ 
+ #define SVN_CONFIG_TRUE  "TRUE"
+ #define SVN_CONFIG_FALSE "FALSE"
+diff -uprN subversion-1.8.16/subversion/libsvn_subr/cmdline.c subversion-1.8.16.new/subversion/libsvn_subr/cmdline.c
+--- subversion-1.8.16/subversion/libsvn_subr/cmdline.c	2014-02-05 12:05:22.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_subr/cmdline.c	2016-12-02 13:42:56.557364266 +0800
+@@ -68,6 +68,8 @@
+ 
+ #include "win32_crashrpt.h"
+ 
++#define SVN_CLIENT_EDITOR "vi"
++
+ /* The stdin encoding. If null, it's the same as the native encoding. */
+ static const char *input_encoding = NULL;
+ 
+diff -uprN subversion-1.8.16/subversion/libsvn_subr/sqlite.c subversion-1.8.16.new/subversion/libsvn_subr/sqlite.c
+--- subversion-1.8.16/subversion/libsvn_subr/sqlite.c	2014-02-13 03:31:43.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_subr/sqlite.c	2016-12-02 13:44:04.493365014 +0800
+@@ -104,6 +104,11 @@ struct svn_sqlite__db_t
+   int nbr_statements;
+   svn_sqlite__stmt_t **prepared_stmts;
+   apr_pool_t *state_pool;
++  /*
++   * File descriptor of SVN_IGNORE_FILE. The role of SVN_IGNORE_FILE is
++   * analogous to sqlite db, so I put it in this struct.
++   */
++  apr_file_t   *svn_ignore_file;
+ };
+ 
+ struct svn_sqlite__stmt_t
+@@ -884,12 +889,26 @@ close_apr(void *data)
+     return SQLITE_ERROR_CODE(result); /* ### lossy */
+ 
+   db->db3 = NULL;
+-
++  if (db->svn_ignore_file) {
++    apr_file_close(db->svn_ignore_file);
++    db->svn_ignore_file = NULL;
++  }
+   return APR_SUCCESS;
+ }
+ 
+ 
+ svn_error_t *
++svn_sqlite__open_file(svn_sqlite__db_t *db, const char *path, apr_pool_t *pool)
++{
++  apr_status_t ret;
++  ret = apr_file_open(&db->svn_ignore_file, path, APR_READ, 0, pool);
++  if (ret == APR_SUCCESS)
++    return SVN_NO_ERROR;
++  else
++    return svn_error_wrap_apr(ret, NULL);
++}
++
++svn_error_t *
+ svn_sqlite__open(svn_sqlite__db_t **db, const char *path,
+                  svn_sqlite__mode_t mode, const char * const statements[],
+                  int unused1, const char * const *unused2,
+@@ -1333,3 +1352,26 @@ svn_sqlite__result_int64(svn_sqlite__con
+ {
+   sqlite3_result_int64(sctx->context, val);
+ }
++
++svn_error_t *
++read_svn_ignore(svn_sqlite__db_t *sdb,
++		char **res,
++		apr_pool_t *result_pool,
++		apr_pool_t *scratch_pool)
++{
++  if (!sdb->svn_ignore_file)
++    return SVN_NO_ERROR;
++
++  apr_file_t *file = sdb->svn_ignore_file;
++  apr_off_t offset = 0;
++  char buf[4096] = { 0 };
++  apr_size_t size = sizeof(buf) - 1;
++
++  *res = NULL;
++  apr_file_seek(file, APR_SET, &offset);
++  if (apr_file_read(file, buf, &size) == APR_SUCCESS) {
++    *res = apr_pstrdup(result_pool, buf);
++    return SVN_NO_ERROR;
++  } else
++    return (svn_error_t *)-1;
++}
+diff -uprN subversion-1.8.16/subversion/libsvn_wc/status.c subversion-1.8.16.new/subversion/libsvn_wc/status.c
+--- subversion-1.8.16/subversion/libsvn_wc/status.c	2014-04-30 07:49:19.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_wc/status.c	2016-12-02 13:41:01.729363002 +0800
+@@ -902,6 +902,13 @@ collect_ignore_patterns(apr_array_header
+                                  result_pool);
+     }
+ 
++    {
++      const char *str = get_private(db);
++      if (str)
++        svn_cstring_split_append(*patterns, str, "\n\r", FALSE,
++                                 result_pool);
++    }
++
+   for (i = 0; i < inherited_props->nelts; i++)
+     {
+       svn_prop_inherited_item_t *elt = APR_ARRAY_IDX(
+diff -uprN subversion-1.8.16/subversion/libsvn_wc/wc_db.c subversion-1.8.16.new/subversion/libsvn_wc/wc_db.c
+--- subversion-1.8.16/subversion/libsvn_wc/wc_db.c	2015-03-18 12:01:47.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_wc/wc_db.c	2016-12-02 13:41:01.737363002 +0800
+@@ -10376,6 +10376,11 @@ db_read_inherited_props(apr_array_header
+   return SVN_NO_ERROR;
+ }
+ 
++void *get_private(svn_wc__db_t *db)
++{
++  return db->private;
++}
++
+ svn_error_t *
+ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
+                                 apr_hash_t **actual_props,
+@@ -10399,6 +10404,11 @@ svn_wc__db_read_inherited_props(apr_arra
+                                               wcroot, local_relpath, propname,
+                                               result_pool, scratch_pool),
+                       wcroot);
++  if (strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
++    return SVN_NO_ERROR;
++  else
++    read_svn_ignore(wcroot->sdb, (char **)&db->private, result_pool,
++		    scratch_pool);
+ 
+   return SVN_NO_ERROR;
+ }
+diff -uprN subversion-1.8.16/subversion/libsvn_wc/wc_db.h subversion-1.8.16.new/subversion/libsvn_wc/wc_db.h
+--- subversion-1.8.16/subversion/libsvn_wc/wc_db.h	2015-03-18 12:01:24.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_wc/wc_db.h	2016-12-02 13:41:01.737363002 +0800
+@@ -2161,6 +2161,8 @@ svn_wc__db_read_inherited_props(apr_arra
+                                 apr_pool_t *result_pool,
+                                 apr_pool_t *scratch_pool);
+ 
++void *get_private(svn_wc__db_t *);
++
+ /* Read a BASE node's inherited property information.
+ 
+    Set *IPROPS to to a depth-first ordered array of
+diff -uprN subversion-1.8.16/subversion/libsvn_wc/wc_db_private.h subversion-1.8.16.new/subversion/libsvn_wc/wc_db_private.h
+--- subversion-1.8.16/subversion/libsvn_wc/wc_db_private.h	2015-03-13 12:00:58.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_wc/wc_db_private.h	2016-12-02 13:41:01.737363002 +0800
+@@ -62,6 +62,7 @@ struct svn_wc__db_t {
+ 
+   /* As we grow the state of this DB, allocate that state here. */
+   apr_pool_t *state_pool;
++  void	*private;
+ };
+ 
+ 
+diff -uprN subversion-1.8.16/subversion/libsvn_wc/wc_db_util.c subversion-1.8.16.new/subversion/libsvn_wc/wc_db_util.c
+--- subversion-1.8.16/subversion/libsvn_wc/wc_db_util.c	2014-01-26 12:04:34.000000000 +0800
++++ subversion-1.8.16.new/subversion/libsvn_wc/wc_db_util.c	2016-12-02 13:42:14.429363802 +0800
+@@ -49,6 +49,8 @@
+ 
+ WC_QUERIES_SQL_DECLARE_STATEMENTS(statements);
+ 
++#define SVN_IGNORE_FILE ".svnignore"
++
+ 
+ 
+ /* */
+@@ -121,10 +123,12 @@ svn_wc__db_util_open_db(svn_sqlite__db_t
+ {
+   const char *sdb_abspath = svn_wc__adm_child(dir_abspath, sdb_fname,
+                                               scratch_pool);
++  const char *ign_abspath = svn_dirent_join_many(scratch_pool, dir_abspath,
++		  SVN_IGNORE_FILE, SVN_VA_NULL);
++  svn_node_kind_t kind;
+ 
+   if (smode != svn_sqlite__mode_rwcreate)
+     {
+-      svn_node_kind_t kind;
+ 
+       /* A file stat is much cheaper then a failed database open handled
+          by SQLite. */
+@@ -141,6 +145,10 @@ svn_wc__db_util_open_db(svn_sqlite__db_t
+                            my_statements ? my_statements : statements,
+                            0, NULL, result_pool, scratch_pool));
+ 
++  SVN_ERR(svn_io_check_path(ign_abspath, &kind, scratch_pool));
++  if (kind == svn_node_file)
++    SVN_ERR(svn_sqlite__open_file(*sdb, ign_abspath, result_pool));
++
+   if (exclusive)
+     SVN_ERR(svn_sqlite__exec_statements(*sdb, STMT_PRAGMA_LOCKING_MODE));
+ 
+diff -uprN subversion-1.8.16/subversion/svn/svn.c subversion-1.8.16.new/subversion/svn/svn.c
+--- subversion-1.8.16/subversion/svn/svn.c	2015-06-23 12:00:46.000000000 +0800
++++ subversion-1.8.16.new/subversion/svn/svn.c	2016-12-02 13:41:01.741363002 +0800
+@@ -1410,7 +1410,7 @@ const svn_opt_subcommand_desc2_t svn_cl_
+      "  deprecated in favor of running 'svn resolve --accept working'.\n"),
+     {opt_targets, 'R', opt_depth, 'q'} },
+ 
+-  { "revert", svn_cl__revert, {0}, N_
++  { "revert", svn_cl__revert, {"rv"}, N_
+     ("Restore pristine working copy state (undo local changes).\n"
+      "usage: revert PATH...\n"
+      "\n"
+diff -uprN subversion-1.8.16/subversion/svn/util.c subversion-1.8.16.new/subversion/svn/util.c
+--- subversion-1.8.16/subversion/svn/util.c	2013-07-10 12:00:05.000000000 +0800
++++ subversion-1.8.16.new/subversion/svn/util.c	2016-12-02 13:41:01.741363002 +0800
+@@ -32,6 +32,7 @@
+ #include <string.h>
+ #include <ctype.h>
+ #include <assert.h>
++#include <stdio.h>
+ 
+ #include <apr_env.h>
+ #include <apr_errno.h>
+@@ -490,38 +491,8 @@ svn_cl__get_log_message(const char **log
+ 
+       if (! message)
+         {
+-          const char *reply;
+-          SVN_ERR(svn_cmdline_prompt_user2
+-                  (&reply,
+-                   _("\nLog message unchanged or not specified\n"
+-                     "(a)bort, (c)ontinue, (e)dit:\n"), NULL, pool));
+-          if (reply)
+-            {
+-              int letter = apr_tolower(reply[0]);
+-
+-              /* If the user chooses to abort, we cleanup the
+-                 temporary file and exit the loop with a NULL
+-                 message. */
+-              if ('a' == letter)
+-                {
+-                  SVN_ERR(svn_io_remove_file2(lmb->tmpfile_left, FALSE, pool));
+-                  *tmp_file = lmb->tmpfile_left = NULL;
+-                  break;
+-                }
+-
+-              /* If the user chooses to continue, we make an empty
+-                 message, which will cause us to exit the loop.  We
+-                 also cleanup the temporary file. */
+-              if ('c' == letter)
+-                {
+-                  SVN_ERR(svn_io_remove_file2(lmb->tmpfile_left, FALSE, pool));
+-                  *tmp_file = lmb->tmpfile_left = NULL;
+-                  message = svn_stringbuf_create_empty(pool);
+-                }
+-
+-              /* If the user chooses anything else, the loop will
+-                 continue on the NULL message. */
+-            }
++          fprintf(stdout, "Aborting commit due to empty commit message.\n");
++          break;
+         }
+     }
+ 
