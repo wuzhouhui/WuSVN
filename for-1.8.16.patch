@@ -203,7 +203,7 @@ diff -uprN subversion-1.8.16/subversion/libsvn_wc/wc_db_util.c subversion-1.8.16
    const char *sdb_abspath = svn_wc__adm_child(dir_abspath, sdb_fname,
                                                scratch_pool);
 +  const char *ign_abspath = svn_dirent_join_many(scratch_pool, dir_abspath,
-+		  SVN_IGNORE_FILE, SVN_VA_NULL);
++		  SVN_IGNORE_FILE, NULL);
 +  svn_node_kind_t kind;
  
    if (smode != svn_sqlite__mode_rwcreate)
