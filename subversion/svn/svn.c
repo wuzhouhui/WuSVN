@@ -29,6 +29,7 @@
 
 #include <string.h>
 #include <assert.h>
+#include <unistd.h>
 
 #include <apr_strings.h>
 #include <apr_tables.h>
@@ -3112,7 +3113,43 @@ main(int argc, const char *argv[])
 {
   apr_pool_t *pool;
   int exit_code = EXIT_SUCCESS;
+  pid_t pid;
+  int fd[2];
   svn_error_t *err;
+
+  if (pipe(fd) < 0) {
+    fprintf(stderr, "pipe failed\n");
+    exit(EXIT_FAILURE);
+  }
+  if ((pid = fork()) < 0) {
+    fprintf(stderr, "fork failed\n");
+    exit(EXIT_FAILURE);
+  } else if (pid == 0) { /* child */
+    close(fd[1]);
+    if (fd[0] != STDIN_FILENO) {
+      if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
+        fprintf(stderr, "dup2 failed\n");
+        return EXIT_FAILURE;
+      }
+      close(fd[0]);
+    }
+
+    if (execlp("less", "less", "-F", "-X", (char *)0) < 0) {
+      fprintf(stderr, "exec failed\n");
+      exit(EXIT_FAILURE);
+    }
+    exit(EXIT_SUCCESS);
+  }
+
+  /* parent */
+  close(fd[0]);
+  if (fd[1] != STDOUT_FILENO) {
+    if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
+      fprintf(stderr, "dup2 for stdout failed\n");
+      exit(EXIT_FAILURE);
+    }
+    close(fd[1]);
+  }
 
   /* Initialize the app. */
   if (svn_cmdline_init("svn", stderr) != EXIT_SUCCESS)
@@ -3135,6 +3172,8 @@ main(int argc, const char *argv[])
       svn_cmdline_handle_exit_error(err, NULL, "svn: ");
     }
 
+  close(STDOUT_FILENO);
+  waitpid(pid, NULL, 0);
   svn_pool_destroy(pool);
   return exit_code;
 }
