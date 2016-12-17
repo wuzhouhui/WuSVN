@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.8.16.tar.gz
 %define svn_version 1.8.16
-%define svn_release 2
+%define svn_release 3
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
