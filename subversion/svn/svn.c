@@ -1916,7 +1916,8 @@ add_search_pattern_to_latest_group(svn_cl__opt_state_t *opt_state,
  * return SVN_NO_ERROR.
  */
 static svn_error_t *
-sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
+		pid_t *pid)
 {
   svn_error_t *err;
   int opt_id;
@@ -3086,6 +3087,49 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     ctx->conflict_baton2 = NULL;
   }
 
+  if (subcommand->cmd_func == svn_cl__blame ||
+		  subcommand->cmd_func == svn_cl__cat ||
+		  subcommand->cmd_func == svn_cl__diff ||
+		  subcommand->cmd_func == svn_cl__log ||
+		  subcommand->cmd_func == svn_cl__status ||
+		  subcommand->cmd_func == svn_cl__list ||
+		  subcommand->cmd_func == svn_cl__help) {
+    int fd[2];
+
+    if (pipe(fd) < 0) {
+      fprintf(stderr, "pipe failed\n");
+      exit(EXIT_FAILURE);
+    }
+    if ((*pid = fork()) < 0) {
+      fprintf(stderr, "fork failed\n");
+      exit(EXIT_FAILURE);
+    } else if (*pid == 0) { /* child */
+      close(fd[1]);
+      if (fd[0] != STDIN_FILENO) {
+        if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
+          fprintf(stderr, "dup2 failed\n");
+          exit(EXIT_FAILURE);
+        }
+        close(fd[0]);
+      }
+
+      if (execlp("less", "less", "-F", "-X", (char *)0) < 0) {
+        fprintf(stderr, "exec failed\n");
+        exit(EXIT_FAILURE);
+      }
+      exit(EXIT_SUCCESS);
+    }
+
+    /* parent */
+    close(fd[0]);
+    if (fd[1] != STDOUT_FILENO) {
+      if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
+        fprintf(stderr, "dup2 for stdout failed\n");
+        exit(EXIT_FAILURE);
+      }
+      close(fd[1]);
+    }
+  }
   /* And now we finally run the subcommand. */
   err = (*subcommand->cmd_func)(os, &command_baton, pool);
   if (err)
@@ -3161,61 +3205,8 @@ main(int argc, const char *argv[])
 {
   apr_pool_t *pool;
   int exit_code = EXIT_SUCCESS;
-  pid_t pid;
-  int fd[2], needpipe = 0;
+  pid_t pid = 0;
   svn_error_t *err;
-
-  if (argc >= 2) {
-    const svn_opt_subcommand_desc2_t *subcmd;
-    subcmd = svn_opt_get_canonical_subcommand2(svn_cl__cmd_table, argv[1]);
-    if (subcmd && subcmd->cmd_func == svn_cl__blame ||
-		    subcmd->cmd_func == svn_cl__cat ||
-		    subcmd->cmd_func == svn_cl__diff ||
-		    subcmd->cmd_func == svn_cl__log ||
-		    subcmd->cmd_func == svn_cl__status ||
-		    subcmd->cmd_func == svn_cl__list ||
-		    subcmd->cmd_func == svn_cl__help)
-      needpipe = 1;
-  }
-
-  if (!needpipe)
-    goto afterpipe;
-
-  if (pipe(fd) < 0) {
-    fprintf(stderr, "pipe failed\n");
-    exit(EXIT_FAILURE);
-  }
-  if ((pid = fork()) < 0) {
-    fprintf(stderr, "fork failed\n");
-    exit(EXIT_FAILURE);
-  } else if (pid == 0) { /* child */
-    close(fd[1]);
-    if (fd[0] != STDIN_FILENO) {
-      if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
-        fprintf(stderr, "dup2 failed\n");
-        return EXIT_FAILURE;
-      }
-      close(fd[0]);
-    }
-
-    if (execlp("less", "less", "-F", "-X", (char *)0) < 0) {
-      fprintf(stderr, "exec failed\n");
-      exit(EXIT_FAILURE);
-    }
-    exit(EXIT_SUCCESS);
-  }
-
-  /* parent */
-  close(fd[0]);
-  if (fd[1] != STDOUT_FILENO) {
-    if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
-      fprintf(stderr, "dup2 for stdout failed\n");
-      exit(EXIT_FAILURE);
-    }
-    close(fd[1]);
-  }
-
-afterpipe:
 
   /* Initialize the app. */
   if (svn_cmdline_init("svn", stderr) != EXIT_SUCCESS)
@@ -3226,7 +3217,7 @@ afterpipe:
    */
   pool = apr_allocator_owner_get(svn_pool_create_allocator(FALSE));
 
-  err = sub_main(&exit_code, argc, argv, pool);
+  err = sub_main(&exit_code, argc, argv, pool, &pid);
 
   /* Flush stdout and report if it fails. It would be flushed on exit anyway
      but this makes sure that output is not silently lost if it fails. */
@@ -3238,7 +3229,7 @@ afterpipe:
       svn_cmdline_handle_exit_error(err, NULL, "svn: ");
     }
 
-  if (needpipe) {
+  if (pid) {
     close(STDOUT_FILENO);
     waitpid(pid, NULL, 0);
   }
