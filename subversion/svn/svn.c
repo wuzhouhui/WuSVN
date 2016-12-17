@@ -3320,8 +3320,24 @@ main(int argc, const char *argv[])
   apr_pool_t *pool;
   int exit_code = EXIT_SUCCESS;
   pid_t pid;
-  int fd[2];
+  int fd[2], needpipe = 0;
   svn_error_t *err;
+
+  if (argc >= 2) {
+    const svn_opt_subcommand_desc2_t *subcmd;
+    subcmd = svn_opt_get_canonical_subcommand2(svn_cl__cmd_table, argv[1]);
+    if (subcmd && subcmd->cmd_func == svn_cl__blame ||
+		    subcmd->cmd_func == svn_cl__cat ||
+		    subcmd->cmd_func == svn_cl__diff ||
+		    subcmd->cmd_func == svn_cl__log ||
+		    subcmd->cmd_func == svn_cl__status ||
+		    subcmd->cmd_func == svn_cl__list ||
+		    subcmd->cmd_func == svn_cl__help)
+      needpipe = 1;
+  }
+
+  if (!needpipe)
+    goto afterpipe;
 
   if (pipe(fd) < 0) {
     fprintf(stderr, "pipe failed\n");
@@ -3357,6 +3373,8 @@ main(int argc, const char *argv[])
     close(fd[1]);
   }
 
+afterpipe:
+
   /* Initialize the app. */
   if (svn_cmdline_init("svn", stderr) != EXIT_SUCCESS)
     return EXIT_FAILURE;
@@ -3378,8 +3396,10 @@ main(int argc, const char *argv[])
       svn_cmdline_handle_exit_error(err, NULL, "svn: ");
     }
 
-  close(STDOUT_FILENO);
-  waitpid(pid, NULL, 0);
+  if (needpipe) {
+    close(STDOUT_FILENO);
+    waitpid(pid, NULL, 0);
+  }
   svn_pool_destroy(pool);
 
   svn_cmdline__cancellation_exit();
