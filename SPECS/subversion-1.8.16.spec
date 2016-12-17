@@ -34,6 +34,7 @@ Patch0: timestamp-replication-v5-1.8.txt
 %endif
 Patch1: subversion-1.8.16-svnignore.patch
 Patch2: 0001-Paging-output-automatically.patch
+Patch3: 0001-Only-paging-output-of-blame-cat-di-log-st-list-and-h.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -160,6 +161,7 @@ WANdisco extensions to subversion
 %{?_with_timestamp:%patch0 -p0}
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -344,6 +346,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Dec 17 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-3
+- add 0001-Only-paging-output-of-blame-cat-di-log-st-list-and-h.patch
+
 * Fri Dec 16 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-2
 - add 0001-Paging-output-automatically.patch
 

@@ -1,0 +1,60 @@
+From 3d47289f4dbb3ce2c39d8a1031992f88c929021c Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 17 Dec 2016 12:05:17 +0800
+Subject: [PATCH] Only paging output of blame, cat, di, log, st, list, and help
+
+---
+ subversion/svn/svn.c | 26 +++++++++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
+
+Index: subversion-1.8.16/subversion/svn/svn.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/svn/svn.c	2016-12-17 12:10:28.324333765 +0800
++++ subversion-1.8.16/subversion/svn/svn.c	2016-12-17 12:11:37.580335620 +0800
+@@ -2975,7 +2975,23 @@
+   apr_pool_t *pool;
+   int exit_code;
+   pid_t pid;
+-  int fd[2];
++  int fd[2], needpipe = 0;
++
++  if (argc >= 2) {
++    const svn_opt_subcommand_desc2_t *subcmd;
++    subcmd = svn_opt_get_canonical_subcommand2(svn_cl__cmd_table, argv[1]);
++    if (subcmd && subcmd->cmd_func == svn_cl__blame ||
++		    subcmd->cmd_func == svn_cl__cat ||
++		    subcmd->cmd_func == svn_cl__diff ||
++		    subcmd->cmd_func == svn_cl__log ||
++		    subcmd->cmd_func == svn_cl__status ||
++		    subcmd->cmd_func == svn_cl__list ||
++		    subcmd->cmd_func == svn_cl__help)
++      needpipe = 1;
++  }
++
++  if (!needpipe)
++    goto afterpipe;
+ 
+   if (pipe(fd) < 0) {
+     fprintf(stderr, "pipe failed\n");
+@@ -3011,6 +3027,8 @@
+     close(fd[1]);
+   }
+ 
++afterpipe:
++
+   /* Initialize the app. */
+   if (svn_cmdline_init("svn", stderr) != EXIT_SUCCESS)
+     return EXIT_FAILURE;
+@@ -3022,8 +3040,10 @@
+ 
+   exit_code = sub_main(argc, argv, pool);
+ 
+-  close(STDOUT_FILENO);
+-  waitpid(pid, NULL, 0);
++  if (needpipe) {
++    close(STDOUT_FILENO);
++    waitpid(pid, NULL, 0);
++  }
+   svn_pool_destroy(pool);
+   return exit_code;
+ }
