@@ -1,0 +1,76 @@
+From d955b7d9992ea9a3fbdac8967e84b5640f31aadc Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Fri, 16 Dec 2016 22:04:43 +0800
+Subject: [PATCH] Paging output automatically
+
+Previously, if we want svn's output to be paged, we have to use pipe, like
+"svn log | less", now we have no longer to do this again, because svn can
+paging output automatically, just like git (except color highlight).
+---
+ subversion/svn/svn.c | 39 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 39 insertions(+)
+
+Index: subversion-1.8.16/subversion/svn/svn.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/svn/svn.c
++++ subversion-1.8.16/subversion/svn/svn.c
+@@ -29,6 +29,7 @@
+ 
+ #include <string.h>
+ #include <assert.h>
++#include <unistd.h>
+ 
+ #include <apr_strings.h>
+ #include <apr_tables.h>
+@@ -2973,6 +2974,42 @@ main(int argc, const char *argv[])
+ {
+   apr_pool_t *pool;
+   int exit_code;
++  pid_t pid;
++  int fd[2];
++
++  if (pipe(fd) < 0) {
++    fprintf(stderr, "pipe failed\n");
++    exit(EXIT_FAILURE);
++  }
++  if ((pid = fork()) < 0) {
++    fprintf(stderr, "fork failed\n");
++    exit(EXIT_FAILURE);
++  } else if (pid == 0) { /* child */
++    close(fd[1]);
++    if (fd[0] != STDIN_FILENO) {
++      if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
++        fprintf(stderr, "dup2 failed\n");
++        return EXIT_FAILURE;
++      }
++      close(fd[0]);
++    }
++
++    if (execlp("less", "less", "-F", "-X", (char *)0) < 0) {
++      fprintf(stderr, "exec failed\n");
++      exit(EXIT_FAILURE);
++    }
++    exit(EXIT_SUCCESS);
++  }
++
++  /* parent */
++  close(fd[0]);
++  if (fd[1] != STDOUT_FILENO) {
++    if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
++      fprintf(stderr, "dup2 for stdout failed\n");
++      exit(EXIT_FAILURE);
++    }
++    close(fd[1]);
++  }
+ 
+   /* Initialize the app. */
+   if (svn_cmdline_init("svn", stderr) != EXIT_SUCCESS)
+@@ -2985,6 +3022,8 @@ main(int argc, const char *argv[])
+ 
+   exit_code = sub_main(argc, argv, pool);
+ 
++  close(STDOUT_FILENO);
++  waitpid(pid, NULL, 0);
+   svn_pool_destroy(pool);
+   return exit_code;
+ }

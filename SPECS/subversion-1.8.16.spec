@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.8.16.tar.gz
 %define svn_version 1.8.16
-%define svn_release 1
+%define svn_release 2
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
@@ -33,6 +33,7 @@ Source2: subversion.conf
 Patch0: timestamp-replication-v5-1.8.txt
 %endif
 Patch1: subversion-1.8.16-svnignore.patch
+Patch2: 0001-Paging-output-automatically.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -154,14 +155,11 @@ Summary: WANdisco extensions to subversion
 WANdisco extensions to subversion
 %endif
 
-%changelog
-* Tue Dec 13 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-1
-- add subversion-1.8.16-svnignore.patch
-
 %prep
 %setup -n subversion-%{version}
 %{?_with_timestamp:%patch0 -p0}
 %patch1 -p1
+%patch2 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -199,7 +197,7 @@ make clean
 # build javahl - needs to be done before the plain make for fsfswd to succeed
 #make javahl %{?_with_fsfswd:javahl-java-fsfswd}
 
-make -j 10
+make -j 4
 
 %if !%{without swig}
 # Build python bindings
@@ -208,7 +206,7 @@ make -j 4 swig-py swig-pl swig-rb DESTDIR=$RPM_BUILD_ROOT
 
 %if !%{without tools}
 # Build tools
-make -j 8 tools
+make -j 4 tools
 %endif
 
 %install
@@ -344,3 +342,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_bindir}/svnmucc
 %{_bindir}/svn-tools
 %endif
+
+%changelog
+* Fri Dec 16 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-2
+- add 0001-Paging-output-automatically.patch
+
+* Tue Dec 13 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-1
+- add subversion-1.8.16-svnignore.patch
