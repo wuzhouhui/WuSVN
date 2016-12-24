@@ -57,6 +57,7 @@ struct svn_diff_t {
   apr_off_t latest_start;
   apr_off_t latest_length;
   svn_diff_t *resolved_diff;
+  int wzh_used; /* used by wzh, don't touch it */
 };
 
 /* Type used for token indices and counts of tokens. Must be signed. */

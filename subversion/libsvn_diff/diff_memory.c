@@ -38,6 +38,7 @@
 #include "svn_private_config.h"
 #include "private/svn_adler32.h"
 #include "private/svn_diff_private.h"
+#include "private/svn_color.h"
 
 typedef struct source_tokens_t
 {
@@ -645,12 +646,21 @@ svn_diff_mem_string_output_unified3(svn_stream_t *output_stream,
       SVN_ERR(svn_utf_cstring_from_utf8_ex2
               (&(baton.prefix_str[unified_output_context]), " ",
                header_encoding, scratch_pool));
-      SVN_ERR(svn_utf_cstring_from_utf8_ex2
+      if (diff->wzh_used == SVN_USE_COLOR_MAGIC) {
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2
+              (&(baton.prefix_str[unified_output_delete]), SVN_COLOR_RED "-",
+               header_encoding, scratch_pool));
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2
+              (&(baton.prefix_str[unified_output_insert]),SVN_COLOR_GREEN "+",
+               header_encoding, scratch_pool));
+      } else {
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2
               (&(baton.prefix_str[unified_output_delete]), "-",
                header_encoding, scratch_pool));
-      SVN_ERR(svn_utf_cstring_from_utf8_ex2
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2
               (&(baton.prefix_str[unified_output_insert]), "+",
                header_encoding, scratch_pool));
+      }
 
       fill_source_tokens(&baton.sources[0], original, scratch_pool);
       fill_source_tokens(&baton.sources[1], modified, scratch_pool);

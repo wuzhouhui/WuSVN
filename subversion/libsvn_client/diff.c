@@ -56,6 +56,9 @@
 
 #include "svn_private_config.h"
 
+void svn_diff_use_color(svn_diff_t *);
+extern int stdout_is_tty;
+
 
 /* Utilities */
 
@@ -862,6 +865,8 @@ diff_content_changed(svn_boolean_t *wrote_header,
       SVN_ERR(svn_diff_file_diff_2(&diff, tmpfile1, tmpfile2,
                                    dwi->options.for_internal,
                                    scratch_pool));
+      if (diff && stdout_is_tty)
+        svn_diff_use_color(diff);
 
       if (force_diff
           || dwi->use_git_diff_format
