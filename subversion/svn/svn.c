@@ -61,6 +61,8 @@
 
 #include "svn_private_config.h"
 
+extern int stdout_is_tty;
+
 
 /*** Option Processing ***/
 
@@ -3087,7 +3089,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
     ctx->conflict_baton2 = NULL;
   }
 
-  if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
+  stdout_is_tty = isatty(STDOUT_FILENO);
+  if (stdout_is_tty && (subcommand->cmd_func == svn_cl__blame ||
 		  subcommand->cmd_func == svn_cl__cat ||
 		  subcommand->cmd_func == svn_cl__diff ||
 		  subcommand->cmd_func == svn_cl__log ||
@@ -3113,7 +3116,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
         close(fd[0]);
       }
 
-      if (execlp("less", "less", "-F", "-X", (char *)0) < 0) {
+      if (execlp("less", "less", "-F", "-X", "-R", (char *)0) < 0) {
         fprintf(stderr, "exec failed\n");
         exit(EXIT_FAILURE);
       }
