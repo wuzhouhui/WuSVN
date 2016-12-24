@@ -3245,13 +3245,13 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
     ctx->conflict_baton2 = NULL;
   }
 
-  if (subcommand->cmd_func == svn_cl__blame ||
+  if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
 		  subcommand->cmd_func == svn_cl__cat ||
 		  subcommand->cmd_func == svn_cl__diff ||
 		  subcommand->cmd_func == svn_cl__log ||
 		  subcommand->cmd_func == svn_cl__status ||
 		  subcommand->cmd_func == svn_cl__list ||
-		  subcommand->cmd_func == svn_cl__help) {
+		  subcommand->cmd_func == svn_cl__help)) {
     int fd[2];
 
     if (pipe(fd) < 0) {
