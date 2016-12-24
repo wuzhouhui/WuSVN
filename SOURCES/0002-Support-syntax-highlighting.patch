@@ -1,0 +1,205 @@
+From cef009cc470c9839f661f579c41829ca1a878c4b Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 24 Dec 2016 18:18:03 +0800
+Subject: [PATCH 2/2] Support syntax highlighting
+
+---
+ subversion/include/private/svn_color.h |  8 ++++++++
+ subversion/libsvn_client/diff.c        |  5 +++++
+ subversion/libsvn_diff/diff.h          |  1 +
+ subversion/libsvn_diff/diff_file.c     | 22 ++++++++++++++++++----
+ subversion/libsvn_diff/diff_memory.c   | 14 ++++++++++++--
+ subversion/libsvn_diff/util.c          |  4 ++++
+ subversion/svn/svn.c                   |  7 +++++--
+ 7 files changed, 53 insertions(+), 8 deletions(-)
+ create mode 100644 subversion/include/private/svn_color.h
+
+diff --git a/subversion/include/private/svn_color.h b/subversion/include/private/svn_color.h
+new file mode 100644
+index 0000000..1433994
+--- /dev/null
++++ b/subversion/include/private/svn_color.h
+@@ -0,0 +1,8 @@
++#ifndef SVN_COLOR_H
++#define SVN_COLOR_H
++
++#define SVN_USE_COLOR_MAGIC   0x8a3f
++#define SVN_COLOR_RED          "\033[31m"
++#define SVN_COLOR_GREEN        "\033[32m"
++
++#endif /* SVN_COLOR_H */
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 4817ffd..e71b03d 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -56,6 +56,9 @@
+ 
+ #include "svn_private_config.h"
+ 
++void svn_diff_use_color(svn_diff_t *);
++extern int stdout_is_tty;
++
+ 
+ /* Utilities */
+ 
+@@ -867,6 +867,8 @@ diff_content_changed(svn_boolean_t *wrot
+       SVN_ERR(svn_diff_file_diff_2(&diff, tmpfile1, tmpfile2,
+                                    diff_cmd_baton->options.for_internal,
+                                    scratch_pool));
++      if (diff && stdout_is_tty)
++        svn_diff_use_color(diff);
+ 
+       if (force_diff
+           || diff_cmd_baton->use_git_diff_format
+diff --git a/subversion/libsvn_diff/diff.h b/subversion/libsvn_diff/diff.h
+index 51a84c6..a0daab2 100644
+--- a/subversion/libsvn_diff/diff.h
++++ b/subversion/libsvn_diff/diff.h
+@@ -57,6 +57,7 @@ struct svn_diff_t {
+   apr_off_t latest_start;
+   apr_off_t latest_length;
+   svn_diff_t *resolved_diff;
++  int wzh_used; /* used by wzh, don't touch it */
+ };
+ 
+ /* Type used for token indices and counts of tokens. Must be signed. */
+diff --git a/subversion/libsvn_diff/diff_file.c b/subversion/libsvn_diff/diff_file.c
+index f54522e..58cb6e5 100644
+--- a/subversion/libsvn_diff/diff_file.c
++++ b/subversion/libsvn_diff/diff_file.c
+@@ -51,6 +51,7 @@
+ #include "private/svn_dep_compat.h"
+ #include "private/svn_adler32.h"
+ #include "private/svn_diff_private.h"
++#include "private/svn_color.h"
+ 
+ /* A token, i.e. a line read from a file. */
+ typedef struct svn_diff__file_token_t
+@@ -1310,6 +1311,12 @@ svn_diff_file_options_parse(svn_diff_file_options_t *options,
+   return SVN_NO_ERROR;
+ }
+ 
++void
++svn_diff_use_color(svn_diff_t *diff)
++{
++  diff->wzh_used = SVN_USE_COLOR_MAGIC;
++}
++
+ svn_error_t *
+ svn_diff_file_diff_2(svn_diff_t **diff,
+                      const char *original,
+@@ -1864,10 +1871,17 @@ svn_diff_file_output_unified4(svn_stream_t *output_stream,
+ 
+       SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.context_str, " ",
+                                             header_encoding, pool));
+-      SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str, "-",
+-                                            header_encoding, pool));
+-      SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str, "+",
+-                                            header_encoding, pool));
++      if (diff->wzh_used == SVN_USE_COLOR_MAGIC) {
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
++                          SVN_COLOR_RED "-", header_encoding, pool));
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
++                          SVN_COLOR_GREEN "+", header_encoding, pool));
++      } else {
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
++                          "-", header_encoding, pool));
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
++                          "+", header_encoding, pool));
++      }
+ 
+       if (relative_to_dir)
+         {
+diff --git a/subversion/libsvn_diff/diff_memory.c b/subversion/libsvn_diff/diff_memory.c
+index d9d800d..e0ad3a3 100644
+--- a/subversion/libsvn_diff/diff_memory.c
++++ b/subversion/libsvn_diff/diff_memory.c
+@@ -38,6 +38,7 @@
+ #include "svn_private_config.h"
+ #include "private/svn_adler32.h"
+ #include "private/svn_diff_private.h"
++#include "private/svn_color.h"
+ 
+ typedef struct source_tokens_t
+ {
+@@ -639,12 +639,21 @@ svn_diff_mem_string_output_unified2(svn_
+       SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_context]), " ",
+                header_encoding, pool));
+-      SVN_ERR(svn_utf_cstring_from_utf8_ex2
++      if (diff->wzh_used == SVN_USE_COLOR_MAGIC) {
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2
++              (&(baton.prefix_str[unified_output_delete]), SVN_COLOR_RED "-",
++               header_encoding, pool));
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2
++              (&(baton.prefix_str[unified_output_insert]), SVN_COLOR_GREEN "+",
++               header_encoding, pool));
++      } else {
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_delete]), "-",
+                header_encoding, pool));
+-      SVN_ERR(svn_utf_cstring_from_utf8_ex2
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_insert]), "+",
+                header_encoding, pool));
++      }
+ 
+       fill_source_tokens(&baton.sources[0], original, pool);
+       fill_source_tokens(&baton.sources[1], modified, pool);
+diff --git a/subversion/libsvn_diff/util.c b/subversion/libsvn_diff/util.c
+index a931822..9dfbb5c 100644
+--- a/subversion/libsvn_diff/util.c
++++ b/subversion/libsvn_diff/util.c
+@@ -43,6 +43,8 @@
+ 
+ #include "svn_private_config.h"
+ 
++void svn_diff_use_color(svn_diff_t *);
++int stdout_is_tty;
+ 
+ svn_boolean_t
+ svn_diff_contains_conflicts(svn_diff_t *diff)
+@@ -595,6 +597,8 @@ svn_diff__display_prop_diffs(svn_stream_t *outstream,
+ 
+         SVN_ERR(svn_diff_mem_string_diff(&diff, orig, val, &options,
+                                          iterpool));
++	if (diff && stdout_is_tty)
++          svn_diff_use_color(diff);
+ 
+         /* UNIX patch will try to apply a diff even if the diff header
+          * is missing. It tries to be helpful by asking the user for a
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index a886ca6..3bed6c8 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -61,6 +61,8 @@
+ 
+ #include "svn_private_config.h"
+ 
++extern int stdout_is_tty;
++
+ 
+ /*** Option Processing ***/
+ 
+@@ -3039,7 +3041,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
+     ctx->conflict_baton2 = b;
+   }
+ 
+-  if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
++  stdout_is_tty = isatty(STDOUT_FILENO);
++  if (stdout_is_tty && (subcommand->cmd_func == svn_cl__blame ||
+ 		  subcommand->cmd_func == svn_cl__cat ||
+ 		  subcommand->cmd_func == svn_cl__diff ||
+ 		  subcommand->cmd_func == svn_cl__log ||
+@@ -3065,7 +3068,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
+         close(fd[0]);
+       }
+ 
+-      if (execlp("less", "less", "-F", "-X", (char *)0) < 0) {
++      if (execlp("less", "less", "-F", "-X", "-R", (char *)0) < 0) {
+         fprintf(stderr, "exec failed\n");
+         exit(EXIT_FAILURE);
+       }
+-- 
+2.10.1
+

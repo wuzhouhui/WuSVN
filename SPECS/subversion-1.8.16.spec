@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.8.16.tar.gz
 %define svn_version 1.8.16
-%define svn_release 4
+%define svn_release 6
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
@@ -36,6 +36,8 @@ Patch1: subversion-1.8.16-svnignore.patch
 Patch2: 0001-Paging-output-automatically.patch
 Patch3: 0001-Only-paging-output-of-blame-cat-di-log-st-list-and-h.patch
 Patch4: 0001-Fix-wrong-judgement-about-subcommand.patch
+Patch5: 0001-Paging-output-only-if-the-stdout-is-terminal.patch
+Patch6: 0002-Support-syntax-highlighting.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -164,6 +166,8 @@ WANdisco extensions to subversion
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -348,6 +352,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Dec 24 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-6
+- add 0001-Paging-output-only-if-the-stdout-is-terminal.patch
+- add 0002-Support-syntax-highlighting.patch
+
 * Sat Dec 17 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-4
 - add 0001-Fix-wrong-judgement-about-subcommand.patch
 
