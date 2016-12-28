@@ -53,6 +53,7 @@
 #include "private/svn_subr_private.h"
 #include "private/svn_io_private.h"
 #include "private/svn_ra_private.h"
+#include "private/svn_color.h"
 
 #include "svn_private_config.h"
 
@@ -478,10 +479,16 @@ display_prop_diffs(const apr_array_header_t *propchanges,
       /* ### Should we show the paths in platform specific format,
        * ### diff_content_changed() does not! */
 
-      SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
-                                          "Index: %s" APR_EOL_STR
-                                          SVN_DIFF__EQUAL_STRING APR_EOL_STR,
-                                          index_path));
+      if (stdout_is_tty)
+        SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
+			      SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
+			      SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+			      SVN_COLOR_BLUE, index_path));
+      else
+        SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
+			      "Index: %s" APR_EOL_STR
+			      SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+			      index_path));
 
       if (use_git_diff_format)
         SVN_ERR(print_git_diff_header(outstream, &label1, &label2,
@@ -704,11 +711,18 @@ diff_content_changed(svn_boolean_t *wrote_header,
   if (! dwi->force_binary && (mt1_binary || mt2_binary))
     {
       /* Print out the diff header. */
-      SVN_ERR(svn_stream_printf_from_utf8(outstream,
-               dwi->header_encoding, scratch_pool,
-               "Index: %s" APR_EOL_STR
-               SVN_DIFF__EQUAL_STRING APR_EOL_STR,
-               index_path));
+      if (stdout_is_tty)
+        SVN_ERR(svn_stream_printf_from_utf8(outstream,
+		 dwi->header_encoding, scratch_pool,
+		 SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
+		 SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+		 SVN_COLOR_BLUE, index_path));
+      else
+        SVN_ERR(svn_stream_printf_from_utf8(outstream,
+		 dwi->header_encoding, scratch_pool,
+		 "Index: %s" APR_EOL_STR
+		 SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+		 index_path));
 
       /* ### Print git diff headers. */
 
@@ -869,11 +883,18 @@ diff_content_changed(svn_boolean_t *wrote_header,
           || svn_diff_contains_diffs(diff))
         {
           /* Print out the diff header. */
-          SVN_ERR(svn_stream_printf_from_utf8(outstream,
-                   dwi->header_encoding, scratch_pool,
-                   "Index: %s" APR_EOL_STR
-                   SVN_DIFF__EQUAL_STRING APR_EOL_STR,
-                   index_path));
+	  if (stdout_is_tty)
+            SVN_ERR(svn_stream_printf_from_utf8(outstream,
+		     dwi->header_encoding, scratch_pool,
+		     SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
+		     SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+		     SVN_COLOR_BLUE, index_path));
+          else
+            SVN_ERR(svn_stream_printf_from_utf8(outstream,
+		     dwi->header_encoding, scratch_pool,
+		     "Index: %s" APR_EOL_STR
+		     SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+		     index_path));
 
           if (dwi->use_git_diff_format)
             {
@@ -1018,11 +1039,18 @@ diff_file_added(const char *relpath,
         index_path = svn_dirent_join(dwi->ddi.anchor, relpath,
                                      scratch_pool);
 
-      SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
-                dwi->header_encoding, scratch_pool,
-                "Index: %s (added)" APR_EOL_STR
-                SVN_DIFF__EQUAL_STRING APR_EOL_STR,
-                index_path));
+      if (stdout_is_tty)
+        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
+                  dwi->header_encoding, scratch_pool,
+                  SVN_COLOR_BLUE "Index: %s%s (added)" APR_EOL_STR
+                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+                  SVN_COLOR_BLUE, index_path));
+      else
+        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
+                  dwi->header_encoding, scratch_pool,
+                  "Index: %s (added)" APR_EOL_STR
+                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+                  index_path));
       wrote_header = TRUE;
     }
   else if (copyfrom_source && right_file)
@@ -1085,11 +1113,18 @@ diff_file_deleted(const char *relpath,
         index_path = svn_dirent_join(dwi->ddi.anchor, relpath,
                                      scratch_pool);
 
-      SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
-                dwi->header_encoding, scratch_pool,
-                "Index: %s (deleted)" APR_EOL_STR
-                SVN_DIFF__EQUAL_STRING APR_EOL_STR,
-                index_path));
+      if (stdout_is_tty)
+        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
+                  dwi->header_encoding, scratch_pool,
+                  SVN_COLOR_BLUE "Index: %s%s (deleted)" APR_EOL_STR
+                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+                  SVN_COLOR_BLUE, index_path));
+      else
+        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
+                  dwi->header_encoding, scratch_pool,
+                  "Index: %s (deleted)" APR_EOL_STR
+                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+                  index_path));
     }
   else
     {

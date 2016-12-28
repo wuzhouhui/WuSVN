@@ -39,6 +39,7 @@
 
 #include "private/svn_diff_private.h"
 #include "private/svn_sorts_private.h"
+#include "private/svn_color.h"
 #include "diff.h"
 
 #include "svn_private_config.h"
@@ -417,12 +418,20 @@ svn_diff__unidiff_write_header(svn_stream_t *output_stream,
                                const char *new_header,
                                apr_pool_t *scratch_pool)
 {
-  SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
-                                      scratch_pool,
-                                      "--- %s" APR_EOL_STR
-                                      "+++ %s" APR_EOL_STR,
-                                      old_header,
-                                      new_header));
+  if (stdout_is_tty)
+    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+                                        scratch_pool,
+                                        SVN_COLOR_BLUE "--- %s" APR_EOL_STR
+                                        SVN_COLOR_BLUE "+++ %s" APR_EOL_STR,
+                                        old_header,
+                                        new_header));
+  else
+    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+                                        scratch_pool,
+                                        "--- %s" APR_EOL_STR
+                                        "+++ %s" APR_EOL_STR,
+                                        old_header,
+                                        new_header));
   return SVN_NO_ERROR;
 }
 
