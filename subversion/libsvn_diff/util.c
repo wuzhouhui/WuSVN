@@ -377,10 +377,16 @@ svn_diff__unified_write_hunk_header(svn_stream_t *output_stream,
                                     const char *hunk_extra_context,
                                     apr_pool_t *scratch_pool)
 {
-  SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
-                                      scratch_pool,
-                                      "%s -%" APR_OFF_T_FMT,
-                                      hunk_delimiter, old_start));
+  if (stdout_is_tty)
+    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+					scratch_pool,
+					SVN_COLOR_YELLOW "%s -%" APR_OFF_T_FMT,
+					hunk_delimiter, old_start));
+  else
+    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+					scratch_pool,
+					"%s -%" APR_OFF_T_FMT,
+					hunk_delimiter, old_start));
   /* If the hunk length is 1, suppress the number of lines in the hunk
    * (it is 1 implicitly) */
   if (old_length != 1)
