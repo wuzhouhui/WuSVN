@@ -38,6 +38,9 @@
 
 #include "private/svn_cmdline_private.h"
 #include "private/svn_sorts_private.h"
+#include "private/svn_color.h"
+
+extern int stdout_is_tty;
 
 #include "cl.h"
 #include "cl-log.h"
@@ -344,9 +347,15 @@ svn_cl__log_entry_receiver(void *baton,
       return SVN_NO_ERROR;
     }
 
-  SVN_ERR(svn_cmdline_printf(pool,
-                             SVN_CL__LOG_SEP_STRING "r%ld | %s | %s",
-                             log_entry->revision, author, date));
+  if (stdout_is_tty)
+    SVN_ERR(svn_cmdline_printf(pool,
+                               SVN_COLOR_MAGENTA SVN_CL__LOG_SEP_STRING
+                               SVN_COLOR_MAGENTA "r%ld | %s | %s",
+			       log_entry->revision, author, date));
+  else
+    SVN_ERR(svn_cmdline_printf(pool,
+                               SVN_CL__LOG_SEP_STRING "r%ld | %s | %s",
+			       log_entry->revision, author, date));
 
   if (message != NULL)
     {
