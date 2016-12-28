@@ -43,7 +43,6 @@
 
 #include "svn_private_config.h"
 
-void svn_diff_use_color(svn_diff_t *);
 int stdout_is_tty;
 
 svn_boolean_t
@@ -597,8 +596,6 @@ svn_diff__display_prop_diffs(svn_stream_t *outstream,
 
         SVN_ERR(svn_diff_mem_string_diff(&diff, orig, val, &options,
                                          iterpool));
-	if (diff && stdout_is_tty)
-          svn_diff_use_color(diff);
 
         /* UNIX patch will try to apply a diff even if the diff header
          * is missing. It tries to be helpful by asking the user for a
