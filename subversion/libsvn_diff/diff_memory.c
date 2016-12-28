@@ -40,6 +40,8 @@
 #include "private/svn_diff_private.h"
 #include "private/svn_color.h"
 
+extern int stdout_is_tty;
+
 typedef struct source_tokens_t
 {
   /* A token simply is an svn_string_t pointing to
@@ -646,7 +648,7 @@ svn_diff_mem_string_output_unified3(svn_stream_t *output_stream,
       SVN_ERR(svn_utf_cstring_from_utf8_ex2
               (&(baton.prefix_str[unified_output_context]), " ",
                header_encoding, scratch_pool));
-      if (diff->wzh_used == SVN_USE_COLOR_MAGIC) {
+      if (stdout_is_tty) {
         SVN_ERR(svn_utf_cstring_from_utf8_ex2
               (&(baton.prefix_str[unified_output_delete]), SVN_COLOR_RED "-",
                header_encoding, scratch_pool));
