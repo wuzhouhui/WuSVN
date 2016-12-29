@@ -1,0 +1,55 @@
+From e95b4f8f0577ec3813bfdd40e9a96fa68850b3fd Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 28 Dec 2016 22:33:55 +0800
+Subject: [PATCH] Pring log header with color magenta
+
+---
+ subversion/include/private/svn_color.h |  2 ++
+ subversion/svn/log-cmd.c               | 15 ++++++++++++---
+ 2 files changed, 14 insertions(+), 3 deletions(-)
+
+Index: subversion-1.8.16/subversion/include/private/svn_color.h
+===================================================================
+--- subversion-1.8.16.orig/subversion/include/private/svn_color.h
++++ subversion-1.8.16/subversion/include/private/svn_color.h
+@@ -6,5 +6,7 @@
+ #define SVN_COLOR_GREEN        "\033[32m"
+ #define SVN_COLOR_BLUE         "\033[34m"
+ #define SVN_COLOR_YELLOW       "\033[33m"
++#define SVN_COLOR_MAGENTA      "\033[35m"
++#define SVN_COLOR_CYAN         "\033[36m"
+ 
+ #endif /* SVN_COLOR_H */
+Index: subversion-1.8.16/subversion/svn/log-cmd.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/svn/log-cmd.c
++++ subversion-1.8.16/subversion/svn/log-cmd.c
+@@ -37,6 +37,9 @@
+ #include "svn_pools.h"
+ 
+ #include "private/svn_cmdline_private.h"
++#include "private/svn_color.h"
++
++extern int stdout_is_tty;
+ 
+ #include "cl.h"
+ 
+@@ -372,9 +375,15 @@ log_entry_receiver(void *baton,
+       return SVN_NO_ERROR;
+     }
+ 
+-  SVN_ERR(svn_cmdline_printf(pool,
+-                             SEP_STRING "r%ld | %s | %s",
+-                             log_entry->revision, author, date));
++  if (stdout_is_tty)
++    SVN_ERR(svn_cmdline_printf(pool,
++                               SVN_COLOR_MAGENTA SEP_STRING
++                               SVN_COLOR_MAGENTA "r%ld | %s | %s",
++			       log_entry->revision, author, date));
++  else
++    SVN_ERR(svn_cmdline_printf(pool,
++                               SEP_STRING "r%ld | %s | %s",
++			       log_entry->revision, author, date));
+ 
+   if (message != NULL)
+     {

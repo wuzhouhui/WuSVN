@@ -1,0 +1,125 @@
+From f2fc51880cac37b56bd9849318bb052771e95fb4 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 28 Dec 2016 20:15:28 +0800
+Subject: [PATCH] Enable syntax highlight only if stdout_is_tty is set
+
+---
+ subversion/libsvn_client/diff.c      |  4 ----
+ subversion/libsvn_diff/diff.h        |  1 -
+ subversion/libsvn_diff/diff_file.c   | 10 +++-------
+ subversion/libsvn_diff/diff_memory.c |  4 +++-
+ subversion/libsvn_diff/util.c        |  3 ---
+ 5 files changed, 6 insertions(+), 16 deletions(-)
+
+Index: subversion-1.8.16/subversion/libsvn_client/diff.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_client/diff.c
++++ subversion-1.8.16/subversion/libsvn_client/diff.c
+@@ -55,7 +55,6 @@
+ 
+ #include "svn_private_config.h"
+ 
+-void svn_diff_use_color(svn_diff_t *);
+ extern int stdout_is_tty;
+ 
+ 
+@@ -867,9 +866,6 @@ diff_content_changed(svn_boolean_t *wrot
+       SVN_ERR(svn_diff_file_diff_2(&diff, tmpfile1, tmpfile2,
+                                    diff_cmd_baton->options.for_internal,
+                                    scratch_pool));
+-      if (diff && stdout_is_tty)
+-        svn_diff_use_color(diff);
+-
+       if (force_diff
+           || diff_cmd_baton->use_git_diff_format
+           || svn_diff_contains_diffs(diff))
+Index: subversion-1.8.16/subversion/libsvn_diff/diff.h
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_diff/diff.h
++++ subversion-1.8.16/subversion/libsvn_diff/diff.h
+@@ -57,7 +57,6 @@ struct svn_diff_t {
+   apr_off_t latest_start;
+   apr_off_t latest_length;
+   svn_diff_t *resolved_diff;
+-  int wzh_used; /* used by wzh, don't touch it */
+ };
+ 
+ /* Type used for token indices and counts of tokens. Must be signed. */
+Index: subversion-1.8.16/subversion/libsvn_diff/diff_file.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_diff/diff_file.c
++++ subversion-1.8.16/subversion/libsvn_diff/diff_file.c
+@@ -51,6 +51,8 @@
+ #include "private/svn_diff_private.h"
+ #include "private/svn_color.h"
+ 
++extern int stdout_is_tty;
++
+ /* A token, i.e. a line read from a file. */
+ typedef struct svn_diff__file_token_t
+ {
+@@ -1306,12 +1308,6 @@ svn_diff_file_options_parse(svn_diff_fil
+   return SVN_NO_ERROR;
+ }
+ 
+-void
+-svn_diff_use_color(svn_diff_t *diff)
+-{
+-  diff->wzh_used = SVN_USE_COLOR_MAGIC;
+-}
+-
+ svn_error_t *
+ svn_diff_file_diff_2(svn_diff_t **diff,
+                      const char *original,
+@@ -1859,7 +1855,7 @@ svn_diff_file_output_unified3(svn_stream
+ 
+       SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.context_str, " ",
+                                             header_encoding, pool));
+-      if (diff->wzh_used == SVN_USE_COLOR_MAGIC) {
++      if (stdout_is_tty) {
+         SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
+                           SVN_COLOR_RED "-", header_encoding, pool));
+         SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
+Index: subversion-1.8.16/subversion/libsvn_diff/diff_memory.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_diff/diff_memory.c
++++ subversion-1.8.16/subversion/libsvn_diff/diff_memory.c
+@@ -40,6 +40,8 @@
+ #include "private/svn_diff_private.h"
+ #include "private/svn_color.h"
+ 
++extern int stdout_is_tty;
++
+ typedef struct source_tokens_t
+ {
+   /* A token simply is an svn_string_t pointing to
+@@ -639,7 +641,7 @@ svn_diff_mem_string_output_unified2(svn_
+       SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_context]), " ",
+                header_encoding, pool));
+-      if (diff->wzh_used == SVN_USE_COLOR_MAGIC) {
++      if (stdout_is_tty) {
+         SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_delete]), SVN_COLOR_RED "-",
+                header_encoding, pool));
+Index: subversion-1.8.16/subversion/libsvn_diff/util.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_diff/util.c
++++ subversion-1.8.16/subversion/libsvn_diff/util.c
+@@ -43,7 +43,6 @@
+ 
+ #include "svn_private_config.h"
+ 
+-void svn_diff_use_color(svn_diff_t *);
+ int stdout_is_tty;
+ 
+ svn_boolean_t
+@@ -581,8 +580,6 @@ svn_diff__display_prop_diffs(svn_stream_
+ 
+         SVN_ERR(svn_diff_mem_string_diff(&diff, orig, val, &options,
+                                          iterpool));
+-	if (diff && stdout_is_tty)
+-          svn_diff_use_color(diff);
+ 
+         /* UNIX patch will try to apply a diff even if the diff header
+          * is missing. It tries to be helpful by asking the user for a
