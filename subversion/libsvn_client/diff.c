@@ -57,8 +57,6 @@
 
 #include "svn_private_config.h"
 
-extern int stdout_is_tty;
-
 
 /* Utilities */
 
@@ -554,7 +552,7 @@ display_prop_diffs(const apr_array_header_t *propchanges,
       /* ### Should we show the paths in platform specific format,
        * ### diff_content_changed() does not! */
 
-      if (stdout_is_tty)
+      if (!dont_use_color)
         SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
 			      SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
 			      SVN_DIFF__EQUAL_STRING APR_EOL_STR,
@@ -876,7 +874,7 @@ diff_content_changed(svn_boolean_t *wrote_header,
   if (! dwi->force_binary && (mt1_binary || mt2_binary))
     {
       /* Print out the diff header. */
-      if (stdout_is_tty)
+      if (!dont_use_color)
         SVN_ERR(svn_stream_printf_from_utf8(outstream,
 		 dwi->header_encoding, scratch_pool,
 		 SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
@@ -1061,7 +1059,7 @@ diff_content_changed(svn_boolean_t *wrote_header,
           || svn_diff_contains_diffs(diff))
         {
           /* Print out the diff header. */
-	  if (stdout_is_tty)
+	  if (!dont_use_color)
             SVN_ERR(svn_stream_printf_from_utf8(outstream,
 		     dwi->header_encoding, scratch_pool,
 		     SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
@@ -1240,7 +1238,7 @@ diff_file_added(const char *relpath,
         index_path = svn_dirent_join(dwi->ddi.anchor, relpath,
                                      scratch_pool);
 
-      if (stdout_is_tty)
+      if (!dont_use_color)
         SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
                   dwi->header_encoding, scratch_pool,
                   SVN_COLOR_BLUE "Index: %s%s (added)" APR_EOL_STR
@@ -1312,7 +1310,7 @@ diff_file_deleted(const char *relpath,
         index_path = svn_dirent_join(dwi->ddi.anchor, relpath,
                                      scratch_pool);
 
-      if (stdout_is_tty)
+      if (!dont_use_color)
         SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
                   dwi->header_encoding, scratch_pool,
                   SVN_COLOR_BLUE "Index: %s%s (deleted)" APR_EOL_STR
