@@ -40,7 +40,7 @@ Available subcommands:
    relocate
    resolve
    resolved
-   revert
+   revert (rv)
    status (stat, st)
    switch (sw)
    unlock
