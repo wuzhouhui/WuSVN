@@ -53,8 +53,6 @@
 #include "private/svn_diff_private.h"
 #include "private/svn_color.h"
 
-extern int stdout_is_tty;
-
 /* A token, i.e. a line read from a file. */
 typedef struct svn_diff__file_token_t
 {
@@ -1867,7 +1865,7 @@ svn_diff_file_output_unified4(svn_stream_t *output_stream,
 
       SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.context_str, " ",
                                             header_encoding, pool));
-      if (stdout_is_tty) {
+      if (!dont_use_color) {
         SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
                           SVN_COLOR_RED "-", header_encoding, pool));
         SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
