@@ -198,6 +198,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t ignore_properties;   /* ignore properties */
   svn_boolean_t properties_only;     /* Show properties only */
   svn_boolean_t patch_compatible;    /* Output compatible with GNU patch */
+  svn_boolean_t no_color;            /* Disable syntax highlight */
     } diff;
   svn_boolean_t ignore_ancestry; /* ignore ancestry for merge-y operations */
   svn_boolean_t ignore_externals;/* ignore externals definitions */

@@ -58,10 +58,9 @@
 #include "private/svn_cmdline_private.h"
 #include "private/svn_subr_private.h"
 #include "private/svn_utf_private.h"
+#include "private/svn_color.h"
 
 #include "svn_private_config.h"
-
-extern int stdout_is_tty;
 
 
 /*** Option Processing ***/
@@ -89,6 +88,7 @@ typedef enum svn_cl__longopt_t {
   opt_ignore_properties,
   opt_properties_only,
   opt_patch_compatible,
+  opt_no_color,
   /* end of diff options */
   opt_dry_run,
   opt_editor_cmd,
@@ -398,6 +398,7 @@ const apr_getopt_option_t svn_cl__options[] =
                        "                             "
                        "--show-copies-as-adds --ignore-properties"
                        )},
+  {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
   /* end of diff options */
   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
                        N_("Allow operation on mixed-revision working copy.\n"
@@ -751,7 +752,8 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      opt_internal_diff, 'x', opt_no_diff_added, opt_no_diff_deleted,
      opt_ignore_properties, opt_properties_only,
      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
-     opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible} },
+     opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
+     opt_no_color,} },
   { "export", svn_cl__export, {0}, N_
     ("Create an unversioned copy of a tree.\n"
      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
@@ -969,7 +971,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
     {'r', 'c', 'q', 'v', 'g', opt_targets, opt_stop_on_copy, opt_incremental,
      opt_xml, 'l', opt_with_all_revprops, opt_with_no_revprops,
      opt_with_revprop, opt_depth, opt_diff, opt_diff_cmd,
-     opt_internal_diff, 'x', opt_search, opt_search_and },
+     opt_internal_diff, 'x', opt_search, opt_search_and, opt_no_color },
     {{opt_with_revprop, N_("retrieve revision property ARG")},
      {'c', N_("the change made in revision ARG")},
      {'v', N_("also print all affected paths")},
@@ -2592,6 +2594,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
       case opt_patch_compatible:
         opt_state.diff.patch_compatible = TRUE;
         break;
+      case opt_no_color:
+	opt_state.diff.no_color = TRUE;
+	break;
       case opt_use_git_diff_format:
         opt_state.diff.use_git_diff_format = TRUE;
         break;
@@ -3247,8 +3252,12 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
     ctx->conflict_baton2 = NULL;
   }
 
-  stdout_is_tty = isatty(STDOUT_FILENO);
-  if (stdout_is_tty && (subcommand->cmd_func == svn_cl__blame ||
+  if (isatty(STDOUT_FILENO)) {
+    if ((subcommand->cmd_func == svn_cl__diff || subcommand->cmd_func ==
+          svn_cl__log) && opt_state.diff.no_color == FALSE)
+			dont_use_color = FALSE;
+  }
+  if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
 		  subcommand->cmd_func == svn_cl__cat ||
 		  subcommand->cmd_func == svn_cl__diff ||
 		  subcommand->cmd_func == svn_cl__log ||

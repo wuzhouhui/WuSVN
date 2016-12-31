@@ -44,7 +44,7 @@
 
 #include "svn_private_config.h"
 
-int stdout_is_tty;
+svn_boolean_t dont_use_color = TRUE;
 
 svn_boolean_t
 svn_diff_contains_conflicts(svn_diff_t *diff)
@@ -377,7 +377,7 @@ svn_diff__unified_write_hunk_header(svn_stream_t *output_stream,
                                     const char *hunk_extra_context,
                                     apr_pool_t *scratch_pool)
 {
-  if (stdout_is_tty)
+  if (!dont_use_color)
     SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
 					scratch_pool,
 					SVN_COLOR_YELLOW "%s -%" APR_OFF_T_FMT,
@@ -424,7 +424,7 @@ svn_diff__unidiff_write_header(svn_stream_t *output_stream,
                                const char *new_header,
                                apr_pool_t *scratch_pool)
 {
-  if (stdout_is_tty)
+  if (!dont_use_color)
     SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
                                         scratch_pool,
                                         SVN_COLOR_BLUE "--- %s" APR_EOL_STR
