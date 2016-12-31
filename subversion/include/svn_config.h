@@ -211,7 +211,9 @@ typedef struct svn_config_t svn_config_t;
   "*.rej *~ #*# .#* .*.swp .DS_Store [Tt]humbs.db"
 #endif
 
-#define SVN_CONFIG_DEFAULT_GLOBAL_IGNORES ""
+#define SVN_CONFIG_DEFAULT_GLOBAL_IGNORES \
+  SVN_CONFIG__DEFAULT_GLOBAL_IGNORES_LINE_1 " " \
+  SVN_CONFIG__DEFAULT_GLOBAL_IGNORES_LINE_2
 
 #define SVN_CONFIG_TRUE  "TRUE"
 #define SVN_CONFIG_FALSE "FALSE"
