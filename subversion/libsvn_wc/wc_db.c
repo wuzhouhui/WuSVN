@@ -10938,7 +10938,7 @@ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
                                               wcroot, local_relpath, propname,
                                               result_pool, scratch_pool),
                       wcroot);
-  if (strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
+  if (propname && strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
     return SVN_NO_ERROR;
   else
     read_svn_ignore(wcroot->sdb, (char **)&db->private, result_pool,
