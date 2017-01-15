@@ -408,7 +408,16 @@ svn_diff__unified_write_hunk_header(svn_stream_t *output_stream,
 
   if (hunk_extra_context == NULL)
       hunk_extra_context = "";
-  SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+  if (!dont_use_color)
+    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+                                      scratch_pool,
+                                      " %s%s%s%s" APR_EOL_STR,
+                                      hunk_delimiter,
+                                      SVN_COLOR_RESET,
+                                      hunk_extra_context[0] ? " " : "",
+                                      hunk_extra_context));
+  else
+    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
                                       scratch_pool,
                                       " %s%s%s" APR_EOL_STR,
                                       hunk_delimiter,
