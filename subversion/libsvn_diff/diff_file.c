@@ -1249,6 +1249,7 @@ svn_diff_file_options_parse(svn_diff_file_options_t *options,
 
   opt_parsing_error_baton.err = NULL;
   opt_parsing_error_baton.pool = pool;
+  options->show_c_function = TRUE;
 
   argv[0] = "";
   memcpy(argv + 1, args->elts, sizeof(char*) * args->nelts);
