@@ -1,0 +1,23 @@
+From 88a4d4dd85e60b060d3af9ed2d0d068d692018e6 Mon Sep 17 00:00:00 2001
+From: Serious Man <wuzhouhui250@gmail.com>
+Date: Sun, 1 Jan 2017 22:24:52 +0800
+Subject: [PATCH] Fix a segmentation fault: check parameter whether is null
+ before calling strcmp().
+
+---
+ subversion/libsvn_wc/wc_db.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+Index: subversion-1.8.16/subversion/libsvn_wc/wc_db.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_wc/wc_db.c
++++ subversion-1.8.16/subversion/libsvn_wc/wc_db.c
+@@ -10404,7 +10404,7 @@ svn_wc__db_read_inherited_props(apr_arra
+                                               wcroot, local_relpath, propname,
+                                               result_pool, scratch_pool),
+                       wcroot);
+-  if (strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
++  if (propname && strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
+     return SVN_NO_ERROR;
+   else
+     read_svn_ignore(wcroot->sdb, (char **)&db->private, result_pool,

@@ -1,0 +1,265 @@
+From 545f804330059ece889c257c5c3143d9961fcfb7 Mon Sep 17 00:00:00 2001
+From: Serious Man <wuzhouhui250@gmail.com>
+Date: Sat, 31 Dec 2016 09:59:57 +0800
+Subject: [PATCH] Add an option '--no-color' to log and diff, for disabling
+ syntax highlight
+
+---
+ subversion/include/private/svn_color.h       |  2 ++
+ subversion/libsvn_client/diff.c              | 12 +++++-------
+ subversion/libsvn_diff/diff_file.c           |  4 +---
+ subversion/libsvn_diff/diff_memory.c         |  4 +---
+ subversion/libsvn_diff/util.c                |  6 +++---
+ subversion/libsvn_subr/internal_statements.h |  2 +-
+ subversion/svn/cl.h                          |  1 +
+ subversion/svn/log-cmd.c                     |  4 +---
+ subversion/svn/svn.c                         | 21 +++++++++++++++------
+ 9 files changed, 30 insertions(+), 26 deletions(-)
+
+diff -uprN subversion-1.8.16.orig/subversion/include/private/svn_color.h subversion-1.8.16/subversion/include/private/svn_color.h
+--- subversion-1.8.16.orig/subversion/include/private/svn_color.h	2016-12-29 21:26:10.650924780 +0800
++++ subversion-1.8.16/subversion/include/private/svn_color.h	2017-01-16 13:28:47.159999660 +0800
+@@ -9,4 +9,6 @@
+ #define SVN_COLOR_MAGENTA      "\033[35m"
+ #define SVN_COLOR_CYAN         "\033[36m"
+ 
++extern svn_boolean_t dont_use_color;
++
+ #endif /* SVN_COLOR_H */
+diff -uprN subversion-1.8.16.orig/subversion/libsvn_client/diff.c subversion-1.8.16/subversion/libsvn_client/diff.c
+--- subversion-1.8.16.orig/subversion/libsvn_client/diff.c	2016-12-29 21:26:10.644924780 +0800
++++ subversion-1.8.16/subversion/libsvn_client/diff.c	2017-01-16 13:35:02.609999216 +0800
+@@ -56,8 +56,6 @@
+ 
+ #include "svn_private_config.h"
+ 
+-extern int stdout_is_tty;
+-
+ 
+ /* Utilities */
+ 
+@@ -492,7 +490,7 @@ display_prop_diffs(const apr_array_heade
+       /* ### Should we show the paths in platform specific format,
+        * ### diff_content_changed() does not! */
+ 
+-      if (stdout_is_tty)
++      if (!dont_use_color)
+         SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
+ 			      SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
+ 			      SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+@@ -756,7 +754,7 @@ diff_content_changed(svn_boolean_t *wrot
+   if (! diff_cmd_baton->force_binary && (mt1_binary || mt2_binary))
+     {
+       /* Print out the diff header. */
+-      if (stdout_is_tty)
++      if (!dont_use_color)
+ 	SVN_ERR(svn_stream_printf_from_utf8(outstream,
+ 		 diff_cmd_baton->header_encoding, scratch_pool,
+ 		 SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
+@@ -812,7 +810,7 @@ diff_content_changed(svn_boolean_t *wrot
+       svn_stream_t *stream;
+ 
+       /* Print out the diff header. */
+-      if (stdout_is_tty)
++      if (!dont_use_color)
+ 	SVN_ERR(svn_stream_printf_from_utf8(outstream,
+                  diff_cmd_baton->header_encoding, scratch_pool,
+ 		 SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
+@@ -1074,7 +1072,7 @@ diff_file_added(svn_wc_notify_state_t *c
+         index_path = svn_dirent_join(diff_cmd_baton->anchor, diff_relpath,
+                                      scratch_pool);
+ 
+-      if (stdout_is_tty)
++      if (!dont_use_color)
+         SVN_ERR(svn_stream_printf_from_utf8(diff_cmd_baton->outstream,
+                   diff_cmd_baton->header_encoding, scratch_pool,
+                   SVN_COLOR_BLUE "Index: %s%s (added)" APR_EOL_STR
+@@ -1138,7 +1136,7 @@ diff_file_deleted(svn_wc_notify_state_t 
+         index_path = svn_dirent_join(diff_cmd_baton->anchor, diff_relpath,
+                                      scratch_pool);
+ 
+-      if (stdout_is_tty)
++      if (!dont_use_color)
+         SVN_ERR(svn_stream_printf_from_utf8(diff_cmd_baton->outstream,
+                   diff_cmd_baton->header_encoding, scratch_pool,
+                   SVN_COLOR_BLUE "Index: %s%s (deleted)" APR_EOL_STR
+diff -uprN subversion-1.8.16.orig/subversion/libsvn_diff/diff_file.c subversion-1.8.16/subversion/libsvn_diff/diff_file.c
+--- subversion-1.8.16.orig/subversion/libsvn_diff/diff_file.c	2016-12-29 21:26:10.639924780 +0800
++++ subversion-1.8.16/subversion/libsvn_diff/diff_file.c	2017-01-16 13:28:47.172999655 +0800
+@@ -51,8 +51,6 @@
+ #include "private/svn_diff_private.h"
+ #include "private/svn_color.h"
+ 
+-extern int stdout_is_tty;
+-
+ /* A token, i.e. a line read from a file. */
+ typedef struct svn_diff__file_token_t
+ {
+@@ -1855,7 +1853,7 @@ svn_diff_file_output_unified3(svn_stream
+ 
+       SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.context_str, " ",
+                                             header_encoding, pool));
+-      if (stdout_is_tty) {
++      if (!dont_use_color) {
+         SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
+                           SVN_COLOR_RED "-", header_encoding, pool));
+         SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
+diff -uprN subversion-1.8.16.orig/subversion/libsvn_diff/diff_memory.c subversion-1.8.16/subversion/libsvn_diff/diff_memory.c
+--- subversion-1.8.16.orig/subversion/libsvn_diff/diff_memory.c	2016-12-29 21:26:10.640924780 +0800
++++ subversion-1.8.16/subversion/libsvn_diff/diff_memory.c	2017-01-16 13:33:40.197999406 +0800
+@@ -40,8 +40,6 @@
+ #include "private/svn_diff_private.h"
+ #include "private/svn_color.h"
+ 
+-extern int stdout_is_tty;
+-
+ typedef struct source_tokens_t
+ {
+   /* A token simply is an svn_string_t pointing to
+@@ -641,7 +639,7 @@ svn_diff_mem_string_output_unified2(svn_
+       SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_context]), " ",
+                header_encoding, pool));
+-      if (stdout_is_tty) {
++      if (!dont_use_color) {
+         SVN_ERR(svn_utf_cstring_from_utf8_ex2
+               (&(baton.prefix_str[unified_output_delete]), SVN_COLOR_RED "-",
+                header_encoding, pool));
+diff -uprN subversion-1.8.16.orig/subversion/libsvn_diff/util.c subversion-1.8.16/subversion/libsvn_diff/util.c
+--- subversion-1.8.16.orig/subversion/libsvn_diff/util.c	2016-12-29 21:26:10.648924780 +0800
++++ subversion-1.8.16/subversion/libsvn_diff/util.c	2017-01-16 13:28:47.174999655 +0800
+@@ -44,7 +44,7 @@
+ 
+ #include "svn_private_config.h"
+ 
+-int stdout_is_tty;
++svn_boolean_t dont_use_color = TRUE;
+ 
+ svn_boolean_t
+ svn_diff_contains_conflicts(svn_diff_t *diff)
+@@ -372,7 +372,7 @@ svn_diff__unified_write_hunk_header(svn_
+                                     const char *hunk_extra_context,
+                                     apr_pool_t *scratch_pool)
+ {
+-  if (stdout_is_tty)
++  if (!dont_use_color)
+     SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+ 					scratch_pool,
+ 					SVN_COLOR_YELLOW "%s -%" APR_OFF_T_FMT,
+@@ -419,7 +419,7 @@ svn_diff__unidiff_write_header(svn_strea
+                                const char *new_header,
+                                apr_pool_t *scratch_pool)
+ {
+-  if (stdout_is_tty)
++  if (!dont_use_color)
+     SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+                                         scratch_pool,
+                                         SVN_COLOR_BLUE "--- %s" APR_EOL_STR
+diff -uprN subversion-1.8.16.orig/subversion/svn/cl.h subversion-1.8.16/subversion/svn/cl.h
+--- subversion-1.8.16.orig/subversion/svn/cl.h	2013-07-27 12:00:17.000000000 +0800
++++ subversion-1.8.16/subversion/svn/cl.h	2017-01-16 13:28:47.176999655 +0800
+@@ -191,6 +191,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t ignore_properties;   /* ignore properties */
+   svn_boolean_t properties_only;     /* Show properties only */
+   svn_boolean_t patch_compatible;    /* Output compatible with GNU patch */
++  svn_boolean_t no_color;            /* Disable syntax highlight */
+     } diff;
+   svn_boolean_t ignore_ancestry; /* ignore ancestry for merge-y operations */
+   svn_boolean_t ignore_externals;/* ignore externals definitions */
+diff -uprN subversion-1.8.16.orig/subversion/svn/log-cmd.c subversion-1.8.16/subversion/svn/log-cmd.c
+--- subversion-1.8.16.orig/subversion/svn/log-cmd.c	2016-12-29 21:26:10.651924780 +0800
++++ subversion-1.8.16/subversion/svn/log-cmd.c	2017-01-16 13:28:47.177999655 +0800
+@@ -39,8 +39,6 @@
+ #include "private/svn_cmdline_private.h"
+ #include "private/svn_color.h"
+ 
+-extern int stdout_is_tty;
+-
+ #include "cl.h"
+ 
+ #include "svn_private_config.h"
+@@ -375,7 +373,7 @@ log_entry_receiver(void *baton,
+       return SVN_NO_ERROR;
+     }
+ 
+-  if (stdout_is_tty)
++  if (!dont_use_color)
+     SVN_ERR(svn_cmdline_printf(pool,
+                                SVN_COLOR_MAGENTA SEP_STRING
+                                SVN_COLOR_MAGENTA "r%ld | %s | %s",
+diff -uprN subversion-1.8.16.orig/subversion/svn/svn.c subversion-1.8.16/subversion/svn/svn.c
+--- subversion-1.8.16.orig/subversion/svn/svn.c	2016-12-29 21:26:10.512924781 +0800
++++ subversion-1.8.16/subversion/svn/svn.c	2017-01-16 13:36:30.182999174 +0800
+@@ -58,11 +58,10 @@
+ #include "private/svn_opt_private.h"
+ #include "private/svn_cmdline_private.h"
+ #include "private/svn_subr_private.h"
++#include "private/svn_color.h"
+ 
+ #include "svn_private_config.h"
+ 
+-extern int stdout_is_tty;
+-
+ 
+ /*** Option Processing ***/
+ 
+@@ -88,6 +87,7 @@ typedef enum svn_cl__longopt_t {
+   opt_ignore_properties,
+   opt_properties_only,
+   opt_patch_compatible,
++  opt_no_color,
+   /* end of diff options */
+   opt_dry_run,
+   opt_editor_cmd,
+@@ -364,6 +364,7 @@ const apr_getopt_option_t svn_cl__option
+                        "                             "
+                        "--show-copies-as-adds --ignore-properties"
+                        )},
++  {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
+   /* end of diff options */
+   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
+                        N_("Allow operation on mixed-revision working copy.\n"
+@@ -589,7 +590,8 @@ const svn_opt_subcommand_desc2_t svn_cl_
+      opt_internal_diff, 'x', opt_no_diff_added, opt_no_diff_deleted,
+      opt_ignore_properties, opt_properties_only,
+      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
+-     opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible} },
++     opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
++     opt_no_color,} },
+   { "export", svn_cl__export, {0}, N_
+     ("Create an unversioned copy of a tree.\n"
+      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
+@@ -754,7 +756,7 @@ const svn_opt_subcommand_desc2_t svn_cl_
+     {'r', 'q', 'v', 'g', 'c', opt_targets, opt_stop_on_copy, opt_incremental,
+      opt_xml, 'l', opt_with_all_revprops, opt_with_no_revprops, opt_with_revprop,
+      opt_depth, opt_diff, opt_diff_cmd, opt_internal_diff, 'x', opt_search,
+-     opt_search_and, },
++     opt_search_and, opt_no_color,},
+     {{opt_with_revprop, N_("retrieve revision property ARG")},
+      {'c', N_("the change made in revision ARG")}} },
+ 
+@@ -2271,6 +2273,9 @@ sub_main(int argc, const char *argv[], a
+       case opt_patch_compatible:
+         opt_state.diff.patch_compatible = TRUE;
+         break;
++      case opt_no_color:
++	opt_state.diff.no_color = TRUE;
++	break;
+       case opt_use_git_diff_format:
+         opt_state.diff.use_git_diff_format = TRUE;
+         break;
+@@ -2890,8 +2895,12 @@ sub_main(int argc, const char *argv[], a
+     ctx->conflict_baton2 = b;
+   }
+ 
+-  stdout_is_tty = isatty(STDOUT_FILENO);
+-  if (stdout_is_tty && (subcommand->cmd_func == svn_cl__blame ||
++  if (isatty(STDOUT_FILENO)) {
++    if ((subcommand->cmd_func == svn_cl__diff || subcommand->cmd_func ==
++          svn_cl__log) && opt_state.diff.no_color == FALSE)
++			dont_use_color = FALSE;
++  }
++  if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
+ 		  subcommand->cmd_func == svn_cl__cat ||
+ 		  subcommand->cmd_func == svn_cl__diff ||
+ 		  subcommand->cmd_func == svn_cl__log ||

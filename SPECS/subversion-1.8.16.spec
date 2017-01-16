@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.8.16.tar.gz
 %define svn_version 1.8.16
-%define svn_release 11
+%define svn_release 14
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
@@ -43,6 +43,9 @@ Patch8: 0001-Enable-syntax-highlight-only-if-stdout_is_tty-is-set.patch
 Patch9: 0001-Print-paths-with-color-in-diff-mode.patch
 Patch10: 0001-Pring-hunk-header-with-color-yellow.patch
 Patch11: 0001-Pring-log-header-with-color-magenta.patch
+Patch12: 0001-Add-an-option-no-color-to-log-and-diff-for-disabling.patch
+Patch13: 0001-Fix-a-segmentation-fault-check-parameter-whether-is-.patch
+Patch14: 0001-Reset-color-after-hunk-delimiter-printed.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -178,6 +181,9 @@ WANdisco extensions to subversion
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -362,6 +368,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Jan 16 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-14
+- add 0001-Add-an-option-no-color-to-log-and-diff-for-disabling.patch
+- add 0001-Fix-a-segmentation-fault-check-parameter-whether-is-.patch
+- add 0001-Reset-color-after-hunk-delimiter-printed.patch
+
 * Thu Dec 29 2016 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-11
 - add 0001-Enable-syntax-highlight-only-if-stdout_is_tty-is-set.patch
 - add 0001-Pring-hunk-header-with-color-yellow.patch
