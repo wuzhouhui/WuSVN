@@ -1,0 +1,38 @@
+Index: subversion-1.8.16/subversion/include/svn_diff.h
+===================================================================
+--- subversion-1.8.16.orig/subversion/include/svn_diff.h
++++ subversion-1.8.16/subversion/include/svn_diff.h
+@@ -456,7 +456,7 @@ typedef struct svn_diff_file_options_t
+   /** Whether the "@@" lines of the unified diff output should include a prefix
+     * of the nearest preceding line that starts with a character that might be
+     * the initial character of a C language identifier.  The default is
+-    * @c FALSE.
++    * @c TRUE.
+     */
+   svn_boolean_t show_c_function;
+ } svn_diff_file_options_t;
+Index: subversion-1.8.16/subversion/libsvn_diff/diff_file.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/libsvn_diff/diff_file.c
++++ subversion-1.8.16/subversion/libsvn_diff/diff_file.c
+@@ -1247,6 +1247,7 @@ svn_diff_file_options_parse(svn_diff_fil
+ 
+   opt_parsing_error_baton.err = NULL;
+   opt_parsing_error_baton.pool = pool;
++  options->show_c_function = TRUE;
+ 
+   argv[0] = "";
+   memcpy((void *) (argv + 1), args->elts, sizeof(char*) * args->nelts);
+Index: subversion-1.8.16/subversion/svn/svn.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/svn/svn.c
++++ subversion-1.8.16/subversion/svn/svn.c
+@@ -193,7 +193,7 @@ const apr_getopt_option_t svn_cl__option
+   {"extensions",    'x', 1,
+                     N_("Specify differencing options for external diff or\n"
+                        "                             "
+-                       "internal diff or blame. Default: '-u'. Options are\n"
++                       "internal diff or blame. Default: '-up'. Options are\n"
+                        "                             "
+                        "separated by spaces. Internal diff and blame take:\n"
+                        "                             "

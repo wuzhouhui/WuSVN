@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.8.16.tar.gz
 %define svn_version 1.8.16
-%define svn_release 14
+%define svn_release 15
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
@@ -46,6 +46,7 @@ Patch11: 0001-Pring-log-header-with-color-magenta.patch
 Patch12: 0001-Add-an-option-no-color-to-log-and-diff-for-disabling.patch
 Patch13: 0001-Fix-a-segmentation-fault-check-parameter-whether-is-.patch
 Patch14: 0001-Reset-color-after-hunk-delimiter-printed.patch
+Patch15: 0001-Enable-extension-option-p-in-default.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -184,6 +185,7 @@ WANdisco extensions to subversion
 %patch12 -p1
 %patch13 -p1
 %patch14 -p1
+%patch15 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -368,6 +370,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Jan 17 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-15
+- add 0001-Enable-extension-option-p-in-default.patch
+
 * Mon Jan 16 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-14
 - add 0001-Add-an-option-no-color-to-log-and-diff-for-disabling.patch
 - add 0001-Fix-a-segmentation-fault-check-parameter-whether-is-.patch
