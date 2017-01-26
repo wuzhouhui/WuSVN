@@ -1763,6 +1763,23 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
   { NULL, NULL, {0}, NULL, {0} }
 };
 
+static pid_t pager_pid;
+
+static void pager_exit(svn_boolean_t in_signal)
+{
+  if (!pager_pid)
+    return;
+  if (in_signal)
+    fflush(stdout);
+  close(STDOUT_FILENO);
+  waitpid(pager_pid, NULL, 0);
+  pager_pid = 0;
+}
+
+static void wait_for_pager_atexit(void)
+{
+  pager_exit(FALSE);
+}
 
 /* Version compatibility check */
 static svn_error_t *
@@ -1793,6 +1810,9 @@ signal_handler(int signum)
 {
   apr_signal(signum, SIG_IGN);
   cancelled = TRUE;
+  if (signum == SIGTERM || signum == SIGINT || signum == SIGHUP
+      || signum == SIGQUIT || signum == SIGPIPE)
+    pager_exit(TRUE);
 }
 
 /* Our cancellation callback. */
@@ -1855,8 +1875,7 @@ add_search_pattern_to_latest_group(svn_cl__opt_state_t *opt_state,
  * return SVN_NO_ERROR.
  */
 static svn_error_t *
-sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
-		pid_t *pid)
+sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 {
   svn_error_t *err;
   int opt_id;
@@ -3039,6 +3058,11 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
     ctx->conflict_baton2 = b;
   }
 
+  if (atexit(wait_for_pager_atexit)) {
+    fprintf(stderr, "atexit failed\n");
+    exit(EXIT_FAILURE);
+  }
+
   if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
 		  subcommand->cmd_func == svn_cl__cat ||
 		  subcommand->cmd_func == svn_cl__diff ||
@@ -3052,10 +3076,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
       fprintf(stderr, "pipe failed\n");
       exit(EXIT_FAILURE);
     }
-    if ((*pid = fork()) < 0) {
+    if ((pager_pid = fork()) < 0) {
       fprintf(stderr, "fork failed\n");
       exit(EXIT_FAILURE);
-    } else if (*pid == 0) { /* child */
+    } else if (pager_pid == 0) { /* child */
       close(fd[1]);
       if (fd[0] != STDIN_FILENO) {
         if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
@@ -3157,7 +3181,6 @@ main(int argc, const char *argv[])
 {
   apr_pool_t *pool;
   int exit_code = EXIT_SUCCESS;
-  pid_t pid = 0;
   svn_error_t *err;
 
   /* Initialize the app. */
@@ -3169,7 +3192,7 @@ main(int argc, const char *argv[])
    */
   pool = apr_allocator_owner_get(svn_pool_create_allocator(FALSE));
 
-  err = sub_main(&exit_code, argc, argv, pool, &pid);
+  err = sub_main(&exit_code, argc, argv, pool);
 
   /* Flush stdout and report if it fails. It would be flushed on exit anyway
      but this makes sure that output is not silently lost if it fails. */
@@ -3181,10 +3204,6 @@ main(int argc, const char *argv[])
       svn_cmdline_handle_exit_error(err, NULL, "svn: ");
     }
 
-  if (pid) {
-    close(STDOUT_FILENO);
-    waitpid(pid, NULL, 0);
-  }
   svn_pool_destroy(pool);
   return exit_code;
 }
