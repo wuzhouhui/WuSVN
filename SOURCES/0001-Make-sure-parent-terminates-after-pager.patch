@@ -1,0 +1,105 @@
+From edf7367add6e26236f05f479b68d0aa438e6962a Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Thu, 26 Jan 2017 14:13:28 +0800
+Subject: [PATCH] Make sure parent terminates after pager
+
+If parent terminates before pager, the pager will exits innormally and
+make terminal stay in an innormal mode.
+---
+ subversion/svn/svn.c | 39 +++++++++++++++++++++++++++++----------
+ 1 file changed, 29 insertions(+), 10 deletions(-)
+
+Index: subversion-1.8.16/subversion/svn/svn.c
+===================================================================
+--- subversion-1.8.16.orig/subversion/svn/svn.c
++++ subversion-1.8.16/subversion/svn/svn.c
+@@ -1636,6 +1636,23 @@ const svn_opt_subcommand_desc2_t svn_cl_
+   { NULL, NULL, {0}, NULL, {0} }
+ };
+ 
++static pid_t pager_pid;
++
++static void pager_exit(svn_boolean_t in_signal)
++{
++  if (!pager_pid)
++    return;
++  if (in_signal)
++    fflush(stdout);
++  close(STDOUT_FILENO);
++  waitpid(pager_pid, NULL, 0);
++  pager_pid = 0;
++}
++
++static void wait_for_pager_atexit(void)
++{
++  pager_exit(FALSE);
++}
+ 
+ /* Version compatibility check */
+ static svn_error_t *
+@@ -1666,6 +1683,9 @@ signal_handler(int signum)
+ {
+   apr_signal(signum, SIG_IGN);
+   cancelled = TRUE;
++  if (signum == SIGTERM || signum == SIGINT || signum == SIGHUP
++      || signum == SIGQUIT || signum == SIGPIPE)
++    pager_exit(TRUE);
+ }
+ 
+ /* Our cancellation callback. */
+@@ -1736,7 +1756,7 @@ add_search_pattern_to_latest_group(svn_c
+   } while (0)
+ 
+ static int
+-sub_main(int argc, const char *argv[], apr_pool_t *pool, pid_t *pid)
++sub_main(int argc, const char *argv[], apr_pool_t *pool)
+ {
+   svn_error_t *err;
+   int opt_id;
+@@ -2895,6 +2915,11 @@ sub_main(int argc, const char *argv[], a
+     ctx->conflict_baton2 = b;
+   }
+ 
++  if (atexit(wait_for_pager_atexit)) {
++    fprintf(stderr, "atexit failed\n");
++    exit(EXIT_FAILURE);
++  }
++
+   if (isatty(STDOUT_FILENO)) {
+     if ((subcommand->cmd_func == svn_cl__diff || subcommand->cmd_func ==
+           svn_cl__log) && opt_state.diff.no_color == FALSE)
+@@ -2913,10 +2938,10 @@ sub_main(int argc, const char *argv[], a
+       fprintf(stderr, "pipe failed\n");
+       exit(EXIT_FAILURE);
+     }
+-    if ((*pid = fork()) < 0) {
++    if ((pager_pid = fork()) < 0) {
+       fprintf(stderr, "fork failed\n");
+       exit(EXIT_FAILURE);
+-    } else if (*pid == 0) { /* child */
++    } else if (pager_pid == 0) { /* child */
+       close(fd[1]);
+       if (fd[0] != STDIN_FILENO) {
+         if (dup2(fd[0], STDIN_FILENO) != STDIN_FILENO) {
+@@ -3030,7 +3055,6 @@ main(int argc, const char *argv[])
+ {
+   apr_pool_t *pool;
+   int exit_code;
+-  pid_t pid = 0;
+ 
+   /* Initialize the app. */
+   if (svn_cmdline_init("svn", stderr) != EXIT_SUCCESS)
+@@ -3041,12 +3065,8 @@ main(int argc, const char *argv[])
+    */
+   pool = apr_allocator_owner_get(svn_pool_create_allocator(FALSE));
+ 
+-  exit_code = sub_main(argc, argv, pool, &pid);
++  exit_code = sub_main(argc, argv, pool);
+ 
+-  if (pid) {
+-    close(STDOUT_FILENO);
+-    waitpid(pid, NULL, 0);
+-  }
+   svn_pool_destroy(pool);
+   return exit_code;
+ }
