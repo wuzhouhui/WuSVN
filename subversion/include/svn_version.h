@@ -357,6 +357,18 @@ svn_version_ext_build_host(const svn_version_extended_t *ext_info);
 /**
  * Accessor for svn_version_extended_t.
  *
+ * @return The name of person who modifies subversion's source code.
+ *
+ * @note Maybe empty.
+ *
+ * @since New in 1.9.
+ */
+const char *
+svn_version_ext_build_hacker(const svn_version_extended_t *ext_info);
+
+/**
+ * Accessor for svn_version_extended_t.
+ *
  * @return The localized copyright notice.
  *
  * @since New in 1.8.

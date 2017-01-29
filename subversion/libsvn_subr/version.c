@@ -115,6 +115,7 @@ struct svn_version_extended_t
   const char *copyright;        /* Copyright notice (localized) */
   const char *runtime_host;     /* Runtime canonical host name */
   const char *runtime_osname;   /* Running OS release name */
+  const char *hacker;           /* Name of hacker, if any */
 
   /* Array of svn_version_ext_linked_lib_t describing dependent
      libraries. */
@@ -135,6 +136,7 @@ svn_version_extended(svn_boolean_t verbose,
   info->build_date = __DATE__;
   info->build_time = __TIME__;
   info->build_host = SVN_BUILD_HOST;
+  info->hacker = "wuzhouhui250@gmail.com";
   info->copyright = apr_pstrdup
     (pool, _("Copyright (C) 2016 The Apache Software Foundation.\n"
              "This software consists of contributions made by many people;\n"
@@ -170,6 +172,12 @@ const char *
 svn_version_ext_build_host(const svn_version_extended_t *ext_info)
 {
   return ext_info->build_host;
+}
+
+const char *
+svn_version_ext_build_hacker(const svn_version_extended_t *ext_info)
+{
+  return ext_info->hacker;
 }
 
 const char *
