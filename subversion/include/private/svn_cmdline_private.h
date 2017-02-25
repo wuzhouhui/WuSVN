@@ -201,6 +201,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents,
                                     apr_hash_t *config,
                                     svn_boolean_t as_text,
                                     const char *encoding,
+                                    svn_boolean_t verbose,
                                     apr_pool_t *pool);
 
 
