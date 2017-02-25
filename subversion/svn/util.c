@@ -195,6 +195,7 @@ struct log_msg_baton
   apr_hash_t *config; /* client configuration hash */
   svn_boolean_t keep_locks; /* Keep repository locks? */
   apr_pool_t *pool; /* a pool. */
+  svn_boolean_t verbose; /* show diff of this commit */
 };
 
 
@@ -206,6 +207,8 @@ svn_cl__make_log_msg_baton(void **baton,
                            apr_pool_t *pool)
 {
   struct log_msg_baton *lmb = apr_pcalloc(pool, sizeof(*lmb));
+
+  lmb->verbose = opt_state->verbose;
 
   if (opt_state->filedata)
     {
@@ -441,6 +444,7 @@ svn_cl__get_log_message(const char **log_msg,
                                                     msg_string, "svn-commit",
                                                     lmb->config, TRUE,
                                                     lmb->message_encoding,
+                                                    lmb->verbose,
                                                     pool);
         }
       else /* non_interactive flag says we can't pop up an editor, so error */

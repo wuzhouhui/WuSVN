@@ -1344,6 +1344,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
                                     apr_hash_t *config,
                                     svn_boolean_t as_text,
                                     const char *encoding,
+                                    svn_boolean_t verbose,
                                     apr_pool_t *pool)
 {
   const char *editor;
@@ -1448,6 +1449,13 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
   /* Make sure the whole CONTENTS were written, else return an error. */
   if (err)
     goto cleanup;
+
+  if (verbose) {
+    char *buf = apr_pcalloc(pool, (strlen("svn di >> ") + strlen(tmpfile_name)
+          + 2) * sizeof(*buf));
+    sprintf(buf, "svn di >> %s", tmpfile_name);
+    system(buf);
+  }
 
   /* Get information about the temporary file before the user has
      been allowed to edit its contents. */
