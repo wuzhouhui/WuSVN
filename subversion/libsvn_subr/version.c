@@ -146,6 +146,7 @@ svn_version_extended(svn_boolean_t verbose,
   info->hacker = "wuzhouhui250@gmail.com";
   info->copyright = apr_pstrdup
     (pool, _("Copyright (C) 2017 The Apache Software Foundation.\n"
+             "Copyright (C) 2016, 2017 Zhouhui Wu <wuzhouhui250@gmail.com>.\n"
              "This software consists of contributions made by many people;\n"
              "see the NOTICE file for more information.\n"
              "Subversion is open source software, see "

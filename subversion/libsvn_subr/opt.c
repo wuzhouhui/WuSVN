@@ -1118,22 +1118,12 @@ svn_opt__print_version_info(const char *pgm_name,
   if (quiet)
     return svn_cmdline_printf(pool, "%s\n", SVN_VER_NUMBER);
 
-  if (svn_version_ext_build_hacker(info))
-    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
-                                       "   compiled %s, %s on %s\n"
-                                       "   modified by %s\n\n"),
-                               pgm_name, SVN_VERSION,
-                               svn_version_ext_build_date(info),
-                               svn_version_ext_build_time(info),
-                               svn_version_ext_build_host(info),
-                               svn_version_ext_build_hacker(info)));
-  else
-    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
-                                       "   compiled %s, %s on %s\n\n"),
-                               pgm_name, SVN_VERSION,
-                               svn_version_ext_build_date(info),
-                               svn_version_ext_build_time(info),
-                               svn_version_ext_build_host(info)));
+  SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
+                                     "   compiled %s, %s on %s\n\n"),
+                             pgm_name, SVN_VERSION,
+                             svn_version_ext_build_date(info),
+                             svn_version_ext_build_time(info),
+                             svn_version_ext_build_host(info)));
   SVN_ERR(svn_cmdline_printf(pool, "%s\n", svn_version_ext_copyright(info)));
 
   if (footer)
