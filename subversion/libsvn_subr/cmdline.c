@@ -1320,6 +1320,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
                                     apr_hash_t *config,
                                     svn_boolean_t as_text,
                                     const char *encoding,
+                                    svn_boolean_t verbose,
                                     apr_pool_t *pool)
 {
   const char *editor;
@@ -1429,6 +1430,13 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
                                tmpfile_name);
       goto cleanup;
     }
+
+  if (verbose) {
+    char *buf = apr_pcalloc(pool, (strlen("svn di >> ") + strlen(tmpfile_name)
+          + 2) * sizeof(*buf));
+    sprintf(buf, "svn di >> %s", tmpfile_name);
+    system(buf);
+  }
 
   err = svn_path_cstring_from_utf8(&tmpfile_apr, tmpfile_name, pool);
   if (err)

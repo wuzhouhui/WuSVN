@@ -612,7 +612,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
        "  externals reached by recursion. Do not commit externals with a\n"
        "  fixed revision.\n"),
     {'q', 'N', opt_depth, opt_targets, opt_no_unlock, SVN_CL__LOG_MSG_OPTIONS,
-     opt_changelist, opt_keep_changelists, opt_include_externals} },
+     opt_changelist, opt_keep_changelists, 'v', opt_include_externals} },
 
   { "copy", svn_cl__copy, {"cp"}, N_
     ("Copy files and directories in a working copy or repository.\n"
