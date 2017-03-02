@@ -1,0 +1,58 @@
+From 3d1a6314cb919ff636783e9f0b0f6987bcf64a57 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 25 Feb 2017 12:54:56 +0800
+Subject: [PATCH] Add my copyright in svn --version
+
+---
+ subversion/libsvn_subr/opt.c     | 22 ++++++----------------
+ subversion/libsvn_subr/version.c |  1 +
+ 2 files changed, 7 insertions(+), 16 deletions(-)
+
+diff --git a/subversion/libsvn_subr/opt.c b/subversion/libsvn_subr/opt.c
+index 54253f7..7b108e5 100644
+--- a/subversion/libsvn_subr/opt.c
++++ b/subversion/libsvn_subr/opt.c
+@@ -1109,22 +1109,12 @@ svn_opt__print_version_info(const char *pgm_name,
+   if (quiet)
+     return svn_cmdline_printf(pool, "%s\n", SVN_VER_NUMBER);
+ 
+-  if (svn_version_ext_build_hacker(info))
+-    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
+-                                       "   compiled %s, %s on %s\n"
+-                                       "   modified by %s\n\n"),
+-                               pgm_name, SVN_VERSION,
+-                               svn_version_ext_build_date(info),
+-                               svn_version_ext_build_time(info),
+-                               svn_version_ext_build_host(info),
+-                               svn_version_ext_build_hacker(info)));
+-  else
+-    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
+-                                       "   compiled %s, %s on %s\n\n"),
+-                               pgm_name, SVN_VERSION,
+-                               svn_version_ext_build_date(info),
+-                               svn_version_ext_build_time(info),
+-                               svn_version_ext_build_host(info)));
++  SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
++                                     "   compiled %s, %s on %s\n\n"),
++                             pgm_name, SVN_VERSION,
++                             svn_version_ext_build_date(info),
++                             svn_version_ext_build_time(info),
++                             svn_version_ext_build_host(info)));
+   SVN_ERR(svn_cmdline_printf(pool, "%s\n", svn_version_ext_copyright(info)));
+ 
+   if (footer)
+diff --git a/subversion/libsvn_subr/version.c b/subversion/libsvn_subr/version.c
+index 5b2ec86..92f1ce4 100644
+--- a/subversion/libsvn_subr/version.c
++++ b/subversion/libsvn_subr/version.c
+@@ -139,6 +139,7 @@ svn_version_extended(svn_boolean_t verbose,
+   info->hacker = "wuzhouhui250@gmail.com";
+   info->copyright = apr_pstrdup
+     (pool, _("Copyright (C) 2016 The Apache Software Foundation.\n"
++             "Copyright (C) 2016, 2017 Zhouhui Wu <wuzhouhui250@gmail.com>.\n"
+              "This software consists of contributions made by many people;\n"
+              "see the NOTICE file for more information.\n"
+              "Subversion is open source software, see "
+-- 
+2.10.1
+

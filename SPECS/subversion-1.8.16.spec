@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.8.16.tar.gz
 %define svn_version 1.8.16
-%define svn_release 17
+%define svn_release 18
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
@@ -50,6 +50,7 @@ Patch14: 0001-Reset-color-after-hunk-delimiter-printed.patch
 Patch15: 0001-Enable-extension-option-p-in-default.patch
 Patch16: 0001-Make-sure-parent-terminates-after-pager.patch
 Patch17: 0001-Add-email-address-of-hacker.patch
+Patch18: 0001-Add-my-copyright-in-svn-version.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -191,6 +192,7 @@ WANdisco extensions to subversion
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -375,6 +377,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Mar 2 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-18
+- add 0001-Add-my-copyright-in-svn-version.patch
+
 * Sun Jan 29 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-17
 - add 0001-Make-sure-parent-terminates-after-pager.patch
 - add 0001-Add-email-address-of-hacker.patch
