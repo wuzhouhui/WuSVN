@@ -150,11 +150,11 @@ Requires: python >= 2
 Provides Python (SWIG) support for Subversion.
 %endif
 
-#%package javahl
-#Group: Utilities/System
-#Summary: Allows java scripts to directly use Subversion repositories.
-#%description javahl
-#Provides Java (jni/c++) oracle jdk6 support for Subversion.
+%package javahl
+Group: Utilities/System
+Summary: Allows java scripts to directly use Subversion repositories.
+%description javahl
+Provides Java (jni/c++) oracle jdk6 support for Subversion.
 
 %if !%{without swig}
 %package tools
@@ -219,6 +219,8 @@ export svn_cv_ruby_sitedir_archsuffix=""
 	--with-apr-util=%{apache_dir}/bin/apu-1-config \
 	--with-apache-libexecdir=yes \
 	--with-gnome-keyring \
+	--enable-javahl \
+	--with-jdk=${JAVA_HOME} \
 	--without-jikes \
 	--with-sqlite=sqlite-amalgamation/sqlite3.c \
 	--with-ruby-sitedir=%{ruby_sitearch} \
@@ -228,7 +230,7 @@ export svn_cv_ruby_sitedir_archsuffix=""
 make clean
 
 # build javahl - needs to be done before the plain make for fsfswd to succeed
-#make javahl %{?_with_fsfswd:javahl-java-fsfswd}
+make -j %{cpunum} javahl %{?_with_fsfswd:javahl-java-fsfswd}
 
 make -j %{cpunum}
 
@@ -253,7 +255,7 @@ ln -s %{_bindir}/svnmucc $RPM_BUILD_ROOT/%{_bindir}/svn-tools/svnmucc
 %endif
 
 # install javahl
-#make install-javahl %{?_with_fsfswd: install-javahl-java-fsfswd} DESTDIR="$RPM_BUILD_ROOT"
+make install-javahl %{?_with_fsfswd: install-javahl-java-fsfswd} DESTDIR="$RPM_BUILD_ROOT"
 
 
 # Add subversion.conf configuration file into httpd/conf.d directory.
@@ -369,6 +371,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libsvn_swig_py*so*
 %endif
 
+%files javahl
+%defattr(-,root,root)
+%{_libdir}/libsvnjavahl*.so*
+%{_libdir}/svn-javahl/svn-javahl.jar
+
+%if %{with fsfswd}
+%files fsfswd
+%defattr(-,root,root)
+%{_bindir}/resequence
+%{_libdir}/svn-javahl/svn-javahl-fsfswd.jar
+%{_libdir}/*fsfswd*.so*
+%endif
+
 %if !%{without tools}
 %files tools
 %defattr(-,root,root)
@@ -377,6 +392,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Mar 31 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-18
+- build javahl package
+
 * Thu Mar 2 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.8.16-18
 - add 0001-Add-my-copyright-in-svn-version.patch
 
