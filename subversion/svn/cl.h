@@ -279,6 +279,7 @@ svn_opt_subcommand_t
   svn_cl__cat,
   svn_cl__changelist,
   svn_cl__checkout,
+  svn_cl__clean,
   svn_cl__cleanup,
   svn_cl__commit,
   svn_cl__copy,
@@ -482,6 +483,21 @@ svn_cl__print_status(const char *target_abspath,
                      svn_client_ctx_t *ctx,
                      apr_pool_t *pool);
 
+svn_error_t *
+svn_cl__remove_unversioned(const char *target_abspath,
+                     const char *target_path,
+                     const char *path,
+                     const svn_client_status_t *status,
+                     svn_boolean_t suppress_externals_placeholders,
+                     svn_boolean_t detailed,
+                     svn_boolean_t show_last_committed,
+                     svn_boolean_t skip_unrecognized,
+                     svn_boolean_t repos_locks,
+                     unsigned int *text_conflicts,
+                     unsigned int *prop_conflicts,
+                     unsigned int *tree_conflicts,
+                     svn_client_ctx_t *ctx,
+                     apr_pool_t *pool);
 
 /* Print STATUS for PATH in XML to stdout.  Use POOL for temporary
    allocations.
