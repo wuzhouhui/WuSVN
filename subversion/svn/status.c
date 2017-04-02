@@ -642,7 +642,8 @@ remove_unversioned(const char *target_abspath,
              svn_client_ctx_t *ctx,
              apr_pool_t *pool)
 {
-  if (combined_status(status) != svn_wc_status_unversioned)
+  if (combined_status(status) != svn_wc_status_unversioned
+                  && combined_status(status) != svn_wc_status_ignored)
     return SVN_NO_ERROR;
 
   apr_status_t  apr_err;
