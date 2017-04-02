@@ -630,6 +630,7 @@ static svn_error_t *
 remove_unversioned(const char *target_abspath,
              const char *target_path,
              const char *path,
+             svn_boolean_t quiet,
              svn_boolean_t detailed,
              svn_boolean_t show_last_committed,
              svn_boolean_t repos_locks,
@@ -657,14 +658,22 @@ remove_unversioned(const char *target_abspath,
     {
       apr_err = apr_file_remove(path, pool);
       if (!apr_err)
-        return SVN_NO_ERROR;
+        {
+          if (quiet)
+            return SVN_NO_ERROR;
+          SVN_ERR(svn_cmdline_printf(pool, "Unlink %s\n", path));
+          return svn_cmdline_fflush(stdout);
+        }
       return svn_error_wrap_apr(apr_err, _("Can't remove file '%s'"),
           svn_dirent_local_style(path, pool));
     }
   else if (finfo.filetype == APR_DIR)
     {
       SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
-      return SVN_NO_ERROR;
+      if (quiet)
+        return SVN_NO_ERROR;
+      SVN_ERR(svn_cmdline_printf(pool, "Remove %s\n", path));
+      return svn_cmdline_fflush(stdout);
     }
 
   fprintf(stderr, "Unknown file type: %s %d", path, finfo.filetype);
@@ -680,7 +689,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
                      svn_boolean_t suppress_externals_placeholders,
                      svn_boolean_t detailed,
                      svn_boolean_t show_last_committed,
-                     svn_boolean_t skip_unrecognized,
+                     svn_boolean_t quiet,
                      svn_boolean_t repos_locks,
                      unsigned int *text_conflicts,
                      unsigned int *prop_conflicts,
@@ -688,42 +697,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
                      svn_client_ctx_t *ctx,
                      apr_pool_t *pool)
 {
-  if (! status
-      || (skip_unrecognized
-          && !(status->versioned
-               || status->conflicted
-               || status->node_status == svn_wc_status_external))
-      || (status->node_status == svn_wc_status_none
-          && status->repos_node_status == svn_wc_status_none))
-    return SVN_NO_ERROR;
-
-  /* If we're trying not to print boring "X  /path/to/external"
-     lines..." */
-  if (suppress_externals_placeholders)
-    {
-      /* ... skip regular externals unmodified in the repository. */
-      if ((status->node_status == svn_wc_status_external)
-          && (status->repos_node_status == svn_wc_status_none)
-          && (! status->conflicted))
-        return SVN_NO_ERROR;
-
-      /* ... skip file externals that aren't modified locally or
-         remotely, changelisted, or locked (in either sense of the
-         word). */
-      if ((status->file_external)
-          && (status->repos_node_status == svn_wc_status_none)
-          && ((status->node_status == svn_wc_status_normal)
-              || (status->node_status == svn_wc_status_none))
-          && ((status->prop_status == svn_wc_status_normal)
-              || (status->prop_status == svn_wc_status_none))
-          && (! status->changelist)
-          && (! status->lock)
-          && (! status->wc_is_locked)
-          && (! status->conflicted))
-        return SVN_NO_ERROR;
-    }
-
-  return remove_unversioned(target_abspath, target_path, path,
+  return remove_unversioned(target_abspath, target_path, path, quiet,
                       detailed, show_last_committed, repos_locks, status,
                       text_conflicts, prop_conflicts, tree_conflicts,
                       ctx, pool);
