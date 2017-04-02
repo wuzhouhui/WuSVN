@@ -15,6 +15,7 @@ Available subcommands:
    cat
    changelist (cl)
    checkout (co)
+   clean
    cleanup
    commit (ci)
    copy (cp)
