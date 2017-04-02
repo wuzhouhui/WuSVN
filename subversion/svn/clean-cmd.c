@@ -48,13 +48,13 @@
 struct status_baton
 {
   /* These fields all correspond to the ones in the
-     svn_cl__print_status() interface. */
+     svn_cl__remove_unversioned() interface. */
   const char *target_abspath;
   const char *target_path;
   svn_boolean_t suppress_externals_placeholders;
   svn_boolean_t detailed;
   svn_boolean_t show_last_committed;
-  svn_boolean_t skip_unrecognized;
+  svn_boolean_t quiet;
   svn_boolean_t repos_locks;
 
   apr_hash_t *cached_changelists;
@@ -156,7 +156,7 @@ do_remove_unversioned(void *baton,
                               sb->suppress_externals_placeholders,
                               sb->detailed,
                               sb->show_last_committed,
-                              sb->skip_unrecognized,
+                              sb->quiet,
                               sb->repos_locks,
                               &sb->text_conflicts,
                               &sb->prop_conflicts,
@@ -313,7 +313,7 @@ svn_cl__clean(apr_getopt_t *os,
                                         && (! opt_state->verbose));
   sb.detailed = (opt_state->verbose || opt_state->update);
   sb.show_last_committed = opt_state->verbose;
-  sb.skip_unrecognized = opt_state->quiet;
+  sb.quiet = opt_state->quiet;
   sb.repos_locks = opt_state->update;
   sb.xml_mode = opt_state->xml;
   sb.cached_changelists = master_cl_hash;
