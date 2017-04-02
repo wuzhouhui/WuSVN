@@ -117,7 +117,7 @@ Valid options:
   --diff-cmd ARG           : use ARG as diff command
   --internal-diff          : override diff-cmd specified in config file
   -x [--extensions] ARG    : Specify differencing options for external diff or
-                             internal diff or blame. Default: '-u'. Options are
+                             internal diff or blame. Default: '-up'. Options are
                              separated by spaces. Internal diff and blame take:
                                -u, --unified: Show 3 lines of unified context
                                -b, --ignore-space-change: Ignore changes in
@@ -130,6 +130,7 @@ Valid options:
                              and accent-insensitive, may require quotation marks
                              to prevent shell expansion)
   --search-and ARG         : combine ARG with the previous search pattern
+  --no-color               : disable syntax highlight
 
 Global options:
   --username ARG           : specify a username ARG
