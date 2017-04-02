@@ -83,6 +83,9 @@ del_lines_res = [
                  re.compile(r"\* GPG-Agent"),
                  re.compile(r"\* Mac OS X Keychain"),
                  re.compile(r"\* KWallet \(KDE\)"),
+
+                 # Remove my copyright
+                 re.compile(r".*wuzhouhui.*"),
                 ]
 
 # This is a list of lines to search and replace text on.
