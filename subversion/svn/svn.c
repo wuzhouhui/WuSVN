@@ -629,7 +629,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
     {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals} },
 
   { "clean", svn_cl__clean, {0}, N_
-    ("Remove untracked files and empty directories.\n"), { 0 } },
+    ("Remove untracked files and directories.\n"), { 0 } },
 
   { "cleanup", svn_cl__cleanup, {0}, N_
     ("Either recover from an interrupted operation that left the working copy locked,\n"

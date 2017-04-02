@@ -663,11 +663,8 @@ remove_unversioned(const char *target_abspath,
     }
   else if (finfo.filetype == APR_DIR)
     {
-      apr_err = apr_dir_remove(path, pool);
-      if (!apr_err)
-        return SVN_NO_ERROR;
-      return svn_error_wrap_apr(apr_err, _("Can't remove dir '%s'"),
-          svn_dirent_local_style(path, pool));
+      SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
+      return SVN_NO_ERROR;
     }
 
   fprintf(stderr, "Unknown file type: %s %d", path, finfo.filetype);
