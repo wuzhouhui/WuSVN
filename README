@@ -6,11 +6,23 @@ $LastChangedDate: 2016-05-31 14:07:51 +0000 (Tue, 31 May 2016) $
 
 Contents:
 
+     O. MAIN PATCHES
      I. A FEW POINTERS
     II. DOCUMENTATION
    III. PARTICIPATING IN THE SUBVERSION COMMUNITY
     IV. QUICKSTART GUIDE
      V. CONVERTING FROM CVS
+
+
+
+O.    MAIN PATCHES
+
+      1. Output paging automatically
+      2. Ignore files if they match the patterns in .svnignore
+      3. Syntax highlight
+      4. New subcommand clean for removing unversioned files
+      5. Add option -v for subcommand commit, for print unified diff in log
+         message template
 
 
 
