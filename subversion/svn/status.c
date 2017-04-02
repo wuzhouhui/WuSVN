@@ -649,7 +649,7 @@ remove_unversioned(const char *target_abspath,
   apr_status_t  apr_err;
   apr_finfo_t   finfo;
 
-  apr_err = apr_stat(&finfo, path, APR_FINFO_TYPE, pool);
+  apr_err = apr_stat(&finfo, path, APR_FINFO_TYPE | APR_FINFO_LINK, pool);
   if (apr_err)
     {
       return svn_error_wrap_apr(apr_err, _("Can't stat file '%s'"),
