@@ -537,10 +537,10 @@ def import_inherited_ignores(sbox):
      'A    ' + os.path.join(F_path, dir5_path)  + '\n',
      'A    ' + os.path.join(F_path, file5_path) + '\n',
      'A    ' + os.path.join(F_path, dir6_path)  + '\n',
-     'A    ' + os.path.join(F_path, file6_path) + '\n',
      'A    ' + os.path.join(F_path, dir7_path)  + '\n',
      'A    ' + os.path.join(F_path, file7_path) + '\n',
      'A    ' + os.path.join(F_path, dir8_path)  + '\n',
+     'A    ' + os.path.join(F_path, file6_path) + '\n',
      'Updated to revision 5.\n'])
   svntest.actions.run_and_verify_svn(expected_output, [], 'up', wc_dir)
 
