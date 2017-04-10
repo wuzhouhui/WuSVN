@@ -576,7 +576,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
 
   { "clean", svn_cl__clean, {0}, N_
     ("Remove unversioned files and directories.\n"
-     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore } },
+     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force } },
 
   { "cleanup", svn_cl__cleanup, {0}, N_
     ("Recursively clean up the working copy, removing write locks, resuming\n"
@@ -2663,6 +2663,16 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
                               _("--message (-m) and --file (-F) "
                                 "are mutually exclusive"));
     }
+
+  /* Think twice before removing unversioned files. */
+  if (opt_state.force == FALSE && subcommand->cmd_func == svn_cl__clean)
+  {
+    svn_error_clear(
+        svn_cmdline_fprintf(stderr, pool,
+          _("Add option --force if you really want to remove files.\n")));
+    *exit_code = EXIT_FAILURE;
+    return SVN_NO_ERROR;
+  }
 
   /* --trust-* options can only be used with --non-interactive */
   if (!opt_state.non_interactive)
