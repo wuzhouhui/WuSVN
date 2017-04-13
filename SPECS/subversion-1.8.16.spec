@@ -203,7 +203,7 @@ mv sqlite-amalgamation-3071602 sqlite-amalgamation
 # be installed.
 rm -rf apr apr-util neon
 
-PYTHON=/usr/bin/python26
+PYTHON=/usr/bin/python2.6
 export PYTHON
 
 export svn_cv_ruby_link="%{__cc} -shared"
