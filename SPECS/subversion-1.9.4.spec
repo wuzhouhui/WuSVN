@@ -161,7 +161,7 @@ mv sqlite-amalgamation-3071602 sqlite-amalgamation
 # be installed.
 rm -rf apr apr-util neon
 
-PYTHON=/usr/bin/python26
+PYTHON=/usr/local/bin/python2.7
 export PYTHON
 
 %configure \
