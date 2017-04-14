@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 1
+%define svn_release 2
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 %define cpunum %(grep processor /proc/cpuinfo | wc -l)
@@ -33,6 +33,7 @@ Source2: subversion.conf
 Patch0: timestamp-replication-v5-1.8.txt
 %endif
 Patch1: subversion-1.9.4.first_patch
+Patch2: Subcmd-clean-remove-files-only-if-option-force-enabl.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -151,6 +152,7 @@ WANdisco extensions to subversion
 %setup -n subversion-%{version}
 %{?_with_timestamp:%patch0 -p0}
 %patch1 -p1
+%patch2 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -340,6 +342,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Apr 14 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-2
+* Subcmd-clean-remove-files-only-if-option-force-enabl.patch
+
 * Mon Apr 3 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-1
 - First commit
 - Add first patch: subversion-1.9.4.first_patch
