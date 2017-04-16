@@ -15,7 +15,6 @@
 %define svn_release 2
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
-%define cpunum %(grep processor /proc/cpuinfo | wc -l)
 
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
@@ -185,18 +184,18 @@ export PYTHON
 make clean
 
 # build javahl - needs to be done before the plain make for fsfswd to succeed
-make javahl %{?_with_fsfswd:javahl-java-fsfswd}
+make %{?_smp_mflags} javahl %{?_with_fsfswd:javahl-java-fsfswd}
 
-make -j %{cpunum}
+make %{?_smp_mflags}
 
 %if !%{without swig}
 # Build python bindings
-make swig-py swig-pl DESTDIR=$RPM_BUILD_ROOT
+make %{?_smp_mflags} swig-py swig-pl DESTDIR=$RPM_BUILD_ROOT
 %endif
 
 %if !%{without tools}
 # Build tools
-make tools
+make %{?_smp_mflags} tools
 %endif
 
 %install
