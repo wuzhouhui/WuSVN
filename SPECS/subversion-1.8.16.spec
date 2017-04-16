@@ -16,7 +16,6 @@
 
 %define perl_siteprefix %(eval "`%{__perl} -V:siteprefix`"; echo $siteprefix)
 %define ruby_sitearch %(ruby -rrbconfig -e "puts Config::CONFIG['sitearchdir']")
-%define cpunum %(grep processor /proc/cpuinfo | wc -l)
 
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
@@ -230,18 +229,18 @@ export svn_cv_ruby_sitedir_archsuffix=""
 make clean
 
 # build javahl - needs to be done before the plain make for fsfswd to succeed
-make -j %{cpunum} javahl %{?_with_fsfswd:javahl-java-fsfswd}
+make %{?_smp_mflags} javahl %{?_with_fsfswd:javahl-java-fsfswd}
 
-make -j %{cpunum}
+make %{?_smp_mflags}
 
 %if !%{without swig}
 # Build python bindings
-make -j %{cpunum} swig-py swig-pl swig-rb DESTDIR=$RPM_BUILD_ROOT
+make %{?_smp_mflags} swig-py swig-pl swig-rb DESTDIR=$RPM_BUILD_ROOT
 %endif
 
 %if !%{without tools}
 # Build tools
-make -j %{cpunum} tools
+make %{?_smp_mflags} tools
 %endif
 
 %install
