@@ -188,7 +188,7 @@ export PYTHON
 make clean
 
 # build javahl - needs to be done before the plain make for fsfswd to succeed
-make %{?_smp_mflags} javahl %{?_with_fsfswd:javahl-java-fsfswd}
+make -j 4 javahl %{?_with_fsfswd:javahl-java-fsfswd}
 
 make %{?_smp_mflags}
 
