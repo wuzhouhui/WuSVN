@@ -1,0 +1,842 @@
+diff -uprN subversion-1.9.6/build-outputs.mk subversion-1.9.7/build-outputs.mk
+--- subversion-1.9.6/build-outputs.mk	2017-06-30 20:40:22.000000000 +0800
++++ subversion-1.9.7/build-outputs.mk	2017-08-06 00:22:47.000000000 +0800
+@@ -2782,7 +2782,7 @@ subversion/libsvn_ra_serf/util_error.lo:
+ 
+ subversion/libsvn_ra_serf/xml.lo: subversion/libsvn_ra_serf/xml.c subversion/include/private/svn_dav_protocol.h subversion/include/private/svn_debug.h subversion/include/private/svn_editor.h subversion/include/private/svn_ra_private.h subversion/include/private/svn_string_private.h subversion/include/private/svn_subr_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_config.h subversion/include/svn_dav.h subversion/include/svn_delta.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_version.h subversion/include/svn_xml.h subversion/libsvn_ra/ra_loader.h subversion/libsvn_ra_serf/blncache.h subversion/libsvn_ra_serf/ra_serf.h subversion/svn_private_config.h
+ 
+-subversion/libsvn_ra_svn/client.lo: subversion/libsvn_ra_svn/client.c subversion/include/private/svn_debug.h subversion/include/private/svn_editor.h subversion/include/private/svn_fspath.h subversion/include/private/svn_ra_private.h subversion/include/private/svn_ra_svn_private.h subversion/include/private/svn_subr_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_compat.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_props.h subversion/include/svn_ra.h subversion/include/svn_ra_svn.h subversion/include/svn_string.h subversion/include/svn_time.h subversion/include/svn_types.h subversion/include/svn_version.h subversion/libsvn_ra/ra_loader.h subversion/libsvn_ra/wrapper_template.h subversion/libsvn_ra_svn/ra_svn.h subversion/svn_private_config.h
++subversion/libsvn_ra_svn/client.lo: subversion/libsvn_ra_svn/client.c subversion/include/private/svn_debug.h subversion/include/private/svn_editor.h subversion/include/private/svn_fspath.h subversion/include/private/svn_ra_private.h subversion/include/private/svn_ra_svn_private.h subversion/include/private/svn_subr_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_compat.h subversion/include/svn_config.h subversion/include/svn_ctype.h subversion/include/svn_delta.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_props.h subversion/include/svn_ra.h subversion/include/svn_ra_svn.h subversion/include/svn_string.h subversion/include/svn_time.h subversion/include/svn_types.h subversion/include/svn_version.h subversion/libsvn_ra/ra_loader.h subversion/libsvn_ra/wrapper_template.h subversion/libsvn_ra_svn/ra_svn.h subversion/svn_private_config.h
+ 
+ subversion/libsvn_ra_svn/cram.lo: subversion/libsvn_ra_svn/cram.c subversion/include/private/svn_debug.h subversion/include/private/svn_editor.h subversion/include/private/svn_ra_svn_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_ra.h subversion/include/svn_ra_svn.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/libsvn_ra_svn/ra_svn.h subversion/svn_private_config.h
+ 
+diff -uprN subversion-1.9.6/CHANGES subversion-1.9.7/CHANGES
+--- subversion-1.9.6/CHANGES	2017-06-30 20:18:35.000000000 +0800
++++ subversion-1.9.7/CHANGES	2017-08-06 00:22:21.000000000 +0800
+@@ -1,3 +1,27 @@
++Version 1.9.7
++(10 Aug 2017, from /branches/1.9.x)
++http://svn.apache.org/repos/asf/subversion/tags/1.9.7
++
++ User-visible changes:
++  - Client-side bugfixes:
++    * Fix arbitrary code execution vulnerability CVE-2017-9800
++        See <https://subversion.apache.org/security/CVE-2017-9800-advisory.txt>
++        for details.
++
++  - Server-side bugfixes:
++    (none)
++
++  - Bindings bugfixes:
++    (none)
++
++ Developer-visible changes:
++  - General:
++    (none)
++
++  - API changes:
++    (none)
++
++
+ Version 1.9.6
+ (5 Jul 2017, from /branches/1.9.x)
+ http://svn.apache.org/repos/asf/subversion/tags/1.9.6
+diff -uprN subversion-1.9.6/configure subversion-1.9.7/configure
+--- subversion-1.9.6/configure	2017-06-30 20:40:23.000000000 +0800
++++ subversion-1.9.7/configure	2017-08-06 00:22:48.000000000 +0800
+@@ -1,6 +1,6 @@
+ #! /bin/sh
+ # Guess values for system-dependent variables and create Makefiles.
+-# Generated by GNU Autoconf 2.69 for subversion 1.9.6.
++# Generated by GNU Autoconf 2.69 for subversion 1.9.7.
+ #
+ # Report bugs to <http://subversion.apache.org/>.
+ #
+@@ -590,8 +590,8 @@ MAKEFLAGS=
+ # Identity of this package.
+ PACKAGE_NAME='subversion'
+ PACKAGE_TARNAME='subversion'
+-PACKAGE_VERSION='1.9.6'
+-PACKAGE_STRING='subversion 1.9.6'
++PACKAGE_VERSION='1.9.7'
++PACKAGE_STRING='subversion 1.9.7'
+ PACKAGE_BUGREPORT='http://subversion.apache.org/'
+ PACKAGE_URL=''
+ 
+@@ -1471,7 +1471,7 @@ if test "$ac_init_help" = "long"; then
+   # Omit some internal or obsolete options to make the list less imposing.
+   # This message is too long to be a string in the A/UX 3.1 sh.
+   cat <<_ACEOF
+-\`configure' configures subversion 1.9.6 to adapt to many kinds of systems.
++\`configure' configures subversion 1.9.7 to adapt to many kinds of systems.
+ 
+ Usage: $0 [OPTION]... [VAR=VALUE]...
+ 
+@@ -1537,7 +1537,7 @@ fi
+ 
+ if test -n "$ac_init_help"; then
+   case $ac_init_help in
+-     short | recursive ) echo "Configuration of subversion 1.9.6:";;
++     short | recursive ) echo "Configuration of subversion 1.9.7:";;
+    esac
+   cat <<\_ACEOF
+ 
+@@ -1751,7 +1751,7 @@ fi
+ test -n "$ac_init_help" && exit $ac_status
+ if $ac_init_version; then
+   cat <<\_ACEOF
+-subversion configure 1.9.6
++subversion configure 1.9.7
+ generated by GNU Autoconf 2.69
+ 
+ Copyright (C) 2012 Free Software Foundation, Inc.
+@@ -2295,7 +2295,7 @@ cat >config.log <<_ACEOF
+ This file contains any messages produced by compilers while
+ running configure, to aid debugging if configure makes a mistake.
+ 
+-It was created by subversion $as_me 1.9.6, which was
++It was created by subversion $as_me 1.9.7, which was
+ generated by GNU Autoconf 2.69.  Invocation command line was
+ 
+   $ $0 $@
+@@ -2675,8 +2675,8 @@ ac_configure="$SHELL $ac_aux_dir/configu
+ 
+ 
+ 
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: Configuring Subversion 1.9.6" >&5
+-$as_echo "$as_me: Configuring Subversion 1.9.6" >&6;}
++{ $as_echo "$as_me:${as_lineno-$LINENO}: Configuring Subversion 1.9.7" >&5
++$as_echo "$as_me: Configuring Subversion 1.9.7" >&6;}
+ 
+ abs_srcdir="`cd $srcdir && pwd`"
+ 
+@@ -26756,7 +26756,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_wri
+ # report actual input values of CONFIG_FILES etc. instead of their
+ # values after options handling.
+ ac_log="
+-This file was extended by subversion $as_me 1.9.6, which was
++This file was extended by subversion $as_me 1.9.7, which was
+ generated by GNU Autoconf 2.69.  Invocation command line was
+ 
+   CONFIG_FILES    = $CONFIG_FILES
+@@ -26822,7 +26822,7 @@ _ACEOF
+ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
+ ac_cs_config="`$as_echo "$ac_configure_args" | sed 's/^ //; s/[\\""\`\$]/\\\\&/g'`"
+ ac_cs_version="\\
+-subversion config.status 1.9.6
++subversion config.status 1.9.7
+ configured by $0, generated by GNU Autoconf 2.69,
+   with options \\"\$ac_cs_config\\"
+ 
+diff -uprN subversion-1.9.6/subversion/bindings/swig/perl/native/core.c subversion-1.9.7/subversion/bindings/swig/perl/native/core.c
+--- subversion-1.9.6/subversion/bindings/swig/perl/native/core.c	2017-06-30 20:40:11.000000000 +0800
++++ subversion-1.9.7/subversion/bindings/swig/perl/native/core.c	2017-08-06 00:22:36.000000000 +0800
+@@ -49565,12 +49565,12 @@ XS(SWIG_init) {
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_PATCH", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(6)));
++    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(7)));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_MICRO", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(6)));
++    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(7)));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+@@ -49595,17 +49595,17 @@ XS(SWIG_init) {
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_NUM", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr("1.9.6"));
++    sv_setsv(sv, SWIG_FromCharPtr("1.9.7"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_NUMBER", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr("1.9.6"));
++    sv_setsv(sv, SWIG_FromCharPtr("1.9.7"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VERSION", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr("1.9.6 (r1800392)"));
++    sv_setsv(sv, SWIG_FromCharPtr("1.9.7 (r1800392)"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+diff -uprN subversion-1.9.6/subversion/bindings/swig/python/core.c subversion-1.9.7/subversion/bindings/swig/python/core.c
+--- subversion-1.9.6/subversion/bindings/swig/python/core.c	2017-06-30 20:40:03.000000000 +0800
++++ subversion-1.9.7/subversion/bindings/swig/python/core.c	2017-08-06 00:22:28.000000000 +0800
+@@ -36652,15 +36652,15 @@ SWIG_init(void) {
+   SWIG_Python_SetConstant(d, "SVN_ALLOCATOR_RECOMMENDED_MAX_FREE",SWIG_From_long((long)((4096*1024))));
+   SWIG_Python_SetConstant(d, "SVN_VER_MAJOR",SWIG_From_long((long)(1)));
+   SWIG_Python_SetConstant(d, "SVN_VER_MINOR",SWIG_From_long((long)(9)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_PATCH",SWIG_From_long((long)(6)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_MICRO",SWIG_From_long((long)(6)));
++  SWIG_Python_SetConstant(d, "SVN_VER_PATCH",SWIG_From_long((long)(7)));
++  SWIG_Python_SetConstant(d, "SVN_VER_MICRO",SWIG_From_long((long)(7)));
+   SWIG_Python_SetConstant(d, "SVN_VER_LIBRARY",SWIG_From_long((long)(1)));
+   SWIG_Python_SetConstant(d, "SVN_VER_TAG",SWIG_FromCharPtr(" (r1800392)"));
+   SWIG_Python_SetConstant(d, "SVN_VER_NUMTAG",SWIG_FromCharPtr(""));
+   SWIG_Python_SetConstant(d, "SVN_VER_REVISION",SWIG_From_long((long)(1800392)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_NUM",SWIG_FromCharPtr("1.9.6"));
+-  SWIG_Python_SetConstant(d, "SVN_VER_NUMBER",SWIG_FromCharPtr("1.9.6"));
+-  SWIG_Python_SetConstant(d, "SVN_VERSION",SWIG_FromCharPtr("1.9.6 (r1800392)"));
++  SWIG_Python_SetConstant(d, "SVN_VER_NUM",SWIG_FromCharPtr("1.9.7"));
++  SWIG_Python_SetConstant(d, "SVN_VER_NUMBER",SWIG_FromCharPtr("1.9.7"));
++  SWIG_Python_SetConstant(d, "SVN_VERSION",SWIG_FromCharPtr("1.9.7 (r1800392)"));
+   SWIG_Python_SetConstant(d, "svn_prop_entry_kind",SWIG_From_long((long)(svn_prop_entry_kind)));
+   SWIG_Python_SetConstant(d, "svn_prop_wc_kind",SWIG_From_long((long)(svn_prop_wc_kind)));
+   SWIG_Python_SetConstant(d, "svn_prop_regular_kind",SWIG_From_long((long)(svn_prop_regular_kind)));
+diff -uprN subversion-1.9.6/subversion/bindings/swig/ruby/core.c subversion-1.9.7/subversion/bindings/swig/ruby/core.c
+--- subversion-1.9.6/subversion/bindings/swig/ruby/core.c	2017-06-30 20:40:18.000000000 +0800
++++ subversion-1.9.7/subversion/bindings/swig/ruby/core.c	2017-08-06 00:22:43.000000000 +0800
+@@ -44077,15 +44077,15 @@ SWIGEXPORT void Init_core(void) {
+   rb_define_module_function(mCore, "svn_pool_create_allocator", _wrap_svn_pool_create_allocator, -1);
+   rb_define_const(mCore, "SVN_VER_MAJOR", SWIG_From_int((int)(1)));
+   rb_define_const(mCore, "SVN_VER_MINOR", SWIG_From_int((int)(9)));
+-  rb_define_const(mCore, "SVN_VER_PATCH", SWIG_From_int((int)(6)));
+-  rb_define_const(mCore, "SVN_VER_MICRO", SWIG_From_int((int)(6)));
++  rb_define_const(mCore, "SVN_VER_PATCH", SWIG_From_int((int)(7)));
++  rb_define_const(mCore, "SVN_VER_MICRO", SWIG_From_int((int)(7)));
+   rb_define_const(mCore, "SVN_VER_LIBRARY", SWIG_From_int((int)(1)));
+   rb_define_const(mCore, "SVN_VER_TAG", SWIG_FromCharPtr(" (r1800392)"));
+   rb_define_const(mCore, "SVN_VER_NUMTAG", SWIG_FromCharPtr(""));
+   rb_define_const(mCore, "SVN_VER_REVISION", SWIG_From_int((int)(1800392)));
+-  rb_define_const(mCore, "SVN_VER_NUM", SWIG_FromCharPtr("1.9.6"));
+-  rb_define_const(mCore, "SVN_VER_NUMBER", SWIG_FromCharPtr("1.9.6"));
+-  rb_define_const(mCore, "SVN_VERSION", SWIG_FromCharPtr("1.9.6 (r1800392)"));
++  rb_define_const(mCore, "SVN_VER_NUM", SWIG_FromCharPtr("1.9.7"));
++  rb_define_const(mCore, "SVN_VER_NUMBER", SWIG_FromCharPtr("1.9.7"));
++  rb_define_const(mCore, "SVN_VERSION", SWIG_FromCharPtr("1.9.7 (r1800392)"));
+   
+   SwigClassSvn_version_t.klass = rb_define_class_under(mCore, "Svn_version_t", rb_cObject);
+   SWIG_TypeClientData(SWIGTYPE_p_svn_version_t, (void *) &SwigClassSvn_version_t);
+diff -uprN subversion-1.9.6/subversion/include/svn_version.h subversion-1.9.7/subversion/include/svn_version.h
+--- subversion-1.9.6/subversion/include/svn_version.h	2017-06-30 20:39:59.000000000 +0800
++++ subversion-1.9.7/subversion/include/svn_version.h	2017-08-06 00:22:24.000000000 +0800
+@@ -70,7 +70,7 @@ extern "C" {
+  *
+  * @since New in 1.1.
+  */
+-#define SVN_VER_PATCH      6
++#define SVN_VER_PATCH      7
+ 
+ 
+ /** @deprecated Provided for backward compatibility with the 1.0 API. */
+diff -uprN subversion-1.9.6/subversion/libsvn_fs_fs/rep-cache-db.h subversion-1.9.7/subversion/libsvn_fs_fs/rep-cache-db.h
+--- subversion-1.9.6/subversion/libsvn_fs_fs/rep-cache-db.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_fs_fs/rep-cache-db.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from rep-cache-db.sql and .dist_sandbox/subversion-1.9.6/subversion/libsvn_fs_fs/token-map.h.
++/* This file is automatically generated from rep-cache-db.sql and .dist_sandbox/subversion-1.9.7/subversion/libsvn_fs_fs/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_CREATE_SCHEMA 0
+diff -uprN subversion-1.9.6/subversion/libsvn_fs_x/rep-cache-db.h subversion-1.9.7/subversion/libsvn_fs_x/rep-cache-db.h
+--- subversion-1.9.6/subversion/libsvn_fs_x/rep-cache-db.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_fs_x/rep-cache-db.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from rep-cache-db.sql and .dist_sandbox/subversion-1.9.6/subversion/libsvn_fs_x/token-map.h.
++/* This file is automatically generated from rep-cache-db.sql and .dist_sandbox/subversion-1.9.7/subversion/libsvn_fs_x/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_CREATE_SCHEMA 0
+diff -uprN subversion-1.9.6/subversion/libsvn_ra_svn/client.c subversion-1.9.7/subversion/libsvn_ra_svn/client.c
+--- subversion-1.9.6/subversion/libsvn_ra_svn/client.c	2016-04-18 12:00:29.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_ra_svn/client.c	2017-08-06 00:22:21.000000000 +0800
+@@ -46,6 +46,7 @@
+ #include "svn_props.h"
+ #include "svn_mergeinfo.h"
+ #include "svn_version.h"
++#include "svn_ctype.h"
+ 
+ #include "svn_private_config.h"
+ 
+@@ -396,7 +397,7 @@ static svn_error_t *find_tunnel_agent(co
+        * versions have it too. If the user is using some other ssh
+        * implementation that doesn't accept it, they can override it
+        * in the [tunnels] section of the config. */
+-      val = "$SVN_SSH ssh -q";
++      val = "$SVN_SSH ssh -q --";
+     }
+ 
+   if (!val || !*val)
+@@ -441,7 +442,7 @@ static svn_error_t *find_tunnel_agent(co
+   for (n = 0; cmd_argv[n] != NULL; n++)
+     argv[n] = cmd_argv[n];
+ 
+-  argv[n++] = svn_path_uri_decode(hostinfo, pool);
++  argv[n++] = hostinfo;
+   argv[n++] = "svnserve";
+   argv[n++] = "-t";
+   argv[n] = NULL;
+@@ -802,6 +803,32 @@ ra_svn_get_schemes(apr_pool_t *pool)
+ }
+ 
+ 
++/* A simple whitelist to ensure the following are valid:
++ *   user@server
++ *   [::1]:22
++ *   server-name
++ *   server_name
++ *   127.0.0.1
++ * with an extra restriction that a leading '-' is invalid.
++ */
++static svn_boolean_t
++is_valid_hostinfo(const char *hostinfo)
++{
++  const char *p = hostinfo;
++
++  if (p[0] == '-')
++    return FALSE;
++
++  while (*p)
++    {
++      if (!svn_ctype_isalnum(*p) && !strchr(":.-_[]@", *p))
++        return FALSE;
++
++      ++p;
++    }
++
++  return TRUE;
++}
+ 
+ static svn_error_t *ra_svn_open(svn_ra_session_t *session,
+                                 const char **corrected_url,
+@@ -835,8 +862,18 @@ static svn_error_t *ra_svn_open(svn_ra_s
+           || (callbacks->check_tunnel_func && callbacks->open_tunnel_func
+               && !callbacks->check_tunnel_func(callbacks->tunnel_baton,
+                                                tunnel))))
+-    SVN_ERR(find_tunnel_agent(tunnel, uri.hostinfo, &tunnel_argv, config,
+-                              result_pool));
++    {
++      const char *decoded_hostinfo;
++
++      decoded_hostinfo = svn_path_uri_decode(uri.hostinfo, result_pool);
++
++      if (!is_valid_hostinfo(decoded_hostinfo))
++        return svn_error_createf(SVN_ERR_BAD_URL, NULL, _("Invalid host '%s'"),
++                                 uri.hostinfo);
++
++      SVN_ERR(find_tunnel_agent(tunnel, decoded_hostinfo, &tunnel_argv,
++                                config, result_pool));
++    }
+   else
+     tunnel_argv = NULL;
+ 
+diff -uprN subversion-1.9.6/subversion/libsvn_subr/config_file.c subversion-1.9.7/subversion/libsvn_subr/config_file.c
+--- subversion-1.9.6/subversion/libsvn_subr/config_file.c	2016-09-02 12:00:30.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_subr/config_file.c	2017-08-06 00:22:21.000000000 +0800
+@@ -1248,12 +1248,12 @@ svn_config_ensure(const char *config_dir
+         "### passed to the tunnel agent as <user>@<hostname>.)  If the"      NL
+         "### built-in ssh scheme were not predefined, it could be defined"   NL
+         "### as:"                                                            NL
+-        "# ssh = $SVN_SSH ssh -q"                                            NL
++        "# ssh = $SVN_SSH ssh -q --"                                         NL
+         "### If you wanted to define a new 'rsh' scheme, to be used with"    NL
+         "### 'svn+rsh:' URLs, you could do so as follows:"                   NL
+-        "# rsh = rsh"                                                        NL
++        "# rsh = rsh --"                                                     NL
+         "### Or, if you wanted to specify a full path and arguments:"        NL
+-        "# rsh = /path/to/rsh -l myusername"                                 NL
++        "# rsh = /path/to/rsh -l myusername --"                              NL
+         "### On Windows, if you are specifying a full path to a command,"    NL
+         "### use a forward slash (/) or a paired backslash (\\\\) as the"    NL
+         "### path separator.  A single backslash will be treated as an"      NL
+diff -uprN subversion-1.9.6/subversion/libsvn_subr/internal_statements.h subversion-1.9.7/subversion/libsvn_subr/internal_statements.h
+--- subversion-1.9.6/subversion/libsvn_subr/internal_statements.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_subr/internal_statements.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from internal_statements.sql and .dist_sandbox/subversion-1.9.6/subversion/libsvn_subr/token-map.h.
++/* This file is automatically generated from internal_statements.sql and .dist_sandbox/subversion-1.9.7/subversion/libsvn_subr/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_INTERNAL_SAVEPOINT_SVN 0
+diff -uprN subversion-1.9.6/subversion/libsvn_wc/wc-checks.h subversion-1.9.7/subversion/libsvn_wc/wc-checks.h
+--- subversion-1.9.6/subversion/libsvn_wc/wc-checks.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_wc/wc-checks.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from wc-checks.sql and .dist_sandbox/subversion-1.9.6/subversion/libsvn_wc/token-map.h.
++/* This file is automatically generated from wc-checks.sql and .dist_sandbox/subversion-1.9.7/subversion/libsvn_wc/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_VERIFICATION_TRIGGERS 0
+diff -uprN subversion-1.9.6/subversion/libsvn_wc/wc-metadata.h subversion-1.9.7/subversion/libsvn_wc/wc-metadata.h
+--- subversion-1.9.6/subversion/libsvn_wc/wc-metadata.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_wc/wc-metadata.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from wc-metadata.sql and .dist_sandbox/subversion-1.9.6/subversion/libsvn_wc/token-map.h.
++/* This file is automatically generated from wc-metadata.sql and .dist_sandbox/subversion-1.9.7/subversion/libsvn_wc/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_CREATE_SCHEMA 0
+diff -uprN subversion-1.9.6/subversion/libsvn_wc/wc-queries.h subversion-1.9.7/subversion/libsvn_wc/wc-queries.h
+--- subversion-1.9.6/subversion/libsvn_wc/wc-queries.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/libsvn_wc/wc-queries.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from wc-queries.sql and .dist_sandbox/subversion-1.9.6/subversion/libsvn_wc/token-map.h.
++/* This file is automatically generated from wc-queries.sql and .dist_sandbox/subversion-1.9.7/subversion/libsvn_wc/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_SELECT_NODE_INFO 0
+diff -uprN subversion-1.9.6/subversion/po/subversion.pot subversion-1.9.7/subversion/po/subversion.pot
+--- subversion-1.9.6/subversion/po/subversion.pot	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/po/subversion.pot	2017-08-06 00:22:51.000000000 +0800
+@@ -8,7 +8,7 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: PACKAGE VERSION\n"
+ "Report-Msgid-Bugs-To: dev@subversion.apache.org\n"
+-"POT-Creation-Date: 2017-06-30 12:40+0000\n"
++"POT-Creation-Date: 2017-08-05 16:22+0000\n"
+ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+ "Language-Team: LANGUAGE <LL@li.org>\n"
+@@ -788,7 +788,7 @@ msgstr ""
+ msgid "Session URL does not match expected session URL"
+ msgstr ""
+ 
+-#: ../include/svn_error_codes.h:983 ../libsvn_ra_svn/client.c:503
++#: ../include/svn_error_codes.h:983 ../libsvn_ra_svn/client.c:504
+ #, c-format
+ msgid "Can't create tunnel"
+ msgstr ""
+@@ -1802,7 +1802,7 @@ msgstr ""
+ 
+ #: ../libsvn_client/copy_foreign.c:373 ../libsvn_client/export.c:814
+ #: ../libsvn_client/repos_diff.c:1002 ../libsvn_fs_fs/dag.c:1110
+-#: ../libsvn_fs_x/dag.c:1074 ../libsvn_ra_svn/client.c:1319
++#: ../libsvn_fs_x/dag.c:1074 ../libsvn_ra_svn/client.c:1356
+ #: ../libsvn_wc/diff_editor.c:1987 ../libsvn_wc/diff_editor.c:2073
+ #: ../libsvn_wc/externals.c:709 ../libsvn_wc/update_editor.c:4228
+ #, c-format
+@@ -4828,7 +4828,7 @@ msgstr ""
+ msgid "'%s' isn't a child of session URL '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra/ra_loader.c:526 ../libsvn_ra_svn/client.c:2587
++#: ../libsvn_ra/ra_loader.c:526 ../libsvn_ra_svn/client.c:2624
+ #, c-format
+ msgid "'%s' isn't a child of repository root URL '%s'"
+ msgstr ""
+@@ -4901,7 +4901,7 @@ msgid "'%s' path not found"
+ msgstr ""
+ 
+ #: ../libsvn_ra_local/ra_plugin.c:1667 ../libsvn_ra_serf/options.c:732
+-#: ../libsvn_ra_svn/client.c:2788
++#: ../libsvn_ra_svn/client.c:2825
+ #, c-format
+ msgid "Don't know anything about capability '%s'"
+ msgstr ""
+@@ -5002,7 +5002,7 @@ msgstr ""
+ msgid "Unsupported encoding '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_serf/log.c:574 ../libsvn_ra_svn/client.c:1709
++#: ../libsvn_ra_serf/log.c:574 ../libsvn_ra_svn/client.c:1746
+ msgid "Server does not support custom revprops via log"
+ msgstr ""
+ 
+@@ -5355,226 +5355,231 @@ msgstr ""
+ msgid "The XML response contains invalid XML"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:142
++#: ../libsvn_ra_svn/client.c:143
+ #, c-format
+ msgid "Unknown hostname '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:167
++#: ../libsvn_ra_svn/client.c:168
+ #, c-format
+ msgid "Can't connect to host '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:205
++#: ../libsvn_ra_svn/client.c:206
+ msgid "Prop diffs element not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:404
++#: ../libsvn_ra_svn/client.c:405
+ #, c-format
+ msgid "Undefined tunnel scheme '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:421
++#: ../libsvn_ra_svn/client.c:422
+ #, c-format
+ msgid "Tunnel scheme %s requires environment variable %s to be defined"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:432
++#: ../libsvn_ra_svn/client.c:433
+ #, c-format
+ msgid "Can't tokenize command '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:475
++#: ../libsvn_ra_svn/client.c:476
+ #, c-format
+ msgid "Error in child process: %s"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:554
++#: ../libsvn_ra_svn/client.c:555
+ msgid ""
+ "To better debug SSH connection problems, remove the -q option from 'ssh' in "
+ "the [tunnels] section of your Subversion configuration file."
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:572
++#: ../libsvn_ra_svn/client.c:573
+ #, c-format
+ msgid "Illegal svn repository URL '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:723
++#: ../libsvn_ra_svn/client.c:724
+ #, c-format
+ msgid "Server requires minimum version %d"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:727
++#: ../libsvn_ra_svn/client.c:728
+ #, c-format
+ msgid "Server only supports versions up to %d"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:735
++#: ../libsvn_ra_svn/client.c:736
+ msgid "Server does not support edit pipelining"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:772
++#: ../libsvn_ra_svn/client.c:773
+ msgid "Impossibly long repository root from server"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:784
++#: ../libsvn_ra_svn/client.c:785
+ msgid ""
+ "Module for accessing a repository using the svn network protocol.\n"
+ "  - with Cyrus SASL authentication"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:788
++#: ../libsvn_ra_svn/client.c:789
+ msgid "Module for accessing a repository using the svn network protocol."
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1025
++#: ../libsvn_ra_svn/client.c:871
++#, c-format
++msgid "Invalid host '%s'"
++msgstr ""
++
++#: ../libsvn_ra_svn/client.c:1062
+ msgid "Server did not send repository root"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1101
++#: ../libsvn_ra_svn/client.c:1138
+ #, c-format
+ msgid ""
+ "ra_svn does not support not specifying a log message with pre-1.5 servers; "
+ "consider passing an empty one, or upgrading the server"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1124
++#: ../libsvn_ra_svn/client.c:1161
+ msgid ""
+ "Server doesn't support setting arbitrary revision properties during commit"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1224
++#: ../libsvn_ra_svn/client.c:1261
+ msgid "Inherited proplist element not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1297
++#: ../libsvn_ra_svn/client.c:1334
+ msgid "Non-string as part of file contents"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1386
++#: ../libsvn_ra_svn/client.c:1423
+ msgid "Dirlist element not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1395
++#: ../libsvn_ra_svn/client.c:1432
+ #, c-format
+ msgid "Invalid directory entry name '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1478
++#: ../libsvn_ra_svn/client.c:1515
+ msgid "Mergeinfo element is not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1697
++#: ../libsvn_ra_svn/client.c:1734
+ msgid "Log entry not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1745
++#: ../libsvn_ra_svn/client.c:1782
+ msgid "Changed-path entry not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1900
++#: ../libsvn_ra_svn/client.c:1937
+ msgid "'stat' not implemented"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1959
++#: ../libsvn_ra_svn/client.c:1996
+ msgid "'get-locations' not implemented"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:1974
++#: ../libsvn_ra_svn/client.c:2011
+ msgid "Location entry not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2013
++#: ../libsvn_ra_svn/client.c:2050
+ msgid "'get-location-segments' not implemented"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2030
++#: ../libsvn_ra_svn/client.c:2067
+ msgid "Location segment entry not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2040
++#: ../libsvn_ra_svn/client.c:2077
+ msgid "Expected valid revision range"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2081
++#: ../libsvn_ra_svn/client.c:2118
+ msgid "'get-file-revs' not implemented"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2105
++#: ../libsvn_ra_svn/client.c:2142
+ msgid "Revision entry not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2122 ../libsvn_ra_svn/client.c:2152
++#: ../libsvn_ra_svn/client.c:2159 ../libsvn_ra_svn/client.c:2189
+ msgid "Text delta chunk not a string"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2164
++#: ../libsvn_ra_svn/client.c:2201
+ msgid "The get-file-revs command didn't return any revisions"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2211
++#: ../libsvn_ra_svn/client.c:2248
+ msgid "Server doesn't support the lock command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2275
++#: ../libsvn_ra_svn/client.c:2312
+ msgid "Server doesn't support the unlock command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2373
++#: ../libsvn_ra_svn/client.c:2410
+ msgid "Lock response not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2387
++#: ../libsvn_ra_svn/client.c:2424
+ msgid "Unknown status for lock command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2411
++#: ../libsvn_ra_svn/client.c:2448
+ msgid "Didn't receive end marker for lock responses"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2501
++#: ../libsvn_ra_svn/client.c:2538
+ msgid "Unlock response not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2515
++#: ../libsvn_ra_svn/client.c:2552
+ msgid "Unknown status for unlock command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2538
++#: ../libsvn_ra_svn/client.c:2575
+ msgid "Didn't receive end marker for unlock responses"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2562 ../libsvn_ra_svn/client.c:2614
++#: ../libsvn_ra_svn/client.c:2599 ../libsvn_ra_svn/client.c:2651
+ msgid "Server doesn't support the get-lock command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2628
++#: ../libsvn_ra_svn/client.c:2665
+ msgid "Lock element not a list"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2671
++#: ../libsvn_ra_svn/client.c:2708
+ msgid "Server doesn't support the replay command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2702
++#: ../libsvn_ra_svn/client.c:2739
+ msgid "Server doesn't support the replay-range command"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2720
++#: ../libsvn_ra_svn/client.c:2757
+ #, c-format
+ msgid "Expected 'revprops', found '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2737
++#: ../libsvn_ra_svn/client.c:2774
+ msgid "Error while replaying commit"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2810
++#: ../libsvn_ra_svn/client.c:2847
+ msgid "'get-deleted-rev' not implemented"
+ msgstr ""
+ 
+-#: ../libsvn_ra_svn/client.c:2921
++#: ../libsvn_ra_svn/client.c:2958
+ #, c-format
+ msgid "Unsupported RA loader version (%d) for ra_svn"
+ msgstr ""
+diff -uprN subversion-1.9.6/subversion/tests/libsvn_wc/wc-test-queries.h subversion-1.9.7/subversion/tests/libsvn_wc/wc-test-queries.h
+--- subversion-1.9.6/subversion/tests/libsvn_wc/wc-test-queries.h	2017-06-30 20:40:26.000000000 +0800
++++ subversion-1.9.7/subversion/tests/libsvn_wc/wc-test-queries.h	2017-08-06 00:22:51.000000000 +0800
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from wc-test-queries.sql and .dist_sandbox/subversion-1.9.6/subversion/tests/libsvn_wc/token-map.h.
++/* This file is automatically generated from wc-test-queries.sql and .dist_sandbox/subversion-1.9.7/subversion/tests/libsvn_wc/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_SELECT_NODES_INFO 0
+diff -uprN subversion-1.9.6/tools/backup/hot-backup.py.in subversion-1.9.7/tools/backup/hot-backup.py.in
+--- subversion-1.9.6/tools/backup/hot-backup.py.in	2016-03-15 12:00:40.000000000 +0800
++++ subversion-1.9.7/tools/backup/hot-backup.py.in	2016-03-15 12:00:40.000000000 +0800
+@@ -28,7 +28,7 @@
+ #    under the License.
+ # ====================================================================
+ 
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/backup/hot-backup.py.in $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/backup/hot-backup.py.in $
+ # $LastChangedDate: 2016-03-15 04:00:40 +0000 (Tue, 15 Mar 2016) $
+ # $LastChangedBy: svn-role $
+ # $LastChangedRevision: 1735016 $
+diff -uprN subversion-1.9.6/tools/dev/which-error.py subversion-1.9.7/tools/dev/which-error.py
+--- subversion-1.9.6/tools/dev/which-error.py	2013-12-05 08:42:34.000000000 +0800
++++ subversion-1.9.7/tools/dev/which-error.py	2013-12-05 08:42:34.000000000 +0800
+@@ -23,7 +23,7 @@
+ #    under the License.
+ # ====================================================================
+ #
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/dev/which-error.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/dev/which-error.py $
+ # $LastChangedDate: 2013-12-05 00:42:34 +0000 (Thu, 05 Dec 2013) $
+ # $LastChangedBy: breser $
+ # $LastChangedRevision: 1547977 $
+diff -uprN subversion-1.9.6/tools/examples/svnlook.py subversion-1.9.7/tools/examples/svnlook.py
+--- subversion-1.9.6/tools/examples/svnlook.py	2013-11-14 19:11:07.000000000 +0800
++++ subversion-1.9.7/tools/examples/svnlook.py	2013-11-14 19:11:07.000000000 +0800
+@@ -21,7 +21,7 @@
+ #    under the License.
+ ######################################################################
+ #
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/examples/svnlook.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/examples/svnlook.py $
+ # $LastChangedDate: 2013-11-14 11:11:07 +0000 (Thu, 14 Nov 2013) $
+ # $LastChangedRevision: 1541878 $
+ 
+diff -uprN subversion-1.9.6/tools/hook-scripts/commit-access-control.pl.in subversion-1.9.7/tools/hook-scripts/commit-access-control.pl.in
+--- subversion-1.9.6/tools/hook-scripts/commit-access-control.pl.in	2009-11-17 03:07:17.000000000 +0800
++++ subversion-1.9.7/tools/hook-scripts/commit-access-control.pl.in	2009-11-17 03:07:17.000000000 +0800
+@@ -6,7 +6,7 @@
+ # commit in repository REPOS using the permissions listed in the
+ # configuration file CONF_FILE.
+ #
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/commit-access-control.pl.in $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/commit-access-control.pl.in $
+ # $LastChangedDate: 2009-11-16 19:07:17 +0000 (Mon, 16 Nov 2009) $
+ # $LastChangedBy: hwright $
+ # $LastChangedRevision: 880911 $
+diff -uprN subversion-1.9.6/tools/hook-scripts/mailer/mailer.py subversion-1.9.7/tools/hook-scripts/mailer/mailer.py
+--- subversion-1.9.6/tools/hook-scripts/mailer/mailer.py	2015-02-13 19:17:40.000000000 +0800
++++ subversion-1.9.7/tools/hook-scripts/mailer/mailer.py	2015-02-13 19:17:40.000000000 +0800
+@@ -22,7 +22,7 @@
+ #
+ # mailer.py: send email describing a commit
+ #
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/mailer/mailer.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/mailer/mailer.py $
+ # $LastChangedDate: 2015-02-13 11:17:40 +0000 (Fri, 13 Feb 2015) $
+ # $LastChangedBy: rhuijben $
+ # $LastChangedRevision: 1659509 $
+diff -uprN subversion-1.9.6/tools/hook-scripts/svn2feed.py subversion-1.9.7/tools/hook-scripts/svn2feed.py
+--- subversion-1.9.6/tools/hook-scripts/svn2feed.py	2009-11-17 03:07:17.000000000 +0800
++++ subversion-1.9.7/tools/hook-scripts/svn2feed.py	2009-11-17 03:07:17.000000000 +0800
+@@ -70,7 +70,7 @@ Options:
+ #   is actually set only on initial feed creation, and thereafter simply
+ #   re-used from the pickle each time.
+ 
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/svn2feed.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/svn2feed.py $
+ # $LastChangedDate: 2009-11-16 19:07:17 +0000 (Mon, 16 Nov 2009) $
+ # $LastChangedBy: hwright $
+ # $LastChangedRevision: 880911 $
+diff -uprN subversion-1.9.6/tools/hook-scripts/svnperms.py subversion-1.9.7/tools/hook-scripts/svnperms.py
+--- subversion-1.9.6/tools/hook-scripts/svnperms.py	2011-07-13 02:37:44.000000000 +0800
++++ subversion-1.9.7/tools/hook-scripts/svnperms.py	2011-07-13 02:37:44.000000000 +0800
+@@ -21,7 +21,7 @@
+ #
+ #
+ 
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/svnperms.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/hook-scripts/svnperms.py $
+ # $LastChangedDate: 2011-07-12 18:37:44 +0000 (Tue, 12 Jul 2011) $
+ # $LastChangedBy: blair $
+ # $LastChangedRevision: 1145712 $
+diff -uprN subversion-1.9.6/tools/server-side/fsfs-reshard.py subversion-1.9.7/tools/server-side/fsfs-reshard.py
+--- subversion-1.9.6/tools/server-side/fsfs-reshard.py	2009-11-17 03:07:17.000000000 +0800
++++ subversion-1.9.7/tools/server-side/fsfs-reshard.py	2009-11-17 03:07:17.000000000 +0800
+@@ -46,7 +46,7 @@
+ #    under the License.
+ # ====================================================================
+ #
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/server-side/fsfs-reshard.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/tools/server-side/fsfs-reshard.py $
+ # $LastChangedDate: 2009-11-16 19:07:17 +0000 (Mon, 16 Nov 2009) $
+ # $LastChangedBy: hwright $
+ # $LastChangedRevision: 880911 $
+diff -uprN subversion-1.9.6/win-tests.py subversion-1.9.7/win-tests.py
+--- subversion-1.9.6/win-tests.py	2015-12-07 18:19:41.000000000 +0800
++++ subversion-1.9.7/win-tests.py	2015-12-07 18:19:41.000000000 +0800
+@@ -24,7 +24,7 @@ Driver for running the tests on Windows.
+ For a list of options, run this script with the --help option.
+ """
+ 
+-# $HeadURL: http://svn.apache.org/repos/asf/subversion/branches/1.9.x/win-tests.py $
++# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.9.x/win-tests.py $
+ # $LastChangedRevision: 1718291 $
+ 
+ import os, sys, subprocess
