@@ -447,7 +447,7 @@ log_message_func(const char **log_msg,
 
       SVN_ERR(svn_cmdline__edit_string_externally(
                       &msg, NULL, NULL, "", msg, "svnmucc-commit",
-                      lmb->ctx->config, TRUE, NULL, FALSE, pool));
+                      lmb->ctx->config, TRUE, NULL, FALSE, NULL, pool));
 
       if (msg && msg->data)
         *log_msg = msg->data;

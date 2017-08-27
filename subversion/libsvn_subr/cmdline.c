@@ -44,6 +44,7 @@
 #include <apr_pools.h>
 #include <apr_signal.h>
 
+#include "svn_client.h"
 #include "svn_cmdline.h"
 #include "svn_ctype.h"
 #include "svn_dso.h"
@@ -1345,6 +1346,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
                                     svn_boolean_t as_text,
                                     const char *encoding,
                                     svn_boolean_t verbose,
+                                    const apr_array_header_t *commit_items,
                                     apr_pool_t *pool)
 {
   const char *editor;
@@ -1451,10 +1453,26 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
     goto cleanup;
 
   if (verbose) {
-    char *buf = apr_pcalloc(pool, (strlen("svn di >> ") + strlen(tmpfile_name)
-          + 2) * sizeof(*buf));
-    sprintf(buf, "svn di >> %s", tmpfile_name);
-    system(buf);
+    int i, len = 0;
+    char *buf;
+    for (i = 0; i < commit_items->nelts; i++)
+      {
+        int t = strlen((APR_ARRAY_IDX(commit_items, i,
+                svn_client_commit_item3_t *))->path);
+        if (t > len)
+          len = t;
+      }
+    buf = apr_pcalloc(pool, (strlen("svn di --properties-only  >> ") +
+          strlen(tmpfile_name) + len + 2) * sizeof(*buf));
+    for (i = 0; i < commit_items->nelts; i++)
+      {
+        svn_client_commit_item3_t *item
+            = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
+        sprintf(buf, "svn di %s %s >> %s",
+            item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
+            "--properties-only" : "", item->path, tmpfile_name);
+        system(buf);
+      }
   }
 
   /* Get information about the temporary file before the user has
