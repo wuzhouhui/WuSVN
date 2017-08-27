@@ -146,7 +146,7 @@ svn_cl__propedit(apr_getopt_t *os,
                propval, "svn-prop",
                ctx->config,
                svn_prop_needs_translation(pname_utf8),
-               opt_state->encoding, opt_state->verbose, pool));
+               opt_state->encoding, opt_state->verbose, NULL, pool));
 
       /* ...and re-set the property's value accordingly. */
       if (propval)
@@ -285,6 +285,7 @@ svn_cl__propedit(apr_getopt_t *os,
                                                       (pname_utf8),
                                                       opt_state->encoding,
                                                       opt_state->verbose,
+                                                      NULL,
                                                       subpool));
 
           target_local = svn_path_is_url(target) ? target
