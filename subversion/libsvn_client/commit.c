@@ -798,6 +798,14 @@ svn_client_commit6(const apr_array_header_t *targets,
         }
     }
 
+  /* Sort and condense our COMMIT_ITEMS. */
+  cmt_err = svn_error_trace(svn_client__condense_commit_items(&base_url,
+                                                              commit_items,
+                                                              pool));
+
+  if (cmt_err)
+    goto cleanup;
+
   /* Go get a log message.  If an error occurs, or no log message is
      specified, abort the operation. */
   if (SVN_CLIENT__HAS_LOG_MSG_FUNC(ctx))
@@ -812,14 +820,6 @@ svn_client_commit6(const apr_array_header_t *targets,
     }
   else
     log_msg = "";
-
-  /* Sort and condense our COMMIT_ITEMS. */
-  cmt_err = svn_error_trace(svn_client__condense_commit_items(&base_url,
-                                                              commit_items,
-                                                              pool));
-
-  if (cmt_err)
-    goto cleanup;
 
   /* Collect our lock tokens with paths relative to base_url. */
   cmt_err = svn_error_trace(collect_lock_tokens(&lock_tokens, lock_tokens,
