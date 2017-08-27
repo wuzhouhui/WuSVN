@@ -445,6 +445,7 @@ svn_cl__get_log_message(const char **log_msg,
                                                     lmb->config, TRUE,
                                                     lmb->message_encoding,
                                                     lmb->verbose,
+                                                    commit_items,
                                                     pool);
         }
       else /* non_interactive flag says we can't pop up an editor, so error */
