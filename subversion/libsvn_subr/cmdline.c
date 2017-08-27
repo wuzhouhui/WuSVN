@@ -1458,7 +1458,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
     for (i = 0; i < commit_items->nelts; i++)
       {
         int t = strlen((APR_ARRAY_IDX(commit_items, i,
-                svn_client_commit_item3_t *))->path);
+                svn_client_commit_item3_t *))->session_relpath);
         if (t > len)
           len = t;
       }
@@ -1470,7 +1470,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
             = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
         sprintf(buf, "svn di %s %s >> %s",
             item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
-            "--properties-only" : "", item->path, tmpfile_name);
+            "--properties-only" : "", item->session_relpath, tmpfile_name);
         system(buf);
       }
   }
