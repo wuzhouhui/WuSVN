@@ -403,6 +403,9 @@ svn_cl__get_log_message(const char **log_msg,
           if (! path || !*path)
             path = ".";
 
+	  if (lmb->verbose)
+            item->diff_relpath = path;
+
           if ((item->state_flags & SVN_CLIENT_COMMIT_ITEM_DELETE)
               && (item->state_flags & SVN_CLIENT_COMMIT_ITEM_ADD))
             text_mod = 'R';
