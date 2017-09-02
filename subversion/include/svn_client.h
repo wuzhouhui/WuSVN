@@ -534,6 +534,14 @@ typedef struct svn_client_commit_item3_t
    */
   const char *moved_from_abspath;
 
+  /**
+   * When processing commit, this contains the relative path that relative to
+   * CWD when getting log message from external editor. #NULL until generating
+   * log message template and verbose enabled.
+   * @since New in 1.8.
+   */
+  const char *diff_relpath;
+
 } svn_client_commit_item3_t;
 
 /** The commit candidate structure.
