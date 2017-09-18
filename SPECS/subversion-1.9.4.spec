@@ -42,6 +42,7 @@ Packager: WANdisco Inc <opensource@wandisco.com>
 
 Requires: apr >= %{apr_version}
 Requires: apr-util >= %{apu_version}
+Requires: less
 
 BuildRequires: qt4-devel
 BuildRequires: gnome-keyring-devel
