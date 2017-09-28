@@ -479,6 +479,52 @@ svn_cl__log_entry_receiver(void *baton,
       SVN_ERR(svn_stream_close(errstream));
     }
 
+  /* Display statistics of diff */
+  if (lb->diffstat)
+    {
+      int c;
+      apr_exit_why_e e;
+      svn_stream_t *diffstatin, *errstream;
+      apr_proc_t diffstatproc;
+      apr_procattr_t *attr;
+      apr_status_t apr_err;
+      const char *progname = "diffstat";
+      const char *args1[] = { progname, "-E", "-C", NULL, };
+      const char *args2[] = { progname, NULL, };
+
+      apr_err = apr_procattr_create(&attr, pool);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't create process '%s' attributes"), progname);
+      apr_err = apr_procattr_cmdtype_set(attr, APR_PROGRAM_PATH);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't set process '%s' cmdtype"), progname);
+      apr_err = apr_procattr_io_set(attr, APR_FULL_BLOCK, APR_NO_PIPE,
+          APR_NO_PIPE);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't set process '%s' io"), progname);
+      apr_err = apr_proc_create(&diffstatproc, progname,
+          (dont_use_color ? args2 : args1), NULL, attr, pool);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't start process '%s'"), progname);
+      diffstatin = svn_stream_from_aprfile2(diffstatproc.in, FALSE, pool);
+
+      SVN_ERR(svn_stream_for_stderr(&errstream, pool));
+
+      SVN_ERR(display_diff(log_entry,
+                           lb->target_path_or_url, &lb->target_peg_revision,
+                           lb->depth, lb->diff_extensions,
+                           diffstatin, errstream,
+                           lb->ctx, pool));
+
+      SVN_ERR(svn_stream_close(diffstatin));
+      SVN_ERR(svn_stream_close(errstream));
+      apr_proc_wait(&diffstatproc, &c, &e, APR_WAIT);
+    }
+
   if (log_entry->has_children)
     {
       if (! lb->merge_stack)
@@ -819,6 +865,7 @@ svn_cl__log(apr_getopt_t *os,
   lb.depth = opt_state->depth == svn_depth_unknown ? svn_depth_infinity
                                                    : opt_state->depth;
   lb.diff_extensions = opt_state->extensions;
+  lb.diffstat = opt_state->diffstat;
   lb.merge_stack = NULL;
   lb.search_patterns = opt_state->search_patterns;
   svn_membuf__create(&lb.buffer, 0, pool);
