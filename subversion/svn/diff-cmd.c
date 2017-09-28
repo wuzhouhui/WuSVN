@@ -41,6 +41,7 @@
 #include "cl.h"
 
 #include "svn_private_config.h"
+#include "private/svn_color.h"
 
 
 /*** Code. ***/
@@ -206,6 +207,8 @@ svn_cl__diff(apr_getopt_t *os,
   struct summarize_baton_t summarize_baton;
   const svn_client_diff_summarize_func_t summarize_func =
     (opt_state->xml ? summarize_xml : summarize_regular);
+  svn_stream_t *diffstatin;
+  apr_proc_t diffstatproc;
 
   if (opt_state->extensions)
     options = svn_cstring_split(opt_state->extensions, " \t\n\r", TRUE, pool);
@@ -416,6 +419,35 @@ svn_cl__diff(apr_getopt_t *os,
 
   iterpool = svn_pool_create(pool);
 
+  if (opt_state->diff.diffstat)
+    {
+      apr_procattr_t *attr;
+      apr_status_t apr_err;
+      const char *progname = "diffstat";
+      const char *args1[] = { progname, "-E", "-C", NULL, };
+      const char *args2[] = { progname, NULL, };
+
+      apr_err = apr_procattr_create(&attr, pool);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't create process '%s' attributes"), progname);
+      apr_err = apr_procattr_cmdtype_set(attr, APR_PROGRAM_PATH);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't set process '%s' cmdtype"), progname);
+      apr_err = apr_procattr_io_set(attr, APR_FULL_BLOCK, APR_NO_PIPE,
+          APR_NO_PIPE);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't set process '%s' io"), progname);
+      apr_err = apr_proc_create(&diffstatproc, progname,
+          (dont_use_color ? args2 : args1), NULL, attr, pool);
+      if (apr_err)
+        return svn_error_wrap_apr(apr_err,
+            _("Can't start process '%s'"), progname);
+      diffstatin = svn_stream_from_aprfile2(diffstatproc.in, FALSE, pool);
+    }
+
   for (i = 0; i < targets->nelts; ++i)
     {
       const char *path = APR_ARRAY_IDX(targets, i, const char *);
@@ -462,6 +494,28 @@ svn_cl__diff(apr_getopt_t *os,
                                 summarize_func, &summarize_baton,
                                 ctx, iterpool));
             }
+          else if (opt_state->diff.diffstat)
+            SVN_ERR(svn_client_diff6(
+                     options,
+                     target1,
+                     &(opt_state->start_revision),
+                     target2,
+                     &(opt_state->end_revision),
+                     NULL,
+                     opt_state->depth,
+                     ! opt_state->diff.notice_ancestry,
+                     opt_state->diff.no_diff_added,
+                     opt_state->diff.no_diff_deleted,
+                     show_copies_as_adds,
+                     ignore_content_type,
+                     ignore_properties,
+                     opt_state->diff.properties_only,
+                     opt_state->diff.use_git_diff_format,
+                     svn_cmdline_output_encoding(pool),
+                     diffstatin,
+                     errstream,
+                     opt_state->changelists,
+                     ctx, iterpool));
           else
             SVN_ERR(svn_client_diff6(
                      options,
@@ -548,6 +602,13 @@ svn_cl__diff(apr_getopt_t *os,
     }
 
   svn_pool_destroy(iterpool);
+  if (opt_state->diff.diffstat)
+    {
+      int c;
+      apr_exit_why_e e;
+      svn_stream_close(diffstatin);
+      apr_proc_wait(&diffstatproc, &c, &e, APR_WAIT);
+    }
 
   return SVN_NO_ERROR;
 }

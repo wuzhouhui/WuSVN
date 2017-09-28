@@ -89,6 +89,7 @@ typedef enum svn_cl__longopt_t {
   opt_properties_only,
   opt_patch_compatible,
   opt_no_color,
+  opt_diffstat,
   /* end of diff options */
   opt_dry_run,
   opt_editor_cmd,
@@ -399,6 +400,7 @@ const apr_getopt_option_t svn_cl__options[] =
                        "--show-copies-as-adds --ignore-properties"
                        )},
   {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
+  {"stat", opt_diffstat, 0, N_("display statistics of diff")},
   /* end of diff options */
   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
                        N_("Allow operation on mixed-revision working copy.\n"
@@ -758,7 +760,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      opt_ignore_properties, opt_properties_only,
      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
      opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
-     opt_no_color,} },
+     opt_no_color, opt_diffstat,} },
   { "export", svn_cl__export, {0}, N_
     ("Create an unversioned copy of a tree.\n"
      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
@@ -2632,6 +2634,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
       case opt_no_color:
 	opt_state.diff.no_color = TRUE;
 	break;
+      case opt_diffstat:
+        opt_state.diff.diffstat = TRUE;
+        break;
       case opt_use_git_diff_format:
         opt_state.diff.use_git_diff_format = TRUE;
         break;
