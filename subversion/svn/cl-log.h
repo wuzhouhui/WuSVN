@@ -65,6 +65,9 @@ typedef struct svn_cl__log_receiver_baton
   /* Diff arguments received from command line. */
   const char *diff_extensions;
 
+  /* Whether to show statistics of diff */
+  svn_boolean_t diffstat;
+
   /* Stack which keeps track of merge revision nesting, using svn_revnum_t's */
   apr_array_header_t *merge_stack;
 
