@@ -59,6 +59,15 @@ struct svn_diff_t {
   svn_diff_t *resolved_diff;
 };
 
+struct svn_dfstat_ctx_s {
+  void *next;
+  char *file_path;
+  int base;
+  svn_linenum_t file_num;
+  svn_linenum_t inserted_num;
+  svn_linenum_t deleted_num;
+};
+
 /* Type used for token indices and counts of tokens. Must be signed. */
 typedef long int svn_diff__token_index_t;
 

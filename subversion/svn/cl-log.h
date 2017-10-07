@@ -57,6 +57,9 @@ typedef struct svn_cl__log_receiver_baton
   /* Whether to show diffs in the log. (maps to --diff) */
   svn_boolean_t show_diff;
 
+  /* Whether to show diff stats in the log. (maps to --stat) */
+  svn_boolean_t diffstat;
+
   /* Depth applied to diff output. */
   svn_depth_t depth;
 

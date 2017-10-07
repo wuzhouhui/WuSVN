@@ -112,6 +112,56 @@ display_diff(const svn_log_entry_t *log_entry,
 }
 
 
+static svn_error_t *
+display_diffstat(const svn_log_entry_t *log_entry,
+             const char *target_path_or_url,
+             const svn_opt_revision_t *target_peg_revision,
+             svn_depth_t depth,
+             const char *diff_extensions,
+             svn_stream_t *outstream,
+             svn_stream_t *errstream,
+             svn_client_ctx_t *ctx,
+             apr_pool_t *pool)
+{
+  apr_array_header_t *diff_options;
+  svn_opt_revision_t start_revision;
+  svn_opt_revision_t end_revision;
+
+  /* Fall back to "" to get options initialized either way. */
+  if (diff_extensions)
+    diff_options = svn_cstring_split(diff_extensions, " \t\n\r",
+                                     TRUE, pool);
+  else
+    diff_options = NULL;
+
+  start_revision.kind = svn_opt_revision_number;
+  start_revision.value.number = log_entry->revision - 1;
+  end_revision.kind = svn_opt_revision_number;
+  end_revision.value.number = log_entry->revision;
+
+  SVN_ERR(svn_client_diff_peg6_diffstat(diff_options,
+                               target_path_or_url,
+                               target_peg_revision,
+                               &start_revision, &end_revision,
+                               NULL,
+                               depth,
+                               FALSE /* ignore ancestry */,
+                               FALSE /* no diff added */,
+                               FALSE /* no diff deleted */,
+                               TRUE  /* show copies as adds */,
+                               FALSE /* ignore content type */,
+                               TRUE  /* ignore prop diff */,
+                               FALSE /* properties only */,
+                               FALSE /* use git diff format */,
+                               svn_cmdline_output_encoding(pool),
+                               outstream,
+                               errstream,
+                               NULL,
+                               ctx, pool));
+  return SVN_NO_ERROR;
+}
+
+
 /* Return TRUE if SEARCH_PATTERN matches the AUTHOR, DATE, LOG_MESSAGE,
  * or a path in the set of keys of the CHANGED_PATHS hash. Else, return FALSE.
  * Any of AUTHOR, DATE, LOG_MESSAGE, and CHANGED_PATHS may be NULL. */
@@ -441,8 +491,25 @@ svn_cl__log_entry_receiver(void *baton,
   SVN_ERR(svn_cmdline_fflush(stdout));
   SVN_ERR(svn_cmdline_fflush(stderr));
 
+  if (lb->diffstat)
+    {
+      svn_stream_t *outstream;
+      svn_stream_t *errstream;
+
+      SVN_ERR(svn_stream_for_stdout(&outstream, pool));
+      SVN_ERR(svn_stream_for_stderr(&errstream, pool));
+
+      SVN_ERR(display_diffstat(log_entry,
+                           lb->target_path_or_url, &lb->target_peg_revision,
+                           lb->depth, lb->diff_extensions,
+                           outstream, errstream,
+                           lb->ctx, pool));
+
+      SVN_ERR(svn_stream_close(outstream));
+      SVN_ERR(svn_stream_close(errstream));
+    }
   /* Print a diff if requested. */
-  if (lb->show_diff)
+  else if (lb->show_diff)
     {
       svn_stream_t *outstream;
       svn_stream_t *errstream;
@@ -800,6 +867,7 @@ svn_cl__log(apr_getopt_t *os,
   lb.depth = opt_state->depth == svn_depth_unknown ? svn_depth_infinity
                                                    : opt_state->depth;
   lb.diff_extensions = opt_state->extensions;
+  lb.diffstat = opt_state->diffstat;
   lb.merge_stack = NULL;
   lb.search_patterns = opt_state->search_patterns;
   lb.pool = pool;
