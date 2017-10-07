@@ -673,6 +673,9 @@ typedef struct diff_writer_info_t
   /* Whether to ignore copyfrom information when showing adds */
   svn_boolean_t show_copies_as_adds;
 
+  svn_boolean_t diffstat;
+  svn_dfstat_ctx_t *dfstat_ctx;
+
   /* Empty files for creating diffs or NULL if not used yet */
   const char *empty_file;
 
@@ -1046,6 +1049,16 @@ diff_content_changed(svn_boolean_t *wrote_header,
       /* If we have printed a diff for this path, mark it as visited. */
       if (exitcode == 1)
         *wrote_header = TRUE;
+    }
+  else if (dwi->diffstat) /* Display diff statistics */
+    {
+      svn_diff_t *diff;
+
+      SVN_ERR(svn_diff_file_diff_2(&diff, tmpfile1, tmpfile2,
+            dwi->options.for_internal,
+            scratch_pool));
+      if (svn_diff_contains_diffs(diff))
+        SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, diff, diff_relpath));
     }
   else   /* use libsvn_diff to generate the diff  */
     {
@@ -2736,6 +2749,95 @@ svn_client_diff_peg6(const apr_array_header_t *options,
                                  TRUE /* text_deltas */,
                                  diff_processor, ctx, pool, pool));
 }
+
+svn_error_t *
+svn_client_diff_peg6_diffstat(const apr_array_header_t *options,
+                     const char *path_or_url,
+                     const svn_opt_revision_t *peg_revision,
+                     const svn_opt_revision_t *start_revision,
+                     const svn_opt_revision_t *end_revision,
+                     const char *relative_to_dir,
+                     svn_depth_t depth,
+                     svn_boolean_t ignore_ancestry,
+                     svn_boolean_t no_diff_added,
+                     svn_boolean_t no_diff_deleted,
+                     svn_boolean_t show_copies_as_adds,
+                     svn_boolean_t ignore_content_type,
+                     svn_boolean_t ignore_properties,
+                     svn_boolean_t properties_only,
+                     svn_boolean_t use_git_diff_format,
+                     const char *header_encoding,
+                     svn_stream_t *outstream,
+                     svn_stream_t *errstream,
+                     const apr_array_header_t *changelists,
+                     svn_client_ctx_t *ctx,
+                     apr_pool_t *pool)
+{
+  diff_writer_info_t dwi = { 0 };
+  const svn_diff_tree_processor_t *diff_processor;
+  svn_diff_tree_processor_t *processor;
+
+  if (ignore_properties && properties_only)
+    return svn_error_create(SVN_ERR_INCORRECT_PARAMS, NULL,
+                            _("Cannot ignore properties and show only "
+                              "properties at the same time"));
+
+  /* setup callback and baton */
+  dwi.ddi.orig_path_1 = path_or_url;
+  dwi.ddi.orig_path_2 = path_or_url;
+
+  SVN_ERR(create_diff_writer_info(&dwi, options,
+                                  ctx->config, pool));
+  dwi.pool = pool;
+  dwi.outstream = outstream;
+  dwi.errstream = errstream;
+  dwi.header_encoding = header_encoding;
+
+  dwi.force_binary = ignore_content_type;
+  dwi.ignore_properties = ignore_properties;
+  dwi.properties_only = properties_only;
+  dwi.relative_to_dir = relative_to_dir;
+  dwi.use_git_diff_format = use_git_diff_format;
+  dwi.no_diff_added = no_diff_added;
+  dwi.no_diff_deleted = no_diff_deleted;
+  dwi.show_copies_as_adds = show_copies_as_adds;
+  dwi.diffstat = TRUE;
+  SVN_ERR(svn_diff_create_dfctx(&dwi.dfstat_ctx));
+
+  dwi.cancel_func = ctx->cancel_func;
+  dwi.cancel_baton = ctx->cancel_baton;
+
+  dwi.wc_ctx = ctx->wc_ctx;
+  dwi.ddi.session_relpath = NULL;
+  dwi.ddi.anchor = NULL;
+
+  processor = svn_diff__tree_processor_create(&dwi, pool);
+
+  processor->dir_added = diff_dir_added;
+  processor->dir_changed = diff_dir_changed;
+  processor->dir_deleted = diff_dir_deleted;
+
+  processor->file_added = diff_file_added;
+  processor->file_changed = diff_file_changed;
+  processor->file_deleted = diff_file_deleted;
+
+  diff_processor = processor;
+
+  /* --show-copies-as-adds and --git imply --notice-ancestry */
+  if (show_copies_as_adds || use_git_diff_format)
+    ignore_ancestry = FALSE;
+
+  SVN_ERR(do_diff(NULL, NULL, &dwi.ddi,
+                                 path_or_url, path_or_url,
+                                 start_revision, end_revision, peg_revision,
+                                 depth, ignore_ancestry, changelists,
+                                 TRUE /* text_deltas */,
+                                 diff_processor, ctx, pool, pool));
+  SVN_ERR(svn_diff_output_dfstat(outstream, dwi.dfstat_ctx));
+  svn_diff_destroy_dfctx(dwi.dfstat_ctx);
+  return SVN_NO_ERROR;
+}
+
 
 svn_error_t *
 svn_client_diff_summarize2(const char *path_or_url1,

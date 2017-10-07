@@ -240,6 +240,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t ignore_whitespace; /* don't account for whitespace when
                                       patching */
   svn_boolean_t show_diff;         /* produce diff output (maps to --diff) */
+  svn_boolean_t diffstat;          /* display statistics of diff */
   svn_boolean_t allow_mixed_rev;   /* Allow operation on mixed-revision WC */
   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
   svn_boolean_t show_inherited_props;  /* get inherited properties */

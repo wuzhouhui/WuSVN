@@ -81,6 +81,8 @@ svn_diff_version(void);
  */
 typedef struct svn_diff_t svn_diff_t;
 
+typedef struct svn_dfstat_ctx_s svn_dfstat_ctx_t;
+
 /**
  * There are four types of datasources.  In GNU diff3 terminology,
  * the first three types correspond to the phrases "older", "mine",
@@ -1364,6 +1366,22 @@ svn_diff_parse_next_patch(svn_patch_t **patch,
 svn_error_t *
 svn_diff_close_patch_file(svn_patch_file_t *patch_file,
                           apr_pool_t *scratch_pool);
+
+
+svn_error_t *
+svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx);
+
+void
+svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx);
+
+svn_error_t *
+svn_diff_stat(svn_dfstat_ctx_t *ctx,
+    const svn_diff_t *diff,
+    const char *file_path);
+
+svn_error_t *
+svn_diff_output_dfstat(svn_stream_t *out,
+    svn_dfstat_ctx_t *head);
 
 #ifdef __cplusplus
 }

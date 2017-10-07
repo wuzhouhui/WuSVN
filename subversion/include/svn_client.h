@@ -3303,6 +3303,31 @@ svn_client_diff_peg6(const apr_array_header_t *diff_options,
                      svn_client_ctx_t *ctx,
                      apr_pool_t *pool);
 
+
+svn_error_t *
+svn_client_diff_peg6_diffstat(const apr_array_header_t *diff_options,
+                     const char *path_or_url,
+                     const svn_opt_revision_t *peg_revision,
+                     const svn_opt_revision_t *start_revision,
+                     const svn_opt_revision_t *end_revision,
+                     const char *relative_to_dir,
+                     svn_depth_t depth,
+                     svn_boolean_t ignore_ancestry,
+                     svn_boolean_t no_diff_added,
+                     svn_boolean_t no_diff_deleted,
+                     svn_boolean_t show_copies_as_adds,
+                     svn_boolean_t ignore_content_type,
+                     svn_boolean_t ignore_properties,
+                     svn_boolean_t properties_only,
+                     svn_boolean_t use_git_diff_format,
+                     const char *header_encoding,
+                     svn_stream_t *outstream,
+                     svn_stream_t *errstream,
+                     const apr_array_header_t *changelists,
+                     svn_client_ctx_t *ctx,
+                     apr_pool_t *pool);
+
+
 /** Similar to svn_client_diff6_peg6(), but with @a outfile and @a errfile,
  * instead of @a outstream and @a errstream, and with @a
  * no_diff_added, @a ignore_properties, and @a properties_only always
