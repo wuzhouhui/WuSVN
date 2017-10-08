@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 5
+%define svn_release 6
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -36,6 +36,7 @@ Patch2: Subcmd-clean-remove-files-only-if-option-force-enabl.patch
 Patch3: subversion-1.9.6.patch
 Patch4: subversion-1.9.7.patch
 Patch5: subversion-1.9.4.option-v.patch
+Patch6: subversion-1.9.4.dfstat-1.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -159,6 +160,7 @@ WANdisco extensions to subversion
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -348,6 +350,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-6
+* subversion-1.9.4.dfstat-1.patch
+
 * Sat Sep 2 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-5
 * subversion-1.9.4.option-v.patch
 

@@ -1,0 +1,1453 @@
+Until ed683098
+
+diff --git a/subversion/include/svn_client.h b/subversion/include/svn_client.h
+index 5ca1654..eaae329 100644
+--- a/subversion/include/svn_client.h
++++ b/subversion/include/svn_client.h
+@@ -3303,6 +3303,31 @@ svn_client_diff_peg6(const apr_array_header_t *diff_options,
+                      svn_client_ctx_t *ctx,
+                      apr_pool_t *pool);
+ 
++
++svn_error_t *
++svn_client_diff_peg6_diffstat(const apr_array_header_t *diff_options,
++                     const char *path_or_url,
++                     const svn_opt_revision_t *peg_revision,
++                     const svn_opt_revision_t *start_revision,
++                     const svn_opt_revision_t *end_revision,
++                     const char *relative_to_dir,
++                     svn_depth_t depth,
++                     svn_boolean_t ignore_ancestry,
++                     svn_boolean_t no_diff_added,
++                     svn_boolean_t no_diff_deleted,
++                     svn_boolean_t show_copies_as_adds,
++                     svn_boolean_t ignore_content_type,
++                     svn_boolean_t ignore_properties,
++                     svn_boolean_t properties_only,
++                     svn_boolean_t use_git_diff_format,
++                     const char *header_encoding,
++                     svn_stream_t *outstream,
++                     svn_stream_t *errstream,
++                     const apr_array_header_t *changelists,
++                     svn_client_ctx_t *ctx,
++                     apr_pool_t *pool);
++
++
+ /** Similar to svn_client_diff6_peg6(), but with @a outfile and @a errfile,
+  * instead of @a outstream and @a errstream, and with @a
+  * no_diff_added, @a ignore_properties, and @a properties_only always
+diff --git a/subversion/include/svn_diff.h b/subversion/include/svn_diff.h
+index ad3257a..16bec22 100644
+--- a/subversion/include/svn_diff.h
++++ b/subversion/include/svn_diff.h
+@@ -81,6 +81,8 @@ svn_diff_version(void);
+  */
+ typedef struct svn_diff_t svn_diff_t;
+ 
++typedef struct svn_dfstat_ctx_s svn_dfstat_ctx_t;
++
+ /**
+  * There are four types of datasources.  In GNU diff3 terminology,
+  * the first three types correspond to the phrases "older", "mine",
+@@ -1293,6 +1295,22 @@ svn_error_t *
+ svn_diff_close_patch_file(svn_patch_file_t *patch_file,
+                           apr_pool_t *scratch_pool);
+ 
++
++svn_error_t *
++svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx);
++
++void
++svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx);
++
++svn_error_t *
++svn_diff_stat(svn_dfstat_ctx_t *ctx,
++    const svn_diff_t *diff,
++    const char *file_path);
++
++svn_error_t *
++svn_diff_output_dfstat(svn_stream_t *out,
++    svn_dfstat_ctx_t *head);
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index fc121aa..5d3f361 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -595,6 +595,9 @@ typedef struct diff_writer_info_t
+   /* Whether to ignore copyfrom information when showing adds */
+   svn_boolean_t show_copies_as_adds;
+ 
++  svn_boolean_t diffstat;
++  svn_dfstat_ctx_t *dfstat_ctx;
++
+   /* Empty files for creating diffs or NULL if not used yet */
+   const char *empty_file;
+ 
+@@ -869,6 +872,16 @@ diff_content_changed(svn_boolean_t *wrote_header,
+       if (exitcode == 1)
+         *wrote_header = TRUE;
+     }
++  else if (dwi->diffstat) /* Display diff statistics */
++    {
++      svn_diff_t *diff;
++
++      SVN_ERR(svn_diff_file_diff_2(&diff, tmpfile1, tmpfile2,
++            dwi->options.for_internal,
++            scratch_pool));
++      if (svn_diff_contains_diffs(diff))
++        SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, diff, diff_relpath));
++    }
+   else   /* use libsvn_diff to generate the diff  */
+     {
+       svn_diff_t *diff;
+@@ -2538,6 +2551,95 @@ svn_client_diff_peg6(const apr_array_header_t *options,
+                                  diff_processor, ctx, pool, pool));
+ }
+ 
++svn_error_t *
++svn_client_diff_peg6_diffstat(const apr_array_header_t *options,
++                     const char *path_or_url,
++                     const svn_opt_revision_t *peg_revision,
++                     const svn_opt_revision_t *start_revision,
++                     const svn_opt_revision_t *end_revision,
++                     const char *relative_to_dir,
++                     svn_depth_t depth,
++                     svn_boolean_t ignore_ancestry,
++                     svn_boolean_t no_diff_added,
++                     svn_boolean_t no_diff_deleted,
++                     svn_boolean_t show_copies_as_adds,
++                     svn_boolean_t ignore_content_type,
++                     svn_boolean_t ignore_properties,
++                     svn_boolean_t properties_only,
++                     svn_boolean_t use_git_diff_format,
++                     const char *header_encoding,
++                     svn_stream_t *outstream,
++                     svn_stream_t *errstream,
++                     const apr_array_header_t *changelists,
++                     svn_client_ctx_t *ctx,
++                     apr_pool_t *pool)
++{
++  diff_writer_info_t dwi = { 0 };
++  const svn_diff_tree_processor_t *diff_processor;
++  svn_diff_tree_processor_t *processor;
++
++  if (ignore_properties && properties_only)
++    return svn_error_create(SVN_ERR_INCORRECT_PARAMS, NULL,
++                            _("Cannot ignore properties and show only "
++                              "properties at the same time"));
++
++  /* setup callback and baton */
++  dwi.ddi.orig_path_1 = path_or_url;
++  dwi.ddi.orig_path_2 = path_or_url;
++
++  SVN_ERR(create_diff_writer_info(&dwi, options,
++                                  ctx->config, pool));
++  dwi.pool = pool;
++  dwi.outstream = outstream;
++  dwi.errstream = errstream;
++  dwi.header_encoding = header_encoding;
++
++  dwi.force_binary = ignore_content_type;
++  dwi.ignore_properties = ignore_properties;
++  dwi.properties_only = properties_only;
++  dwi.relative_to_dir = relative_to_dir;
++  dwi.use_git_diff_format = use_git_diff_format;
++  dwi.no_diff_added = no_diff_added;
++  dwi.no_diff_deleted = no_diff_deleted;
++  dwi.show_copies_as_adds = show_copies_as_adds;
++  dwi.diffstat = TRUE;
++  SVN_ERR(svn_diff_create_dfctx(&dwi.dfstat_ctx));
++
++  dwi.cancel_func = ctx->cancel_func;
++  dwi.cancel_baton = ctx->cancel_baton;
++
++  dwi.wc_ctx = ctx->wc_ctx;
++  dwi.ddi.session_relpath = NULL;
++  dwi.ddi.anchor = NULL;
++
++  processor = svn_diff__tree_processor_create(&dwi, pool);
++
++  processor->dir_added = diff_dir_added;
++  processor->dir_changed = diff_dir_changed;
++  processor->dir_deleted = diff_dir_deleted;
++
++  processor->file_added = diff_file_added;
++  processor->file_changed = diff_file_changed;
++  processor->file_deleted = diff_file_deleted;
++
++  diff_processor = processor;
++
++  /* --show-copies-as-adds and --git imply --notice-ancestry */
++  if (show_copies_as_adds || use_git_diff_format)
++    ignore_ancestry = FALSE;
++
++  SVN_ERR(do_diff(NULL, NULL, &dwi.ddi,
++                                 path_or_url, path_or_url,
++                                 start_revision, end_revision, peg_revision,
++                                 depth, ignore_ancestry, changelists,
++                                 TRUE /* text_deltas */,
++                                 diff_processor, ctx, pool, pool));
++  SVN_ERR(svn_diff_output_dfstat(outstream, dwi.dfstat_ctx));
++  svn_diff_destroy_dfctx(dwi.dfstat_ctx);
++  return SVN_NO_ERROR;
++}
++
++
+ svn_error_t *
+ svn_client_diff_summarize2(const char *path_or_url1,
+                            const svn_opt_revision_t *revision1,
+diff --git a/subversion/libsvn_diff/diff.c b/subversion/libsvn_diff/diff.c
+index f43a3be..93e7f3b 100644
+--- a/subversion/libsvn_diff/diff.c
++++ b/subversion/libsvn_diff/diff.c
+@@ -32,6 +32,7 @@
+ #include "svn_types.h"
+ 
+ #include "diff.h"
++#include "private/svn_color.h"
+ 
+ 
+ svn_diff__token_index_t*
+@@ -197,3 +198,941 @@ svn_diff_diff_2(svn_diff_t **diff,
+ 
+   return SVN_NO_ERROR;
+ }
++
++
++
++/******************************************************************************
++ * Copyright 1994-2015,2016 by Thomas E. Dickey                               *
++ * All Rights Reserved.                                                       *
++ *                                                                            *
++ * Permission to use, copy, modify, and distribute this software and its      *
++ * documentation for any purpose and without fee is hereby granted, provided  *
++ * that the above copyright notice appear in all copies and that both that    *
++ * copyright notice and this permission notice appear in supporting           *
++ * documentation, and that the name of the above listed copyright holder(s)   *
++ * not be used in advertising or publicity pertaining to distribution of the  *
++ * software without specific, written prior permission.                       *
++ *                                                                            *
++ * THE ABOVE LISTED COPYRIGHT HOLDER(S) DISCLAIM ALL WARRANTIES WITH REGARD   *
++ * TO THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND  *
++ * FITNESS, IN NO EVENT SHALL THE ABOVE LISTED COPYRIGHT HOLDER(S) BE LIABLE  *
++ * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES          *
++ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN      *
++ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR *
++ * IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.                *
++ ******************************************************************************/
++
++#ifndef	NO_IDENT
++static const char *Id = "$Id: diffstat.c,v 1.61 2016/01/14 00:52:29 tom Exp $";
++#endif
++
++/*
++ * Title:	diffstat.c
++ * Author:	T.E.Dickey
++ * Created:	02 Feb 1992
++ * Modified:
++ *		14 Jan 2016, extend -S option to count unmodified files.
++ *			     add -T option to show values with histogram
++ *		06 Jul 2015, handle double-quotes, e.g., from diffutils 3.3
++ *			     when filenames have embedded spaces.
++ *		05 Jun 2014, add -E option to filter colordiff output.
++ *		28 Oct 2013, portability improvements for MinGW.
++ *		15 Apr 2013, modify to accommodate output of "diff -q", which
++ *			     tells only if the files are different.  Work
++ *			     around the equivalent ambiguous message introduced
++ *			     in diffutils 2.8.4 and finally removed for 3.0
++ *		11 Feb 2013, add -K option.  Use strtol() to provide error
++ *			     checking of optarg values.
++ *		10 Feb 2013, document -b, -C, -s option in usage (patch by
++ *			     Tim Waugh, Red Hat #852770).  Improve pathname
++ *			     merging.
++ *		02 Jun 2012, fix for svn diff with spaces in path (patch by
++ *			     Stuart Prescott, Debian #675465).
++ *		03 Jan 2012, Correct case for "xz" suffix in is_compressed()
++ *			     (patch from Frederic Culot in FreeBSD ports).  Add
++ *			     "-R" option.  Improve dequoting of filenames in
++ *			     headers.
++ *		10 Oct 2010, correct display of new files when -S/-D options
++ *			     are used.  Remove the temporary directory on
++ *			     error, introduced in 1.48+ (patch by Solar
++ *			     Designer).
++ *		19 Jul 2010, add missing "break" statement which left "-c"
++ *			     option falling-through into "-C".
++ *		16 Jul 2010, configure "xz" path explicitly, in case lzcat
++ *			     does not support xz format.  Add "-s" (summary)
++ *			     and "-C" (color) options.
++ *		15 Jul 2010, fix strict gcc warnings, e.g., using const.
++ *		10 Jan 2010, improve a case where filenames have embedded blanks
++ *			     (patch by Reinier Post).
++ *		07 Nov 2009, correct suffix-check for ".xz" files as
++ *			     command-line parameters rather than as piped
++ *			     input (report by Moritz Barsnick).
++ *		06 Oct 2009, fixes to build/run with MSYS or MinGW.  use
++ *			     $TMPDIR for path of temporary file used in
++ *			     decompression.  correct else-condition for
++ *			     detecting compression type (patch by Zach Hirsch).
++ *		31 Aug 2009, improve lzma support, add support for xz (patch by
++ *			     Eric Blake).  Add special case for no-newline
++ *			     message from some diff's (Ubuntu #269895).
++ *			     Improve configure check for getopt().
++ *		11 Aug 2009, Add logic to check standard input, decompress if
++ *			     possible.  Add -N option, to truncate long names.
++ *			     Add pack/pcat as a compression type.
++ *			     Add lzma/lzcat as a compression type.
++ *			     Allow overriding program paths with environment.
++ *		10 Aug 2009, modify to work with Perforce-style diffs (patch
++ *			     by Ed Schouten).
++ *		29 Mar 2009, modify to work with patch ".rej" files, which have
++ *			     no filename header (use the name of the ".rej"
++ *			     file if it is available).
++ *		29 Sep 2008, fix typo in usage message.
++ *		06 Aug 2008, add "-m", "-S" and "-D" options.
++ *		05 Aug 2008, add "-q" option to suppress 0-files-changed
++ *			     message (patch by Greg Norris).
++ *		04 Sep 2007, add "-b" option to suppress binary-files (patch
++ *			     by Greg Norris).
++ *		26 Aug 2007, add "-d" option to show debugging traces, rather
++ *			     than by defining DEBUG.  Add check after
++ *			     unified-diff chunk to avoid adding non-diff text
++ *			     (report by Adrian Bunk).  Quote pathname passed
++ *			     in command to gzip/uncompress.  Add a check for
++ *			     default-diff output without the "diff" command
++ *			     supplied to provide filename, mark as "unknown".
++ *		16 Jul 2006, fix to avoid modifying which is being used by
++ *			     tsearch() for ordering the binary tree (report by
++ *			     Adrian Bunk).
++ *		02 Jul 2006, do not ignore pathnames in /tmp/, since some tools
++ *			     create usable pathnames for both old/new files
++ *			     there (Debian #376086).  Correct ifdef for
++ *			     fgetc_unlocked().  Add configure check for
++ *			     compress, gzip and bzip2 programs that may be used
++ *			     to decompress files.
++ *		24 Aug 2005, update usage message for -l, -r changes.
++ *		15 Aug 2005, apply PLURAL() to num_files (Jean Delvare).
++ *			     add -l option (request by Michael Burian).
++ *			     Use fgetc_locked() if available.
++ *		14 Aug 2005, add -r2 option (rounding with adjustment to ensure
++ *			     that nonzero values always display a histogram
++ *			     bar), adapted from patch by Jean Delvare.  Extend
++ *			     the -f option (2=filled, 4=verbose).
++ *		12 Aug 2005, modify to use tsearch() for sorted lists.
++ *		11 Aug 2005, minor fixes to scaling of modified lines.  Add
++ *			     -r (round) option.
++ *		05 Aug 2005, add -t (table) option.
++ *		10 Apr 2005, change order of merging and prefix-stripping so
++ *			     stripping all prefixes, e.g., with -p9, will be
++ *			     sorted as expected (Patch by Jean Delvare
++ *			     <khali@linux-fr.org>).
++ *		10 Jan 2005, add support for '--help' and '--version' (Patch
++ *			     by Eric Blake <ebb9@byu.net>.)
++ *		16 Dec 2004, fix a different case for data beginning with "--"
++ *			     which was treated as a header line.
++ *		14 Dec 2004, Fix allocation problems.  Open files in binary
++ *			     mode for reading.  Getopt returns -1, not
++ *			     necessarily EOF.  Add const where useful.  Use
++ *			     NO_IDENT where necessary.  malloc() comes from
++ *			     <stdlib.h> in standard systems (Patch by Eric
++ *			     Blake <ebb9@byu.net>.)
++ *		08 Nov 2004, minor fix for resync of unified diffs checks for
++ *			     range (line beginning with '@' without header
++ *			     lines (successive lines beginning with "---" and
++ *			     "+++").  Fix a few problems reported by valgrind.
++ *		09 Nov 2003, modify check for lines beginning with '-' or '+'
++ *			     to treat only "---" in old-style diffs as a
++ *			     special case.
++ *		14 Feb 2003, modify check for filenames to allow for some cases
++ *			     of incomplete dates (the reported example omitted
++ *			     the day of the month).  Correct a typo in usage().
++ *			     Add -e, -h, -o options.
++ *		04 Jan 2003, improve tracking of chunks in unified diff, in
++ *			     case the original files contained a '+' or '-' in
++ *			     the first column (Debian #155000).  Add -v option
++ *			     (Debian #170947).  Modify to allocate buffers big
++ *			     enough for long input lines.  Do additional
++ *			     merging to handle unusual Index/diff constructs in
++ *			     recent makepatch script.
++ *		20 Aug 2002, add -u option to tell diffstat to preserve the
++ *			     order of filenames as given rather than sort them
++ *			     (request by H Peter Anvin <hpa@zytor.com>).  Add
++ *			     -k option for completeness.
++ *		09 Aug 2002, allow either '/' or '-' as delimiters in dates,
++ *			     to accommodate diffutils 2.8 (report by Rik van
++ *			     Riel <riel@conectiva.com.br>).
++ *		10 Oct 2001, add bzip2 (.bz2) suffix as suggested by
++ *			     Gregory T Norris <haphazard@socket.net> in Debian
++ *			     bug report #82969).
++ *			     add check for diff from RCS archive where the
++ *			     "diff" lines do not reference a filename.
++ *		29 Mar 2000, add -c option.  Check for compressed input, read
++ *			     via pipe.  Change to ANSI C.  Adapted change from
++ *			     Troy Engel to add option that displays a number
++ *			     only, rather than a histogram.
++ *		17 May 1998, handle Debian diff files, which do not contain
++ *			     dates on the header lines.
++ *		16 Jan 1998, accommodate patches w/o tabs in header lines (e.g.,
++ *			     from cut/paste).  Strip suffixes such as ".orig".
++ *		24 Mar 1996, corrected -p0 logic, more fixes in do_merging.
++ *		16 Mar 1996, corrected state-change for "Binary".  Added -p
++ *			     option.
++ *		17 Dec 1995, corrected matching algorithm in 'do_merging()'
++ *		11 Dec 1995, mods to accommodate diffs against /dev/null or
++ *			     /tmp/XXX (tempfiles).
++ *		06 May 1995, limit scaling -- only shrink-to-fit.
++ *		29 Apr 1995, recognize 'rcsdiff -u' format.
++ *		26 Dec 1994, strip common pathname-prefix.
++ *		13 Nov 1994, added '-n' option.  Corrected logic of 'match'.
++ *		17 Jun 1994, ifdef-<string.h>
++ *		12 Jun 1994, recognize unified diff, and output of makepatch.
++ *		04 Oct 1993, merge multiple diff-files, busy message when the
++ *			     output is piped to a file.
++ *
++ * Function:	this program reads the output of 'diff' and displays a histogram
++ *		of the insertions/deletions/modifications per-file.
++ */
++
++#if defined(HAVE_CONFIG_H)
++#include <config.h>
++#endif
++
++#if defined(WIN32) && !defined(HAVE_CONFIG_H)
++#define HAVE_STDLIB_H
++#define HAVE_STRING_H
++#define HAVE_MALLOC_H
++#define HAVE_GETOPT_H
++#endif
++
++#include <stdio.h>
++#include <ctype.h>
++
++#ifdef HAVE_STRING_H
++#include <string.h>
++#else
++#include <strings.h>
++#define strchr index
++#define strrchr rindex
++#endif
++
++#ifdef HAVE_STDLIB_H
++#include <stdlib.h>
++#else
++extern int atoi(const char *);
++#endif
++
++#ifdef HAVE_UNISTD_H
++#include <unistd.h>
++#else
++extern int isatty(int);
++#endif
++
++#ifdef HAVE_OPENDIR
++#include <dirent.h>
++#endif
++
++#ifdef HAVE_MALLOC_H
++#include <malloc.h>
++#endif
++
++#if defined(HAVE_SEARCH_H) && defined(HAVE_TSEARCH)
++#include <search.h>
++#else
++#undef HAVE_TSEARCH
++#endif
++
++#ifdef HAVE_GETC_UNLOCKED
++#define MY_GETC getc_unlocked
++#else
++#define MY_GETC getc
++#endif
++
++#ifdef HAVE_GETOPT_H
++#include <getopt.h>
++#elif !defined(HAVE_GETOPT_HEADER)
++extern int getopt(int, char *const *, const char *);
++extern char *optarg;
++extern int optind;
++#endif
++
++#include <sys/types.h>
++#include <sys/stat.h>
++
++#if defined(HAVE_POPEN) && !defined(HAVE_POPEN_PROTOTYPE)
++extern FILE *popen(const char *, const char *);
++extern int pclose(FILE *);
++#endif
++
++#if !defined(EXIT_SUCCESS)
++#define EXIT_SUCCESS 0
++#define EXIT_FAILURE 1
++#endif
++
++#ifndef BZCAT_PATH
++#define BZCAT_PATH ""
++#endif
++
++#ifndef BZIP2_PATH
++#define BZIP2_PATH ""
++#endif
++
++#ifndef COMPRESS_PATH
++#define COMPRESS_PATH ""
++#endif
++
++#ifndef GZIP_PATH
++#define GZIP_PATH ""
++#endif
++
++#ifndef LZCAT_PATH
++#define LZCAT_PATH ""
++#endif
++
++#ifndef PCAT_PATH
++#define PCAT_PATH ""
++#endif
++
++#ifndef UNCOMPRESS_PATH
++#define UNCOMPRESS_PATH ""
++#endif
++
++#ifndef XZ_PATH
++#define XZ_PATH ""
++#endif
++
++#ifndef ZCAT_PATH
++#define ZCAT_PATH ""
++#endif
++
++/******************************************************************************/
++
++#if defined(__MINGW32__) || defined(WIN32)
++#define MKDIR(name,mode) mkdir(name)
++#else
++#define MKDIR(name,mode) mkdir(name,mode)
++#endif
++
++#if defined(WIN32) && !defined(__MINGW32__)
++#define PATHSEP '\\'
++#else
++#define PATHSEP '/'
++#endif
++
++#define DQUOTE  '"'
++#define SQUOTE  '\''
++#define EOS     '\0'
++#define BLANK   ' '
++
++#define UC(c)   ((unsigned char)(c))
++
++#ifndef OPT_TRACE
++#define OPT_TRACE 1
++#endif
++
++#if OPT_TRACE
++#define TRACE(p) if (trace_opt) printf p
++#else
++#define TRACE(p)		/*nothing */
++#endif
++
++#define contain_any(s,reject) (strcspn(s,reject) != strlen(s))
++#define maximum(a,b) ((a) < (b) ? (b) : (a))
++
++#define HAVE_NOTHING 0
++#define HAVE_GENERIC 1		/* e.g., "Index: foo" w/o pathname */
++#define HAVE_PATH    2		/* reference-file from "diff dirname/foo" */
++#define HAVE_PATH2   4		/* comparison-file from "diff dirname/foo" */
++
++#define FMT_CONCISE  0
++#define FMT_NORMAL   1
++#define FMT_FILLED   2
++#define FMT_VERBOSE  4
++
++typedef enum comment {
++    Normal, Only, OnlyLeft, OnlyRight, Binary, Differs, Either
++} Comment;
++
++#define MARKS 4			/* each of +, - and ! */
++
++typedef enum {
++    cInsert = 0,
++    cDelete,
++    cModify,
++    cEquals
++} Change;
++
++typedef svn_dfstat_ctx_t DATA;
++
++#define InsOf(p) (p)->inserted_num	/* "+" count inserted lines */
++#define DelOf(p) (p)->deleted_num	/* "-" count deleted lines */
++
++#define TotalOf(p) (InsOf(p) + DelOf(p))
++#define for_each_mark(n) for (n = 0; n < num_marks; ++n)
++
++
++static const char marks[MARKS + 1] = "+-!=";
++static const int colors[MARKS + 1] =
++{2, 1, 6, 4};
++
++static const char *comment_opt = "";
++static char *path_opt = 0;
++static int count_files;		/* true if we count added/deleted files */
++static int format_opt = FMT_NORMAL;
++static int max_name_wide;	/* maximum amount reserved for filenames */
++static int max_width;		/* the specified width-limit */
++static int merge_names = 1;	/* true if we merge similar filenames */
++static int merge_opt = 0;	/* true if we merge ins/del as modified */
++static int min_name_wide;	/* minimum amount reserved for filenames */
++static int names_only;		/* true if we list filenames only */
++static int num_marks = 3;	/* 3 or 4, according to "-P" option */
++static int path_dest;		/* true if path_opt is destination (patched) */
++static int plot_width;		/* the amount left over for histogram */
++static int prefix_opt = 0;	/* if positive, controls stripping of PATHSEP */
++static int quiet = 0;		/* -q option */
++static int reverse_opt;		/* true if results are reversed */
++static int round_opt = 0;	/* if nonzero, round data for histogram */
++#define show_colors (!dont_use_color)	/* true if showing SGR colors */
++static int show_progress;	/* if not writing to tty, show progress */
++static int sort_names = 1;	/* true if we sort filenames */
++static int summary_only = 0;	/* true if only summary line is shown */
++static int suppress_binary = 0;	/* -b option */
++static int trim_escapes = 0;	/* -E option */
++static int table_opt = 0;	/* if 1/2, write table instead/also plot */
++static int trace_opt = 0;	/* if nonzero, write debugging information */
++static int unchanged = 0;	/* special-case for -S vs modified-files */
++static int verbose = 0;		/* -v option */
++static long plot_scale;		/* the effective scale (1:maximum) */
++
++static int number_len = 5;
++static int prefix_len = -1;
++
++/******************************************************************************/
++
++static int
++compare_data(const void *a, const void *b)
++{
++    const DATA *p = (const DATA *) a;
++    const DATA *q = (const DATA *) b;
++    return strcmp(p->file_path + p->base, q->file_path + q->base);
++}
++
++static int
++count_prefix(const char *name)
++{
++    int count = 0;
++    const char *s;
++    while ((s = strchr(name, PATHSEP)) != 0) {
++	name = s + 1;
++	++count;
++    }
++    return count;
++}
++
++static const char *
++skip_prefix(const char *name, int prefix, int *base)
++{
++    if (prefix >= 0) {
++	int n;
++	*base = 0;
++
++	for (n = prefix; n > 0; n--) {
++	    const char *s = strchr(name + *base, PATHSEP);
++	    if (s == 0 || *++s == EOS) {
++		name = s;
++		break;
++	    }
++	    *base = (int) (s - name);
++	}
++	TRACE(("** base set to %d\n", *base));
++    }
++    return name;
++}
++
++
++static void
++show_color(int color)
++{
++    if (color >= 0)
++	printf("\033[%dm", color + 30);
++    else
++	printf("\033[0;39m");
++}
++
++static long
++plot_bar(long count, int c, int color)
++{
++    long result = count;
++
++    if (show_colors && result != 0)
++	show_color(color);
++
++    while (--count >= 0)
++	(void) putchar(c);
++
++    if (show_colors && result != 0)
++	show_color(-1);
++
++    return result;
++}
++
++/*
++ * Each call to 'plot_num()' prints a scaled bar of 'c' characters.  The
++ * 'extra' parameter is used to keep the accumulated error in the bar's total
++ * length from getting large.
++ */
++static long
++plot_num(long num_value, int c, int color, long *extra)
++{
++    long product;
++    long result = 0;
++
++    /* the value to plot */
++    /* character to display in the bar */
++    /* accumulated error in the bar */
++    if (num_value) {
++	product = (plot_width * num_value);
++	result = ((product + *extra) / plot_scale);
++	*extra = product - (result * plot_scale) - *extra;
++	plot_bar(result, c, color);
++    }
++    return result;
++}
++
++static long
++plot_round1(const long num[MARKS])
++{
++    long result = 0;
++    long scaled[MARKS];
++    long remain[MARKS];
++    long want = 0;
++    long have = 0;
++    long half = (plot_scale / 2);
++    int i, j;
++
++    for_each_mark(i) {
++	long product = (plot_width * num[i]);
++	scaled[i] = (product / plot_scale);
++	remain[i] = (product % plot_scale);
++	want += product;
++	have += product - remain[i];
++    }
++    while (want > have) {
++	j = -1;
++	for_each_mark(i) {
++	    if (remain[i] != 0
++		&& (remain[i] > (j >= 0 ? remain[j] : half))) {
++		j = i;
++	    }
++	}
++	if (j >= 0) {
++	    have += remain[j];
++	    remain[j] = 0;
++	    scaled[j] += 1;
++	} else {
++	    break;
++	}
++    }
++    for_each_mark(i) {
++	plot_bar(scaled[i], marks[i], colors[i]);
++	result += scaled[i];
++    }
++    return result;
++}
++
++/*
++ * Print a scaled bar of characters, where c[0] is for insertions, c[1]
++ * for deletions and c[2] for modifications. The num array contains the
++ * count for each type of change, in the same order.
++ */
++static long
++plot_round2(const long num[MARKS])
++{
++    long result = 0;
++    long scaled[MARKS];
++    long remain[MARKS];
++    long total = 0;
++    int i;
++
++    for (i = 0; i < MARKS; i++)
++	total += num[i];
++
++    if (total == 0)
++	return result;
++
++    total = (total * plot_width + (plot_scale / 2)) / plot_scale;
++    /* display at least one character */
++    if (total == 0)
++	total++;
++
++    for_each_mark(i) {
++	scaled[i] = num[i] * plot_width / plot_scale;
++	remain[i] = num[i] * plot_width - scaled[i] * plot_scale;
++	total -= scaled[i];
++    }
++
++    /* assign the missing chars using the largest remainder algo */
++    while (total) {
++	int largest, largest_count;	/* largest is a bit field */
++	long max_remain;
++
++	/* search for the largest remainder */
++	largest = largest_count = 0;
++	max_remain = 0;
++	for_each_mark(i) {
++	    if (remain[i] > max_remain) {
++		largest = 1 << i;
++		largest_count = 1;
++		max_remain = remain[i];
++	    } else if (remain[i] == max_remain) {	/* ex aequo */
++		largest |= 1 << i;
++		largest_count++;
++	    }
++	}
++
++	/* if there are more greatest remainders than characters
++	   missing, don't assign them at all */
++	if (total < largest_count)
++	    break;
++
++	/* allocate the extra characters */
++	for_each_mark(i) {
++	    if (largest & (1 << i)) {
++		scaled[i]++;
++		total--;
++		remain[i] -= plot_width;
++	    }
++	}
++    }
++
++    for_each_mark(i) {
++	result += plot_bar(scaled[i], marks[i], colors[i]);
++    }
++
++    return result;
++}
++
++static void
++plot_numbers(const DATA * p)
++{
++    long temp = 0;
++    long used = 0;
++    int i;
++
++    printf("%5ld ", TotalOf(p));
++
++    if (format_opt & FMT_VERBOSE) {
++	printf("%5ld ", InsOf(p));
++	printf("%5ld ", DelOf(p));
++    }
++
++    if (format_opt == FMT_CONCISE) {
++	printf("\t%ld %c", p->inserted_num, marks[0]);
++	printf("\t%ld %c", p->deleted_num, marks[1]);
++    } else {
++	switch (round_opt) {
++	default:
++	    used += plot_num(p->inserted_num, marks[0], colors[0], &temp);
++	    used += plot_num(p->deleted_num, marks[1], colors[1], &temp);
++	    break;
++	}
++
++	if ((format_opt & FMT_FILLED) != 0) {
++	    if (used > plot_width)
++		printf("%ld", used - plot_width);	/* oops */
++	    else
++		plot_bar(plot_width - used, '.', 0);
++	}
++    }
++}
++
++static char *
++data_filename(const DATA * p)
++{
++    return p ? (p->file_path + (prefix_opt >= 0 ? p->base : prefix_len)) : "";
++}
++
++static void
++show_data(DATA * p)
++{
++    char *name = data_filename(p);
++    int width;
++
++    if (summary_only) {
++	;
++    } else if (table_opt == 1) {
++	if (names_only) {
++	    printf("%s\n", name);
++	} else {
++	    printf("%ld,%ld,",
++		   InsOf(p),
++		   DelOf(p));
++	    printf("%s\n", name);
++	}
++    } else if (names_only) {
++	printf("%s\n", name);
++    } else {
++	printf("%s ", comment_opt);
++	if (max_name_wide > 0
++	    && max_name_wide < min_name_wide
++	    && max_name_wide < ((width = (int) strlen(name)))) {
++	    printf("%.*s", max_name_wide, name + (width - max_name_wide));
++	} else {
++	    width = ((max_name_wide > 0 && max_name_wide < min_name_wide)
++		     ? max_name_wide
++		     : min_name_wide);
++	    printf("%-*.*s", width, width, name);
++	}
++	if (table_opt == 2) {
++	    putchar('|');
++	    printf("%*ld ", number_len, InsOf(p));
++	    printf("%*ld ", number_len, DelOf(p));
++	}
++	putchar('|');
++        plot_numbers(p);
++	printf("\n");
++    }
++}
++
++#ifdef HAVE_TSEARCH
++static void
++show_tsearch(const void *nodep, const VISIT which, const int depth)
++{
++    const DATA *p = *(DATA * const *) nodep;
++    (void) depth;
++    if (which == postorder || which == leaf)
++	show_data(p);
++}
++#endif
++
++
++/*
++ * Return the length of any directory-prefix from the given path.
++ */
++static size_t
++path_length(const char *path)
++{
++    size_t result = 0;
++    char *mark = strrchr(path, PATHSEP);
++    if (mark != 0 && mark != path)
++	result = (size_t) (mark + 1 - path);
++    return result;
++}
++
++
++static void
++update_min_name_wide(long longest_name)
++{
++    if (prefix_opt < 0) {
++	if (prefix_len < 0)
++	    prefix_len = 0;
++	if ((longest_name - prefix_len) > min_name_wide)
++	    min_name_wide = (longest_name - prefix_len);
++    }
++
++    if (min_name_wide < 1)
++	min_name_wide = 0;
++    min_name_wide++;		/* make sure it's nonzero */
++}
++
++static void
++summarize(DATA *all_data)
++{
++    DATA *p;
++    long total_ins = 0;
++    long total_del = 0;
++    long total_mod = 0;
++    long total_eql = 0;
++    long files_added = 0;
++    long files_equal = 0;
++    long files_binary = 0;
++    long files_removed = 0;
++    long temp;
++    int num_files = 0, shortest_name = -1, longest_name = -1;
++
++    plot_scale = 0;
++    for (p = all_data; p; p = p->next) {
++	int len = (int) strlen(p->file_path);
++
++	/*
++	 * If "-pX" option is given, prefix_opt is positive.
++	 *
++	 * "-p0" gives the whole pathname unmodified.  "-p1" strips
++	 * through the first path-separator, etc.
++	 */
++	if (prefix_opt >= 0) {
++	    /* p->base has been computed at node creation */
++	    if (min_name_wide < (len - p->base))
++		min_name_wide = (len - p->base);
++	} else {
++	    /*
++	     * If "-pX" option is not given, strip off any prefix which is
++	     * shared by all of the names.
++	     */
++	    if (len < prefix_len || prefix_len < 0)
++		prefix_len = len;
++	    while (prefix_len > 0) {
++		if (p->file_path[prefix_len - 1] != PATHSEP)
++		    prefix_len--;
++		else if (strncmp(all_data->file_path, p->file_path, (size_t) prefix_len))
++		    prefix_len--;
++		else
++		    break;
++	    }
++
++	    if (len > longest_name)
++		longest_name = len;
++	    if (len < shortest_name || shortest_name < 0)
++		shortest_name = len;
++	}
++    }
++
++    /*
++     * Use a separate loop after computing prefix_len so we can apply the "-S"
++     * or "-D" options to find files that we can use as reference for the
++     * unchanged-count.
++     */
++    for (p = all_data; p; p = p->next) {
++	    if (reverse_opt) {
++		long save_ins = InsOf(p);
++		long save_del = DelOf(p);
++		InsOf(p) = save_del;
++		DelOf(p) = save_ins;
++	    }
++	    num_files++;
++	    total_ins += InsOf(p);
++	    total_del += DelOf(p);
++	    temp = TotalOf(p);
++	    if (temp > plot_scale)
++		plot_scale = temp;
++    }
++
++    update_min_name_wide(longest_name);
++
++    plot_width = (max_width - min_name_wide - 8);
++    if (plot_width < 10)
++	plot_width = 10;
++
++    if (plot_scale < plot_width)
++	plot_scale = plot_width;	/* 1:1 */
++
++    if (table_opt == 1) {
++	if (!names_only) {
++	    printf("INSERTED,DELETED,MODIFIED,");
++	    if (path_opt)
++		printf("UNCHANGED,");
++	    if (count_files && !reverse_opt)
++		printf("FILE-ADDED,FILE-DELETED,FILE-BINARY,");
++	}
++	printf("FILENAME\n");
++    } else if (table_opt == 2) {
++	long largest = 0;
++	for (p = all_data; p; p = p->next) {
++	    largest = maximum(largest, InsOf(p));
++	    largest = maximum(largest, DelOf(p));
++	}
++	number_len = 0;
++	while (largest > 0) {
++	    number_len++;
++	    largest /= 10;
++	}
++	number_len = maximum(number_len, 3);
++    }
++	for (p = all_data; p; p = p->next) {
++	    show_data(p);
++	}
++
++    if ((table_opt != 1) && !names_only) {
++#define PLURAL(n) n, n != 1 ? "s" : ""
++	if (num_files > 0 || !quiet) {
++	    printf("%s %d file%s changed", comment_opt, PLURAL(num_files));
++	    if (total_ins)
++		printf(", %ld insertion%s(+)", PLURAL(total_ins));
++	    if (total_del)
++		printf(", %ld deletion%s(-)", PLURAL(total_del));
++	    (void) putchar('\n');
++	}
++    }
++}
++
++
++static svn_dfstat_ctx_t dfctx;
++static apr_pool_t *dfctx_pool;
++
++svn_error_t *
++svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx)
++{
++  apr_status_t err = apr_pool_create(&dfctx_pool, NULL);
++  if (err)
++    svn_error_wrap_apr(err, "Create dfctx pool failed");
++  memset(&dfctx, 0, sizeof(dfctx));
++  *ctx = &dfctx;
++
++  /* Re-initialize diffstat's static variables */
++  path_opt = 0;
++  count_files = 0;		/* true if we count added/deleted files */
++  format_opt = FMT_NORMAL;
++  max_name_wide = 0;	/* maximum amount reserved for filenames */
++  max_width = 0;		/* the specified width-limit */
++  merge_names = 1;	/* true if we merge similar filenames */
++  merge_opt = 0;	/* true if we merge ins/del as modified */
++  min_name_wide = 0;	/* minimum amount reserved for filenames */
++  names_only = 0;		/* true if we list filenames only */
++  num_marks = 3;	/* 3 or 4, according to "-P" option */
++  path_dest = 0;		/* true if path_opt is destination (patched) */
++  plot_width = 0;		/* the amount left over for histogram */
++  prefix_opt = 0;	/* if positive, controls stripping of PATHSEP */
++  quiet = 0;		/* -q option */
++  reverse_opt = 0;		/* true if results are reversed */
++  round_opt = 0;	/* if nonzero, round data for histogram */
++  show_progress = 0;	/* if not writing to tty, show progress */
++  sort_names = 1;	/* true if we sort filenames */
++  summary_only = 0;	/* true if only summary line is shown */
++  suppress_binary = 0;	/* -b option */
++  trim_escapes = 0;	/* -E option */
++  table_opt = 0;	/* if 1/2, write table instead/also plot */
++  trace_opt = 0;	/* if nonzero, write debugging information */
++  unchanged = 0;	/* special-case for -S vs modified-files */
++  verbose = 0;		/* -v option */
++  plot_scale = 0;		/* the effective scale (1:maximum) */
++  number_len = 5;
++  prefix_len = -1;
++
++  return SVN_NO_ERROR;
++}
++
++
++void
++svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx)
++{
++  ctx->next = NULL;
++  apr_pool_destroy(dfctx_pool);
++}
++
++
++svn_error_t *
++svn_diff_stat(svn_dfstat_ctx_t *head,
++    const svn_diff_t *diff,
++    const char *file_path)
++{
++  svn_dfstat_ctx_t *t = apr_pcalloc(dfctx_pool, sizeof(*t));
++  t->file_path = apr_pstrdup(dfctx_pool, file_path);
++  t->next = head->next;
++  head->next = (void *)t;
++  while (diff)
++    {
++      if (diff->type == svn_diff__type_diff_modified)
++        {
++          t->inserted_num += diff->modified_length;
++          t->deleted_num += diff->original_length;
++        }
++      diff = diff->next;
++    }
++  head->inserted_num += t->inserted_num;
++  head->deleted_num += t->deleted_num;
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_diff_output_dfstat(svn_stream_t *outstream,
++    svn_dfstat_ctx_t *head)
++{
++  summarize((DATA *)head->next);
++  return SVN_NO_ERROR;
++}
+diff --git a/subversion/libsvn_diff/diff.h b/subversion/libsvn_diff/diff.h
+index 51a84c6..bdc70b1 100644
+--- a/subversion/libsvn_diff/diff.h
++++ b/subversion/libsvn_diff/diff.h
+@@ -59,6 +59,15 @@ struct svn_diff_t {
+   svn_diff_t *resolved_diff;
+ };
+ 
++struct svn_dfstat_ctx_s {
++  void *next;
++  char *file_path;
++  int base;
++  svn_linenum_t file_num;
++  svn_linenum_t inserted_num;
++  svn_linenum_t deleted_num;
++};
++
+ /* Type used for token indices and counts of tokens. Must be signed. */
+ typedef long int svn_diff__token_index_t;
+ 
+diff --git a/subversion/svn/cl-log.h b/subversion/svn/cl-log.h
+index 5b4c7aa..def453e 100644
+--- a/subversion/svn/cl-log.h
++++ b/subversion/svn/cl-log.h
+@@ -57,6 +57,9 @@ typedef struct svn_cl__log_receiver_baton
+   /* Whether to show diffs in the log. (maps to --diff) */
+   svn_boolean_t show_diff;
+ 
++  /* Whether to show diff stats in the log. (maps to --stat) */
++  svn_boolean_t diffstat;
++
+   /* Depth applied to diff output. */
+   svn_depth_t depth;
+ 
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 04c316e..c0fa537 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -194,6 +194,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t properties_only;     /* Show properties only */
+   svn_boolean_t patch_compatible;    /* Output compatible with GNU patch */
+   svn_boolean_t no_color;            /* Disable syntax highlight */
++  svn_boolean_t diffstat;            /* Display statistics of diff */
+     } diff;
+   svn_boolean_t ignore_ancestry; /* ignore ancestry for merge-y operations */
+   svn_boolean_t ignore_externals;/* ignore externals definitions */
+@@ -239,6 +240,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t ignore_whitespace; /* don't account for whitespace when
+                                       patching */
+   svn_boolean_t show_diff;         /* produce diff output (maps to --diff) */
++  svn_boolean_t diffstat;          /* display statistics of diff */
+   svn_boolean_t allow_mixed_rev;   /* Allow operation on mixed-revision WC */
+   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
+   svn_boolean_t show_inherited_props;  /* get inherited properties */
+diff --git a/subversion/svn/diff-cmd.c b/subversion/svn/diff-cmd.c
+index 71853c7..3677ad0 100644
+--- a/subversion/svn/diff-cmd.c
++++ b/subversion/svn/diff-cmd.c
+@@ -41,6 +41,7 @@
+ #include "cl.h"
+ 
+ #include "svn_private_config.h"
++#include "private/svn_color.h"
+ 
+ 
+ /*** Code. ***/
+@@ -206,6 +207,8 @@ svn_cl__diff(apr_getopt_t *os,
+   struct summarize_baton_t summarize_baton;
+   const svn_client_diff_summarize_func_t summarize_func =
+     (opt_state->xml ? summarize_xml : summarize_regular);
++  svn_stream_t *diffstatin;
++  apr_proc_t diffstatproc;
+ 
+   if (opt_state->extensions)
+     options = svn_cstring_split(opt_state->extensions, " \t\n\r", TRUE, pool);
+@@ -379,6 +382,35 @@ svn_cl__diff(apr_getopt_t *os,
+ 
+   iterpool = svn_pool_create(pool);
+ 
++  if (opt_state->diff.diffstat)
++    {
++      apr_procattr_t *attr;
++      apr_status_t apr_err;
++      const char *progname = "diffstat";
++      const char *args1[] = { progname, "-E", "-C", NULL, };
++      const char *args2[] = { progname, NULL, };
++
++      apr_err = apr_procattr_create(&attr, pool);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't create process '%s' attributes"), progname);
++      apr_err = apr_procattr_cmdtype_set(attr, APR_PROGRAM_PATH);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't set process '%s' cmdtype"), progname);
++      apr_err = apr_procattr_io_set(attr, APR_FULL_BLOCK, APR_NO_PIPE,
++          APR_NO_PIPE);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't set process '%s' io"), progname);
++      apr_err = apr_proc_create(&diffstatproc, progname,
++          (dont_use_color ? args2 : args1), NULL, attr, pool);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't start process '%s'"), progname);
++      diffstatin = svn_stream_from_aprfile2(diffstatproc.in, FALSE, pool);
++    }
++
+   for (i = 0; i < targets->nelts; ++i)
+     {
+       const char *path = APR_ARRAY_IDX(targets, i, const char *);
+@@ -425,6 +457,28 @@ svn_cl__diff(apr_getopt_t *os,
+                                 summarize_func, &summarize_baton,
+                                 ctx, iterpool));
+             }
++          else if (opt_state->diff.diffstat)
++            SVN_ERR(svn_client_diff6(
++                     options,
++                     target1,
++                     &(opt_state->start_revision),
++                     target2,
++                     &(opt_state->end_revision),
++                     NULL,
++                     opt_state->depth,
++                     ! opt_state->diff.notice_ancestry,
++                     opt_state->diff.no_diff_added,
++                     opt_state->diff.no_diff_deleted,
++                     show_copies_as_adds,
++                     ignore_content_type,
++                     ignore_properties,
++                     opt_state->diff.properties_only,
++                     opt_state->diff.use_git_diff_format,
++                     svn_cmdline_output_encoding(pool),
++                     diffstatin,
++                     errstream,
++                     opt_state->changelists,
++                     ctx, iterpool));
+           else
+             SVN_ERR(svn_client_diff6(
+                      options,
+@@ -511,6 +565,13 @@ svn_cl__diff(apr_getopt_t *os,
+     }
+ 
+   svn_pool_destroy(iterpool);
++  if (opt_state->diff.diffstat)
++    {
++      int c;
++      apr_exit_why_e e;
++      svn_stream_close(diffstatin);
++      apr_proc_wait(&diffstatproc, &c, &e, APR_WAIT);
++    }
+ 
+   return SVN_NO_ERROR;
+ }
+diff --git a/subversion/svn/log-cmd.c b/subversion/svn/log-cmd.c
+index c059e91..46926d1 100644
+--- a/subversion/svn/log-cmd.c
++++ b/subversion/svn/log-cmd.c
+@@ -112,6 +112,56 @@ display_diff(const svn_log_entry_t *log_entry,
+ }
+ 
+ 
++static svn_error_t *
++display_diffstat(const svn_log_entry_t *log_entry,
++             const char *target_path_or_url,
++             const svn_opt_revision_t *target_peg_revision,
++             svn_depth_t depth,
++             const char *diff_extensions,
++             svn_stream_t *outstream,
++             svn_stream_t *errstream,
++             svn_client_ctx_t *ctx,
++             apr_pool_t *pool)
++{
++  apr_array_header_t *diff_options;
++  svn_opt_revision_t start_revision;
++  svn_opt_revision_t end_revision;
++
++  /* Fall back to "" to get options initialized either way. */
++  if (diff_extensions)
++    diff_options = svn_cstring_split(diff_extensions, " \t\n\r",
++                                     TRUE, pool);
++  else
++    diff_options = NULL;
++
++  start_revision.kind = svn_opt_revision_number;
++  start_revision.value.number = log_entry->revision - 1;
++  end_revision.kind = svn_opt_revision_number;
++  end_revision.value.number = log_entry->revision;
++
++  SVN_ERR(svn_client_diff_peg6_diffstat(diff_options,
++                               target_path_or_url,
++                               target_peg_revision,
++                               &start_revision, &end_revision,
++                               NULL,
++                               depth,
++                               FALSE /* ignore ancestry */,
++                               FALSE /* no diff added */,
++                               FALSE /* no diff deleted */,
++                               TRUE  /* show copies as adds */,
++                               FALSE /* ignore content type */,
++                               TRUE  /* ignore prop diff */,
++                               FALSE /* properties only */,
++                               FALSE /* use git diff format */,
++                               svn_cmdline_output_encoding(pool),
++                               outstream,
++                               errstream,
++                               NULL,
++                               ctx, pool));
++  return SVN_NO_ERROR;
++}
++
++
+ /* Return TRUE if SEARCH_PATTERN matches the AUTHOR, DATE, LOG_MESSAGE,
+  * or a path in the set of keys of the CHANGED_PATHS hash. Else, return FALSE.
+  * Any of AUTHOR, DATE, LOG_MESSAGE, and CHANGED_PATHS may be NULL. */
+@@ -441,8 +491,25 @@ svn_cl__log_entry_receiver(void *baton,
+   SVN_ERR(svn_cmdline_fflush(stdout));
+   SVN_ERR(svn_cmdline_fflush(stderr));
+ 
++  if (lb->diffstat)
++    {
++      svn_stream_t *outstream;
++      svn_stream_t *errstream;
++
++      SVN_ERR(svn_stream_for_stdout(&outstream, pool));
++      SVN_ERR(svn_stream_for_stderr(&errstream, pool));
++
++      SVN_ERR(display_diffstat(log_entry,
++                           lb->target_path_or_url, &lb->target_peg_revision,
++                           lb->depth, lb->diff_extensions,
++                           outstream, errstream,
++                           lb->ctx, pool));
++
++      SVN_ERR(svn_stream_close(outstream));
++      SVN_ERR(svn_stream_close(errstream));
++    }
+   /* Print a diff if requested. */
+-  if (lb->show_diff)
++  else if (lb->show_diff)
+     {
+       svn_stream_t *outstream;
+       svn_stream_t *errstream;
+@@ -800,6 +867,7 @@ svn_cl__log(apr_getopt_t *os,
+   lb.depth = opt_state->depth == svn_depth_unknown ? svn_depth_infinity
+                                                    : opt_state->depth;
+   lb.diff_extensions = opt_state->extensions;
++  lb.diffstat = opt_state->diffstat;
+   lb.merge_stack = NULL;
+   lb.search_patterns = opt_state->search_patterns;
+   lb.pool = pool;
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index dd84749..720cfb7 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -88,6 +88,7 @@ typedef enum svn_cl__longopt_t {
+   opt_properties_only,
+   opt_patch_compatible,
+   opt_no_color,
++  opt_diffstat,
+   /* end of diff options */
+   opt_dry_run,
+   opt_editor_cmd,
+@@ -390,6 +391,7 @@ const apr_getopt_option_t svn_cl__options[] =
+                        "--show-copies-as-adds --ignore-properties"
+                        )},
+   {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
++  {"stat", opt_diffstat, 0, N_("display statistics of diff")},
+   /* end of diff options */
+   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
+                        N_("Allow operation on mixed-revision working copy.\n"
+@@ -696,7 +698,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+      opt_ignore_properties, opt_properties_only,
+      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
+      opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
+-     opt_no_color,} },
++     opt_no_color, opt_diffstat,} },
+   { "export", svn_cl__export, {0}, N_
+     ("Create an unversioned copy of a tree.\n"
+      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
+@@ -876,7 +878,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+     {'r', 'c', 'q', 'v', 'g', opt_targets, opt_stop_on_copy, opt_incremental,
+      opt_xml, 'l', opt_with_all_revprops, opt_with_no_revprops,
+      opt_with_revprop, opt_depth, opt_diff, opt_diff_cmd,
+-     opt_internal_diff, 'x', opt_search, opt_search_and, opt_no_color },
++     opt_internal_diff, 'x', opt_search, opt_search_and, opt_no_color, opt_diffstat },
+     {{opt_with_revprop, N_("retrieve revision property ARG")},
+      {'c', N_("the change made in revision ARG")},
+      {'v', N_("also print all affected paths")},
+@@ -2417,6 +2419,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+       case opt_no_color:
+ 	opt_state.diff.no_color = TRUE;
+ 	break;
++      case opt_diffstat:
++        opt_state.diffstat = opt_state.diff.diffstat = TRUE;
++        break;
+       case opt_use_git_diff_format:
+         opt_state.diff.use_git_diff_format = TRUE;
+         break;
