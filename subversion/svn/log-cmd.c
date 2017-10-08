@@ -139,6 +139,7 @@ display_diffstat(const svn_log_entry_t *log_entry,
   end_revision.kind = svn_opt_revision_number;
   end_revision.value.number = log_entry->revision;
 
+  SVN_ERR(svn_stream_puts(outstream, "\n"));
   SVN_ERR(svn_client_diff_peg6_diffstat(diff_options,
                                target_path_or_url,
                                target_peg_revision,
