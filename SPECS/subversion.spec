@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 7
+%define svn_release 8
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -37,6 +37,9 @@ Patch3: subversion-1.9.6.patch
 Patch4: subversion-1.9.7.patch
 Patch5: subversion-1.9.4.option-v.patch
 Patch6: subversion-1.9.4.dfstat-1.patch
+Patch7: 0001-option-stat-and-diff-are-not-mutual-exclusion.patch
+Patch8: 0002-Output-newline-before-diff-statistics.patch
+Patch9: 0003-Add-option-p0-to-diffstat-program.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -162,6 +165,9 @@ WANdisco extensions to subversion
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -351,6 +357,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-8
+- Add 0001-option-stat-and-diff-are-not-mutual-exclusion.patch
+- Add 0002-Output-newline-before-diff-statistics.patch
+- Add 0003-Add-option-p0-to-diffstat-program.patch
+
 * Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-7
 - Require diffstat >= 1.59
 
