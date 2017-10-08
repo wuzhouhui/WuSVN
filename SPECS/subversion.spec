@@ -352,22 +352,22 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-7
-* Require diffstat >= 1.59
+- Require diffstat >= 1.59
 
 * Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-6
-* subversion-1.9.4.dfstat-1.patch
+- subversion-1.9.4.dfstat-1.patch
 
 * Sat Sep 2 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-5
-* subversion-1.9.4.option-v.patch
+- subversion-1.9.4.option-v.patch
 
 * Fri Aug 11 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-4
-* subversion-1.9.7.patch
+- subversion-1.9.7.patch
 
 * Thu Jul 6 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-3
-* subversion-1.9.6.patch
+- subversion-1.9.6.patch
 
 * Fri Apr 14 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-2
-* Subcmd-clean-remove-files-only-if-option-force-enabl.patch
+- Subcmd-clean-remove-files-only-if-option-force-enabl.patch
 
 * Mon Apr 3 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-1
 - First commit
