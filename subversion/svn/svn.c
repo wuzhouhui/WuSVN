@@ -698,7 +698,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      opt_ignore_properties, opt_properties_only,
      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
      opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
-     opt_no_color, opt_diffstat,} },
+     opt_no_color, opt_diffstat, } },
   { "export", svn_cl__export, {0}, N_
     ("Create an unversioned copy of a tree.\n"
      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
