@@ -527,8 +527,9 @@ svn_cl__log_entry_receiver(void *baton,
       SVN_ERR(svn_stream_close(outstream));
       SVN_ERR(svn_stream_close(errstream));
     }
+
   /* Print a diff if requested. */
-  else if (lb->show_diff)
+  if (lb->show_diff)
     {
       svn_stream_t *outstream;
       svn_stream_t *errstream;
