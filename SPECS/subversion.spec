@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 6
+%define svn_release 7
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -44,6 +44,7 @@ Packager: WANdisco Inc <opensource@wandisco.com>
 Requires: apr >= %{apr_version}
 Requires: apr-util >= %{apu_version}
 Requires: less
+Requires: diffstat >= 1.59
 
 BuildRequires: qt4-devel
 BuildRequires: gnome-keyring-devel
@@ -350,6 +351,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-7
+* Require diffstat >= 1.59
+
 * Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-6
 * subversion-1.9.4.dfstat-1.patch
 
