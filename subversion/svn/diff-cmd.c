@@ -424,7 +424,7 @@ svn_cl__diff(apr_getopt_t *os,
       apr_procattr_t *attr;
       apr_status_t apr_err;
       const char *progname = "diffstat";
-      const char *args1[] = { progname, "-E", "-C", NULL, };
+      const char *args1[] = { progname, "-E", "-C", "-p0", NULL, };
       const char *args2[] = { progname, NULL, };
 
       apr_err = apr_procattr_create(&attr, pool);
