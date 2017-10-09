@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 8
+%define svn_release 9
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -40,6 +40,7 @@ Patch6: subversion-1.9.4.dfstat-1.patch
 Patch7: 0001-option-stat-and-diff-are-not-mutual-exclusion.patch
 Patch8: 0002-Output-newline-before-diff-statistics.patch
 Patch9: 0003-Add-option-p0-to-diffstat-program.patch
+Patch10: 0001-Reimplementation-of-option-stat-of-subcommand-diff.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -47,7 +48,6 @@ Packager: WANdisco Inc <opensource@wandisco.com>
 Requires: apr >= %{apr_version}
 Requires: apr-util >= %{apu_version}
 Requires: less
-Requires: diffstat >= 1.59
 
 BuildRequires: qt4-devel
 BuildRequires: gnome-keyring-devel
@@ -168,6 +168,7 @@ WANdisco extensions to subversion
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -357,6 +358,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Oct 9 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-9
+- 0001-Reimplementation-of-option-stat-of-subcommand-diff.patch
+
 * Sun Oct 8 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-8
 - Add 0001-option-stat-and-diff-are-not-mutual-exclusion.patch
 - Add 0002-Output-newline-before-diff-statistics.patch
