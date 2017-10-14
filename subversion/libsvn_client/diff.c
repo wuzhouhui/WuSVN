@@ -709,7 +709,7 @@ diff_content_changed(svn_boolean_t *wrote_header,
   if (mimetype2)
     mt2_binary = svn_mime_type_is_binary(mimetype2);
 
-  if (! dwi->force_binary && (mt1_binary || mt2_binary))
+  if (! dwi->force_binary && (mt1_binary || mt2_binary) && !dwi->diffstat)
     {
       /* Print out the diff header. */
       if (!dont_use_color)
@@ -795,6 +795,12 @@ diff_content_changed(svn_boolean_t *wrote_header,
         }
 
       /* Exit early. */
+      return SVN_NO_ERROR;
+    }
+  else if (! dwi->force_binary && (mt1_binary || mt2_binary) && dwi->diffstat)
+    {
+      /* Suppress binary files' warning */
+      /* TODO */
       return SVN_NO_ERROR;
     }
 
