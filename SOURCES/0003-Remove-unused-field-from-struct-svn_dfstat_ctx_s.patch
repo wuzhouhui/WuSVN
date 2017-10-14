@@ -1,0 +1,24 @@
+From 56a2560c4d94201b3605352a451770c97e0b13d1 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 14 Oct 2017 17:49:22 +0800
+Subject: [PATCH 3/5] Remove unused field from struct svn_dfstat_ctx_s
+
+---
+ subversion/libsvn_diff/diff.h | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/subversion/libsvn_diff/diff.h b/subversion/libsvn_diff/diff.h
+index bdc70b1..1e2062e 100644
+--- a/subversion/libsvn_diff/diff.h
++++ b/subversion/libsvn_diff/diff.h
+@@ -63,7 +63,6 @@ struct svn_dfstat_ctx_s {
+   void *next;
+   char *file_path;
+   int base;
+-  svn_linenum_t file_num;
+   svn_linenum_t inserted_num;
+   svn_linenum_t deleted_num;
+ };
+-- 
+1.9.1
+
