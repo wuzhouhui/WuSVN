@@ -576,7 +576,7 @@ static char *path_opt = 0;
 static int count_files;		/* true if we count added/deleted files */
 static int format_opt = FMT_NORMAL;
 static int max_name_wide;	/* maximum amount reserved for filenames */
-static int max_width;		/* the specified width-limit */
+static int max_width = 80;		/* the specified width-limit */
 static int merge_names = 1;	/* true if we merge similar filenames */
 static int merge_opt = 0;	/* true if we merge ins/del as modified */
 static int min_name_wide;	/* minimum amount reserved for filenames */
@@ -956,7 +956,7 @@ svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx)
   count_files = 0;		/* true if we count added/deleted files */
   format_opt = FMT_NORMAL;
   max_name_wide = 0;	/* maximum amount reserved for filenames */
-  max_width = 0;		/* the specified width-limit */
+  max_width = 80;		/* the specified width-limit */
   merge_names = 1;	/* true if we merge similar filenames */
   merge_opt = 0;	/* true if we merge ins/del as modified */
   min_name_wide = 0;	/* minimum amount reserved for filenames */
