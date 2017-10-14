@@ -63,7 +63,6 @@ struct svn_dfstat_ctx_s {
   void *next;
   char *file_path;
   int base;
-  svn_linenum_t file_num;
   svn_linenum_t inserted_num;
   svn_linenum_t deleted_num;
 };
