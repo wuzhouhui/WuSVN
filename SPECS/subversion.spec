@@ -12,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 10
+%define svn_release 11
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -46,6 +46,7 @@ Patch12: 0002-Initialize-max_width-to-80-instead-of-0.patch
 Patch13: 0003-Remove-unused-field-from-struct-svn_dfstat_ctx_s.patch
 Patch14: 0004-Supress-binary-file-s-warnings-when-stat.patch
 Patch15: 0005-Implement-svn-di-cr-stat.patch
+Patch16: 0001-Complete-a-TODO-in-diff_content_changed.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -179,6 +180,7 @@ WANdisco extensions to subversion
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -368,6 +370,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Oct 15 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-11
+- 0001-Complete-a-TODO-in-diff_content_changed.patch
+
 * Sat Oct 14 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-10
 - 0001-Remove-unused-functions-plot_round1-and-plot_round2.patch
 - 0002-Initialize-max_width-to-80-instead-of-0.patch
