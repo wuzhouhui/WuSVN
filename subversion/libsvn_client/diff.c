@@ -975,6 +975,12 @@ diff_content_changed(svn_boolean_t *wrote_header,
       /* Exit early. */
       return SVN_NO_ERROR;
     }
+  else if (! dwi->force_binary && (mt1_binary || mt2_binary) && dwi->diffstat)
+    {
+      /* Suppress binary files' warning */
+      SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, NULL, diff_relpath));
+      return SVN_NO_ERROR;
+    }
 
 
   if (dwi->diff_cmd)
