@@ -978,7 +978,7 @@ diff_content_changed(svn_boolean_t *wrote_header,
   else if (! dwi->force_binary && (mt1_binary || mt2_binary) && dwi->diffstat)
     {
       /* Suppress binary files' warning */
-      SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, NULL, diff_relpath));
+      SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, NULL, diff_relpath, svn_dfstat_bin));
       return SVN_NO_ERROR;
     }
 
@@ -1064,7 +1064,7 @@ diff_content_changed(svn_boolean_t *wrote_header,
             dwi->options.for_internal,
             scratch_pool));
       if (svn_diff_contains_diffs(diff))
-        SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, diff, diff_relpath));
+        SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, diff, diff_relpath, 0));
     }
   else   /* use libsvn_diff to generate the diff  */
     {
