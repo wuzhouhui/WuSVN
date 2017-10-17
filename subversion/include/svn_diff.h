@@ -1379,10 +1379,16 @@ svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx);
 void
 svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx);
 
+enum svn_dfstat_cmt {
+	svn_dfstat_normal = 0,
+	svn_dfstat_bin,
+};
+
 svn_error_t *
 svn_diff_stat(svn_dfstat_ctx_t *ctx,
     const svn_diff_t *diff,
-    const char *file_path);
+    const char *file_path,
+    enum svn_dfstat_cmt cmt);
 
 svn_error_t *
 svn_diff_output_dfstat(svn_stream_t *out,
