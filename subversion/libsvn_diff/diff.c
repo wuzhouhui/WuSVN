@@ -772,7 +772,10 @@ show_data(DATA * p)
 	    printf("%*ld ", number_len, DelOf(p));
 	}
 	putchar('|');
-        plot_numbers(p);
+	if (p->cmt == svn_dfstat_bin)
+		printf("binary");
+	else
+		plot_numbers(p);
 	printf("\n");
     }
 }
@@ -996,10 +999,12 @@ svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx)
 svn_error_t *
 svn_diff_stat(svn_dfstat_ctx_t *head,
     const svn_diff_t *diff,
-    const char *file_path)
+    const char *file_path,
+    enum svn_dfstat_cmt cmt)
 {
   svn_dfstat_ctx_t *t = apr_pcalloc(dfctx_pool, sizeof(*t));
   t->file_path = apr_pstrdup(dfctx_pool, file_path);
+  t->cmt = cmt;
   t->next = head->next;
   head->next = (void *)t;
   while (diff)
