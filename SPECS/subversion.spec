@@ -1,5 +1,6 @@
 %bcond_with fsfswd
 %bcond_without swig
+%bcond_without swig-py
 %bcond_without tools
 %bcond_without devel
 %bcond_with timestamp
@@ -12,7 +13,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 12
+%define svn_release 13
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -71,7 +72,6 @@ BuildRequires: apr-util-devel >= %{apr_version}
 BuildRequires: libxslt >= 1.0.27
 BuildRequires: openssl-devel
 BuildRequires: perl(ExtUtils::Embed)
-BuildRequires: python-devel
 BuildRequires: swig >= %{swig_version}
 BuildRequires: zlib-devel
 BuildRequires: gcc-c++
@@ -132,7 +132,9 @@ Summary: Allows Perl scripts to directly use Subversion repositories.
 Requires: perl
 %description perl
 Provides Perl (SWIG) support for Subversion.
+%endif
 
+%if !%{without swig-py}
 %package python
 Group: Utilities/System
 Summary: Allows Python scripts to directly use Subversion repositories.
@@ -147,7 +149,7 @@ Summary: Allows java scripts to directly use Subversion repositories.
 %description javahl
 Provides Java (jni/c++) oracle jdk6 support for Subversion.
 
-%if !%{without swig}
+%if !%{without tools}
 %package tools
 Group: Utilities/System
 Summary: Tools for Subversion
@@ -221,7 +223,12 @@ make %{?_smp_mflags}
 
 %if !%{without swig}
 # Build python bindings
-make %{?_smp_mflags} swig-py swig-pl DESTDIR=$RPM_BUILD_ROOT
+make %{?_smp_mflags} swig-pl DESTDIR=$RPM_BUILD_ROOT
+%endif
+
+%if !%{without swig-py}
+# Build python bindings
+make swig-py swig-pl DESTDIR=$RPM_BUILD_ROOT
 %endif
 
 %if !%{without tools}
@@ -247,13 +254,15 @@ make install-javahl %{?_with_fsfswd: install-javahl-java-fsfswd} DESTDIR="$RPM_B
 mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d
 cp %{SOURCE2} $RPM_BUILD_ROOT/etc/httpd/conf.d
 
-%if !%{without swig}
+%if !%{without swig-py}
 # Install Python SWIG bindings.
 make install-swig-py DESTDIR=$RPM_BUILD_ROOT DISTUTIL_PARAM=--prefix=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/python%{pyver}/site-packages
 mv $RPM_BUILD_ROOT/%{_libdir}/svn-python/* $RPM_BUILD_ROOT/%{_libdir}/python%{pyver}/site-packages
 rmdir $RPM_BUILD_ROOT/%{_libdir}/svn-python
+%endif
 
+%if !%{without swig}
 # Install PERL SWIG bindings.
 make install-swig-pl DESTDIR=$RPM_BUILD_ROOT
 
@@ -342,7 +351,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libsvn_swig_perl*so*
 %{_mandir}/man3/SVN*
 %{perl_archlib}/perllocal.pod
+%endif
 
+%if !%{without swig-py}
 %files python
 %defattr(-,root,root)
 %{_libdir}/python%{pyver}/site-packages/svn
@@ -372,6 +383,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Oct 20 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-13
+- Sychronized with official subversion.spec
+
 * Tue Oct 17 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-12
 - subversion-1.9.4-diffstat-binary.patch
 
