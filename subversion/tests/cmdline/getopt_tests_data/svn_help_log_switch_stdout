@@ -129,6 +129,7 @@ Valid options:
   --search ARG             : use ARG as search pattern (glob syntax)
   --search-and ARG         : combine ARG with the previous search pattern
   --no-color               : disable syntax highlight
+  --stat                   : display statistics of diff
 
 Global options:
   --username ARG           : specify a username ARG
