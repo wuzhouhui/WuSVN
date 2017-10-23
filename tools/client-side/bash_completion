@@ -242,11 +242,11 @@ _svn()
 	cur=${COMP_WORDS[COMP_CWORD]}
 
 	# Possible expansions, without pure-prefix abbreviations such as "up".
-	cmds='add auth blame annotate praise cat changelist cl checkout co cleanup'
+	cmds='add auth blame annotate praise cat changelist cl checkout co clean cleanup'
 	cmds="$cmds commit ci copy cp delete remove rm diff export help import"
 	cmds="$cmds info list ls lock log merge mergeinfo mkdir move mv rename"
 	cmds="$cmds patch propdel pdel propedit pedit propget pget proplist"
-	cmds="$cmds plist propset pset relocate resolve resolved revert status"
+	cmds="$cmds plist propset pset relocate resolve resolved revert rv status"
 	cmds="$cmds switch unlock update upgrade"
 	cmds="$cmds shelve shelves unshelve"
 
@@ -771,7 +771,7 @@ _svn()
 		    st*) # status completion must include all files
 			files=$cur*
 			;;
-		    ci|commit|revert|di*) # anything edited
+		    ci|commit|revert|rv|di*) # anything edited
 			files=$($status $cs| _svn_grcut '@([MADR!]*| M*|_M*)')
 			;;
 		    add) # unknown files
@@ -881,6 +881,9 @@ _svn()
 		cmdOpts="$rOpts $qOpts $nOpts $pOpts --ignore-externals \
                          --force"
 		;;
+	clean)
+		cmdOpts="$qOpts $pOpts --no-ignore --force"
+		;;
 	cleanup)
 		cmdOpts="$pOpts --include-externals -q --quiet\
 			--remove-ignored --remove-unversioned --vacuum-pristines"
@@ -888,7 +891,7 @@ _svn()
 	commit|ci)
 		cmdOpts="$mOpts $qOpts $nOpts --targets --editor-cmd $pOpts \
 		         --no-unlock $cOpts --keep-changelists \
-		         --include-externals"
+		         --include-externals -v --verbose"
 		;;
 	copy|cp)
 		cmdOpts="$mOpts $rOpts $qOpts --editor-cmd $pOpts --parents \
@@ -904,7 +907,7 @@ _svn()
 		         -c --change --summarize $cOpts --xml --git \
 		         --internal-diff --show-copies-as-adds \
 		         --ignore-properties --properties-only --no-diff-added \
-		         --patch-compatible"
+		         --patch-compatible --no-color --stat"
 		;;
 	export)
 		cmdOpts="$rOpts $qOpts $pOpts $nOpts --force --native-eol \
@@ -936,7 +939,8 @@ _svn()
 		         --incremental --xml $qOpts -l --limit -c --change \
                          $gOpts --with-all-revprops --with-revprop --depth \
 		         --diff --diff-cmd -x --extensions --internal-diff \
-		         --with-no-revprops --search --search-and"
+		         --with-no-revprops --search --search-and --no-color \
+			 --stat"
 		;;
 	merge)
 		cmdOpts="$rOpts $nOpts $qOpts --force --dry-run --diff3-cmd \
@@ -995,7 +999,7 @@ _svn()
 	resolved)
 		cmdOpts="--targets -R --recursive $qOpts $pOpts --depth"
 		;;
-	revert)
+	revert|rv)
 		cmdOpts="--targets -R --recursive $qOpts $cOpts \
                          --depth $pOpts"
 		;;
