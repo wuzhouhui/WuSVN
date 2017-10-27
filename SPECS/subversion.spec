@@ -1,9 +1,7 @@
-%bcond_with fsfswd
 %bcond_without swig
 %bcond_without swig-py
 %bcond_without tools
 %bcond_without devel
-%bcond_with timestamp
 
 %define apache_version 2.2.3
 %define apr_version 1.2.7
@@ -13,7 +11,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 13
+%define svn_release 14
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -29,9 +27,6 @@ Source: %{svn_source}
 Source1: sqlite-amalgamation-3071602.zip
 Source2: subversion.conf
 
-%if %{with timestamp}
-Patch0: timestamp-replication-v5-1.8.txt
-%endif
 Patch1: subversion-1.9.4.first_patch
 Patch2: Subcmd-clean-remove-files-only-if-option-force-enabl.patch
 Patch3: subversion-1.9.6.patch
@@ -49,6 +44,8 @@ Patch14: 0004-Supress-binary-file-s-warnings-when-stat.patch
 Patch15: 0005-Implement-svn-di-cr-stat.patch
 Patch16: 0001-Complete-a-TODO-in-diff_content_changed.patch
 Patch17: subversion-1.9.4-diffstat-binary.patch
+Patch18: 0001-Add-bash-completion-of-new-option-and-subcommand.patch
+Patch19: subversion-1.9.4.testing.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -157,17 +154,8 @@ Summary: Tools for Subversion
 Tools for Subversion.
 %endif
 
-%if %{with fsfswd}
-%package fsfswd
-Group: Utilities/System
-Summary: WANdisco extensions to subversion
-%description fsfswd
-WANdisco extensions to subversion
-%endif
-
 %prep
 %setup -n subversion-%{version}
-%{?_with_timestamp:%patch0 -p0}
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -185,6 +173,8 @@ WANdisco extensions to subversion
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -211,13 +201,12 @@ export PYTHON
 	--with-jdk=${JAVA_HOME} \
 	--without-jikes \
 	--with-sqlite=sqlite-amalgamation/sqlite3.c \
-  --enable-runtime-module-search \
   --with-serf
 %build
 make clean
 
-# build javahl - needs to be done before the plain make for fsfswd to succeed
-make %{?_smp_mflags} javahl %{?_with_fsfswd:javahl-java-fsfswd}
+# build javahl
+make %{?_smp_mflags} javahl
 
 make %{?_smp_mflags}
 
@@ -247,7 +236,7 @@ ln -s %{_bindir}/svnmucc $RPM_BUILD_ROOT/%{_bindir}/svn-tools/svnmucc
 %endif
 
 # install javahl
-make install-javahl %{?_with_fsfswd: install-javahl-java-fsfswd} DESTDIR="$RPM_BUILD_ROOT"
+make install-javahl DESTDIR="$RPM_BUILD_ROOT"
 
 
 # Add subversion.conf configuration file into httpd/conf.d directory.
@@ -272,6 +261,13 @@ rm -rf $RPM_BUILD_ROOT/%{_libdir}/perl5/%{perl_version}
 
 # Create doxygen documentation.
 %{!?_without_devel:doxygen doc/doxygen.conf}
+
+# Install bash completion
+install -Dpm 644 tools/client-side/bash_completion \
+        $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/%{name}
+
+%check
+make check
 
 %post -n mod_dav_svn
 # Restart apache server if needed.
@@ -310,13 +306,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libsvn_repos*so*
 %{_libdir}/libsvn_subr*so*
 %{_libdir}/libsvn_wc*so*
+%{_sysconfdir}/bash_completion.d
 /usr/share/locale/*/*/*
 /usr/share/man/man1/*
 /usr/share/man/man5/*
 /usr/share/man/man8/*
 %{!?_without_swig: %exclude %{_libdir}/libsvn_swig_perl*}
 %exclude %{_libdir}/libsvn_auth_gnome*
-%{?_with_fsfswd: %exclude %{_libdir}/*fsfswd*.so*}
 %{?_without_tools: %exclude %{_bindir}/svnmucc}
 %{?_without_devel: %exclude %{_includedir}/subversion-1}
 %{?_without_devel: %exclude %{_libdir}/*.a}
@@ -366,14 +362,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libsvnjavahl*.so*
 %{_libdir}/svn-javahl/svn-javahl.jar
 
-%if %{with fsfswd}
-%files fsfswd
-%defattr(-,root,root)
-%{_bindir}/resequence
-%{_libdir}/svn-javahl/svn-javahl-fsfswd.jar
-%{_libdir}/*fsfswd*.so*
-%endif
-
 %if !%{without tools}
 %files tools
 %defattr(-,root,root)
@@ -383,6 +371,14 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Oct 26 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-14
+- 0001-Add-bash-completion-of-new-option-and-subcommand
+- Add bash_completion in package subversion
+- Remove un-needed macro and related code
+- subversion-1.9.4.testing.patch
+- Remove --enable-runtime-module-search in configure, for make check.
+- Add section check
+
 * Fri Oct 20 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-13
 - Sychronized with official subversion.spec
 
