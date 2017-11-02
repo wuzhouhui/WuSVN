@@ -2090,6 +2090,13 @@ add_search_pattern_to_latest_group(svn_cl__opt_state_t *opt_state,
 static svn_error_t *
 sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 {
+  static const svn_opt_subcommand_desc2_t pseudo_cmd =
+    { "--version", svn_cl__help, {0}, "",
+      {opt_version,    /* must accept its own option */
+       'q',            /* brief output */
+       'v',            /* verbose output */
+       opt_config_dir  /* all commands accept this */
+      } };
   svn_error_t *err;
   int opt_id;
   apr_getopt_t *os;
@@ -2745,14 +2752,6 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
           if (opt_state.version)
             {
               /* Use the "help" subcommand to handle the "--version" option. */
-              static const svn_opt_subcommand_desc2_t pseudo_cmd =
-                { "--version", svn_cl__help, {0}, "",
-                  {opt_version,    /* must accept its own option */
-                   'q',            /* brief output */
-                   'v',            /* verbose output */
-                   opt_config_dir  /* all commands accept this */
-                  } };
-
               subcommand = &pseudo_cmd;
             }
           else
@@ -3319,7 +3318,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 		  subcommand->cmd_func == svn_cl__log ||
 		  subcommand->cmd_func == svn_cl__status ||
 		  subcommand->cmd_func == svn_cl__list ||
-		  subcommand->cmd_func == svn_cl__help)) {
+		  subcommand->cmd_func == svn_cl__help) &&
+      subcommand != &pseudo_cmd) {
     int fd[2];
 
     if (pipe(fd) < 0) {
