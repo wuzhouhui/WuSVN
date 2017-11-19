@@ -11,5 +11,6 @@
 #define SVN_COLOR_RESET        "\033[m"
 
 extern svn_boolean_t dont_use_color;
+extern int tty_fileno;
 
 #endif /* SVN_COLOR_H */

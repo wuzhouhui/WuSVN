@@ -3347,6 +3347,11 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     }
 
     /* parent */
+    if ((tty_fileno = dup(STDOUT_FILENO)) < 0)
+      {
+        fprintf(stderr, "dup for stdout failed: %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+      }
     close(fd[0]);
     if (fd[1] != STDOUT_FILENO) {
       if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
