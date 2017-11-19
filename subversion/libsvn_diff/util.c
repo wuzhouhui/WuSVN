@@ -45,6 +45,7 @@
 #include "svn_private_config.h"
 
 svn_boolean_t dont_use_color = TRUE;
+int tty_fileno = -1;
 
 svn_boolean_t
 svn_diff_contains_conflicts(svn_diff_t *diff)
