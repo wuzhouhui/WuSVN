@@ -2,6 +2,7 @@
 %bcond_without swig-py
 %bcond_without tools
 %bcond_without devel
+%bcond_without check
 
 %define apache_version 2.2.3
 %define apr_version 1.2.7
@@ -11,7 +12,7 @@
 %define pyver 2.6
 %define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 14
+%define svn_release 15
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -46,6 +47,10 @@ Patch16: 0001-Complete-a-TODO-in-diff_content_changed.patch
 Patch17: subversion-1.9.4-diffstat-binary.patch
 Patch18: 0001-Add-bash-completion-of-new-option-and-subcommand.patch
 Patch19: subversion-1.9.4.testing.patch
+Patch20: 0001-I-think-we-should-not-paging-svn-version.patch
+Patch21: 0002-Update-README.patch
+Patch22: 0003-Adjust-max-width-of-diffstat-according-terminal-widt.patch
+Patch23: 0004-Scale-max-width-for-diffstat-for-better-look.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -175,6 +180,10 @@ Tools for Subversion.
 %patch17 -p1
 %patch18 -p1
 %patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -266,8 +275,10 @@ rm -rf $RPM_BUILD_ROOT/%{_libdir}/perl5/%{perl_version}
 install -Dpm 644 tools/client-side/bash_completion \
         $RPM_BUILD_ROOT%{_sysconfdir}/bash_completion.d/%{name}
 
+%if !%{without check}
 %check
 make check
+%endif
 
 %post -n mod_dav_svn
 # Restart apache server if needed.
@@ -371,6 +382,13 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Nov 22 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-15
+- 0001-I-think-we-should-not-paging-svn-version.patch
+- 0002-Update-README.patch
+- 0003-Adjust-max-width-of-diffstat-according-terminal-widt.patch
+- 0004-Scale-max-width-for-diffstat-for-better-look.patch
+- Using --without check to disable checking
+
 * Thu Oct 26 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-14
 - 0001-Add-bash-completion-of-new-option-and-subcommand
 - Add bash_completion in package subversion
