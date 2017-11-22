@@ -959,7 +959,21 @@ svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx)
   count_files = 0;		/* true if we count added/deleted files */
   format_opt = FMT_NORMAL;
   max_name_wide = 0;	/* maximum amount reserved for filenames */
+
   max_width = 80;		/* the specified width-limit */
+  if (tty_fileno >= 0)
+    {
+      struct winsize winsz;
+
+      if (ioctl(tty_fileno, TIOCGWINSZ, (char *)&winsz) < 0)
+        {
+          fprintf(stderr, "get win size failed: %s\n", strerror(errno));
+          exit(EXIT_FAILURE);
+        }
+      max_width = winsz.ws_col;
+    }
+  max_width--;
+
   merge_names = 1;	/* true if we merge similar filenames */
   merge_opt = 0;	/* true if we merge ins/del as modified */
   min_name_wide = 0;	/* minimum amount reserved for filenames */
