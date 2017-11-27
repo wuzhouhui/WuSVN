@@ -10,9 +10,8 @@
 %define swig_version 1.3.29
 %define apache_dir /usr
 %define pyver 2.6
-%define svn_source subversion-1.9.4.tar.gz
 %define svn_version 1.9.4
-%define svn_release 15
+%define svn_release 16
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -24,8 +23,8 @@ License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
 
-Source: %{svn_source}
-Source1: sqlite-amalgamation-3071602.zip
+Source: %{name}-%{version}.tar.gz
+Source1: sqlite-amalgamation-3210000.zip
 Source2: subversion.conf
 
 Patch1: subversion-1.9.4.first_patch
@@ -188,7 +187,7 @@ Tools for Subversion.
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
 unzip %{SOURCE1}
-mv sqlite-amalgamation-3071602 sqlite-amalgamation
+mv sqlite-amalgamation-3210000 sqlite-amalgamation
 
 # Delete apr, apr-util, and neon from the tree as those packages should already
 # be installed.
@@ -382,6 +381,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Nov 26 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-16
+- SQLite upgrades to 3210000
+- Remove macro svn_source
+
 * Wed Nov 22 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-15
 - 0001-I-think-we-should-not-paging-svn-version.patch
 - 0002-Update-README.patch
