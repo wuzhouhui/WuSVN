@@ -482,6 +482,21 @@ svn_cl__get_log_message(const char **log_msg,
         truncate_buffer_at_prefix(&message->len, message->data,
                                   EDITOR_EOF_PREFIX);
 
+      /* Strip off extra EOL marker */
+      if (message && message->len >= 1)
+        {
+          if (message->len >= 2
+              && message->data[message->len - 2] == '\r'
+              && message->data[message->len - 1] == '\n')
+            {
+              message->len -= 2;
+              message->data[message->len] = 0;
+            }
+          else if (message->data[message->len - 1] == '\r'
+                  || message->data[message->len - 1] == '\n')
+            message->data[--message->len] = 0;
+        }
+
       if (message)
         {
           /* We did get message, now check if it is anything more than just
