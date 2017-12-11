@@ -1,0 +1,38 @@
+From c365c193e3a5a3df6079919eff6b3310fc574335 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 10 Dec 2017 22:59:36 +0800
+Subject: [PATCH] Remove extra EOL marker when getting log from editor
+
+---
+ subversion/svn/util.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/subversion/svn/util.c b/subversion/svn/util.c
+index 1004975..2a58e74 100644
+--- a/subversion/svn/util.c
++++ b/subversion/svn/util.c
+@@ -482,6 +482,21 @@ svn_cl__get_log_message(const char **log_msg,
+         truncate_buffer_at_prefix(&message->len, message->data,
+                                   EDITOR_EOF_PREFIX);
+ 
++      /* Strip off extra EOL marker */
++      if (message && message->len >= 1)
++        {
++          if (message->len >= 2
++              && message->data[message->len - 2] == '\r'
++              && message->data[message->len - 1] == '\n')
++            {
++              message->len -= 2;
++              message->data[message->len] = 0;
++            }
++          else if (message->data[message->len - 1] == '\r'
++                  || message->data[message->len - 1] == '\n')
++            message->data[--message->len] = 0;
++        }
++
+       if (message)
+         {
+           /* We did get message, now check if it is anything more than just
+-- 
+2.14.1
+

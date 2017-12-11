@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.4
-%define svn_release 16
+%define svn_release 17
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -50,6 +50,7 @@ Patch20: 0001-I-think-we-should-not-paging-svn-version.patch
 Patch21: 0002-Update-README.patch
 Patch22: 0003-Adjust-max-width-of-diffstat-according-terminal-widt.patch
 Patch23: 0004-Scale-max-width-for-diffstat-for-better-look.patch
+Patch24: 0001-Remove-extra-EOL-marker-when-getting-log-from-editor.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -183,6 +184,7 @@ Tools for Subversion.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
+%patch24 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -381,6 +383,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Dec 11 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-17
+- 0001-Remove-extra-EOL-marker-when-getting-log-from-editor.patch
+
 * Sun Nov 26 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-16
 - SQLite upgrades to 3210000
 - Remove macro svn_source
