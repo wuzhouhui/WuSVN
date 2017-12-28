@@ -10,8 +10,8 @@
 %define swig_version 1.3.29
 %define apache_dir /usr
 %define pyver 2.6
-%define svn_version 1.9.4
-%define svn_release 17
+%define svn_version 1.9.7
+%define svn_release 1
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -27,30 +27,7 @@ Source: %{name}-%{version}.tar.gz
 Source1: sqlite-amalgamation-3210000.zip
 Source2: subversion.conf
 
-Patch1: subversion-1.9.4.first_patch
-Patch2: Subcmd-clean-remove-files-only-if-option-force-enabl.patch
-Patch3: subversion-1.9.6.patch
-Patch4: subversion-1.9.7.patch
-Patch5: subversion-1.9.4.option-v.patch
-Patch6: subversion-1.9.4.dfstat-1.patch
-Patch7: 0001-option-stat-and-diff-are-not-mutual-exclusion.patch
-Patch8: 0002-Output-newline-before-diff-statistics.patch
-Patch9: 0003-Add-option-p0-to-diffstat-program.patch
-Patch10: 0001-Reimplementation-of-option-stat-of-subcommand-diff.patch
-Patch11: 0001-Remove-unused-functions-plot_round1-and-plot_round2.patch
-Patch12: 0002-Initialize-max_width-to-80-instead-of-0.patch
-Patch13: 0003-Remove-unused-field-from-struct-svn_dfstat_ctx_s.patch
-Patch14: 0004-Supress-binary-file-s-warnings-when-stat.patch
-Patch15: 0005-Implement-svn-di-cr-stat.patch
-Patch16: 0001-Complete-a-TODO-in-diff_content_changed.patch
-Patch17: subversion-1.9.4-diffstat-binary.patch
-Patch18: 0001-Add-bash-completion-of-new-option-and-subcommand.patch
-Patch19: subversion-1.9.4.testing.patch
-Patch20: 0001-I-think-we-should-not-paging-svn-version.patch
-Patch21: 0002-Update-README.patch
-Patch22: 0003-Adjust-max-width-of-diffstat-according-terminal-widt.patch
-Patch23: 0004-Scale-max-width-for-diffstat-for-better-look.patch
-Patch24: 0001-Remove-extra-EOL-marker-when-getting-log-from-editor.patch
+Patch1: for-1.9.7.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -162,29 +139,6 @@ Tools for Subversion.
 %prep
 %setup -n subversion-%{version}
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -383,6 +337,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Dec 28 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-1
+- for-1.9.7.patch
+
 * Mon Dec 11 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.4-17
 - 0001-Remove-extra-EOL-marker-when-getting-log-from-editor.patch
 
