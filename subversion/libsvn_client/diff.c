@@ -3032,6 +3032,9 @@ svn_cmdline__edit_string_externally_v(svn_string_t **edited_contents /* UTF-8! *
   /* Dump initial CONTENTS to TMP_FILE. */
   apr_err = apr_file_write_full(tmp_file, translated_contents->data,
                                 translated_contents->len, NULL);
+  /* Write newline before diff */
+  if (!apr_err)
+    apr_err = apr_file_write_full(tmp_file, "\n", 1, NULL);
 
   fstream = svn_stream_from_aprfile2(tmp_file, FALSE, pool);
 
