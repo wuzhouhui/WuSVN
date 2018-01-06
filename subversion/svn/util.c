@@ -196,6 +196,7 @@ struct log_msg_baton
   svn_boolean_t keep_locks; /* Keep repository locks? */
   apr_pool_t *pool; /* a pool. */
   svn_boolean_t verbose; /* show diff of this commit */
+  svn_client_ctx_t *ctx; /* context of client */
 };
 
 
@@ -209,6 +210,64 @@ svn_cl__make_log_msg_baton(void **baton,
   struct log_msg_baton *lmb = apr_pcalloc(pool, sizeof(*lmb));
 
   lmb->verbose = opt_state->verbose;
+
+  if (opt_state->filedata)
+    {
+      if (strlen(opt_state->filedata->data) < opt_state->filedata->len)
+        {
+          /* The data contains a zero byte, and therefore can't be
+             represented as a C string.  Punt now; it's probably not
+             a deliberate encoding, and even if it is, we still
+             can't handle it. */
+          return svn_error_create(SVN_ERR_CL_BAD_LOG_MESSAGE, NULL,
+                                  _("Log message contains a zero byte"));
+        }
+      lmb->message = opt_state->filedata->data;
+    }
+  else
+    {
+      lmb->message = opt_state->message;
+    }
+
+  lmb->editor_cmd = opt_state->editor_cmd;
+  if (opt_state->encoding)
+    {
+      lmb->message_encoding = opt_state->encoding;
+    }
+  else if (config)
+    {
+      svn_config_t *cfg = svn_hash_gets(config, SVN_CONFIG_CATEGORY_CONFIG);
+      svn_config_get(cfg, &(lmb->message_encoding),
+                     SVN_CONFIG_SECTION_MISCELLANY,
+                     SVN_CONFIG_OPTION_LOG_ENCODING,
+                     NULL);
+    }
+  else
+    lmb->message_encoding = NULL;
+
+  lmb->base_dir = base_dir;
+  lmb->tmpfile_left = NULL;
+  lmb->config = config;
+  lmb->keep_locks = opt_state->no_unlock;
+  lmb->non_interactive = opt_state->non_interactive;
+  lmb->pool = pool;
+  *baton = lmb;
+  return SVN_NO_ERROR;
+}
+
+
+svn_error_t *
+svn_cl__make_log_msg_baton_v(void **baton,
+                           svn_cl__opt_state_t *opt_state,
+                           const char *base_dir /* UTF-8! */,
+                           apr_hash_t *config,
+                           svn_client_ctx_t *ctx,
+                           apr_pool_t *pool)
+{
+  struct log_msg_baton *lmb = apr_pcalloc(pool, sizeof(*lmb));
+
+  lmb->verbose = opt_state->verbose;
+  lmb->ctx = ctx;
 
   if (opt_state->filedata)
     {
@@ -441,15 +500,25 @@ svn_cl__get_log_message(const char **log_msg,
       /* Use the external edit to get a log message. */
       if (! lmb->non_interactive)
         {
-          err = svn_cmdline__edit_string_externally(&msg_string, &lmb->tmpfile_left,
-                                                    lmb->editor_cmd,
-                                                    lmb->base_dir ? lmb->base_dir : "",
-                                                    msg_string, "svn-commit",
-                                                    lmb->config, TRUE,
-                                                    lmb->message_encoding,
-                                                    lmb->verbose,
-                                                    commit_items,
-                                                    pool);
+          if (!lmb->verbose)
+            err = svn_cmdline__edit_string_externally(&msg_string, &lmb->tmpfile_left,
+                                                      lmb->editor_cmd,
+                                                      lmb->base_dir ? lmb->base_dir : "",
+                                                      msg_string, "svn-commit",
+                                                      lmb->config, TRUE,
+                                                      lmb->message_encoding,
+                                                      commit_items,
+                                                      pool);
+          else
+            err = svn_cmdline__edit_string_externally_v(&msg_string, &lmb->tmpfile_left,
+                                                        lmb->editor_cmd,
+                                                        lmb->base_dir ? lmb->base_dir : "",
+                                                        msg_string, "svn-commit",
+                                                        lmb->config, TRUE,
+                                                        lmb->message_encoding,
+                                                        commit_items,
+                                                        lmb->ctx,
+                                                        pool);
         }
       else /* non_interactive flag says we can't pop up an editor, so error */
         {

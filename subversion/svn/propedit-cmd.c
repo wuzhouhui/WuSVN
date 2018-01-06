@@ -146,7 +146,7 @@ svn_cl__propedit(apr_getopt_t *os,
                propval, "svn-prop",
                ctx->config,
                svn_prop_needs_translation(pname),
-               opt_state->encoding, opt_state->verbose, NULL, pool));
+               opt_state->encoding, NULL, pool));
 
       /* ...and re-set the property's value accordingly. */
       if (propval)
@@ -284,7 +284,6 @@ svn_cl__propedit(apr_getopt_t *os,
                                                       svn_prop_needs_translation
                                                       (pname),
                                                       opt_state->encoding,
-                                                      opt_state->verbose,
                                                       NULL,
                                                       subpool));
 

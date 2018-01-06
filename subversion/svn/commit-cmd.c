@@ -149,9 +149,14 @@ svn_cl__commit(apr_getopt_t *os,
      to store the temp file, instead of the current working directory.  The
      client might not have write access to their working directory, but they
      better have write access to the directory they're committing.  */
-  SVN_ERR(svn_cl__make_log_msg_baton(&(ctx->log_msg_baton3),
-                                     opt_state, base_dir,
-                                     ctx->config, pool));
+  if (!opt_state->verbose)
+    SVN_ERR(svn_cl__make_log_msg_baton(&(ctx->log_msg_baton3),
+                                       opt_state, base_dir,
+                                       ctx->config, pool));
+  else
+    SVN_ERR(svn_cl__make_log_msg_baton_v(&(ctx->log_msg_baton3),
+                                         opt_state, base_dir,
+                                         ctx->config, ctx, pool));
 
   /* Copies are done server-side, and cheaply, which means they're
      effectively always done with infinite depth.  This is a potential

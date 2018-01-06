@@ -33,6 +33,7 @@
 #include "svn_string.h"
 #include "svn_error.h"
 #include "svn_io.h"
+#include "svn_client.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -201,8 +202,22 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents,
                                     apr_hash_t *config,
                                     svn_boolean_t as_text,
                                     const char *encoding,
-                                    svn_boolean_t verbose,
                                     const apr_array_header_t *commit_items,
+                                    apr_pool_t *pool);
+
+
+svn_error_t *
+svn_cmdline__edit_string_externally_v(svn_string_t **edited_contents,
+                                    const char **tmpfile_left,
+                                    const char *editor_cmd,
+                                    const char *base_dir,
+                                    const svn_string_t *contents,
+                                    const char *prefix,
+                                    apr_hash_t *config,
+                                    svn_boolean_t as_text,
+                                    const char *encoding,
+                                    const apr_array_header_t *commit_items,
+                                    svn_client_ctx_t *ctx,
                                     apr_pool_t *pool);
 
 
