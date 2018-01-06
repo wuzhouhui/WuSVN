@@ -1321,7 +1321,6 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
                                     apr_hash_t *config,
                                     svn_boolean_t as_text,
                                     const char *encoding,
-                                    svn_boolean_t verbose,
                                     const apr_array_header_t *commit_items,
                                     apr_pool_t *pool)
 {
@@ -1432,29 +1431,6 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
                                tmpfile_name);
       goto cleanup;
     }
-
-  if (verbose) {
-    int i, len = 0;
-    char *buf;
-    for (i = 0; i < commit_items->nelts; i++)
-      {
-        int t = strlen((APR_ARRAY_IDX(commit_items, i,
-                svn_client_commit_item3_t *))->diff_relpath);
-        if (t > len)
-          len = t;
-      }
-    buf = apr_pcalloc(pool, (strlen("svn di --properties-only  >> ") +
-          strlen(tmpfile_name) + len + 2) * sizeof(*buf));
-    for (i = 0; i < commit_items->nelts; i++)
-      {
-        svn_client_commit_item3_t *item
-            = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
-        sprintf(buf, "svn di %s %s >> %s",
-            item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
-            "--properties-only" : "", item->diff_relpath, tmpfile_name);
-        system(buf);
-      }
-  }
 
   err = svn_path_cstring_from_utf8(&tmpfile_apr, tmpfile_name, pool);
   if (err)
