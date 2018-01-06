@@ -2804,6 +2804,7 @@ svn_client_diff_summarize_peg2(const char *path_or_url,
                                  diff_processor, ctx, pool, pool));
 }
 
+#define SVN_CLIENT_EDITOR "vi"
 /* Helper for the next two functions.  Set *EDITOR to some path to an
    editor binary.  Sources to search include: the EDITOR_CMD argument
    (if not NULL), $SVN_EDITOR, the runtime CONFIG variable (if CONFIG
