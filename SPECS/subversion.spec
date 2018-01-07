@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.7
-%define svn_release 1
+%define svn_release 2
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -28,6 +28,12 @@ Source1: sqlite-amalgamation-3210000.zip
 Source2: subversion.conf
 
 Patch1: for-1.9.7.patch
+Patch2: 0001-New-implementation-of-option-v-for-subcommand-ci.patch
+Patch3: 0002-Remove-some-unused-local-variables-in-svn_cmdline__e.patch
+Patch4: 0003-Write-newline-before-diff-for-svn-ci-with-option-v.patch
+Patch5: 0004-New-year.patch
+Patch6: 0005-Using-vi-if-no-other-editor-found.patch
+Patch7: 0006-Set-properties-only-only-when-path-is-a-directory.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -139,6 +145,12 @@ Tools for Subversion.
 %prep
 %setup -n subversion-%{version}
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -169,10 +181,10 @@ export PYTHON
 %build
 make clean
 
-# build javahl
-make %{?_smp_mflags} javahl
-
 make %{?_smp_mflags}
+
+# build javahl
+make javahl
 
 %if !%{without swig}
 # Build python bindings
@@ -337,6 +349,16 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Jan  6 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-1
+- plain make before make javahl
+- single threaded make javahl
+- 0001-New-implementation-of-option-v-for-subcommand-ci.patch
+- 0002-Remove-some-unused-local-variables-in-svn_cmdline__e.patch
+- 0003-Write-newline-before-diff-for-svn-ci-with-option-v.patch
+- 0004-New-year.patch
+- 0005-Using-vi-if-no-other-editor-found.patch
+- 0006-Set-properties-only-only-when-path-is-a-directory.patch
+
 * Thu Dec 28 2017 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-1
 - for-1.9.7.patch
 

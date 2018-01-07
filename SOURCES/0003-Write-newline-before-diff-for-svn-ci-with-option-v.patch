@@ -1,0 +1,26 @@
+From 7dc7e4bbf2d2909d8b21ea4a14c6f1be0d81f774 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 6 Jan 2018 17:24:31 +0800
+Subject: [PATCH 3/6] Write newline before diff for svn ci with option -v
+
+---
+ subversion/libsvn_client/diff.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 7cee4cb..50f2cf8 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -3032,6 +3032,9 @@ svn_cmdline__edit_string_externally_v(svn_string_t **edited_contents /* UTF-8! *
+   /* Dump initial CONTENTS to TMP_FILE. */
+   apr_err = apr_file_write_full(tmp_file, translated_contents->data,
+                                 translated_contents->len, NULL);
++  /* Write newline before diff */
++  if (!apr_err)
++    apr_err = apr_file_write_full(tmp_file, "\n", 1, NULL);
+ 
+   fstream = svn_stream_from_aprfile2(tmp_file, FALSE, pool);
+ 
+-- 
+2.14.1
+

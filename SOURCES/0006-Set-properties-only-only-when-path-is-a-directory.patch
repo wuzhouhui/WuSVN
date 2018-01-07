@@ -1,0 +1,26 @@
+From 543ddeaf00e11733dbb9bf065819bfc74a572525 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 6 Jan 2018 20:11:44 +0800
+Subject: [PATCH 6/6] Set properties-only only when path is a directory
+
+Otherwise, there will be repeated output in log message
+---
+ subversion/libsvn_client/diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index fc8139f..1ad2d01 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -2912,7 +2912,7 @@ verbose_output(const apr_array_header_t *commit_items,
+                TRUE,
+                FALSE,
+                FALSE,
+-               !!(item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS),
++               item->kind == svn_node_dir,
+                FALSE,
+                svn_cmdline_output_encoding(pool),
+                fstream,
+-- 
+2.14.1
+
