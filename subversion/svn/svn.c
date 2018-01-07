@@ -400,7 +400,10 @@ const apr_getopt_option_t svn_cl__options[] =
                        "--show-copies-as-adds --ignore-properties"
                        )},
   {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
-  {"stat", opt_diffstat, 0, N_("display statistics of diff")},
+  {"stat", opt_diffstat, 0,
+                       N_("display statistics of diff, ignore property\n"
+                          "                             "
+                          "changes automatically")},
   /* end of diff options */
   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
                        N_("Allow operation on mixed-revision working copy.\n"
@@ -2642,7 +2645,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 	opt_state.diff.no_color = TRUE;
 	break;
       case opt_diffstat:
-        opt_state.diffstat = opt_state.diff.diffstat = TRUE;
+        opt_state.diffstat
+            = opt_state.diff.ignore_properties
+            = opt_state.diff.diffstat
+            = TRUE;
         break;
       case opt_use_git_diff_format:
         opt_state.diff.use_git_diff_format = TRUE;
