@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.7
-%define svn_release 2
+%define svn_release 3%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -34,6 +34,8 @@ Patch4: 0003-Write-newline-before-diff-for-svn-ci-with-option-v.patch
 Patch5: 0004-New-year.patch
 Patch6: 0005-Using-vi-if-no-other-editor-found.patch
 Patch7: 0006-Set-properties-only-only-when-path-is-a-directory.patch
+Patch8: 0001-Ignore-property-changes-when-option-stat-setted.patch
+Patch9: 0002-Update-expected-output-of-svn-help-log.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -151,6 +153,8 @@ Tools for Subversion.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -349,7 +353,12 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
-* Sat Jan  6 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-1
+* Mon Jan  8 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-3
+- Add %{?dist} label in package name
+- 0001-Ignore-property-changes-when-option-stat-setted.patch
+- 0002-Update-expected-output-of-svn-help-log.patch
+
+* Sat Jan  6 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-2
 - plain make before make javahl
 - single threaded make javahl
 - 0001-New-implementation-of-option-v-for-subcommand-ci.patch
