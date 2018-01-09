@@ -3109,15 +3109,15 @@ verbose_output(const apr_array_header_t *commit_items,
                target,
                &end_rev,
                NULL,
-               svn_depth_unknown,
-               FALSE,
-               FALSE,
-               FALSE,
-               TRUE,
-               FALSE,
-               FALSE,
-               item->kind == svn_node_dir,
-               FALSE,
+               svn_depth_unknown,             /* depth */
+               FALSE,                         /* ignore_ancestry */
+               FALSE,                         /* no_diff_added */
+               FALSE,                         /* no_diff_deleted */
+               TRUE,                          /* show_copies_as_adds */
+               FALSE,                         /* ignore_content_type */
+               FALSE,                         /* ignore_properties */
+               item->kind == svn_node_dir,    /* properties_only */
+               FALSE,                         /* use_git_diff_format */
                svn_cmdline_output_encoding(pool),
                fstream,
                errstream,
