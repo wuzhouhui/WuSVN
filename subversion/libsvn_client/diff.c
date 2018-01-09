@@ -2912,7 +2912,10 @@ verbose_output(const apr_array_header_t *commit_items,
                TRUE,                          /* show_copies_as_adds */
                FALSE,                         /* ignore_content_type */
                FALSE,                         /* ignore_properties */
-               item->kind == svn_node_dir,    /* properties_only */
+               /* properties_only */
+               !(item->kind != svn_node_dir
+                 || (item->kind == svn_node_dir
+                     && (item->state_flags & SVN_CLIENT_COMMIT_ITEM_DELETE))),
                FALSE,                         /* use_git_diff_format */
                svn_cmdline_output_encoding(pool),
                fstream,
