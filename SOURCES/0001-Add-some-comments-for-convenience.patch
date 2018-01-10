@@ -1,0 +1,41 @@
+From 3cf2cbf22aa8a48a0497b25b53c1206709888224 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Tue, 9 Jan 2018 22:05:40 +0800
+Subject: [PATCH 1/2] Add some comments for convenience
+
+---
+ subversion/libsvn_client/diff.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 1ad2d01..7020c02 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -2905,15 +2905,15 @@ verbose_output(const apr_array_header_t *commit_items,
+                target,
+                &end_rev,
+                NULL,
+-               svn_depth_unknown,
+-               FALSE,
+-               FALSE,
+-               FALSE,
+-               TRUE,
+-               FALSE,
+-               FALSE,
+-               item->kind == svn_node_dir,
+-               FALSE,
++               svn_depth_unknown,             /* depth */
++               FALSE,                         /* ignore_ancestry */
++               FALSE,                         /* no_diff_added */
++               FALSE,                         /* no_diff_deleted */
++               TRUE,                          /* show_copies_as_adds */
++               FALSE,                         /* ignore_content_type */
++               FALSE,                         /* ignore_properties */
++               item->kind == svn_node_dir,    /* properties_only */
++               FALSE,                         /* use_git_diff_format */
+                svn_cmdline_output_encoding(pool),
+                fstream,
+                errstream,
+-- 
+2.14.1
+

@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.7
-%define svn_release 3%{?dist}
+%define svn_release 4%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -21,7 +21,7 @@ Version: %{svn_version}
 Release: %{svn_release}
 License: Apache 2.0
 Group: Utilities/System
-URL: http://www.wandisco.com
+URL: https://github.com/wuzhouhui/subversion
 
 Source: %{name}-%{version}.tar.gz
 Source1: sqlite-amalgamation-3210000.zip
@@ -36,6 +36,8 @@ Patch6: 0005-Using-vi-if-no-other-editor-found.patch
 Patch7: 0006-Set-properties-only-only-when-path-is-a-directory.patch
 Patch8: 0001-Ignore-property-changes-when-option-stat-setted.patch
 Patch9: 0002-Update-expected-output-of-svn-help-log.patch
+Patch10: 0001-Add-some-comments-for-convenience.patch
+Patch11: 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -155,6 +157,8 @@ Tools for Subversion.
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -353,6 +357,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Wed Jan 10 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-4
+- 0001-Add-some-comments-for-convenience.patch
+- 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
+- Update URL to my GitHub repository
+
 * Mon Jan  8 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-3
 - Add %{?dist} label in package name
 - 0001-Ignore-property-changes-when-option-stat-setted.patch
