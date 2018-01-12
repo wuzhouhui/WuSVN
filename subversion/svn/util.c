@@ -426,6 +426,21 @@ svn_cl__get_log_message(const char **log_msg,
       truncate_buffer_at_prefix(&(log_msg_str->len), (char *)log_msg_str->data,
                                 EDITOR_EOF_PREFIX);
 
+      /* Strip off extra EOL marker */
+      if (log_msg_str->len >= 1)
+        {
+          if (log_msg_str->len >= 2
+              && log_msg_str->data[log_msg_str->len - 2] == '\r'
+              && log_msg_str->data[log_msg_str->len - 1] == '\n')
+            {
+              log_msg_str->len -= 2;
+              ((char *)log_msg_str->data)[log_msg_str->len] = 0;
+            }
+          else if (log_msg_str->data[log_msg_str->len - 1] == '\r'
+              || log_msg_str->data[log_msg_str->len - 1] == '\n')
+            ((char *)log_msg_str->data)[--log_msg_str->len] = 0;
+        }
+
       *log_msg = log_msg_str->data;
       return SVN_NO_ERROR;
     }
