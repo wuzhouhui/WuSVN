@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.7
-%define svn_release 4%{?dist}
+%define svn_release 5%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -38,6 +38,7 @@ Patch8: 0001-Ignore-property-changes-when-option-stat-setted.patch
 Patch9: 0002-Update-expected-output-of-svn-help-log.patch
 Patch10: 0001-Add-some-comments-for-convenience.patch
 Patch11: 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
+Patch12: 0001-Strip-extra-EOL-when-get-log-message-from-file.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -159,6 +160,7 @@ Tools for Subversion.
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -357,6 +359,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Jan 14 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-5
+- Strip extra EOL when get log message from file
+
 * Wed Jan 10 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-4
 - 0001-Add-some-comments-for-convenience.patch
 - 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
