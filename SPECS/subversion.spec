@@ -1,17 +1,15 @@
-%bcond_without swig
-%bcond_without swig-py
 %bcond_without tools
 %bcond_without devel
 %bcond_without check
 
-%define apache_version 2.2.3
-%define apr_version 1.2.7
-%define apu_version 1.2.7
-%define swig_version 1.3.29
+%define apache_version 2.4.6
+%define apr_version 1.4.8
+%define apu_version 1.5.2
+%define swig_version 2.0.10
 %define apache_dir /usr
-%define pyver 2.6
+%define pyver 2.7
 %define svn_version 1.9.7
-%define svn_release 5%{?dist}
+%define svn_release 6%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -39,6 +37,7 @@ Patch9: 0002-Update-expected-output-of-svn-help-log.patch
 Patch10: 0001-Add-some-comments-for-convenience.patch
 Patch11: 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
 Patch12: 0001-Strip-extra-EOL-when-get-log-message-from-file.patch
+Patch13: SVNB-1866.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -51,7 +50,7 @@ BuildRequires: qt4-devel
 BuildRequires: gnome-keyring-devel
 BuildRequires: dbus-devel
 BuildRequires: kdelibs-devel
-BuildRequires: db4-devel >= 4.2.52
+BuildRequires: libdb-devel >= 4.2.52
 BuildRequires: docbook-style-xsl >= 1.58.1
 BuildRequires: doxygen
 BuildRequires: expat-devel
@@ -115,7 +114,7 @@ Requires: httpd >= %{apache_version}
 The mod_dav_svn package adds the Subversion server Apache module to
 the Apache directories and configuration.
 
-%if !%{without swig}
+%if %{with swig}
 %package perl
 Group: Utilities/System
 Summary: Allows Perl scripts to directly use Subversion repositories.
@@ -124,7 +123,7 @@ Requires: perl
 Provides Perl (SWIG) support for Subversion.
 %endif
 
-%if !%{without swig-py}
+%if %{with swig-py}
 %package python
 Group: Utilities/System
 Summary: Allows Python scripts to directly use Subversion repositories.
@@ -161,6 +160,7 @@ Tools for Subversion.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p0
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -171,20 +171,19 @@ mv sqlite-amalgamation-3210000 sqlite-amalgamation
 # be installed.
 rm -rf apr apr-util neon
 
-PYTHON=/usr/local/bin/python2.7
-export PYTHON
+export PYTHON=/usr/bin/python2.7
 
 %configure \
 	--disable-mod-activation \
 	%{?_without_swig} \
 	--with-berkeley-db \
-	--with-apxs=%{apache_dir}/sbin/apxs \
+	--with-apxs=%{apache_dir}/bin/apxs \
 	--with-apr=%{apache_dir}/bin/apr-1-config \
 	--with-apr-util=%{apache_dir}/bin/apu-1-config \
 	--with-apache-libexecdir=yes \
 	--with-gnome-keyring \
 	--enable-javahl \
-	--with-jdk=${JAVA_HOME} \
+	--with-jdk=/usr/lib/jvm/java-1.8.0 \
 	--without-jikes \
 	--with-sqlite=sqlite-amalgamation/sqlite3.c \
   --with-serf
@@ -196,12 +195,12 @@ make %{?_smp_mflags}
 # build javahl
 make javahl
 
-%if !%{without swig}
+%if %{with swig}
 # Build python bindings
 make %{?_smp_mflags} swig-pl DESTDIR=$RPM_BUILD_ROOT
 %endif
 
-%if !%{without swig-py}
+%if %{with swig-py}
 # Build python bindings
 make swig-py swig-pl DESTDIR=$RPM_BUILD_ROOT
 %endif
@@ -229,7 +228,7 @@ make install-javahl DESTDIR="$RPM_BUILD_ROOT"
 mkdir -p $RPM_BUILD_ROOT/etc/httpd/conf.d
 cp %{SOURCE2} $RPM_BUILD_ROOT/etc/httpd/conf.d
 
-%if !%{without swig-py}
+%if %{with swig-py}
 # Install Python SWIG bindings.
 make install-swig-py DESTDIR=$RPM_BUILD_ROOT DISTUTIL_PARAM=--prefix=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_libdir}/python%{pyver}/site-packages
@@ -237,7 +236,7 @@ mv $RPM_BUILD_ROOT/%{_libdir}/svn-python/* $RPM_BUILD_ROOT/%{_libdir}/python%{py
 rmdir $RPM_BUILD_ROOT/%{_libdir}/svn-python
 %endif
 
-%if !%{without swig}
+%if %{with swig}
 # Install PERL SWIG bindings.
 make install-swig-pl DESTDIR=$RPM_BUILD_ROOT
 
@@ -327,7 +326,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_libdir}/libsvn_auth_gnome_keyring-*.so.*
 
-%if !%{without swig}
+%if %{with swig}
 %files perl
 %defattr(-,root,root)
 %{perl_siteprefix}/SVN
@@ -337,7 +336,7 @@ rm -rf $RPM_BUILD_ROOT
 %{perl_archlib}/perllocal.pod
 %endif
 
-%if !%{without swig-py}
+%if %{with swig-py}
 %files python
 %defattr(-,root,root)
 %{_libdir}/python%{pyver}/site-packages/svn
@@ -359,6 +358,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Feb  1 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-6
+- Updated for rpmbuild in CentOS 7
+- SVNB-1866.patch
+
 * Sun Jan 14 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-5
 - Strip extra EOL when get log message from file
 

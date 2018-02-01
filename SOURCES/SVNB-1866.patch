@@ -1,0 +1,38 @@
+*** build/ac-macros/apache.m4 2015-08-27 05:00:23.000000000 +0100
+--- build/ac-macros/apache.m4 2015-10-14 14:01:44.000000000 +0100
+***************
+*** 102,108 ****
+    HTTPD_PATCH=`$SED -ne '/^#define AP_SERVER_PATCHLEVEL_NUMBER/p' "$APXS_INCLUDE/ap_release.h" | $SED -e 's/^.*NUMBER *//'`
+    HTTPD_VERSION="${HTTPD_MAJOR}.${HTTPD_MINOR}.${HTTPD_PATCH}"
+    case "$HTTPD_VERSION" in
+!     2.2.25 | 2.4.[[5-6]])
+        AC_MSG_RESULT([broken])
+        AC_MSG_ERROR([Apache httpd version $HTTPD_VERSION includes a broken mod_dav; use a newer version of httpd])
+        ;;
+--- 102,108 ----
+    HTTPD_PATCH=`$SED -ne '/^#define AP_SERVER_PATCHLEVEL_NUMBER/p' "$APXS_INCLUDE/ap_release.h" | $SED -e 's/^.*NUMBER *//'`
+    HTTPD_VERSION="${HTTPD_MAJOR}.${HTTPD_MINOR}.${HTTPD_PATCH}"
+    case "$HTTPD_VERSION" in
+!     2.2.25 | 2.4.[[5]])
+        AC_MSG_RESULT([broken])
+        AC_MSG_ERROR([Apache httpd version $HTTPD_VERSION includes a broken mod_dav; use a newer version of httpd])
+        ;;
+*** configure 2015-09-18 14:18:38.000000000 +0100
+--- configure 2015-11-03 10:53:07.419000000 +0000
+***************
+*** 5868,5874 ****
+    HTTPD_PATCH=`$SED -ne '/^#define AP_SERVER_PATCHLEVEL_NUMBER/p' "$APXS_INCLUDE/ap_release.h" | $SED -e 's/^.*NUMBER *//'`
+    HTTPD_VERSION="${HTTPD_MAJOR}.${HTTPD_MINOR}.${HTTPD_PATCH}"
+    case "$HTTPD_VERSION" in
+!     2.2.25 | 2.4.[5-6])
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: broken" >&5
+  $as_echo "broken" >&6; }
+        as_fn_error $? "Apache httpd version $HTTPD_VERSION includes a broken mod_dav; use a newer version of httpd" "$LINENO" 5
+--- 5868,5874 ----
+    HTTPD_PATCH=`$SED -ne '/^#define AP_SERVER_PATCHLEVEL_NUMBER/p' "$APXS_INCLUDE/ap_release.h" | $SED -e 's/^.*NUMBER *//'`
+    HTTPD_VERSION="${HTTPD_MAJOR}.${HTTPD_MINOR}.${HTTPD_PATCH}"
+    case "$HTTPD_VERSION" in
+!     2.2.25 | 2.4.[5])
+        { $as_echo "$as_me:${as_lineno-$LINENO}: result: broken" >&5
+  $as_echo "broken" >&6; }
+        as_fn_error $? "Apache httpd version $HTTPD_VERSION includes a broken mod_dav; use a newer version of httpd" "$LINENO" 5
