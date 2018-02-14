@@ -3107,6 +3107,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 		  subcommand->cmd_func == svn_cl__log ||
 		  subcommand->cmd_func == svn_cl__status ||
 		  subcommand->cmd_func == svn_cl__list ||
+		  subcommand->cmd_func == svn_cl__auth ||
 		  subcommand->cmd_func == svn_cl__help) &&
       subcommand != &pseudo_cmd) {
     int fd[2];
