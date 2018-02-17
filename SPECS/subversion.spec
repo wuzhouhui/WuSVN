@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.7
-%define svn_release 5%{?dist}
+%define svn_release 6%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -359,6 +359,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Feb 15 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-6
+- svn/auth: output paging automatically
+
 * Sun Jan 14 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-5
 - Strip extra EOL when get log message from file
 
