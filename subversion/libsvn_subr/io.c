@@ -4224,6 +4224,92 @@ svn_io_file_rename(const char *from_path, const char *to_path,
 
 
 svn_error_t *
+svn_io_file_rename2(const char *from_path, const char *to_path,
+                    svn_boolean_t flush_to_disk, apr_pool_t *pool)
+{
+  apr_status_t status = APR_SUCCESS;
+  const char *from_path_apr, *to_path_apr;
+#if defined(WIN32)
+  WCHAR *from_path_w;
+  WCHAR *to_path_w;
+#endif
+
+  SVN_ERR(cstring_from_utf8(&from_path_apr, from_path, pool));
+  SVN_ERR(cstring_from_utf8(&to_path_apr, to_path, pool));
+
+#if defined(WIN32)
+  SVN_ERR(svn_io__utf8_to_unicode_longpath(&from_path_w, from_path_apr, pool));
+  SVN_ERR(svn_io__utf8_to_unicode_longpath(&to_path_w, to_path_apr, pool));
+  status = win32_file_rename(from_path_w, to_path_w, flush_to_disk);
+
+  /* If the target file is read only NTFS reports EACCESS and
+     FAT/FAT32 reports EEXIST */
+  if (APR_STATUS_IS_EACCES(status) || APR_STATUS_IS_EEXIST(status))
+    {
+      /* Set the destination file writable because Windows will not
+         allow us to rename when to_path is read-only, but will
+         allow renaming when from_path is read only. */
+      SVN_ERR(svn_io_set_file_read_write(to_path, TRUE, pool));
+
+      status = win32_file_rename(from_path_w, to_path_w, flush_to_disk);
+    }
+  WIN32_RETRY_LOOP(status, win32_file_rename(from_path_w, to_path_w,
+                                             flush_to_disk));
+#elif defined(__OS2__)
+  status = apr_file_rename(from_path_apr, to_path_apr, pool);
+  /* If the target file is read only NTFS reports EACCESS and
+     FAT/FAT32 reports EEXIST */
+  if (APR_STATUS_IS_EACCES(status) || APR_STATUS_IS_EEXIST(status))
+    {
+      /* Set the destination file writable because OS/2 will not
+         allow us to rename when to_path is read-only, but will
+         allow renaming when from_path is read only. */
+      SVN_ERR(svn_io_set_file_read_write(to_path, TRUE, pool));
+
+      status = apr_file_rename(from_path_apr, to_path_apr, pool);
+    }
+#else
+  status = apr_file_rename(from_path_apr, to_path_apr, pool);
+#endif /* WIN32 || __OS2__ */
+
+  if (status)
+    return svn_error_wrap_apr(status, _("Can't move '%s' to '%s'"),
+                              svn_dirent_local_style(from_path, pool),
+                              svn_dirent_local_style(to_path, pool));
+
+#if defined(SVN_ON_POSIX)
+  if (flush_to_disk)
+    {
+      /* On POSIX, the file name is stored in the file's directory entry.
+         Hence, we need to fsync() that directory as well.
+         On other operating systems, we'd only be asking for trouble
+         by trying to open and fsync a directory. */
+      const char *dirname;
+      apr_file_t *file;
+
+      dirname = svn_dirent_dirname(to_path, pool);
+      SVN_ERR(svn_io_file_open(&file, dirname, APR_READ, APR_OS_DEFAULT,
+                               pool));
+      SVN_ERR(svn_io_file_flush_to_disk(file, pool));
+      SVN_ERR(svn_io_file_close(file, pool));
+    }
+#elif !defined(WIN32)
+  /* Flush the target of the rename to disk. */
+  if (flush_to_disk)
+    {
+      apr_file_t *file;
+      SVN_ERR(svn_io_file_open(&file, to_path, APR_WRITE,
+                               APR_OS_DEFAULT, pool));
+      SVN_ERR(svn_io_file_flush_to_disk(file, pool));
+      SVN_ERR(svn_io_file_close(file, pool));
+    }
+#endif
+
+  return SVN_NO_ERROR;
+}
+
+
+svn_error_t *
 svn_io_file_move(const char *from_path, const char *to_path,
                  apr_pool_t *pool)
 {
