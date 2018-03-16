@@ -9,7 +9,7 @@
 %define apache_dir /usr
 %define pyver 2.7
 %define svn_version 1.9.7
-%define svn_release 6%{?dist}
+%define svn_release 7%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -38,6 +38,7 @@ Patch10: 0001-Add-some-comments-for-convenience.patch
 Patch11: 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
 Patch12: 0001-Strip-extra-EOL-when-get-log-message-from-file.patch
 Patch13: SVNB-1866.patch
+Patch14: shelve.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -161,6 +162,7 @@ Tools for Subversion.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p0
+%patch14 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -358,6 +360,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Mar 16 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-7
+- New experimental subcommand shelve
+
 * Thu Feb  1 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-6
 - Updated for rpmbuild in CentOS 7
 - SVNB-1866.patch
