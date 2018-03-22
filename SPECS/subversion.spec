@@ -9,7 +9,7 @@
 %define apache_dir /usr
 %define pyver 2.7
 %define svn_version 1.9.7
-%define svn_release 7%{?dist}
+%define svn_release 8%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -39,6 +39,7 @@ Patch11: 0002-Do-not-set-properties_only-if-item-deleted-is-a-dir.patch
 Patch12: 0001-Strip-extra-EOL-when-get-log-message-from-file.patch
 Patch13: SVNB-1866.patch
 Patch14: shelve.patch
+Patch15: 0001-shelve-limit-minimum-width-of-header-to-79-column.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -163,6 +164,7 @@ Tools for Subversion.
 %patch12 -p1
 %patch13 -p0
 %patch14 -p1
+%patch15 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -360,6 +362,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Mar 22 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-8
+- shelve: limit minimum width of header to 79 column
+
 * Fri Mar 16 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-7
 - New experimental subcommand shelve
 
