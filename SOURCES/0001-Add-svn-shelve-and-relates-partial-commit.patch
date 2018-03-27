@@ -1,0 +1,1705 @@
+From b313d7d123c147f32ced93b4a15b2c244df3e93a Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 11 Mar 2018 15:26:57 +0800
+Subject: [PATCH 1/4] Add svn shelve and relates, partial commit
+
+---
+ build-outputs.mk                                   |  12 +-
+ subversion/include/svn_client.h                    | 146 ++++++
+ subversion/include/svn_io.h                        |  19 +
+ subversion/libsvn_client/shelve.c                  | 552 +++++++++++++++++++++
+ subversion/libsvn_subr/io.c                        |  86 ++++
+ subversion/libsvn_wc/wcroot_anchor.c               |  20 +
+ subversion/svn/cl.h                                |   4 +
+ subversion/svn/shelve-cmd.c                        | 369 ++++++++++++++
+ subversion/svn/svn.c                               |  80 +++
+ .../cmdline/getopt_tests_data/svn--help_stdout     |   3 +
+ .../cmdline/getopt_tests_data/svn_help_stdout      |   3 +
+ subversion/tests/cmdline/shelve_tests.py           | 176 +++++++
+ tools/client-side/bash_completion                  |  10 +
+ 13 files changed, 1476 insertions(+), 4 deletions(-)
+ create mode 100644 subversion/libsvn_client/shelve.c
+ create mode 100644 subversion/svn/shelve-cmd.c
+ create mode 100755 subversion/tests/cmdline/shelve_tests.py
+
+diff --git a/build-outputs.mk b/build-outputs.mk
+index 78c9812..931de76 100644
+--- a/build-outputs.mk
++++ b/build-outputs.mk
+@@ -399,8 +399,8 @@ subversion/libsvn_auth_kwallet/libsvn_auth_kwallet-1.la: $(libsvn_auth_kwallet_D
+ 	cd subversion/libsvn_auth_kwallet && $(LINK_CXX_LIB) $(libsvn_auth_kwallet_LDFLAGS) -o libsvn_auth_kwallet-1.la $(LT_NO_UNDEFINED) $(libsvn_auth_kwallet_OBJECTS) ../../subversion/libsvn_subr/libsvn_subr-1.la $(SVN_APR_LIBS) $(SVN_KWALLET_LIBS) $(LIBS)
+ 
+ libsvn_client_PATH = subversion/libsvn_client
+-libsvn_client_DEPS = subversion/libsvn_client/add.lo subversion/libsvn_client/blame.lo subversion/libsvn_client/cat.lo subversion/libsvn_client/changelist.lo subversion/libsvn_client/checkout.lo subversion/libsvn_client/cleanup.lo subversion/libsvn_client/cmdline.lo subversion/libsvn_client/commit.lo subversion/libsvn_client/commit_util.lo subversion/libsvn_client/compat_providers.lo subversion/libsvn_client/copy.lo subversion/libsvn_client/copy_foreign.lo subversion/libsvn_client/ctx.lo subversion/libsvn_client/delete.lo subversion/libsvn_client/deprecated.lo subversion/libsvn_client/diff.lo subversion/libsvn_client/diff_local.lo subversion/libsvn_client/diff_summarize.lo subversion/libsvn_client/export.lo subversion/libsvn_client/externals.lo subversion/libsvn_client/import.lo subversion/libsvn_client/info.lo subversion/libsvn_client/iprops.lo subversion/libsvn_client/list.lo subversion/libsvn_client/locking_commands.lo subversion/libsvn_client/log.lo subversion/libsvn_client/merge.lo subversion/libsvn_client/mergeinfo.lo subversion/libsvn_client/mtcc.lo subversion/libsvn_client/patch.lo subversion/libsvn_client/prop_commands.lo subversion/libsvn_client/ra.lo subversion/libsvn_client/relocate.lo subversion/libsvn_client/repos_diff.lo subversion/libsvn_client/resolved.lo subversion/libsvn_client/revert.lo subversion/libsvn_client/revisions.lo subversion/libsvn_client/status.lo subversion/libsvn_client/switch.lo subversion/libsvn_client/update.lo subversion/libsvn_client/upgrade.lo subversion/libsvn_client/url.lo subversion/libsvn_client/util.lo subversion/libsvn_client/version.lo subversion/libsvn_wc/libsvn_wc-1.la subversion/libsvn_ra/libsvn_ra-1.la subversion/libsvn_delta/libsvn_delta-1.la subversion/libsvn_diff/libsvn_diff-1.la subversion/libsvn_subr/libsvn_subr-1.la
+-libsvn_client_OBJECTS = add.lo blame.lo cat.lo changelist.lo checkout.lo cleanup.lo cmdline.lo commit.lo commit_util.lo compat_providers.lo copy.lo copy_foreign.lo ctx.lo delete.lo deprecated.lo diff.lo diff_local.lo diff_summarize.lo export.lo externals.lo import.lo info.lo iprops.lo list.lo locking_commands.lo log.lo merge.lo mergeinfo.lo mtcc.lo patch.lo prop_commands.lo ra.lo relocate.lo repos_diff.lo resolved.lo revert.lo revisions.lo status.lo switch.lo update.lo upgrade.lo url.lo util.lo version.lo
++libsvn_client_DEPS = subversion/libsvn_client/add.lo subversion/libsvn_client/blame.lo subversion/libsvn_client/cat.lo subversion/libsvn_client/changelist.lo subversion/libsvn_client/checkout.lo subversion/libsvn_client/cleanup.lo subversion/libsvn_client/cmdline.lo subversion/libsvn_client/commit.lo subversion/libsvn_client/commit_util.lo subversion/libsvn_client/compat_providers.lo subversion/libsvn_client/copy.lo subversion/libsvn_client/copy_foreign.lo subversion/libsvn_client/ctx.lo subversion/libsvn_client/delete.lo subversion/libsvn_client/deprecated.lo subversion/libsvn_client/diff.lo subversion/libsvn_client/diff_local.lo subversion/libsvn_client/diff_summarize.lo subversion/libsvn_client/export.lo subversion/libsvn_client/externals.lo subversion/libsvn_client/import.lo subversion/libsvn_client/info.lo subversion/libsvn_client/iprops.lo subversion/libsvn_client/list.lo subversion/libsvn_client/locking_commands.lo subversion/libsvn_client/log.lo subversion/libsvn_client/merge.lo subversion/libsvn_client/mergeinfo.lo subversion/libsvn_client/mtcc.lo subversion/libsvn_client/patch.lo subversion/libsvn_client/prop_commands.lo subversion/libsvn_client/ra.lo subversion/libsvn_client/relocate.lo subversion/libsvn_client/repos_diff.lo subversion/libsvn_client/resolved.lo subversion/libsvn_client/revert.lo subversion/libsvn_client/revisions.lo subversion/libsvn_client/shelve.lo subversion/libsvn_client/status.lo subversion/libsvn_client/switch.lo subversion/libsvn_client/update.lo subversion/libsvn_client/upgrade.lo subversion/libsvn_client/url.lo subversion/libsvn_client/util.lo subversion/libsvn_client/version.lo subversion/libsvn_wc/libsvn_wc-1.la subversion/libsvn_ra/libsvn_ra-1.la subversion/libsvn_delta/libsvn_delta-1.la subversion/libsvn_diff/libsvn_diff-1.la subversion/libsvn_subr/libsvn_subr-1.la
++libsvn_client_OBJECTS = add.lo blame.lo cat.lo changelist.lo checkout.lo cleanup.lo cmdline.lo commit.lo commit_util.lo compat_providers.lo copy.lo copy_foreign.lo ctx.lo delete.lo deprecated.lo diff.lo diff_local.lo diff_summarize.lo export.lo externals.lo import.lo info.lo iprops.lo list.lo locking_commands.lo log.lo merge.lo mergeinfo.lo mtcc.lo patch.lo prop_commands.lo ra.lo relocate.lo repos_diff.lo resolved.lo revert.lo revisions.lo shelve.lo status.lo switch.lo update.lo upgrade.lo url.lo util.lo version.lo
+ subversion/libsvn_client/libsvn_client-1.la: $(libsvn_client_DEPS)
+ 	cd subversion/libsvn_client && $(LINK_LIB) $(libsvn_client_LDFLAGS) -o libsvn_client-1.la $(LT_NO_UNDEFINED) $(libsvn_client_OBJECTS) ../../subversion/libsvn_wc/libsvn_wc-1.la ../../subversion/libsvn_ra/libsvn_ra-1.la ../../subversion/libsvn_delta/libsvn_delta-1.la ../../subversion/libsvn_diff/libsvn_diff-1.la ../../subversion/libsvn_subr/libsvn_subr-1.la $(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(LIBS)
+ 
+@@ -849,8 +849,8 @@ subversion/tests/libsvn_subr/subst_translate-test$(EXEEXT): $(subst_translate_te
+ 	cd subversion/tests/libsvn_subr && $(LINK) $(subst_translate_test_LDFLAGS) -o subst_translate-test$(EXEEXT)  $(subst_translate_test_OBJECTS) ../../../subversion/tests/libsvn_test-1.la ../../../subversion/libsvn_subr/libsvn_subr-1.la $(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(LIBS)
+ 
+ svn_PATH = subversion/svn
+-svn_DEPS = subversion/svn/add-cmd.lo subversion/svn/auth-cmd.lo subversion/svn/blame-cmd.lo subversion/svn/cat-cmd.lo subversion/svn/changelist-cmd.lo subversion/svn/checkout-cmd.lo subversion/svn/cl-conflicts.lo subversion/svn/clean-cmd.lo subversion/svn/cleanup-cmd.lo subversion/svn/commit-cmd.lo subversion/svn/conflict-callbacks.lo subversion/svn/copy-cmd.lo subversion/svn/delete-cmd.lo subversion/svn/deprecated.lo subversion/svn/diff-cmd.lo subversion/svn/export-cmd.lo subversion/svn/file-merge.lo subversion/svn/help-cmd.lo subversion/svn/import-cmd.lo subversion/svn/info-cmd.lo subversion/svn/list-cmd.lo subversion/svn/lock-cmd.lo subversion/svn/log-cmd.lo subversion/svn/merge-cmd.lo subversion/svn/mergeinfo-cmd.lo subversion/svn/mkdir-cmd.lo subversion/svn/move-cmd.lo subversion/svn/notify.lo subversion/svn/patch-cmd.lo subversion/svn/propdel-cmd.lo subversion/svn/propedit-cmd.lo subversion/svn/propget-cmd.lo subversion/svn/proplist-cmd.lo subversion/svn/props.lo subversion/svn/propset-cmd.lo subversion/svn/relocate-cmd.lo subversion/svn/resolve-cmd.lo subversion/svn/resolved-cmd.lo subversion/svn/revert-cmd.lo subversion/svn/similarity.lo subversion/svn/status-cmd.lo subversion/svn/status.lo subversion/svn/svn.lo subversion/svn/switch-cmd.lo subversion/svn/unlock-cmd.lo subversion/svn/update-cmd.lo subversion/svn/upgrade-cmd.lo subversion/svn/util.lo subversion/libsvn_client/libsvn_client-1.la subversion/libsvn_wc/libsvn_wc-1.la subversion/libsvn_ra/libsvn_ra-1.la subversion/libsvn_delta/libsvn_delta-1.la subversion/libsvn_diff/libsvn_diff-1.la subversion/libsvn_subr/libsvn_subr-1.la
+-svn_OBJECTS = add-cmd.lo auth-cmd.lo blame-cmd.lo cat-cmd.lo changelist-cmd.lo checkout-cmd.lo cl-conflicts.lo clean-cmd.lo cleanup-cmd.lo commit-cmd.lo conflict-callbacks.lo copy-cmd.lo delete-cmd.lo deprecated.lo diff-cmd.lo export-cmd.lo file-merge.lo help-cmd.lo import-cmd.lo info-cmd.lo list-cmd.lo lock-cmd.lo log-cmd.lo merge-cmd.lo mergeinfo-cmd.lo mkdir-cmd.lo move-cmd.lo notify.lo patch-cmd.lo propdel-cmd.lo propedit-cmd.lo propget-cmd.lo proplist-cmd.lo props.lo propset-cmd.lo relocate-cmd.lo resolve-cmd.lo resolved-cmd.lo revert-cmd.lo similarity.lo status-cmd.lo status.lo svn.lo switch-cmd.lo unlock-cmd.lo update-cmd.lo upgrade-cmd.lo util.lo
++svn_DEPS = subversion/svn/add-cmd.lo subversion/svn/auth-cmd.lo subversion/svn/blame-cmd.lo subversion/svn/cat-cmd.lo subversion/svn/changelist-cmd.lo subversion/svn/checkout-cmd.lo subversion/svn/cl-conflicts.lo subversion/svn/clean-cmd.lo subversion/svn/cleanup-cmd.lo subversion/svn/commit-cmd.lo subversion/svn/conflict-callbacks.lo subversion/svn/copy-cmd.lo subversion/svn/delete-cmd.lo subversion/svn/deprecated.lo subversion/svn/diff-cmd.lo subversion/svn/export-cmd.lo subversion/svn/file-merge.lo subversion/svn/help-cmd.lo subversion/svn/import-cmd.lo subversion/svn/info-cmd.lo subversion/svn/list-cmd.lo subversion/svn/lock-cmd.lo subversion/svn/log-cmd.lo subversion/svn/merge-cmd.lo subversion/svn/mergeinfo-cmd.lo subversion/svn/mkdir-cmd.lo subversion/svn/move-cmd.lo subversion/svn/notify.lo subversion/svn/patch-cmd.lo subversion/svn/propdel-cmd.lo subversion/svn/propedit-cmd.lo subversion/svn/propget-cmd.lo subversion/svn/proplist-cmd.lo subversion/svn/props.lo subversion/svn/propset-cmd.lo subversion/svn/relocate-cmd.lo subversion/svn/resolve-cmd.lo subversion/svn/resolved-cmd.lo subversion/svn/revert-cmd.lo subversion/svn/shelve-cmd.lo subversion/svn/similarity.lo subversion/svn/status-cmd.lo subversion/svn/status.lo subversion/svn/svn.lo subversion/svn/switch-cmd.lo subversion/svn/unlock-cmd.lo subversion/svn/update-cmd.lo subversion/svn/upgrade-cmd.lo subversion/svn/util.lo subversion/libsvn_client/libsvn_client-1.la subversion/libsvn_wc/libsvn_wc-1.la subversion/libsvn_ra/libsvn_ra-1.la subversion/libsvn_delta/libsvn_delta-1.la subversion/libsvn_diff/libsvn_diff-1.la subversion/libsvn_subr/libsvn_subr-1.la
++svn_OBJECTS = add-cmd.lo auth-cmd.lo blame-cmd.lo cat-cmd.lo changelist-cmd.lo checkout-cmd.lo cl-conflicts.lo clean-cmd.lo cleanup-cmd.lo commit-cmd.lo conflict-callbacks.lo copy-cmd.lo delete-cmd.lo deprecated.lo diff-cmd.lo export-cmd.lo file-merge.lo help-cmd.lo import-cmd.lo info-cmd.lo list-cmd.lo lock-cmd.lo log-cmd.lo merge-cmd.lo mergeinfo-cmd.lo mkdir-cmd.lo move-cmd.lo notify.lo patch-cmd.lo propdel-cmd.lo propedit-cmd.lo propget-cmd.lo proplist-cmd.lo props.lo propset-cmd.lo relocate-cmd.lo resolve-cmd.lo resolved-cmd.lo revert-cmd.lo shelve-cmd.lo similarity.lo status-cmd.lo status.lo svn.lo switch-cmd.lo unlock-cmd.lo update-cmd.lo upgrade-cmd.lo util.lo
+ subversion/svn/svn$(EXEEXT): $(svn_DEPS)
+ 	cd subversion/svn && $(LINK) $(svn_LDFLAGS) -o svn$(EXEEXT)  $(svn_OBJECTS) ../../subversion/libsvn_client/libsvn_client-1.la ../../subversion/libsvn_wc/libsvn_wc-1.la ../../subversion/libsvn_ra/libsvn_ra-1.la ../../subversion/libsvn_delta/libsvn_delta-1.la ../../subversion/libsvn_diff/libsvn_diff-1.la ../../subversion/libsvn_subr/libsvn_subr-1.la $(SVN_APRUTIL_LIBS) $(SVN_APR_LIBS) $(LIBS)
+ 
+@@ -2482,6 +2482,8 @@ subversion/libsvn_client/revert.lo: subversion/libsvn_client/revert.c subversion
+ 
+ subversion/libsvn_client/revisions.lo: subversion/libsvn_client/revisions.c subversion/include/private/svn_client_private.h subversion/include/private/svn_debug.h subversion/include/private/svn_diff_tree.h subversion/include/private/svn_editor.h subversion/include/private/svn_magic.h subversion/include/private/svn_wc_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_wc.h subversion/libsvn_client/client.h subversion/svn_private_config.h
+ 
++subversion/libsvn_client/shelve.lo: subversion/libsvn_client/shelve.c subversion/include/private/svn_client_private.h subversion/include/private/svn_debug.h subversion/include/private/svn_diff_tree.h subversion/include/private/svn_editor.h subversion/include/private/svn_magic.h subversion/include/private/svn_wc_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_config.h subversion/include/svn_ctype.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_utf.h subversion/include/svn_wc.h subversion/libsvn_client/client.h subversion/svn_private_config.h
++
+ subversion/libsvn_client/status.lo: subversion/libsvn_client/status.c subversion/include/private/svn_client_private.h subversion/include/private/svn_debug.h subversion/include/private/svn_diff_tree.h subversion/include/private/svn_editor.h subversion/include/private/svn_magic.h subversion/include/private/svn_sorts_private.h subversion/include/private/svn_wc_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_ra.h subversion/include/svn_sorts.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_wc.h subversion/libsvn_client/client.h subversion/svn_private_config.h
+ 
+ subversion/libsvn_client/switch.lo: subversion/libsvn_client/switch.c subversion/include/private/svn_client_private.h subversion/include/private/svn_debug.h subversion/include/private/svn_diff_tree.h subversion/include/private/svn_editor.h subversion/include/private/svn_magic.h subversion/include/private/svn_wc_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_time.h subversion/include/svn_types.h subversion/include/svn_wc.h subversion/libsvn_client/client.h subversion/svn_private_config.h
+@@ -3253,6 +3255,8 @@ subversion/svn/resolved-cmd.lo: subversion/svn/resolved-cmd.c subversion/include
+ 
+ subversion/svn/revert-cmd.lo: subversion/svn/revert-cmd.c subversion/include/private/svn_debug.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_cmdline.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_wc.h subversion/svn/cl.h subversion/svn_private_config.h
+ 
++subversion/svn/shelve-cmd.lo: subversion/svn/shelve-cmd.c subversion/include/private/svn_debug.h subversion/include/private/svn_sorts_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_cmdline.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_ra.h subversion/include/svn_sorts.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_utf.h subversion/include/svn_wc.h subversion/svn/cl.h subversion/svn_private_config.h
++
+ subversion/svn/similarity.lo: subversion/svn/similarity.c subversion/include/private/svn_debug.h subversion/include/private/svn_string_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_cmdline.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_wc.h subversion/svn/cl.h subversion/svn_private_config.h
+ 
+ subversion/svn/status-cmd.lo: subversion/svn/status-cmd.c subversion/include/private/svn_debug.h subversion/include/private/svn_diff_tree.h subversion/include/private/svn_wc_private.h subversion/include/svn_auth.h subversion/include/svn_checksum.h subversion/include/svn_client.h subversion/include/svn_cmdline.h subversion/include/svn_config.h subversion/include/svn_delta.h subversion/include/svn_diff.h subversion/include/svn_dirent_uri.h subversion/include/svn_error.h subversion/include/svn_error_codes.h subversion/include/svn_hash.h subversion/include/svn_io.h subversion/include/svn_mergeinfo.h subversion/include/svn_opt.h subversion/include/svn_path.h subversion/include/svn_pools.h subversion/include/svn_ra.h subversion/include/svn_string.h subversion/include/svn_types.h subversion/include/svn_wc.h subversion/include/svn_xml.h subversion/svn/cl.h subversion/svn_private_config.h
+diff --git a/subversion/include/svn_client.h b/subversion/include/svn_client.h
+index 2e11d2e..a0f38ae 100644
+--- a/subversion/include/svn_client.h
++++ b/subversion/include/svn_client.h
+@@ -6002,6 +6002,152 @@ svn_client_cat(svn_stream_t *out,
+ 
+ /** @} end group: cat */
+ 
++
++/** Shelving commands
++ *
++ * @defgroup svn_client_shelve_funcs Client Shelving Functions
++ * @{
++ */
++
++/** Shelve a change.
++ *
++ * Shelve as @a name the local modifications found by @a paths, @a depth,
++ * @a changelists. Revert the shelved change from the WC unless @a keep_local
++ * is true.
++ *
++ * If @a dry_run is true, don't actually do it.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_shelve(const char *name,
++                  const apr_array_header_t *paths,
++                  svn_depth_t depth,
++                  const apr_array_header_t *changelists,
++                  svn_boolean_t keep_local,
++                  svn_boolean_t dry_run,
++                  svn_client_ctx_t *ctx,
++                  apr_pool_t *pool);
++
++/** Unshelve the shelved change @a name.
++ *
++ * @a local_abspath is any path in the WC and is used to find the WC root.
++ * Rename the shelved patch to add a '.bak' extension unless @a keep is true.
++ *
++ * If @a dry_run is true, don't actually do it.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_unshelve(const char *name,
++                    const char *local_abspath,
++                    svn_boolean_t keep,
++                    svn_boolean_t dry_run,
++                    svn_client_ctx_t *ctx,
++                    apr_pool_t *pool);
++
++/** Delete the shelved patch @a name.
++ *
++ * @a local_abspath is any path in the WC and is used to find the WC root.
++ *
++ * If @a dry_run is true, don't actually do it.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_shelves_delete(const char *name,
++                          const char *local_abspath,
++                          svn_boolean_t dry_run,
++                          svn_client_ctx_t *ctx,
++                          apr_pool_t *pool);
++
++/** Information about a shelved patch.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++typedef struct svn_client_shelved_patch_info_t
++{
++  const char *message;  /* first line of log message */
++  const char *patch_path;  /* abspath of the patch file */
++  svn_io_dirent2_t *dirent;  /* info about the patch file */
++  apr_time_t mtime;  /* a copy of dirent->mtime */
++} svn_client_shelved_patch_info_t;
++
++/** Set @a *shelved_patch_infos to a hash, keyed by patch name, of pointers to
++ * @c svn_client_shelved_patch_info_t structures.
++ *
++ * @a local_abspath is any path in the WC and is used to find the WC root.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_shelves_list(apr_hash_t **shelved_patch_infos,
++                        const char *local_abspath,
++                        svn_client_ctx_t *ctx,
++                        apr_pool_t *result_pool,
++                        apr_pool_t *scratch_pool);
++
++/** Set @a *any_shelved to indicate if there are any shelved changes in this WC.
++ *
++ * This shall provide the answer fast, regardless of how many changes
++ * are stored, unlike svn_client_shelves_list().
++ *
++ * ### Initial implementation isn't O(1) fast -- it just calls
++ *     svn_client_shelves_list().
++ *
++ * @a local_abspath is any path in the WC and is used to find the WC root.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_shelves_any(svn_boolean_t *any_shelved,
++                       const char *local_abspath,
++                       svn_client_ctx_t *ctx,
++                       apr_pool_t *scratch_pool);
++
++/** Set @a *affected_paths to a hash with one entry for each path affected
++ * by the shelf @a name. The hash key is the old path and value is
++ * the new path, both relative to the WC root. The key and value are the
++ * same except when a path is moved or copied.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_shelf_get_paths(apr_hash_t **affected_paths,
++                           const char *name,
++                           const char *local_abspath,
++                           svn_client_ctx_t *ctx,
++                           apr_pool_t *result_pool,
++                           apr_pool_t *scratch_pool);
++
++/** Set @a *has_changes to indicate whether the shelf @a name
++ * contains any modifications, in other words if svn_client_shelf_get_paths()
++ * would return a non-empty set of paths.
++ *
++ * @since New in 1.10.
++ * @warning EXPERIMENTAL.
++ */
++SVN_EXPERIMENTAL
++svn_error_t *
++svn_client_shelf_has_changes(svn_boolean_t *has_changes,
++                             const char *name,
++                             const char *local_abspath,
++                             svn_client_ctx_t *ctx,
++                             apr_pool_t *scratch_pool);
++
+ 
+ 
+ /** Changelist commands
+diff --git a/subversion/include/svn_io.h b/subversion/include/svn_io.h
+index 42eb422..fd8c324 100644
+--- a/subversion/include/svn_io.h
++++ b/subversion/include/svn_io.h
+@@ -2328,6 +2328,25 @@ svn_io_stat(apr_finfo_t *finfo,
+             apr_pool_t *pool);
+ 
+ 
++/** Rename and/or move the node (not necessarily a regular file) at
++ * @a from_path to a new path @a to_path within the same filesystem.
++ * In some cases, an existing node at @a to_path will be overwritten.
++ *
++ * @a from_path and @a to_path are utf8-encoded.  If @a flush_to_disk
++ * is non-zero, do not return until the node has actually been moved on
++ * the disk.
++ *
++ * @note The flush to disk operation can be very expensive on systems
++ * that implement flushing on all IO layers, like Windows. Please use
++ * @a flush_to_disk flag only for critical data.
++ *
++ * @since New in 1.10.
++ */
++svn_error_t *
++svn_io_file_rename2(const char *from_path, const char *to_path,
++                    svn_boolean_t flush_to_disk, apr_pool_t *pool);
++
++
+ /** Rename and/or move the node (not necessarily a regular file) at
+  * @a from_path to a new path @a to_path within the same filesystem.
+  * In some cases, an existing node at @a to_path will be overwritten.
+diff --git a/subversion/libsvn_client/shelve.c b/subversion/libsvn_client/shelve.c
+new file mode 100644
+index 0000000..467692c
+--- /dev/null
++++ b/subversion/libsvn_client/shelve.c
+@@ -0,0 +1,552 @@
++/*
++ * shelve.c:  implementation of the 'shelve' commands
++ *
++ * ====================================================================
++ *    Licensed to the Apache Software Foundation (ASF) under one
++ *    or more contributor license agreements.  See the NOTICE file
++ *    distributed with this work for additional information
++ *    regarding copyright ownership.  The ASF licenses this file
++ *    to you under the Apache License, Version 2.0 (the
++ *    "License"); you may not use this file except in compliance
++ *    with the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *    Unless required by applicable law or agreed to in writing,
++ *    software distributed under the License is distributed on an
++ *    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ *    KIND, either express or implied.  See the License for the
++ *    specific language governing permissions and limitations
++ *    under the License.
++ * ====================================================================
++ */
++
++/* ==================================================================== */
++
++/* We define this here to remove any further warnings about the usage of
++   experimental functions in this file. */
++#define SVN_EXPERIMENTAL
++
++#include "svn_client.h"
++#include "svn_wc.h"
++#include "svn_pools.h"
++#include "svn_dirent_uri.h"
++#include "svn_path.h"
++#include "svn_hash.h"
++#include "svn_utf.h"
++#include "svn_ctype.h"
++
++#include "client.h"
++#include "private/svn_client_private.h"
++#include "private/svn_wc_private.h"
++#include "svn_private_config.h"
++
++
++static svn_error_t *
++shelf_name_encode(char **encoded_name_p,
++                  const char *name,
++                  apr_pool_t *result_pool)
++{
++  char *encoded_name
++    = apr_palloc(result_pool, strlen(name) * 2 + 1);
++  char *out_pos = encoded_name;
++
++  if (name[0] == '\0')
++    return svn_error_create(SVN_ERR_BAD_CHANGELIST_NAME, NULL,
++                            _("Shelf name cannot be the empty string"));
++
++  while (*name)
++    {
++      apr_snprintf(out_pos, 3, "%02x", *name++);
++      out_pos += 2;
++    }
++  *encoded_name_p = encoded_name;
++  return SVN_NO_ERROR;
++}
++
++static svn_error_t *
++shelf_name_decode(char **decoded_name_p,
++                  const char *codename,
++                  apr_pool_t *result_pool)
++{
++  svn_stringbuf_t *sb
++    = svn_stringbuf_create_ensure(strlen(codename) / 2, result_pool);
++  const char *input = codename;
++
++  while (*input)
++    {
++      int c;
++      int nchars;
++      int nitems = sscanf(input, "%02x%n", &c, &nchars);
++
++      if (nitems != 1 || nchars != 2)
++        return svn_error_createf(SVN_ERR_BAD_CHANGELIST_NAME, NULL,
++                                 _("Shelve: Bad encoded name '%s'"), codename);
++      svn_stringbuf_appendbyte(sb, c);
++      input += 2;
++    }
++  *decoded_name_p = sb->data;
++  return SVN_NO_ERROR;
++}
++
++/* Set *NAME to the shelf name from FILENAME. */
++static svn_error_t *
++shelf_name_from_filename(char **name,
++                         const char *filename,
++                         apr_pool_t *result_pool)
++{
++  size_t len = strlen(filename);
++
++  if (len > 6 && strcmp(filename + len - 6, ".patch") == 0)
++    {
++      char *codename = apr_pstrndup(result_pool, filename, len - 6);
++      SVN_ERR(shelf_name_decode(name, codename, result_pool));
++    }
++  return SVN_NO_ERROR;
++}
++
++/* Set *PATCH_ABSPATH to the abspath of the patch file for shelved change
++ * NAME, no matter whether it exists.
++ */
++static svn_error_t *
++get_patch_abspath(char **patch_abspath,
++                  const char *name,
++                  const char *wc_root_abspath,
++                  svn_client_ctx_t *ctx,
++                  apr_pool_t *result_pool,
++                  apr_pool_t *scratch_pool)
++{
++  char *dir;
++  char *filename;
++
++  SVN_ERR(svn_wc__get_shelves_dir(&dir, ctx->wc_ctx, wc_root_abspath,
++                                  scratch_pool, scratch_pool));
++  SVN_ERR(shelf_name_encode(&filename, name, scratch_pool));
++  filename = apr_pstrcat(scratch_pool, filename, ".patch", SVN_VA_NULL);
++  *patch_abspath = svn_dirent_join(dir, filename, result_pool);
++  return SVN_NO_ERROR;
++}
++
++/** Write local changes to a patch file for shelved change @a name.
++ *
++ * @a message: An optional log message.
++ *
++ * @a wc_root_abspath: The WC root dir.
++ *
++ * @a overwrite_existing: If a file at @a patch_abspath exists, overwrite it.
++ *
++ * @a paths, @a depth, @a changelists: The selection of local paths to diff.
++ */
++static svn_error_t *
++shelf_write_patch(const char *name,
++                  const char *message,
++                  const char *wc_root_abspath,
++                  svn_boolean_t overwrite_existing,
++                  const apr_array_header_t *paths,
++                  svn_depth_t depth,
++                  const apr_array_header_t *changelists,
++                  svn_client_ctx_t *ctx,
++                  apr_pool_t *scratch_pool)
++{
++  char *patch_abspath;
++  apr_int32_t flag;
++  apr_file_t *outfile;
++  svn_stream_t *outstream;
++  svn_stream_t *errstream;
++  apr_pool_t *iterpool = svn_pool_create(scratch_pool);
++  int i;
++  svn_opt_revision_t peg_revision = {svn_opt_revision_unspecified, {0}};
++  svn_opt_revision_t start_revision = {svn_opt_revision_base, {0}};
++  svn_opt_revision_t end_revision = {svn_opt_revision_working, {0}};
++
++  SVN_ERR(get_patch_abspath(&patch_abspath, name, wc_root_abspath,
++                            ctx, scratch_pool, scratch_pool));
++
++  /* Get streams for the output and any error output of the diff. */
++  /* ### svn_stream_open_writable() doesn't work here: the buffering
++         goes wrong so that diff headers appear after their hunks.
++         For now, fix by opening the file without APR_BUFFERED. */
++  flag = APR_FOPEN_WRITE | APR_FOPEN_CREATE | APR_FOPEN_TRUNCATE;
++  if (! overwrite_existing)
++    flag |= APR_FOPEN_EXCL;
++  SVN_ERR(svn_io_file_open(&outfile, patch_abspath,
++                           flag, APR_FPROT_OS_DEFAULT, scratch_pool));
++  outstream = svn_stream_from_aprfile2(outfile, FALSE /*disown*/, scratch_pool);
++  SVN_ERR(svn_stream_for_stderr(&errstream, scratch_pool));
++
++  /* Write the patch file header (log message, etc.) */
++  if (message)
++    {
++      SVN_ERR(svn_stream_printf(outstream, scratch_pool, "%s\n",
++                                message));
++    }
++  SVN_ERR(svn_stream_printf(outstream, scratch_pool,
++                            "--This line, and those below, will be ignored--\n\n"));
++  SVN_ERR(svn_stream_printf(outstream, scratch_pool,
++                            "--This patch was generated by 'svn shelve'--\n\n"));
++
++  for (i = 0; i < paths->nelts; i++)
++    {
++      const char *path = APR_ARRAY_IDX(paths, i, const char *);
++
++      if (svn_path_is_url(path))
++        return svn_error_createf(SVN_ERR_ILLEGAL_TARGET, NULL,
++                                 _("'%s' is not a local path"), path);
++      SVN_ERR(svn_dirent_get_absolute(&path, path, scratch_pool));
++
++      SVN_ERR(svn_client_diff_peg6(
++                     NULL /*options*/,
++                     path,
++                     &peg_revision,
++                     &start_revision,
++                     &end_revision,
++                     wc_root_abspath,
++                     depth,
++                     TRUE /*notice_ancestry*/,
++                     FALSE /*no_diff_added*/,
++                     FALSE /*no_diff_deleted*/,
++                     TRUE /*show_copies_as_adds*/,
++                     FALSE /*ignore_content_type: FALSE -> omit binary files*/,
++                     FALSE /*ignore_properties*/,
++                     FALSE /*properties_only*/,
++                     FALSE /*use_git_diff_format*/,
++                     SVN_APR_LOCALE_CHARSET,
++                     outstream,
++                     errstream,
++                     changelists,
++                     ctx, iterpool));
++    }
++  SVN_ERR(svn_stream_close(outstream));
++  SVN_ERR(svn_stream_close(errstream));
++
++  return SVN_NO_ERROR;
++}
++
++/** Apply the patch file for shelved change @a name to the WC.
++ *
++ * @a wc_root_abspath: The WC root dir.
++ *
++ * @a reverse: Apply the patch in reverse.
++ *
++ * @a dry_run: Don't really apply the changes, just notify what would be done.
++ */
++static svn_error_t *
++shelf_apply_patch(const char *name,
++                  const char *wc_root_abspath,
++                  svn_boolean_t reverse,
++                  svn_boolean_t dry_run,
++                  svn_client_ctx_t *ctx,
++                  apr_pool_t *scratch_pool)
++{
++  char *patch_abspath;
++
++  SVN_ERR(get_patch_abspath(&patch_abspath, name, wc_root_abspath,
++                            ctx, scratch_pool, scratch_pool));
++  SVN_ERR(svn_client_patch(patch_abspath, wc_root_abspath,
++                           dry_run, 0 /*strip*/,
++                           reverse,
++                           FALSE /*ignore_whitespace*/,
++                           TRUE /*remove_tempfiles*/, NULL, NULL,
++                           ctx, scratch_pool));
++
++  return SVN_NO_ERROR;
++}
++
++/** Delete the patch file for shelved change @a name.
++ *
++ * @a wc_root_abspath: The WC root dir.
++ */
++static svn_error_t *
++shelf_delete_patch(const char *name,
++                   const char *wc_root_abspath,
++                   svn_client_ctx_t *ctx,
++                   apr_pool_t *scratch_pool)
++{
++  char *patch_abspath, *to_abspath;
++
++  SVN_ERR(get_patch_abspath(&patch_abspath, name, wc_root_abspath,
++                            ctx, scratch_pool, scratch_pool));
++  to_abspath = apr_pstrcat(scratch_pool, patch_abspath, ".bak", SVN_VA_NULL);
++
++  /* remove any previous backup */
++  SVN_ERR(svn_io_remove_file2(to_abspath, TRUE /*ignore_enoent*/,
++                              scratch_pool));
++
++  /* move the patch to a backup file */
++  SVN_ERR(svn_io_file_rename2(patch_abspath, to_abspath, FALSE /*flush_to_disk*/,
++                              scratch_pool));
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_shelve(const char *name,
++                  const apr_array_header_t *paths,
++                  svn_depth_t depth,
++                  const apr_array_header_t *changelists,
++                  svn_boolean_t keep_local,
++                  svn_boolean_t dry_run,
++                  svn_client_ctx_t *ctx,
++                  apr_pool_t *pool)
++{
++  const char *local_abspath;
++  const char *wc_root_abspath;
++  const char *message = "";
++  svn_error_t *err;
++
++  /* ### TODO: check all paths are in same WC; for now use first path */
++  SVN_ERR(svn_dirent_get_absolute(&local_abspath,
++                                  APR_ARRAY_IDX(paths, 0, char *), pool));
++  SVN_ERR(svn_client_get_wc_root(&wc_root_abspath,
++                                 local_abspath, ctx, pool, pool));
++
++  /* Fetch the log message and any other revprops */
++  if (SVN_CLIENT__HAS_LOG_MSG_FUNC(ctx))
++    {
++      const char *tmp_file;
++      apr_array_header_t *commit_items = apr_array_make(pool, 1, sizeof(void *));
++
++      SVN_ERR(svn_client__get_log_msg(&message, &tmp_file, commit_items,
++                                      ctx, pool));
++      if (! message)
++        return SVN_NO_ERROR;
++    }
++
++  err = shelf_write_patch(name, message, wc_root_abspath,
++                          FALSE /*overwrite_existing*/,
++                          paths, depth, changelists,
++                          ctx, pool);
++  if (err && APR_STATUS_IS_EEXIST(err->apr_err))
++    {
++      return svn_error_quick_wrapf(err,
++                                   "Shelved change '%s' already exists",
++                                   name);
++    }
++  else
++    SVN_ERR(err);
++
++  if (!keep_local)
++    {
++      /* Reverse-apply the patch. This should be a safer way to remove those
++         changes from the WC than running a 'revert' operation. */
++      SVN_ERR(shelf_apply_patch(name, wc_root_abspath,
++                                TRUE /*reverse*/, dry_run,
++                                ctx, pool));
++    }
++
++  if (dry_run)
++    {
++      SVN_ERR(shelf_delete_patch(name, wc_root_abspath,
++                                 ctx, pool));
++    }
++
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_unshelve(const char *name,
++                    const char *local_abspath,
++                    svn_boolean_t keep,
++                    svn_boolean_t dry_run,
++                    svn_client_ctx_t *ctx,
++                    apr_pool_t *pool)
++{
++  const char *wc_root_abspath;
++  svn_error_t *err;
++
++  SVN_ERR(svn_client_get_wc_root(&wc_root_abspath,
++                                 local_abspath, ctx, pool, pool));
++
++  /* Apply the patch. */
++  err = shelf_apply_patch(name, wc_root_abspath,
++                          FALSE /*reverse*/, dry_run,
++                          ctx, pool);
++  if (err && err->apr_err == SVN_ERR_ILLEGAL_TARGET)
++    {
++      return svn_error_quick_wrapf(err,
++                                   "Shelved change '%s' not found",
++                                   name);
++    }
++  else
++    SVN_ERR(err);
++
++  /* Remove the patch. */
++  if (! keep && ! dry_run)
++    {
++      SVN_ERR(shelf_delete_patch(name, wc_root_abspath,
++                                 ctx, pool));
++    }
++
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_shelves_delete(const char *name,
++                          const char *local_abspath,
++                          svn_boolean_t dry_run,
++                          svn_client_ctx_t *ctx,
++                          apr_pool_t *pool)
++{
++  const char *wc_root_abspath;
++
++  SVN_ERR(svn_client_get_wc_root(&wc_root_abspath,
++                                 local_abspath, ctx, pool, pool));
++
++  /* Remove the patch. */
++  if (! dry_run)
++    {
++      svn_error_t *err;
++
++      err = shelf_delete_patch(name, wc_root_abspath,
++                               ctx, pool);
++      if (err && APR_STATUS_IS_ENOENT(err->apr_err))
++        {
++          return svn_error_quick_wrapf(err,
++                                       "Shelved change '%s' not found",
++                                       name);
++        }
++      else
++        SVN_ERR(err);
++    }
++
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_shelf_get_paths(apr_hash_t **affected_paths,
++                           const char *name,
++                           const char *local_abspath,
++                           svn_client_ctx_t *ctx,
++                           apr_pool_t *result_pool,
++                           apr_pool_t *scratch_pool)
++{
++  const char *wc_root_abspath;
++  char *patch_abspath;
++  svn_patch_file_t *patch_file;
++  apr_pool_t *iterpool = svn_pool_create(scratch_pool);
++  apr_hash_t *paths = apr_hash_make(result_pool);
++
++  SVN_ERR(svn_client_get_wc_root(&wc_root_abspath,
++                                 local_abspath, ctx, scratch_pool, scratch_pool));
++  SVN_ERR(get_patch_abspath(&patch_abspath, name, wc_root_abspath,
++                            ctx, scratch_pool, scratch_pool));
++  SVN_ERR(svn_diff_open_patch_file(&patch_file, patch_abspath, result_pool));
++
++  while (1)
++    {
++      svn_patch_t *patch;
++
++      svn_pool_clear(iterpool);
++      SVN_ERR(svn_diff_parse_next_patch(&patch, patch_file,
++                                        FALSE /*reverse*/,
++                                        FALSE /*ignore_whitespace*/,
++                                        iterpool, iterpool));
++      if (! patch)
++        break;
++      svn_hash_sets(paths,
++                    apr_pstrdup(result_pool, patch->old_filename),
++                    apr_pstrdup(result_pool, patch->new_filename));
++    }
++  SVN_ERR(svn_diff_close_patch_file(patch_file, iterpool));
++  svn_pool_destroy(iterpool);
++
++  *affected_paths = paths;
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_shelf_has_changes(svn_boolean_t *has_changes,
++                             const char *name,
++                             const char *local_abspath,
++                             svn_client_ctx_t *ctx,
++                             apr_pool_t *scratch_pool)
++{
++  apr_hash_t *patch_paths;
++
++  SVN_ERR(svn_client_shelf_get_paths(&patch_paths, name, local_abspath,
++                                     ctx, scratch_pool, scratch_pool));
++  *has_changes = (apr_hash_count(patch_paths) != 0);
++  return SVN_NO_ERROR;
++}
++
++/* Set *LOGMSG to the log message stored in the file PATCH_ABSPATH.
++ *
++ * ### Currently just reads the first line.
++ */
++static svn_error_t *
++read_logmsg_from_patch(const char **logmsg,
++                       const char *patch_abspath,
++                       apr_pool_t *result_pool,
++                       apr_pool_t *scratch_pool)
++{
++  apr_file_t *file;
++  svn_stream_t *stream;
++  svn_boolean_t eof;
++  svn_stringbuf_t *line;
++
++  SVN_ERR(svn_io_file_open(&file, patch_abspath,
++                           APR_FOPEN_READ, APR_FPROT_OS_DEFAULT, scratch_pool));
++  stream = svn_stream_from_aprfile2(file, FALSE /*disown*/, scratch_pool);
++  SVN_ERR(svn_stream_readline(stream, &line, "\n", &eof, result_pool));
++  SVN_ERR(svn_stream_close(stream));
++  *logmsg = line->data;
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_shelves_list(apr_hash_t **shelved_patch_infos,
++                        const char *local_abspath,
++                        svn_client_ctx_t *ctx,
++                        apr_pool_t *result_pool,
++                        apr_pool_t *scratch_pool)
++{
++  char *shelves_dir;
++  apr_hash_t *dirents;
++  apr_hash_index_t *hi;
++
++  SVN_ERR(svn_wc__get_shelves_dir(&shelves_dir, ctx->wc_ctx, local_abspath,
++                                  scratch_pool, scratch_pool));
++  SVN_ERR(svn_io_get_dirents3(&dirents, shelves_dir, FALSE /*only_check_type*/,
++                              result_pool, scratch_pool));
++
++  *shelved_patch_infos = apr_hash_make(result_pool);
++
++  /* Remove non-shelves */
++  for (hi = apr_hash_first(scratch_pool, dirents); hi; hi = apr_hash_next(hi))
++    {
++      const char *filename = apr_hash_this_key(hi);
++      svn_io_dirent2_t *dirent = apr_hash_this_val(hi);
++      char *name = NULL;
++
++      svn_error_clear(shelf_name_from_filename(&name, filename, result_pool));
++      if (name && dirent->kind == svn_node_file)
++        {
++          svn_client_shelved_patch_info_t *info
++            = apr_palloc(result_pool, sizeof(*info));
++
++          info->dirent = dirent;
++          info->mtime = info->dirent->mtime;
++          info->patch_path
++            = svn_dirent_join(shelves_dir, filename, result_pool);
++          SVN_ERR(read_logmsg_from_patch(&info->message, info->patch_path,
++                                         result_pool, scratch_pool));
++
++          svn_hash_sets(*shelved_patch_infos, name, info);
++        }
++    }
++
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_client_shelves_any(svn_boolean_t *any_shelved,
++                       const char *local_abspath,
++                       svn_client_ctx_t *ctx,
++                       apr_pool_t *scratch_pool)
++{
++  apr_hash_t *shelved_patch_infos;
++
++  SVN_ERR(svn_client_shelves_list(&shelved_patch_infos, local_abspath,
++                                  ctx, scratch_pool, scratch_pool));
++  *any_shelved = apr_hash_count(shelved_patch_infos) != 0;
++  return SVN_NO_ERROR;
++}
+diff --git a/subversion/libsvn_subr/io.c b/subversion/libsvn_subr/io.c
+index 468dd17..95c0efe 100644
+--- a/subversion/libsvn_subr/io.c
++++ b/subversion/libsvn_subr/io.c
+@@ -4223,6 +4223,92 @@ svn_io_file_rename(const char *from_path, const char *to_path,
+ }
+ 
+ 
++svn_error_t *
++svn_io_file_rename2(const char *from_path, const char *to_path,
++                    svn_boolean_t flush_to_disk, apr_pool_t *pool)
++{
++  apr_status_t status = APR_SUCCESS;
++  const char *from_path_apr, *to_path_apr;
++#if defined(WIN32)
++  WCHAR *from_path_w;
++  WCHAR *to_path_w;
++#endif
++
++  SVN_ERR(cstring_from_utf8(&from_path_apr, from_path, pool));
++  SVN_ERR(cstring_from_utf8(&to_path_apr, to_path, pool));
++
++#if defined(WIN32)
++  SVN_ERR(svn_io__utf8_to_unicode_longpath(&from_path_w, from_path_apr, pool));
++  SVN_ERR(svn_io__utf8_to_unicode_longpath(&to_path_w, to_path_apr, pool));
++  status = win32_file_rename(from_path_w, to_path_w, flush_to_disk);
++
++  /* If the target file is read only NTFS reports EACCESS and
++     FAT/FAT32 reports EEXIST */
++  if (APR_STATUS_IS_EACCES(status) || APR_STATUS_IS_EEXIST(status))
++    {
++      /* Set the destination file writable because Windows will not
++         allow us to rename when to_path is read-only, but will
++         allow renaming when from_path is read only. */
++      SVN_ERR(svn_io_set_file_read_write(to_path, TRUE, pool));
++
++      status = win32_file_rename(from_path_w, to_path_w, flush_to_disk);
++    }
++  WIN32_RETRY_LOOP(status, win32_file_rename(from_path_w, to_path_w,
++                                             flush_to_disk));
++#elif defined(__OS2__)
++  status = apr_file_rename(from_path_apr, to_path_apr, pool);
++  /* If the target file is read only NTFS reports EACCESS and
++     FAT/FAT32 reports EEXIST */
++  if (APR_STATUS_IS_EACCES(status) || APR_STATUS_IS_EEXIST(status))
++    {
++      /* Set the destination file writable because OS/2 will not
++         allow us to rename when to_path is read-only, but will
++         allow renaming when from_path is read only. */
++      SVN_ERR(svn_io_set_file_read_write(to_path, TRUE, pool));
++
++      status = apr_file_rename(from_path_apr, to_path_apr, pool);
++    }
++#else
++  status = apr_file_rename(from_path_apr, to_path_apr, pool);
++#endif /* WIN32 || __OS2__ */
++
++  if (status)
++    return svn_error_wrap_apr(status, _("Can't move '%s' to '%s'"),
++                              svn_dirent_local_style(from_path, pool),
++                              svn_dirent_local_style(to_path, pool));
++
++#if defined(SVN_ON_POSIX)
++  if (flush_to_disk)
++    {
++      /* On POSIX, the file name is stored in the file's directory entry.
++         Hence, we need to fsync() that directory as well.
++         On other operating systems, we'd only be asking for trouble
++         by trying to open and fsync a directory. */
++      const char *dirname;
++      apr_file_t *file;
++
++      dirname = svn_dirent_dirname(to_path, pool);
++      SVN_ERR(svn_io_file_open(&file, dirname, APR_READ, APR_OS_DEFAULT,
++                               pool));
++      SVN_ERR(svn_io_file_flush_to_disk(file, pool));
++      SVN_ERR(svn_io_file_close(file, pool));
++    }
++#elif !defined(WIN32)
++  /* Flush the target of the rename to disk. */
++  if (flush_to_disk)
++    {
++      apr_file_t *file;
++      SVN_ERR(svn_io_file_open(&file, to_path, APR_WRITE,
++                               APR_OS_DEFAULT, pool));
++      SVN_ERR(svn_io_file_flush_to_disk(file, pool));
++      SVN_ERR(svn_io_file_close(file, pool));
++    }
++#endif
++
++  return SVN_NO_ERROR;
++}
++
++
+ svn_error_t *
+ svn_io_file_move(const char *from_path, const char *to_path,
+                  apr_pool_t *pool)
+diff --git a/subversion/libsvn_wc/wcroot_anchor.c b/subversion/libsvn_wc/wcroot_anchor.c
+index 913a61b..7400aa5 100644
+--- a/subversion/libsvn_wc/wcroot_anchor.c
++++ b/subversion/libsvn_wc/wcroot_anchor.c
+@@ -182,6 +182,26 @@ svn_wc__get_wcroot(const char **wcroot_abspath,
+ }
+ 
+ 
++svn_error_t *
++svn_wc__get_shelves_dir(char **dir,
++                        svn_wc_context_t *wc_ctx,
++                        const char *local_abspath,
++                        apr_pool_t *result_pool,
++                        apr_pool_t *scratch_pool)
++{
++  const char *wcroot_abspath;
++
++  SVN_ERR(svn_wc__get_wcroot(&wcroot_abspath, wc_ctx, local_abspath,
++                             scratch_pool, scratch_pool));
++  *dir = svn_dirent_join(wcroot_abspath, ".svn/shelves", result_pool);
++  
++  /* Ensure the directory exists. (Other versions of svn don't create it.) */
++  SVN_ERR(svn_io_make_dir_recursively(*dir, scratch_pool));
++
++  return SVN_NO_ERROR;
++}
++
++
+ svn_error_t *
+ svn_wc_get_actual_target2(const char **anchor,
+                           const char **target,
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 6e70b9e..2ab99aa 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -252,6 +252,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t show_passwords;    /* show cached passwords */
+   svn_boolean_t pin_externals;     /* pin externals to last-changed revisions */
+   const char *show_item;           /* print only the given item */
++  svn_boolean_t list;
+ } svn_cl__opt_state_t;
+ 
+ 
+@@ -297,6 +298,9 @@ svn_opt_subcommand_t
+   svn_cl__revert,
+   svn_cl__resolve,
+   svn_cl__resolved,
++  svn_cl__shelve,
++  svn_cl__unshelve,
++  svn_cl__shelves,
+   svn_cl__status,
+   svn_cl__switch,
+   svn_cl__unlock,
+diff --git a/subversion/svn/shelve-cmd.c b/subversion/svn/shelve-cmd.c
+new file mode 100644
+index 0000000..df88a65
+--- /dev/null
++++ b/subversion/svn/shelve-cmd.c
+@@ -0,0 +1,369 @@
++/*
++ * shelve-cmd.c -- Shelve commands.
++ *
++ * ====================================================================
++ *    Licensed to the Apache Software Foundation (ASF) under one
++ *    or more contributor license agreements.  See the NOTICE file
++ *    distributed with this work for additional information
++ *    regarding copyright ownership.  The ASF licenses this file
++ *    to you under the Apache License, Version 2.0 (the
++ *    "License"); you may not use this file except in compliance
++ *    with the License.  You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ *    Unless required by applicable law or agreed to in writing,
++ *    software distributed under the License is distributed on an
++ *    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++ *    KIND, either express or implied.  See the License for the
++ *    specific language governing permissions and limitations
++ *    under the License.
++ * ====================================================================
++ */
++
++/* We define this here to remove any further warnings about the usage of
++   experimental functions in this file. */
++#define SVN_EXPERIMENTAL
++
++#include "svn_client.h"
++#include "svn_error_codes.h"
++#include "svn_error.h"
++#include "svn_path.h"
++#include "svn_utf.h"
++
++#include "cl.h"
++
++#include "svn_private_config.h"
++#include "private/svn_sorts_private.h"
++
++
++/* First argument should be the name of a shelved change. */
++static svn_error_t *
++get_name(const char **name,
++         apr_getopt_t *os,
++         apr_pool_t *result_pool,
++         apr_pool_t *scratch_pool)
++{
++  apr_array_header_t *args;
++
++  SVN_ERR(svn_opt_parse_num_args(&args, os, 1, scratch_pool));
++  SVN_ERR(svn_utf_cstring_to_utf8(name,
++                                  APR_ARRAY_IDX(args, 0, const char *),
++                                  result_pool));
++  return SVN_NO_ERROR;
++}
++
++/* A comparison function for svn_sort__hash(), comparing the mtime of two
++   svn_client_shelved_patch_info_t's. */
++static int
++compare_shelved_patch_infos_by_mtime(const svn_sort__item_t *a,
++                                     const svn_sort__item_t *b)
++{
++  svn_client_shelved_patch_info_t *a_val = a->value;
++  svn_client_shelved_patch_info_t *b_val = b->value;
++
++  return (a_val->dirent->mtime < b_val->dirent->mtime)
++           ? -1 : (a_val->dirent->mtime > b_val->dirent->mtime) ? 1 : 0;
++}
++
++/* Return a list of shelved changes sorted by patch file mtime, oldest first.
++ */
++static svn_error_t *
++list_sorted_by_date(apr_array_header_t **list,
++                    const char *local_abspath,
++                    svn_client_ctx_t *ctx,
++                    apr_pool_t *scratch_pool)
++{
++  apr_hash_t *shelved_patch_infos;
++
++  SVN_ERR(svn_client_shelves_list(&shelved_patch_infos, local_abspath,
++                                  ctx, scratch_pool, scratch_pool));
++  *list = svn_sort__hash(shelved_patch_infos,
++                         compare_shelved_patch_infos_by_mtime,
++                         scratch_pool);
++  return SVN_NO_ERROR;
++}
++
++#ifndef WIN32
++/* Run CMD with ARGS.
++ * Send its stdout to the parent's stdout. Disconnect its stdin and stderr.
++ */
++static svn_error_t *
++run_cmd(const char *cmd,
++        const char *const *args,
++        apr_pool_t *scratch_pool)
++{
++  apr_status_t apr_err;
++  apr_file_t *outfile;
++  svn_error_t *err;
++  int exitcode;
++
++  apr_err = apr_file_open_stdout(&outfile, scratch_pool);
++  if (apr_err)
++    return svn_error_wrap_apr(apr_err, "Can't open stdout");
++
++  err = svn_io_run_cmd(NULL /*path*/, cmd, args,
++                       &exitcode, NULL /*exitwhy*/,
++                       TRUE /*inherit*/,
++                       NULL /*infile*/, outfile, NULL /*errfile*/,
++                       scratch_pool);
++  if (err || exitcode)
++    return svn_error_createf(SVN_ERR_EXTERNAL_PROGRAM, err,
++                             _("Could not run external command '%s'"), cmd);
++  return SVN_NO_ERROR;
++}
++#endif
++
++/* Display a list of shelved changes */
++static svn_error_t *
++shelves_list(const char *local_abspath,
++             svn_boolean_t diffstat,
++             svn_client_ctx_t *ctx,
++             apr_pool_t *scratch_pool)
++{
++  apr_array_header_t *list;
++  int i;
++
++  SVN_ERR(list_sorted_by_date(&list,
++                              local_abspath, ctx, scratch_pool));
++
++  for (i = 0; i < list->nelts; i++)
++    {
++      const svn_sort__item_t *item = &APR_ARRAY_IDX(list, i, svn_sort__item_t);
++      const char *name = item->key;
++      svn_client_shelved_patch_info_t *info = item->value;
++      int age = (int)((apr_time_now() - info->mtime) / 1000000 / 60);
++      apr_hash_t *paths;
++
++      SVN_ERR(svn_client_shelf_get_paths(&paths,
++                                         name, local_abspath, ctx,
++                                         scratch_pool, scratch_pool));
++
++      SVN_ERR(svn_cmdline_printf(scratch_pool,
++                                 _("%-30s %6d mins old %10ld bytes %4d paths changed\n"),
++                                 name, age, (long)info->dirent->filesize,
++                                 apr_hash_count(paths)));
++      SVN_ERR(svn_cmdline_printf(scratch_pool,
++                                 _(" %.50s\n"),
++                                 info->message));
++
++      if (diffstat)
++        {
++#ifndef WIN32
++          const char *args[4];
++          svn_error_t *err;
++
++          args[0] = "diffstat";
++          args[1] = "-p0";
++          args[2] = info->patch_path;
++          args[3] = NULL;
++          err = run_cmd("diffstat", args, scratch_pool);
++          if (err)
++            svn_error_clear(err);
++          else
++            SVN_ERR(svn_cmdline_printf(scratch_pool,
++                                       "\n"));
++#endif
++        }
++    }
++
++  return SVN_NO_ERROR;
++}
++
++/* Find the name of the youngest shelved change.
++ */
++static svn_error_t *
++name_of_youngest(const char **name_p,
++                 const char *local_abspath,
++                 svn_client_ctx_t *ctx,
++                 apr_pool_t *result_pool,
++                 apr_pool_t *scratch_pool)
++{
++  apr_array_header_t *list;
++  const svn_sort__item_t *youngest_item;
++
++  SVN_ERR(list_sorted_by_date(&list,
++                              local_abspath, ctx, scratch_pool));
++  if (list->nelts == 0)
++    return svn_error_create(SVN_ERR_CL_INSUFFICIENT_ARGS, NULL,
++                            _("No shelved changes found"));
++
++  youngest_item = &APR_ARRAY_IDX(list, list->nelts - 1, svn_sort__item_t);
++  *name_p = youngest_item->key;
++  return SVN_NO_ERROR;
++}
++
++/* This implements the `svn_opt_subcommand_t' interface. */
++svn_error_t *
++svn_cl__shelve(apr_getopt_t *os,
++               void *baton,
++               apr_pool_t *pool)
++{
++  svn_cl__opt_state_t *opt_state = ((svn_cl__cmd_baton_t *) baton)->opt_state;
++  svn_client_ctx_t *ctx = ((svn_cl__cmd_baton_t *) baton)->ctx;
++  const char *local_abspath;
++  const char *name;
++  apr_array_header_t *targets;
++  svn_boolean_t has_changes;
++
++  if (opt_state->quiet)
++    ctx->notify_func2 = NULL; /* Easy out: avoid unneeded work */
++
++  SVN_ERR(svn_dirent_get_absolute(&local_abspath, "", pool));
++
++  if (opt_state->list)
++    {
++      if (os->ind < os->argc)
++        return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, 0, NULL);
++
++      SVN_ERR(shelves_list(local_abspath,
++                           ! opt_state->quiet /*diffstat*/,
++                           ctx, pool));
++      return SVN_NO_ERROR;
++    }
++
++  SVN_ERR(get_name(&name, os, pool, pool));
++
++  if (opt_state->remove)
++    {
++      if (os->ind < os->argc)
++        return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, 0, NULL);
++
++      SVN_ERR(svn_client_shelves_delete(name, local_abspath,
++                                        opt_state->dry_run,
++                                        ctx, pool));
++      if (! opt_state->quiet)
++        SVN_ERR(svn_cmdline_printf(pool, "deleted '%s'\n", name));
++      return SVN_NO_ERROR;
++    }
++
++  /* Parse the remaining arguments as paths. */
++  SVN_ERR(svn_cl__args_to_target_array_print_reserved(&targets, os,
++                                                      opt_state->targets,
++                                                      ctx, FALSE, pool));
++  svn_opt_push_implicit_dot_target(targets, pool);
++
++  {
++      svn_depth_t depth = opt_state->depth;
++      svn_error_t *err;
++
++      /* shelve has no implicit dot-target `.', so don't you put that
++         code here! */
++      if (!targets->nelts)
++        return svn_error_create(SVN_ERR_CL_INSUFFICIENT_ARGS, 0, NULL);
++
++      SVN_ERR(svn_cl__check_targets_are_local_paths(targets));
++
++      if (depth == svn_depth_unknown)
++        depth = svn_depth_infinity;
++
++      SVN_ERR(svn_cl__eat_peg_revisions(&targets, targets, pool));
++
++      if (ctx->log_msg_func3)
++        SVN_ERR(svn_cl__make_log_msg_baton(&ctx->log_msg_baton3,
++                                           opt_state, NULL, ctx->config,
++                                           pool));
++      err = svn_client_shelve(name,
++                              targets, depth, opt_state->changelists,
++                              opt_state->keep_local, opt_state->dry_run,
++                              ctx, pool);
++      if (ctx->log_msg_func3)
++        SVN_ERR(svn_cl__cleanup_log_msg(ctx->log_msg_baton3,
++                                        err, pool));
++      else
++        SVN_ERR(err);
++  }
++
++  /* If no modifications were shelved, throw an error. */
++  SVN_ERR(svn_client_shelf_has_changes(&has_changes,
++                                       name, local_abspath, ctx, pool));
++  if (! has_changes)
++    {
++      SVN_ERR(svn_client_shelves_delete(name, local_abspath,
++                                        opt_state->dry_run, ctx, pool));
++      return svn_error_createf(SVN_ERR_ILLEGAL_TARGET, NULL,
++                               _("No changes were shelved"));
++    }
++
++  if (! opt_state->quiet)
++    SVN_ERR(svn_cmdline_printf(pool, "shelved '%s'\n", name));
++
++  return SVN_NO_ERROR;
++}
++
++/* This implements the `svn_opt_subcommand_t' interface. */
++svn_error_t *
++svn_cl__unshelve(apr_getopt_t *os,
++                 void *baton,
++                 apr_pool_t *pool)
++{
++  svn_cl__opt_state_t *opt_state = ((svn_cl__cmd_baton_t *) baton)->opt_state;
++  svn_client_ctx_t *ctx = ((svn_cl__cmd_baton_t *) baton)->ctx;
++  const char *local_abspath;
++  const char *name;
++  apr_array_header_t *targets;
++
++  SVN_ERR(svn_dirent_get_absolute(&local_abspath, "", pool));
++
++  if (opt_state->list)
++    {
++      if (os->ind < os->argc)
++        return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, 0, NULL);
++
++      SVN_ERR(shelves_list(local_abspath,
++                           ! opt_state->quiet /*diffstat*/,
++                           ctx, pool));
++      return SVN_NO_ERROR;
++    }
++
++  if (os->ind < os->argc)
++    {
++      SVN_ERR(get_name(&name, os, pool, pool));
++    }
++  else
++    {
++      SVN_ERR(name_of_youngest(&name, local_abspath, ctx, pool, pool));
++      SVN_ERR(svn_cmdline_printf(pool,
++                                 _("unshelving the youngest change, '%s'\n"),
++                                 name));
++    }
++
++  /* There should be no remaining arguments. */
++  SVN_ERR(svn_cl__args_to_target_array_print_reserved(&targets, os,
++                                                      opt_state->targets,
++                                                      ctx, FALSE, pool));
++  if (targets->nelts)
++    return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, 0, NULL);
++
++  if (opt_state->quiet)
++    ctx->notify_func2 = NULL; /* Easy out: avoid unneeded work */
++
++  SVN_ERR(svn_client_unshelve(name, local_abspath,
++                              opt_state->keep_local, opt_state->dry_run,
++                              ctx, pool));
++  if (! opt_state->quiet)
++    SVN_ERR(svn_cmdline_printf(pool, "unshelved '%s'\n", name));
++
++  return SVN_NO_ERROR;
++}
++
++/* This implements the `svn_opt_subcommand_t' interface. */
++svn_error_t *
++svn_cl__shelves(apr_getopt_t *os,
++                void *baton,
++                apr_pool_t *pool)
++{
++  svn_cl__opt_state_t *opt_state = ((svn_cl__cmd_baton_t *) baton)->opt_state;
++  svn_client_ctx_t *ctx = ((svn_cl__cmd_baton_t *) baton)->ctx;
++  const char *local_abspath;
++
++  /* There should be no remaining arguments. */
++  if (os->ind < os->argc)
++    return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, 0, NULL);
++
++  SVN_ERR(svn_dirent_get_absolute(&local_abspath, "", pool));
++  SVN_ERR(shelves_list(local_abspath, ! opt_state->quiet /*diffstat*/,
++                       ctx, pool));
++
++  return SVN_NO_ERROR;
++}
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index f3e4c82..69bb1a4 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -147,6 +147,9 @@ typedef enum svn_cl__longopt_t {
+   opt_show_passwords,
+   opt_pin_externals,
+   opt_show_item,
++  opt_delete,
++  opt_keep_shelved,
++  opt_list
+ } svn_cl__longopt_t;
+ 
+ 
+@@ -434,6 +437,10 @@ const apr_getopt_option_t svn_cl__options[] =
+                        "                             "
+                        "'wc-root')")},
+ 
++  {"list", opt_list, 0, N_("list shelved patches")},
++  {"keep-shelved", opt_keep_shelved, 0, N_("do not delete the shelved patch")},
++  {"delete", opt_delete, 0, N_("delete the shelved patch")},
++
+   /* Long-opt Aliases
+    *
+    * These have NULL desriptions, but an option code that matches some
+@@ -1564,6 +1571,74 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+      "  the output of 'svn help merge' for 'undo'.\n"),
+     {opt_targets, 'R', opt_depth, 'q', opt_changelist} },
+ 
++  { "shelve", svn_cl__shelve, {0}, N_
++    ("Put a local change aside, as if putting it on a shelf.\n"
++     "usage: 1. shelve [--keep-local] NAME [PATH...]\n"
++     "       2. shelve --delete NAME\n"
++     "       3. shelve --list\n"
++     "\n"
++     "  1. Save the local change in the given PATHs to a patch file, and\n"
++     "     revert that change from the WC unless '--keep-local' is given.\n"
++     "     If a log message is given with '-m' or '-F', include it at the\n"
++     "     beginning of the patch file.\n"
++     "\n"
++     "  2. Delete the shelved change NAME.\n"
++     "     (A backup is kept, named with a '.bak' extension.)\n"
++     "\n"
++     "  3. List shelved changes. Include the first line of any log message\n"
++     "     and some details about the contents of the change, unless '-q' is\n"
++     "     given.\n"
++     "\n"
++     "  The kinds of change you can shelve are those supported by 'svn diff'\n"
++     "  and 'svn patch'. The following are currently NOT supported:\n"
++     "     mergeinfo changes, copies, moves, mkdir, rmdir,\n"
++     "     'binary' content, uncommittable states\n"
++     "\n"
++     "  To bring back a shelved change, use 'svn unshelve NAME'.\n"
++     "\n"
++     "  A shelved change is stored as a patch file, .svn/shelves/NAME.patch\n"
++     "\n"
++     "  The shelving feature is EXPERIMENTAL. This command is likely to change\n"
++     "  in the next release, and there is no promise of backward compatibility.\n"
++    ),
++    {opt_delete, opt_list, 'q', opt_dry_run, opt_keep_local,
++     opt_depth, opt_targets, opt_changelist,
++     /* almost SVN_CL__LOG_MSG_OPTIONS but not currently opt_with_revprop: */
++     'm', 'F', opt_force_log, opt_editor_cmd, opt_encoding,
++    } },
++
++  { "unshelve", svn_cl__unshelve, {0}, N_
++    ("Bring a shelved change back to a local change in the WC.\n"
++     "usage: 1. unshelve [--keep-shelved] [NAME]\n"
++     "       2. unshelve --list\n"
++     "\n"
++     "  1. Apply the shelved change NAME to the working copy.\n"
++     "     Delete the patch unless the '--keep-shelved' option is given.\n"
++     "     (A backup is kept, named with a '.bak' extension.)\n"
++     "     NAME defaults to the most recent shelved change.\n"
++     "\n"
++     "  2. List shelved changes. Include the first line of any log message\n"
++     "     and some details about the contents of the change, unless '-q' is\n"
++     "     given.\n"
++     "\n"
++     "  Any conflict between the change being unshelved and a change\n"
++     "  already in the WC is handled the same way as by 'svn patch',\n"
++     "  creating a 'reject' file.\n"
++     "\n"
++     "  The shelving feature is EXPERIMENTAL. This command is likely to change\n"
++     "  in the next release, and there is no promise of backward compatibility.\n"
++    ),
++    {opt_keep_shelved, opt_list, 'q', opt_dry_run} },
++
++  { "shelves", svn_cl__shelves, {0}, N_
++    ("List shelved changes.\n"
++     "usage: shelves\n"
++     "\n"
++     "  The shelving feature is EXPERIMENTAL. This command is likely to change\n"
++     "  in the next release, and there is no promise of backward compatibility.\n"
++    ),
++    {'q'} },
++
+   { "status", svn_cl__status, {"stat", "st"}, N_
+     ("Print the status of working copy files and directories.\n"
+      "usage: status [PATH...]\n"
+@@ -2154,6 +2229,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+       case opt_dry_run:
+         opt_state.dry_run = TRUE;
+         break;
++      case opt_list:
++        opt_state.list = TRUE;
++        break;
+       case opt_revprop:
+         opt_state.revprop = TRUE;
+         break;
+@@ -2334,6 +2412,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+         opt_state.diff.summarize = TRUE;
+         break;
+       case opt_remove:
++      case opt_delete:
+         opt_state.remove = TRUE;
+         break;
+       case opt_changelist:
+@@ -2349,6 +2428,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+         opt_state.keep_changelists = TRUE;
+         break;
+       case opt_keep_local:
++      case opt_keep_shelved:
+         opt_state.keep_local = TRUE;
+         break;
+       case opt_with_all_revprops:
+diff --git a/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout b/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout
+index f85399f..fcf3159 100644
+--- a/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout
++++ b/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout
+@@ -42,6 +42,9 @@ Available subcommands:
+    resolve
+    resolved
+    revert (rv)
++   shelve
++   unshelve
++   shelves
+    status (stat, st)
+    switch (sw)
+    unlock
+diff --git a/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout b/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout
+index f85399f..fcf3159 100644
+--- a/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout
++++ b/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout
+@@ -42,6 +42,9 @@ Available subcommands:
+    resolve
+    resolved
+    revert (rv)
++   shelve
++   unshelve
++   shelves
+    status (stat, st)
+    switch (sw)
+    unlock
+diff --git a/subversion/tests/cmdline/shelve_tests.py b/subversion/tests/cmdline/shelve_tests.py
+new file mode 100755
+index 0000000..a71ddbb
+--- /dev/null
++++ b/subversion/tests/cmdline/shelve_tests.py
+@@ -0,0 +1,176 @@
++#!/usr/bin/env python
++#
++#  shelve_tests.py:  testing shelving
++#
++#  Subversion is a tool for revision control.
++#  See http://subversion.apache.org for more information.
++#
++# ====================================================================
++#    Licensed to the Apache Software Foundation (ASF) under one
++#    or more contributor license agreements.  See the NOTICE file
++#    distributed with this work for additional information
++#    regarding copyright ownership.  The ASF licenses this file
++#    to you under the Apache License, Version 2.0 (the
++#    "License"); you may not use this file except in compliance
++#    with the License.  You may obtain a copy of the License at
++#
++#      http://www.apache.org/licenses/LICENSE-2.0
++#
++#    Unless required by applicable law or agreed to in writing,
++#    software distributed under the License is distributed on an
++#    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++#    KIND, either express or implied.  See the License for the
++#    specific language governing permissions and limitations
++#    under the License.
++######################################################################
++
++# General modules
++import shutil, stat, re, os, logging
++
++logger = logging.getLogger()
++
++# Our testing module
++import svntest
++from svntest import wc
++
++# (abbreviation)
++Skip = svntest.testcase.Skip_deco
++SkipUnless = svntest.testcase.SkipUnless_deco
++XFail = svntest.testcase.XFail_deco
++Issues = svntest.testcase.Issues_deco
++Issue = svntest.testcase.Issue_deco
++Wimp = svntest.testcase.Wimp_deco
++Item = wc.StateItem
++
++#----------------------------------------------------------------------
++
++def shelve_unshelve_verify(sbox):
++  """Round-trip: shelve; verify all changes are reverted;
++     unshelve; verify all changes are restored.
++  """
++
++  wc_dir = sbox.wc_dir
++
++  # Save the modified state
++  _, output, _ = svntest.main.run_svn(None, 'status', '-v', '-u', '-q',
++                                      wc_dir)
++  modified_state = svntest.wc.State.from_status(output, wc_dir)
++
++  # Shelve; check there are no longer any modifications
++  svntest.actions.run_and_verify_svn(None, [],
++                                     'shelve', 'foo')
++  virginal_state = svntest.actions.get_virginal_state(wc_dir, 1)
++  svntest.actions.run_and_verify_status(wc_dir, virginal_state)
++
++  # Unshelve; check the original modifications are here again
++  svntest.actions.run_and_verify_svn(None, [],
++                                     'unshelve', 'foo')
++  svntest.actions.run_and_verify_status(wc_dir, modified_state)
++
++#----------------------------------------------------------------------
++
++def shelve_unshelve(sbox, modifier):
++  """Round-trip: build 'sbox'; apply changes by calling 'modifier(sbox)';
++     shelve and unshelve; verify changes are fully reverted and restored.
++  """
++
++  sbox.build()
++  was_cwd = os.getcwd()
++  os.chdir(sbox.wc_dir)
++  sbox.wc_dir = ''
++
++  # Make some changes to the working copy
++  modifier(sbox)
++
++  shelve_unshelve_verify(sbox)
++
++  os.chdir(was_cwd)
++
++######################################################################
++# Tests
++#
++#   Each test must return on success or raise on failure.
++
++def shelve_text_mods(sbox):
++  "shelve text mods"
++
++  def modifier(sbox):
++    sbox.simple_append('A/mu', 'appended mu text')
++
++  shelve_unshelve(sbox, modifier)
++
++#----------------------------------------------------------------------
++
++def shelve_prop_changes(sbox):
++  "shelve prop changes"
++
++  def modifier(sbox):
++    sbox.simple_propset('p', 'v', 'A')
++    sbox.simple_propset('p', 'v', 'A/mu')
++
++  shelve_unshelve(sbox, modifier)
++
++#----------------------------------------------------------------------
++
++def shelve_adds(sbox):
++  "shelve adds"
++
++  def modifier(sbox):
++    sbox.simple_append('A/new', 'A new file\n')
++    sbox.simple_add('A/new')
++    sbox.simple_append('A/new2', 'A new file\n')
++    sbox.simple_add('A/new2')
++    sbox.simple_propset('p', 'v', 'A/new2')
++
++  shelve_unshelve(sbox, modifier)
++
++#----------------------------------------------------------------------
++
++@XFail()
++@Issue(4709)
++def shelve_deletes(sbox):
++  "shelve deletes"
++
++  def modifier(sbox):
++    sbox.simple_rm('A/mu')
++
++  shelve_unshelve(sbox, modifier)
++
++#----------------------------------------------------------------------
++
++def shelve_from_inner_path(sbox):
++  "shelve from inner path"
++
++  def modifier(sbox):
++    sbox.simple_append('A/mu', 'appended mu text')
++
++  sbox.build()
++  was_cwd = os.getcwd()
++  os.chdir(sbox.ospath('A'))
++  sbox.wc_dir = '..'
++
++  modifier(sbox)
++  shelve_unshelve_verify(sbox)
++
++  os.chdir(was_cwd)
++
++#----------------------------------------------------------------------
++
++########################################################################
++# Run the tests
++
++# list all tests here, starting with None:
++test_list = [ None,
++              shelve_text_mods,
++              shelve_prop_changes,
++              shelve_adds,
++              shelve_deletes,
++              shelve_from_inner_path,
++             ]
++
++if __name__ == '__main__':
++  svntest.main.run_tests(test_list)
++  # NOTREACHED
++
++
++### End of file.
+diff --git a/tools/client-side/bash_completion b/tools/client-side/bash_completion
+index 99de279..23c996d 100644
+--- a/tools/client-side/bash_completion
++++ b/tools/client-side/bash_completion
+@@ -168,6 +168,7 @@ _svn()
+ 	cmds="$cmds patch propdel pdel propedit pedit propget pget proplist"
+ 	cmds="$cmds plist propset pset relocate resolve resolved revert rv status"
+ 	cmds="$cmds switch unlock update upgrade"
++	cmds="$cmds shelve shelves unshelve"
+ 
+ 	# help options have a strange command status...
+ 	local helpOpts='--help -h'
+@@ -959,6 +960,15 @@ _svn()
+ 	upgrade)
+ 		cmdOpts="$qOpts $pOpts"
+ 		;;
++	shelve)
++		cmdOpts="$qOpts --keep-local --delete --list -m --message -F --file --encoding --force-log --editor-cmd --dry-run --depth --targets $cOpts $pOpts"
++		;;
++	unshelve)
++		cmdOpts="$qOpts --keep-shelved --list --dry-run $pOpts"
++		;;
++	shelves)
++		cmdOpts="$qOpts $pOpts"
++		;;
+ 	*)
+ 		;;
+ 	esac
+-- 
+2.14.1
+

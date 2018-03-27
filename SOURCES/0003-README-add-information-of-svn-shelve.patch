@@ -1,0 +1,21 @@
+From ce341f4f48e2ff1fe62423c8a87a976b8b5daa07 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Fri, 16 Mar 2018 20:04:30 +0800
+Subject: [PATCH 3/4] README: add information of 'svn shelve'
+
+---
+ README | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/README b/README
+index 72b5950..6924dff 100644
+--- a/README
++++ b/README
+@@ -8,3 +8,4 @@ MAIN PATCHES
+       5. Add option -v for subcommand commit, for print unified diff in log
+          message template
+       6. Add option --stat for subcommand diff and log
++      7. Backport 'svn shelve' (experimental) commands from 1.10.x
+-- 
+2.14.1
+

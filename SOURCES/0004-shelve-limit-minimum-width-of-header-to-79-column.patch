@@ -1,0 +1,26 @@
+From 7b08fa4a905d1761a2d0020ac127c4800f5f49ef Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 21 Mar 2018 14:09:50 +0800
+Subject: [PATCH 4/4] shelve: limit minimum width of header to 79 column
+
+Width of terminal is 80 columns in default.
+---
+ subversion/svn/shelve-cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/svn/shelve-cmd.c b/subversion/svn/shelve-cmd.c
+index df88a65..d2ca952 100644
+--- a/subversion/svn/shelve-cmd.c
++++ b/subversion/svn/shelve-cmd.c
+@@ -140,7 +140,7 @@ shelves_list(const char *local_abspath,
+                                          scratch_pool, scratch_pool));
+ 
+       SVN_ERR(svn_cmdline_printf(scratch_pool,
+-                                 _("%-30s %6d mins old %10ld bytes %4d paths changed\n"),
++                                 _("%-27s %6d mins old %10ld bytes %4d paths changed\n"),
+                                  name, age, (long)info->dirent->filesize,
+                                  apr_hash_count(paths)));
+       SVN_ERR(svn_cmdline_printf(scratch_pool,
+-- 
+2.14.1
+
