@@ -241,6 +241,8 @@ typedef struct svn_cl__opt_state_t
                                       patching */
   svn_boolean_t show_diff;         /* produce diff output (maps to --diff) */
   svn_boolean_t diffstat;          /* display statistics of diff */
+  /* Don't highlight trailing blanks at EOL */
+  svn_boolean_t no_hl_trailing_blanks;
   svn_boolean_t allow_mixed_rev;   /* Allow operation on mixed-revision WC */
   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
   svn_boolean_t show_inherited_props;  /* get inherited properties */

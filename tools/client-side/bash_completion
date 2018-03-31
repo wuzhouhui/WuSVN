@@ -844,7 +844,7 @@ _svn()
 		         -c --change --summarize $cOpts --xml --git \
 		         --internal-diff --show-copies-as-adds \
 		         --ignore-properties --properties-only --no-diff-added \
-		         --patch-compatible --no-color --stat"
+		         --patch-compatible --no-color --stat --no-hl-trailing-blanks"
 		;;
 	export)
 		cmdOpts="$rOpts $qOpts $pOpts $nOpts --force --native-eol \

@@ -28,6 +28,8 @@
 #include <apr_pools.h>
 #include <apr_tables.h>
 
+#include "svn_client.h"
+#include "svn_opt.h"
 #include "svn_types.h"
 #include "svn_io.h"
 
@@ -113,6 +115,44 @@ svn_diff__display_prop_diffs(svn_stream_t *outstream,
                              void *cancel_baton,
                              apr_pool_t *scratch_pool);
 
+/* highlight trailing blanks at EOL */
+svn_error_t *
+svn_diff_file_output_unified4_hltb(svn_stream_t *output_stream,
+                              svn_diff_t *diff,
+                              const char *original_path,
+                              const char *modified_path,
+                              const char *original_header,
+                              const char *modified_header,
+                              const char *header_encoding,
+                              const char *relative_to_dir,
+                              svn_boolean_t show_c_function,
+                              int context_size,
+                              svn_cancel_func_t cancel_func,
+                              void *cancel_baton,
+                              apr_pool_t *scratch_pool);
+
+svn_error_t *
+svn_client_diff6_hltb(const apr_array_header_t *diff_options,
+                 const char *path_or_url1,
+                 const svn_opt_revision_t *revision1,
+                 const char *path_or_url2,
+                 const svn_opt_revision_t *revision2,
+                 const char *relative_to_dir,
+                 svn_depth_t depth,
+                 svn_boolean_t ignore_ancestry,
+                 svn_boolean_t no_diff_added,
+                 svn_boolean_t no_diff_deleted,
+                 svn_boolean_t show_copies_as_adds,
+                 svn_boolean_t ignore_content_type,
+                 svn_boolean_t ignore_properties,
+                 svn_boolean_t properties_only,
+                 svn_boolean_t use_git_diff_format,
+                 const char *header_encoding,
+                 svn_stream_t *outstream,
+                 svn_stream_t *errstream,
+                 const apr_array_header_t *changelists,
+                 svn_client_ctx_t *ctx,
+                 apr_pool_t *pool);
 
 #ifdef __cplusplus
 }

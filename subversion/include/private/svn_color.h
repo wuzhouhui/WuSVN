@@ -9,6 +9,7 @@
 #define SVN_COLOR_MAGENTA      "\033[35m"
 #define SVN_COLOR_CYAN         "\033[36m"
 #define SVN_COLOR_RESET        "\033[m"
+#define SVN_COLOR_BG_RED       "\033[41m"
 
 extern svn_boolean_t dont_use_color;
 extern int tty_fileno;
