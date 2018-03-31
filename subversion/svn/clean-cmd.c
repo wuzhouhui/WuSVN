@@ -383,22 +383,6 @@ svn_cl__clean(apr_getopt_t *os,
           apr_array_header_t *path_array = apr_hash_this_val(hi);
           int j;
 
-          /* ### TODO: For non-XML output, we shouldn't print the
-             ### leading \n on the first changelist if there were no
-             ### non-changelist entries. */
-          if (opt_state->xml)
-            {
-              svn_stringbuf_setempty(buf);
-              svn_xml_make_open_tag(&buf, scratch_pool, svn_xml_normal,
-                                    "changelist", "name", changelist_name,
-                                    SVN_VA_NULL);
-              SVN_ERR(svn_cl__error_checked_fputs(buf->data, stdout));
-            }
-          else
-            SVN_ERR(svn_cmdline_printf(scratch_pool,
-                                       _("\n--- Changelist '%s':\n"),
-                                       changelist_name));
-
           for (j = 0; j < path_array->nelts; j++)
             {
               struct status_cache *scache =
