@@ -42,6 +42,8 @@
 
 #include "svn_private_config.h"
 
+#include "private/svn_diff_private.h"
+
 
 /*** Code. ***/
 
@@ -484,8 +486,30 @@ svn_cl__diff(apr_getopt_t *os,
                      errstream,
                      opt_state->changelists,
                      ctx, iterpool));
-          else
+          else if (opt_state->no_hl_trailing_blanks)
             SVN_ERR(svn_client_diff6(
+                     options,
+                     target1,
+                     &(opt_state->start_revision),
+                     target2,
+                     &(opt_state->end_revision),
+                     NULL,
+                     opt_state->depth,
+                     ! opt_state->diff.notice_ancestry,
+                     opt_state->diff.no_diff_added,
+                     opt_state->diff.no_diff_deleted,
+                     show_copies_as_adds,
+                     ignore_content_type,
+                     ignore_properties,
+                     opt_state->diff.properties_only,
+                     opt_state->diff.use_git_diff_format,
+                     svn_cmdline_output_encoding(pool),
+                     outstream,
+                     errstream,
+                     opt_state->changelists,
+                     ctx, iterpool));
+          else
+            SVN_ERR(svn_client_diff6_hltb(
                      options,
                      target1,
                      &(opt_state->start_revision),

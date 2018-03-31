@@ -32,6 +32,7 @@
 #include <apr_getopt.h>
 
 #include <assert.h>
+#include <ctype.h>
 
 #include "svn_error.h"
 #include "svn_diff.h"
@@ -1411,6 +1412,8 @@ typedef struct svn_diff__file_output_baton_t
 
   /* Should we emit C functions in the unified diff header */
   svn_boolean_t show_c_function;
+  /* Should we highlight trailing blanks at EOL */
+  svn_boolean_t hl_trailing_blanks;
   /* Extra strings to skip over if we match. */
   apr_array_header_t *extra_skip_match;
   /* "Context" to append to the @@ line when the show_c_function option
@@ -1437,12 +1440,37 @@ typedef enum svn_diff__file_output_unified_type_e
 } svn_diff__file_output_unified_type_e;
 
 
+static svn_boolean_t
+has_trailing_blanks(const char *str,
+                    apr_size_t len,
+                    const char **pos)
+{
+  assert(len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r'));
+
+  if (str[len - 1] == '\n')
+    len--;
+  if (len > 0 && str[len - 1] == '\r')
+    len--;
+
+  while (len > 0 && isblank(str[len - 1]))
+    len--;
+  len++;
+  if (isblank(str[len - 1]))
+    {
+      *pos = &str[len - 1];
+      return(TRUE);
+    }
+  else
+    return(FALSE);
+}
+
 static svn_error_t *
 output_unified_line(svn_diff__file_output_baton_t *baton,
                     svn_diff__file_output_unified_type_e type, int idx)
 {
   char *curp;
   char *eol;
+  const char *pos;
   apr_size_t length;
   svn_error_t *err;
   svn_boolean_t bytes_processed = FALSE;
@@ -1520,10 +1548,27 @@ output_unified_line(svn_diff__file_output_baton_t *baton,
 
                   length -= len;
 
-                  if (type != svn_diff__file_output_unified_skip)
+                  /* Highlight trailing blanks. */
+                  if (type == svn_diff__file_output_unified_insert
+                        && !dont_use_color
+                        && baton->hl_trailing_blanks
+                        && has_trailing_blanks(curp, len, &pos))
+                    {
+                        svn_stringbuf_appendbytes(baton->hunk,
+                                                  curp,
+                                                  pos - curp);
+                        svn_stringbuf_appendbytes(baton->hunk,
+                                                  SVN_COLOR_BG_RED,
+                                                  strlen(SVN_COLOR_BG_RED));
+                        svn_stringbuf_appendbytes(baton->hunk,
+                                                  pos,
+                                                  len - (pos - curp));
+                    }
+                  else if (type != svn_diff__file_output_unified_skip)
                     {
                       svn_stringbuf_appendbytes(baton->hunk, curp, len);
                     }
+
                   if (collect_extra)
                     {
                       svn_stringbuf_appendbytes(baton->extra_context,
@@ -1877,6 +1922,137 @@ svn_diff_file_output_unified4(svn_stream_t *output_stream,
       baton.path[1] = modified_path;
       baton.hunk = svn_stringbuf_create_empty(pool);
       baton.show_c_function = show_c_function;
+      baton.extra_context = svn_stringbuf_create_empty(pool);
+      baton.context_size = (context_size >= 0) ? context_size
+                                              : SVN_DIFF__UNIFIED_CONTEXT_SIZE;
+
+      if (show_c_function)
+        {
+          baton.extra_skip_match = apr_array_make(pool, 3, sizeof(char **));
+
+          APR_ARRAY_PUSH(baton.extra_skip_match, const char *) = "public:*";
+          APR_ARRAY_PUSH(baton.extra_skip_match, const char *) = "private:*";
+          APR_ARRAY_PUSH(baton.extra_skip_match, const char *) = "protected:*";
+        }
+
+      SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.context_str, " ",
+                                            header_encoding, pool));
+      if (!dont_use_color) {
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
+                          SVN_COLOR_RED "-", header_encoding, pool));
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
+                          SVN_COLOR_GREEN "+", header_encoding, pool));
+      } else {
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
+                          "-", header_encoding, pool));
+        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
+                          "+", header_encoding, pool));
+      }
+
+      if (relative_to_dir)
+        {
+          /* Possibly adjust the "original" and "modified" paths shown in
+             the output (see issue #2723). */
+          const char *child_path;
+
+          if (! original_header)
+            {
+              child_path = svn_dirent_is_child(relative_to_dir,
+                                               original_path, pool);
+              if (child_path)
+                original_path = child_path;
+              else
+                return svn_error_createf(
+                                   SVN_ERR_BAD_RELATIVE_PATH, NULL,
+                                   _("Path '%s' must be inside "
+                                     "the directory '%s'"),
+                                   svn_dirent_local_style(original_path, pool),
+                                   svn_dirent_local_style(relative_to_dir,
+                                                          pool));
+            }
+
+          if (! modified_header)
+            {
+              child_path = svn_dirent_is_child(relative_to_dir,
+                                               modified_path, pool);
+              if (child_path)
+                modified_path = child_path;
+              else
+                return svn_error_createf(
+                                   SVN_ERR_BAD_RELATIVE_PATH, NULL,
+                                   _("Path '%s' must be inside "
+                                     "the directory '%s'"),
+                                   svn_dirent_local_style(modified_path, pool),
+                                   svn_dirent_local_style(relative_to_dir,
+                                                          pool));
+            }
+        }
+
+      for (i = 0; i < 2; i++)
+        {
+          SVN_ERR(svn_io_file_open(&baton.file[i], baton.path[i],
+                                   APR_READ, APR_OS_DEFAULT, pool));
+        }
+
+      if (original_header == NULL)
+        {
+          SVN_ERR(output_unified_default_hdr(&original_header, original_path,
+                                             pool));
+        }
+
+      if (modified_header == NULL)
+        {
+          SVN_ERR(output_unified_default_hdr(&modified_header, modified_path,
+                                             pool));
+        }
+
+      SVN_ERR(svn_diff__unidiff_write_header(output_stream, header_encoding,
+                                             original_header, modified_header,
+                                             pool));
+
+      SVN_ERR(svn_diff_output2(diff, &baton,
+                               &svn_diff__file_output_unified_vtable,
+                               cancel_func, cancel_baton));
+      SVN_ERR(output_unified_flush_hunk(&baton));
+
+      for (i = 0; i < 2; i++)
+        {
+          SVN_ERR(svn_io_file_close(baton.file[i], pool));
+        }
+    }
+
+  return SVN_NO_ERROR;
+}
+
+svn_error_t *
+svn_diff_file_output_unified4_hltb(svn_stream_t *output_stream,
+                              svn_diff_t *diff,
+                              const char *original_path,
+                              const char *modified_path,
+                              const char *original_header,
+                              const char *modified_header,
+                              const char *header_encoding,
+                              const char *relative_to_dir,
+                              svn_boolean_t show_c_function,
+                              int context_size,
+                              svn_cancel_func_t cancel_func,
+                              void *cancel_baton,
+                              apr_pool_t *pool)
+{
+  if (svn_diff_contains_diffs(diff))
+    {
+      svn_diff__file_output_baton_t baton;
+      int i;
+
+      memset(&baton, 0, sizeof(baton));
+      baton.output_stream = output_stream;
+      baton.pool = pool;
+      baton.header_encoding = header_encoding;
+      baton.path[0] = original_path;
+      baton.path[1] = modified_path;
+      baton.hunk = svn_stringbuf_create_empty(pool);
+      baton.show_c_function = show_c_function;
+      baton.hl_trailing_blanks = TRUE;
       baton.extra_context = svn_stringbuf_create_empty(pool);
       baton.context_size = (context_size >= 0) ? context_size
                                               : SVN_DIFF__UNIFIED_CONTEXT_SIZE;
