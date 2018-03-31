@@ -36,6 +36,8 @@
 #include "svn_private_config.h"
 #include "private/svn_sorts_private.h"
 
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 /* First argument should be the name of a shelved change. */
 static svn_error_t *
@@ -150,13 +152,19 @@ shelves_list(const char *local_abspath,
       if (diffstat)
         {
 #ifndef WIN32
-          const char *args[4];
+          struct winsize winsz;
+          char optw[8] = "-w79";
+          const char *args[] = {
+            "diffstat",
+            "-p0",
+            optw,
+            info->patch_path,
+            NULL,
+          };
           svn_error_t *err;
-
-          args[0] = "diffstat";
-          args[1] = "-p0";
-          args[2] = info->patch_path;
-          args[3] = NULL;
+          if (isatty(STDOUT_FILENO) &&
+              !ioctl(STDOUT_FILENO, TIOCGWINSZ, (char *)&winsz))
+            snprintf(optw, sizeof(optw), "-w%d", winsz.ws_col - 1);
           err = run_cmd("diffstat", args, scratch_pool);
           if (err)
             svn_error_clear(err);
