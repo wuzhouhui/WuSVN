@@ -9,7 +9,7 @@
 %define apache_dir /usr
 %define pyver 2.7
 %define svn_version 1.9.7
-%define svn_release 8%{?dist}
+%define svn_release 9%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -40,6 +40,9 @@ Patch12: 0001-Strip-extra-EOL-when-get-log-message-from-file.patch
 Patch13: SVNB-1866.patch
 Patch14: shelve.patch
 Patch15: 0001-shelve-limit-minimum-width-of-header-to-79-column.patch
+Patch16: 0001-diff-highlight-trailing-blanks-of-local-changes.patch
+Patch17: 0002-shelve-set-output-width-to-windows-s-col-minus-one.patch
+Patch18: 0003-clean-don-t-print-anything-about-changelist.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -165,6 +168,9 @@ Tools for Subversion.
 %patch13 -p0
 %patch14 -p1
 %patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -362,6 +368,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Mar 31 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-9
+- diff: highlight trailing blanks of local changes
+- shelve: set output width to windows's col minus one
+- clean: don't print anything about changelist
+
 * Thu Mar 22 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-8
 - shelve: limit minimum width of header to 79 column
 

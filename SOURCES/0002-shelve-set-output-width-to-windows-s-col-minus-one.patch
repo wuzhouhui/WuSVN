@@ -1,0 +1,51 @@
+From ca7a299de20f37bd57118049f2ca989ac1b9dd85 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 31 Mar 2018 16:46:34 +0800
+Subject: [PATCH 2/3] shelve: set output width to windows's col minus one
+
+---
+ subversion/svn/shelve-cmd.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/subversion/svn/shelve-cmd.c b/subversion/svn/shelve-cmd.c
+index d2ca952..6c715ae 100644
+--- a/subversion/svn/shelve-cmd.c
++++ b/subversion/svn/shelve-cmd.c
+@@ -36,6 +36,8 @@
+ #include "svn_private_config.h"
+ #include "private/svn_sorts_private.h"
+ 
++#include <sys/ioctl.h>
++#include <unistd.h>
+ 
+ /* First argument should be the name of a shelved change. */
+ static svn_error_t *
+@@ -150,13 +152,19 @@ shelves_list(const char *local_abspath,
+       if (diffstat)
+         {
+ #ifndef WIN32
+-          const char *args[4];
++          struct winsize winsz;
++          char optw[8] = "-w79";
++          const char *args[] = {
++            "diffstat",
++            "-p0",
++            optw,
++            info->patch_path,
++            NULL,
++          };
+           svn_error_t *err;
+-
+-          args[0] = "diffstat";
+-          args[1] = "-p0";
+-          args[2] = info->patch_path;
+-          args[3] = NULL;
++          if (isatty(STDOUT_FILENO) &&
++              !ioctl(STDOUT_FILENO, TIOCGWINSZ, (char *)&winsz))
++            snprintf(optw, sizeof(optw), "-w%d", winsz.ws_col - 1);
+           err = run_cmd("diffstat", args, scratch_pool);
+           if (err)
+             svn_error_clear(err);
+-- 
+2.14.1
+
