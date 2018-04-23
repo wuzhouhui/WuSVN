@@ -11,7 +11,7 @@
 %define apache_dir /usr
 %define pyver 2.6
 %define svn_version 1.9.7
-%define svn_release 7%{?dist}
+%define svn_release 8%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -43,6 +43,9 @@ Patch13: 0001-Add-svn-shelve-and-relates-partial-commit.patch
 Patch14: 0002-Run-shelve-tests-when-make-check.patch
 Patch15: 0003-README-add-information-of-svn-shelve.patch
 Patch16: 0004-shelve-limit-minimum-width-of-header-to-79-column.patch
+Patch17: 0001-diff-highlight-trailing-blanks-of-local-changes.patch
+Patch18: 0002-shelve-set-output-width-to-windows-s-col-minus-one.patch
+Patch19: 0003-clean-don-t-print-anything-about-changelist.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -169,6 +172,9 @@ Tools for Subversion.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -367,6 +373,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Mon Apr 23 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-8
+- diff: highlight trailing blanks of local changes
+- shelve: set output width to windows's col minus one
+- clean: don't print anything about changelist
+
 * Tue Mar 27 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-7
 - Add svn shelve and relates, partial commit
 - Run shelve tests when make check

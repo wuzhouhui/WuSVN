@@ -1,0 +1,572 @@
+From 21647fde85fccddc5c19f7f8ac36fd2c797b18b5 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 31 Mar 2018 16:19:22 +0800
+Subject: [PATCH 1/3] diff: highlight trailing blanks of local changes
+
+---
+ subversion/include/private/svn_color.h        |   1 +
+ subversion/include/private/svn_diff_private.h |  40 ++++++
+ subversion/libsvn_client/diff.c               | 115 ++++++++++++++++-
+ subversion/libsvn_diff/diff_file.c            | 178 +++++++++++++++++++++++++-
+ subversion/svn/cl.h                           |   2 +
+ subversion/svn/diff-cmd.c                     |  26 +++-
+ subversion/svn/svn.c                          |   8 +-
+ tools/client-side/bash_completion             |   2 +-
+ 8 files changed, 361 insertions(+), 11 deletions(-)
+
+diff --git a/subversion/include/private/svn_color.h b/subversion/include/private/svn_color.h
+index ed8bbff..68e024b 100644
+--- a/subversion/include/private/svn_color.h
++++ b/subversion/include/private/svn_color.h
+@@ -9,6 +9,7 @@
+ #define SVN_COLOR_MAGENTA      "\033[35m"
+ #define SVN_COLOR_CYAN         "\033[36m"
+ #define SVN_COLOR_RESET        "\033[m"
++#define SVN_COLOR_BG_RED       "\033[41m"
+ 
+ extern svn_boolean_t dont_use_color;
+ extern int tty_fileno;
+diff --git a/subversion/include/private/svn_diff_private.h b/subversion/include/private/svn_diff_private.h
+index 48b4d52..8eaecfb 100644
+--- a/subversion/include/private/svn_diff_private.h
++++ b/subversion/include/private/svn_diff_private.h
+@@ -28,6 +28,8 @@
+ #include <apr_pools.h>
+ #include <apr_tables.h>
+ 
++#include "svn_client.h"
++#include "svn_opt.h"
+ #include "svn_types.h"
+ #include "svn_io.h"
+ 
+@@ -113,6 +115,44 @@ svn_diff__display_prop_diffs(svn_stream_t *outstream,
+                              void *cancel_baton,
+                              apr_pool_t *scratch_pool);
+ 
++/* highlight trailing blanks at EOL */
++svn_error_t *
++svn_diff_file_output_unified4_hltb(svn_stream_t *output_stream,
++                              svn_diff_t *diff,
++                              const char *original_path,
++                              const char *modified_path,
++                              const char *original_header,
++                              const char *modified_header,
++                              const char *header_encoding,
++                              const char *relative_to_dir,
++                              svn_boolean_t show_c_function,
++                              int context_size,
++                              svn_cancel_func_t cancel_func,
++                              void *cancel_baton,
++                              apr_pool_t *scratch_pool);
++
++svn_error_t *
++svn_client_diff6_hltb(const apr_array_header_t *diff_options,
++                 const char *path_or_url1,
++                 const svn_opt_revision_t *revision1,
++                 const char *path_or_url2,
++                 const svn_opt_revision_t *revision2,
++                 const char *relative_to_dir,
++                 svn_depth_t depth,
++                 svn_boolean_t ignore_ancestry,
++                 svn_boolean_t no_diff_added,
++                 svn_boolean_t no_diff_deleted,
++                 svn_boolean_t show_copies_as_adds,
++                 svn_boolean_t ignore_content_type,
++                 svn_boolean_t ignore_properties,
++                 svn_boolean_t properties_only,
++                 svn_boolean_t use_git_diff_format,
++                 const char *header_encoding,
++                 svn_stream_t *outstream,
++                 svn_stream_t *errstream,
++                 const apr_array_header_t *changelists,
++                 svn_client_ctx_t *ctx,
++                 apr_pool_t *pool);
+ 
+ #ifdef __cplusplus
+ }
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index fe9ebfb..24f36e8 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -602,6 +602,8 @@ typedef struct diff_writer_info_t
+   svn_boolean_t diffstat;
+   svn_dfstat_ctx_t *dfstat_ctx;
+ 
++  svn_boolean_t hl_trailing_blanks;
++
+   /* Empty files for creating diffs or NULL if not used yet */
+   const char *empty_file;
+ 
+@@ -945,13 +947,24 @@ diff_content_changed(svn_boolean_t *wrote_header,
+ 
+           /* Output the actual diff */
+           if (force_diff || svn_diff_contains_diffs(diff))
+-            SVN_ERR(svn_diff_file_output_unified4(outstream, diff,
+-                     tmpfile1, tmpfile2, label1, label2,
+-                     dwi->header_encoding, rel_to_dir,
+-                     dwi->options.for_internal->show_c_function,
+-                     dwi->options.for_internal->context_size,
+-                     dwi->cancel_func, dwi->cancel_baton,
+-                     scratch_pool));
++            {
++              if (!dwi->hl_trailing_blanks)
++                SVN_ERR(svn_diff_file_output_unified4(outstream, diff,
++                         tmpfile1, tmpfile2, label1, label2,
++                         dwi->header_encoding, rel_to_dir,
++                         dwi->options.for_internal->show_c_function,
++                         dwi->options.for_internal->context_size,
++                         dwi->cancel_func, dwi->cancel_baton,
++                         scratch_pool));
++              else
++                SVN_ERR(svn_diff_file_output_unified4_hltb(outstream, diff,
++                         tmpfile1, tmpfile2, label1, label2,
++                         dwi->header_encoding, rel_to_dir,
++                         dwi->options.for_internal->show_c_function,
++                         dwi->options.for_internal->context_size,
++                         dwi->cancel_func, dwi->cancel_baton,
++                         scratch_pool));
++            }
+ 
+           /* If we have printed a diff for this path, mark it as visited. */
+           if (dwi->use_git_diff_format || svn_diff_contains_diffs(diff))
+@@ -2478,6 +2491,94 @@ svn_client_diff6(const apr_array_header_t *options,
+                                  diff_processor, ctx, pool, pool));
+ }
+ 
++svn_error_t *
++svn_client_diff6_hltb(const apr_array_header_t *options,
++                 const char *path_or_url1,
++                 const svn_opt_revision_t *revision1,
++                 const char *path_or_url2,
++                 const svn_opt_revision_t *revision2,
++                 const char *relative_to_dir,
++                 svn_depth_t depth,
++                 svn_boolean_t ignore_ancestry,
++                 svn_boolean_t no_diff_added,
++                 svn_boolean_t no_diff_deleted,
++                 svn_boolean_t show_copies_as_adds,
++                 svn_boolean_t ignore_content_type,
++                 svn_boolean_t ignore_properties,
++                 svn_boolean_t properties_only,
++                 svn_boolean_t use_git_diff_format,
++                 const char *header_encoding,
++                 svn_stream_t *outstream,
++                 svn_stream_t *errstream,
++                 const apr_array_header_t *changelists,
++                 svn_client_ctx_t *ctx,
++                 apr_pool_t *pool)
++{
++  diff_writer_info_t dwi = { 0 };
++  svn_opt_revision_t peg_revision;
++  const svn_diff_tree_processor_t *diff_processor;
++  svn_diff_tree_processor_t *processor;
++
++  if (ignore_properties && properties_only)
++    return svn_error_create(SVN_ERR_INCORRECT_PARAMS, NULL,
++                            _("Cannot ignore properties and show only "
++                              "properties at the same time"));
++
++  /* We will never do a pegged diff from here. */
++  peg_revision.kind = svn_opt_revision_unspecified;
++
++  /* setup callback and baton */
++  dwi.ddi.orig_path_1 = path_or_url1;
++  dwi.ddi.orig_path_2 = path_or_url2;
++
++  SVN_ERR(create_diff_writer_info(&dwi, options,
++                                  ctx->config, pool));
++  dwi.pool = pool;
++  dwi.outstream = outstream;
++  dwi.errstream = errstream;
++  dwi.header_encoding = header_encoding;
++
++  dwi.force_binary = ignore_content_type;
++  dwi.ignore_properties = ignore_properties;
++  dwi.properties_only = properties_only;
++  dwi.relative_to_dir = relative_to_dir;
++  dwi.use_git_diff_format = use_git_diff_format;
++  dwi.hl_trailing_blanks = TRUE;
++  dwi.no_diff_added = no_diff_added;
++  dwi.no_diff_deleted = no_diff_deleted;
++  dwi.show_copies_as_adds = show_copies_as_adds;
++
++  dwi.cancel_func = ctx->cancel_func;
++  dwi.cancel_baton = ctx->cancel_baton;
++
++  dwi.wc_ctx = ctx->wc_ctx;
++  dwi.ddi.session_relpath = NULL;
++  dwi.ddi.anchor = NULL;
++
++  processor = svn_diff__tree_processor_create(&dwi, pool);
++
++  processor->dir_added = diff_dir_added;
++  processor->dir_changed = diff_dir_changed;
++  processor->dir_deleted = diff_dir_deleted;
++
++  processor->file_added = diff_file_added;
++  processor->file_changed = diff_file_changed;
++  processor->file_deleted = diff_file_deleted;
++
++  diff_processor = processor;
++
++  /* --show-copies-as-adds and --git imply --notice-ancestry */
++  if (show_copies_as_adds || use_git_diff_format)
++    ignore_ancestry = FALSE;
++
++  return svn_error_trace(do_diff(NULL, NULL, &dwi.ddi,
++                                 path_or_url1, path_or_url2,
++                                 revision1, revision2, &peg_revision,
++                                 depth, ignore_ancestry, changelists,
++                                 TRUE /* text_deltas */,
++                                 diff_processor, ctx, pool, pool));
++}
++
+ svn_error_t *
+ svn_client_diff6_diffstat(const apr_array_header_t *options,
+                  const char *path_or_url1,
+diff --git a/subversion/libsvn_diff/diff_file.c b/subversion/libsvn_diff/diff_file.c
+index 0f63287..b21e94a 100644
+--- a/subversion/libsvn_diff/diff_file.c
++++ b/subversion/libsvn_diff/diff_file.c
+@@ -32,6 +32,7 @@
+ #include <apr_getopt.h>
+ 
+ #include <assert.h>
++#include <ctype.h>
+ 
+ #include "svn_error.h"
+ #include "svn_diff.h"
+@@ -1409,6 +1410,8 @@ typedef struct svn_diff__file_output_baton_t
+ 
+   /* Should we emit C functions in the unified diff header */
+   svn_boolean_t show_c_function;
++  /* Should we highlight trailing blanks at EOL */
++  svn_boolean_t hl_trailing_blanks;
+   /* Extra strings to skip over if we match. */
+   apr_array_header_t *extra_skip_match;
+   /* "Context" to append to the @@ line when the show_c_function option
+@@ -1431,12 +1434,37 @@ typedef enum svn_diff__file_output_unified_type_e
+ } svn_diff__file_output_unified_type_e;
+ 
+ 
++static svn_boolean_t
++has_trailing_blanks(const char *str,
++                    apr_size_t len,
++                    const char **pos)
++{
++  assert(len > 0 && (str[len - 1] == '\n' || str[len - 1] == '\r'));
++
++  if (str[len - 1] == '\n')
++    len--;
++  if (len > 0 && str[len - 1] == '\r')
++    len--;
++
++  while (len > 0 && isblank(str[len - 1]))
++    len--;
++  len++;
++  if (isblank(str[len - 1]))
++    {
++      *pos = &str[len - 1];
++      return(TRUE);
++    }
++  else
++    return(FALSE);
++}
++
+ static svn_error_t *
+ output_unified_line(svn_diff__file_output_baton_t *baton,
+                     svn_diff__file_output_unified_type_e type, int idx)
+ {
+   char *curp;
+   char *eol;
++  const char *pos;
+   apr_size_t length;
+   svn_error_t *err;
+   svn_boolean_t bytes_processed = FALSE;
+@@ -1514,10 +1542,27 @@ output_unified_line(svn_diff__file_output_baton_t *baton,
+ 
+                   length -= len;
+ 
+-                  if (type != svn_diff__file_output_unified_skip)
++                  /* Highlight trailing blanks. */
++                  if (type == svn_diff__file_output_unified_insert
++                        && !dont_use_color
++                        && baton->hl_trailing_blanks
++                        && has_trailing_blanks(curp, len, &pos))
++                    {
++                        svn_stringbuf_appendbytes(baton->hunk,
++                                                  curp,
++                                                  pos - curp);
++                        svn_stringbuf_appendbytes(baton->hunk,
++                                                  SVN_COLOR_BG_RED,
++                                                  strlen(SVN_COLOR_BG_RED));
++                        svn_stringbuf_appendbytes(baton->hunk,
++                                                  pos,
++                                                  len - (pos - curp));
++                    }
++                  else if (type != svn_diff__file_output_unified_skip)
+                     {
+                       svn_stringbuf_appendbytes(baton->hunk, curp, len);
+                     }
++
+                   if (collect_extra)
+                     {
+                       svn_stringbuf_appendbytes(baton->extra_context,
+@@ -1953,6 +1998,137 @@ svn_diff_file_output_unified4(svn_stream_t *output_stream,
+   return SVN_NO_ERROR;
+ }
+ 
++svn_error_t *
++svn_diff_file_output_unified4_hltb(svn_stream_t *output_stream,
++                              svn_diff_t *diff,
++                              const char *original_path,
++                              const char *modified_path,
++                              const char *original_header,
++                              const char *modified_header,
++                              const char *header_encoding,
++                              const char *relative_to_dir,
++                              svn_boolean_t show_c_function,
++                              int context_size,
++                              svn_cancel_func_t cancel_func,
++                              void *cancel_baton,
++                              apr_pool_t *pool)
++{
++  if (svn_diff_contains_diffs(diff))
++    {
++      svn_diff__file_output_baton_t baton;
++      int i;
++
++      memset(&baton, 0, sizeof(baton));
++      baton.output_stream = output_stream;
++      baton.pool = pool;
++      baton.header_encoding = header_encoding;
++      baton.path[0] = original_path;
++      baton.path[1] = modified_path;
++      baton.hunk = svn_stringbuf_create_empty(pool);
++      baton.show_c_function = show_c_function;
++      baton.hl_trailing_blanks = TRUE;
++      baton.extra_context = svn_stringbuf_create_empty(pool);
++      baton.context_size = (context_size >= 0) ? context_size
++                                              : SVN_DIFF__UNIFIED_CONTEXT_SIZE;
++
++      if (show_c_function)
++        {
++          baton.extra_skip_match = apr_array_make(pool, 3, sizeof(char **));
++
++          APR_ARRAY_PUSH(baton.extra_skip_match, const char *) = "public:*";
++          APR_ARRAY_PUSH(baton.extra_skip_match, const char *) = "private:*";
++          APR_ARRAY_PUSH(baton.extra_skip_match, const char *) = "protected:*";
++        }
++
++      SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.context_str, " ",
++                                            header_encoding, pool));
++      if (!dont_use_color) {
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
++                          SVN_COLOR_RED "-", header_encoding, pool));
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
++                          SVN_COLOR_GREEN "+", header_encoding, pool));
++      } else {
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.delete_str,
++                          "-", header_encoding, pool));
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&baton.insert_str,
++                          "+", header_encoding, pool));
++      }
++
++      if (relative_to_dir)
++        {
++          /* Possibly adjust the "original" and "modified" paths shown in
++             the output (see issue #2723). */
++          const char *child_path;
++
++          if (! original_header)
++            {
++              child_path = svn_dirent_is_child(relative_to_dir,
++                                               original_path, pool);
++              if (child_path)
++                original_path = child_path;
++              else
++                return svn_error_createf(
++                                   SVN_ERR_BAD_RELATIVE_PATH, NULL,
++                                   _("Path '%s' must be inside "
++                                     "the directory '%s'"),
++                                   svn_dirent_local_style(original_path, pool),
++                                   svn_dirent_local_style(relative_to_dir,
++                                                          pool));
++            }
++
++          if (! modified_header)
++            {
++              child_path = svn_dirent_is_child(relative_to_dir,
++                                               modified_path, pool);
++              if (child_path)
++                modified_path = child_path;
++              else
++                return svn_error_createf(
++                                   SVN_ERR_BAD_RELATIVE_PATH, NULL,
++                                   _("Path '%s' must be inside "
++                                     "the directory '%s'"),
++                                   svn_dirent_local_style(modified_path, pool),
++                                   svn_dirent_local_style(relative_to_dir,
++                                                          pool));
++            }
++        }
++
++      for (i = 0; i < 2; i++)
++        {
++          SVN_ERR(svn_io_file_open(&baton.file[i], baton.path[i],
++                                   APR_READ, APR_OS_DEFAULT, pool));
++        }
++
++      if (original_header == NULL)
++        {
++          SVN_ERR(output_unified_default_hdr(&original_header, original_path,
++                                             pool));
++        }
++
++      if (modified_header == NULL)
++        {
++          SVN_ERR(output_unified_default_hdr(&modified_header, modified_path,
++                                             pool));
++        }
++
++      SVN_ERR(svn_diff__unidiff_write_header(output_stream, header_encoding,
++                                             original_header, modified_header,
++                                             pool));
++
++      SVN_ERR(svn_diff_output2(diff, &baton,
++                               &svn_diff__file_output_unified_vtable,
++                               cancel_func, cancel_baton));
++      SVN_ERR(output_unified_flush_hunk(&baton));
++
++      for (i = 0; i < 2; i++)
++        {
++          SVN_ERR(svn_io_file_close(baton.file[i], pool));
++        }
++    }
++
++  return SVN_NO_ERROR;
++}
++
+ 
+ /** Display diff3 **/
+ 
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 2ab99aa..5068541 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -241,6 +241,8 @@ typedef struct svn_cl__opt_state_t
+                                       patching */
+   svn_boolean_t show_diff;         /* produce diff output (maps to --diff) */
+   svn_boolean_t diffstat;          /* display statistics of diff */
++  /* Don't highlight trailing blanks at EOL */
++  svn_boolean_t no_hl_trailing_blanks;
+   svn_boolean_t allow_mixed_rev;   /* Allow operation on mixed-revision WC */
+   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
+   svn_boolean_t show_inherited_props;  /* get inherited properties */
+diff --git a/subversion/svn/diff-cmd.c b/subversion/svn/diff-cmd.c
+index 9de667f..562a9cd 100644
+--- a/subversion/svn/diff-cmd.c
++++ b/subversion/svn/diff-cmd.c
+@@ -42,6 +42,8 @@
+ 
+ #include "svn_private_config.h"
+ 
++#include "private/svn_diff_private.h"
++
+ 
+ /*** Code. ***/
+ 
+@@ -447,7 +449,7 @@ svn_cl__diff(apr_getopt_t *os,
+                      errstream,
+                      opt_state->changelists,
+                      ctx, iterpool));
+-          else
++          else if (opt_state->no_hl_trailing_blanks)
+             SVN_ERR(svn_client_diff6(
+                      options,
+                      target1,
+@@ -469,6 +471,28 @@ svn_cl__diff(apr_getopt_t *os,
+                      errstream,
+                      opt_state->changelists,
+                      ctx, iterpool));
++          else
++            SVN_ERR(svn_client_diff6_hltb(
++                     options,
++                     target1,
++                     &(opt_state->start_revision),
++                     target2,
++                     &(opt_state->end_revision),
++                     NULL,
++                     opt_state->depth,
++                     ! opt_state->diff.notice_ancestry,
++                     opt_state->diff.no_diff_added,
++                     opt_state->diff.no_diff_deleted,
++                     show_copies_as_adds,
++                     ignore_content_type,
++                     ignore_properties,
++                     opt_state->diff.properties_only,
++                     opt_state->diff.use_git_diff_format,
++                     svn_cmdline_output_encoding(pool),
++                     outstream,
++                     errstream,
++                     opt_state->changelists,
++                     ctx, iterpool));
+         }
+       else
+         {
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 69bb1a4..bed73a5 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -89,6 +89,7 @@ typedef enum svn_cl__longopt_t {
+   opt_patch_compatible,
+   opt_no_color,
+   opt_diffstat,
++  opt_no_hl_trailing_blanks,
+   /* end of diff options */
+   opt_dry_run,
+   opt_editor_cmd,
+@@ -398,6 +399,8 @@ const apr_getopt_option_t svn_cl__options[] =
+                        N_("display statistics of diff, ignore property\n"
+                           "                             "
+                           "changes automatically")},
++  {"no-hl-trailing-blanks", opt_no_hl_trailing_blanks, 0,
++                       N_("disable highlight trailing blanks")},
+   /* end of diff options */
+   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
+                        N_("Allow operation on mixed-revision working copy.\n"
+@@ -708,7 +711,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+      opt_ignore_properties, opt_properties_only,
+      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
+      opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
+-     opt_no_color, opt_diffstat, } },
++     opt_no_color, opt_diffstat, opt_no_hl_trailing_blanks, } },
+   { "export", svn_cl__export, {0}, N_
+     ("Create an unversioned copy of a tree.\n"
+      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
+@@ -2515,6 +2518,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+             = opt_state.diff.diffstat
+             = TRUE;
+         break;
++      case opt_no_hl_trailing_blanks:
++        opt_state.no_hl_trailing_blanks = TRUE;
++        break;
+       case opt_use_git_diff_format:
+         opt_state.diff.use_git_diff_format = TRUE;
+         break;
+diff --git a/tools/client-side/bash_completion b/tools/client-side/bash_completion
+index 23c996d..2c70626 100644
+--- a/tools/client-side/bash_completion
++++ b/tools/client-side/bash_completion
+@@ -844,7 +844,7 @@ _svn()
+ 		         -c --change --summarize $cOpts --xml --git \
+ 		         --internal-diff --show-copies-as-adds \
+ 		         --ignore-properties --properties-only --no-diff-added \
+-		         --patch-compatible --no-color --stat"
++		         --patch-compatible --no-color --stat --no-hl-trailing-blanks"
+ 		;;
+ 	export)
+ 		cmdOpts="$rOpts $qOpts $pOpts $nOpts --force --native-eol \
+-- 
+2.14.1
+

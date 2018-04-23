@@ -1,0 +1,40 @@
+From bf6b730d44299d945786ecfc63620cf4804d913a Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 31 Mar 2018 16:53:48 +0800
+Subject: [PATCH 3/3] clean: don't print anything about changelist
+
+ChangeList has no meaning to clean
+---
+ subversion/svn/clean-cmd.c | 16 ----------------
+ 1 file changed, 16 deletions(-)
+
+diff --git a/subversion/svn/clean-cmd.c b/subversion/svn/clean-cmd.c
+index 71c5c61..bc8716f 100644
+--- a/subversion/svn/clean-cmd.c
++++ b/subversion/svn/clean-cmd.c
+@@ -383,22 +383,6 @@ svn_cl__clean(apr_getopt_t *os,
+           apr_array_header_t *path_array = apr_hash_this_val(hi);
+           int j;
+ 
+-          /* ### TODO: For non-XML output, we shouldn't print the
+-             ### leading \n on the first changelist if there were no
+-             ### non-changelist entries. */
+-          if (opt_state->xml)
+-            {
+-              svn_stringbuf_setempty(buf);
+-              svn_xml_make_open_tag(&buf, scratch_pool, svn_xml_normal,
+-                                    "changelist", "name", changelist_name,
+-                                    SVN_VA_NULL);
+-              SVN_ERR(svn_cl__error_checked_fputs(buf->data, stdout));
+-            }
+-          else
+-            SVN_ERR(svn_cmdline_printf(scratch_pool,
+-                                       _("\n--- Changelist '%s':\n"),
+-                                       changelist_name));
+-
+           for (j = 0; j < path_array->nelts; j++)
+             {
+               struct status_cache *scache =
+-- 
+2.14.1
+
