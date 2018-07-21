@@ -1,3 +1,38 @@
+Version 1.9.9
+(20 Jul 2018, from /branches/1.9.x)
+http://svn.apache.org/repos/asf/subversion/tags/1.9.9
+
+ User-visible changes:
+  - Client-side bugfixes:
+    * Fix SEGV for 'svn export -rN WC' with relative externals (r1803755)
+    * Fix issue #4677: 'svn up' after a directory replaced a file (r1814248)
+    * Fix segfault when no home directory is available (r1819199)
+    * Performance: Make 'svn info' fast on old repository revisions (r1827690)
+    * Fix RA-serf problem with proxy username and password (r1833571)
+
+  - Server-side bugfixes:
+    * svnadmin: Fix false errors on some valid LOCK_PATH arguments (r1803754)
+    * Fix crash when exiting 'svnserve --config-file' (r1824405)
+    * Fix issue #4722: false "filesystem is corrupt" error on commit (r1827688)
+    * Reword confusing "nested" wording in an httpd.conf warning (r1835700)
+
+  - Bindings bugfixes:
+    * swig-py: svn.core.Stream supports raw binary file-like objects (r1820620)
+    * swig-rb: Don't crash if svn_md5_digest_to_cstring returns NULL (r1823805)
+
+ Developer-visible changes:
+  - General:
+    * Fix CVE-2017-9800: Malicious server can execute arbitrary command on client (r1804698)
+    * Fix test failure if compile- and run-time HTTPD versions differ (r1820523)
+
+  - API changes:
+    (none)
+
+
+Version 1.9.8
+(Not released; see changes for 1.9.9.)
+
+
 Version 1.9.7
 (10 Aug 2017, from /branches/1.9.x)
 http://svn.apache.org/repos/asf/subversion/tags/1.9.7
@@ -992,6 +1027,51 @@ http://svn.apache.org/repos/asf/subversion/tags/1.9.0
     * javahl: requires Java 1.6 (r1677003)
     * javahl: on OS X use /usr/libexec/java_home to find the JDK (r1675774)
     * javahl: allow compiling with a C++11 compiler (r1684412)
+
+
+Version 1.8.19
+(10 Aug 2017, from /branches/1.8.x)
+http://svn.apache.org/repos/asf/subversion/tags/1.8.19
+
+ User-visible changes:
+  - Client-side bugfixes:
+    * Fix arbitrary code execution vulnerability CVE-2017-9800
+        See <https://subversion.apache.org/security/CVE-2017-9800-advisory.txt>
+        for details.
+
+  - Server-side bugfixes:
+    (none)
+
+  - Bindings bugfixes:
+    (none)
+
+ Developer-visible changes:
+  - General:
+    (none)
+
+  - API changes:
+    (none)
+
+
+Version 1.8.18
+(10 Jul 2017, from /branches/1.8.x)
+http://svn.apache.org/repos/asf/subversion/tags/1.8.18
+
+ User-visible changes:
+  - Server-side bugfixes:
+    * fsfs: never attempt to share directory representations (r1785053)
+    * fsfs: make consistency independent of hash algorithms (r1785737 et al)
+	This change makes Subversion resilient to collision attacks, including
+	SHA-1 collision attacks such as <http://shattered.io/>.  See also our
+	documentation at <https://subversion.apache.org/faq#shattered-sha1> and
+	<https://subversion.apache.org/docs/release-notes/1.8#shattered-sha1>.
+
+  - Client-side and server-side bugfixes:
+    * work around an APR bug related to file truncation (r1759116)
+
+ Developer-visible changes:
+  - General:
+    * update serf download URI in build scripts (r1700130 et al)
 
 
 Version 1.8.17
@@ -2666,7 +2746,7 @@ the 1.6 release:  http://subversion.apache.org/docs/release-notes/1.7.html
     * fixed: ra_serf doesn't support http-auth-types config (issue #3435)
     * fixed: merge sets incorrect mergeinfo on skipped paths (issue #3440)
     * fixed: ra_serf inconsistent handling of cached authn creds (issue #3450)
-    * fixed: ra_serf sefault with using NTLM or Negotiate auth (r876910)
+    * fixed: ra_serf segfault with using NTLM or Negotiate auth (r876910)
     * fixed: excluded subtrees are not detected by svnversion (issue #3461)
     * fixed: submitting a changelist while obstructed item exists (issue #3484)
     * fixed: crash when changing an external's URL (issue #3530)
@@ -5387,7 +5467,7 @@ http://svn.apache.org/repos/asf/subversion/tags/0.28.2
       twice as slow and lose all concurrent-client scalability.
 
       This is a temporary fix for a larger design problem.  See issue
-      http://subversion.tigris.org/issues/show_bug.cgi?id=1499
+      https://issues.apache.org/jira/browse/SVN-1499
 
 
 Version 0.28.1
