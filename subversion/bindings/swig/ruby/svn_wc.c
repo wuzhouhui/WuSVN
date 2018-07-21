@@ -2108,7 +2108,7 @@ SWIG_ruby_failed(void)
 } 
 
 
-/*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2LONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -2188,7 +2188,7 @@ SWIGINTERN svn_wc_external_item2_t *svn_wc_external_item2_t_dup(struct svn_wc_ex
     return svn_wc_external_item2_dup(self, pool);
   }
 
-/*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2ULONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -32957,7 +32957,7 @@ _wrap_svn_wc_transmit_text_deltas2(int argc, VALUE *argv, VALUE self) {
   }
   {
     char *digest_string = (char *)svn_md5_digest_to_cstring(arg2, _global_pool);
-    vresult = SWIG_Ruby_AppendOutput(vresult, rb_str_new2(digest_string));
+    vresult = SWIG_Ruby_AppendOutput(vresult, rb_str_new2(digest_string ? digest_string : ""));
   }
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   {

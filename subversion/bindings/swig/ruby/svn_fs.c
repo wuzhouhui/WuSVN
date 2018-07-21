@@ -2093,7 +2093,7 @@ SWIG_ruby_failed(void)
 } 
 
 
-/*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2LONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -2138,7 +2138,7 @@ SWIG_AsVal_int (VALUE obj, int *val)
 }
 
 
-/*@SWIG:/tmp/svnrm/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2ULONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -9750,7 +9750,7 @@ _wrap_svn_fs_file_md5_checksum(int argc, VALUE *argv, VALUE self) {
   }
   {
     char *digest_string = (char *)svn_md5_digest_to_cstring(arg1, _global_pool);
-    vresult = SWIG_Ruby_AppendOutput(vresult, rb_str_new2(digest_string));
+    vresult = SWIG_Ruby_AppendOutput(vresult, rb_str_new2(digest_string ? digest_string : ""));
   }
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
   {
