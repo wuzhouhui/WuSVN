@@ -634,6 +634,7 @@ remove_unversioned(const char *target_abspath,
              svn_boolean_t detailed,
              svn_boolean_t show_last_committed,
              svn_boolean_t repos_locks,
+             svn_boolean_t dry_run,
              const svn_client_status_t *status,
              unsigned int *text_conflicts,
              unsigned int *prop_conflicts,
@@ -657,7 +658,10 @@ remove_unversioned(const char *target_abspath,
 
   if (finfo.filetype == APR_REG || finfo.filetype == APR_LNK)
     {
-      apr_err = apr_file_remove(path, pool);
+      if (!dry_run)
+        {
+          apr_err = apr_file_remove(path, pool);
+        }
       if (!apr_err)
         {
           if (quiet)
@@ -670,7 +674,10 @@ remove_unversioned(const char *target_abspath,
     }
   else if (finfo.filetype == APR_DIR)
     {
-      SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
+      if (!dry_run)
+        {
+          SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
+        }
       if (quiet)
         return SVN_NO_ERROR;
       SVN_ERR(svn_cmdline_printf(pool, "Remove %s\n", path));
@@ -692,6 +699,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
                      svn_boolean_t show_last_committed,
                      svn_boolean_t quiet,
                      svn_boolean_t repos_locks,
+                     svn_boolean_t dry_run,
                      unsigned int *text_conflicts,
                      unsigned int *prop_conflicts,
                      unsigned int *tree_conflicts,
@@ -699,7 +707,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
                      apr_pool_t *pool)
 {
   return remove_unversioned(target_abspath, target_path, path, quiet,
-                      detailed, show_last_committed, repos_locks, status,
-                      text_conflicts, prop_conflicts, tree_conflicts,
+                      detailed, show_last_committed, repos_locks, dry_run,
+                      status, text_conflicts, prop_conflicts, tree_conflicts,
                       ctx, pool);
 }

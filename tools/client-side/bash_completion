@@ -881,7 +881,7 @@ _svn()
                          --force"
 		;;
 	clean)
-		cmdOpts="$qOpts $pOpts --no-ignore --force"
+		cmdOpts="$qOpts $pOpts --no-ignore --force --dry-run"
 		;;
 	cleanup)
 		cmdOpts="--diff3-cmd $pOpts --include-externals -q --quiet\
