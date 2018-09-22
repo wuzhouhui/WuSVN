@@ -56,6 +56,7 @@ struct status_baton
   svn_boolean_t show_last_committed;
   svn_boolean_t quiet;
   svn_boolean_t repos_locks;
+  svn_boolean_t dry_run;
 
   apr_hash_t *cached_changelists;
   apr_pool_t *cl_pool;          /* where cached changelists are allocated */
@@ -158,6 +159,7 @@ do_remove_unversioned(void *baton,
                               sb->show_last_committed,
                               sb->quiet,
                               sb->repos_locks,
+                              sb->dry_run,
                               &sb->text_conflicts,
                               &sb->prop_conflicts,
                               &sb->tree_conflicts,
@@ -315,6 +317,7 @@ svn_cl__clean(apr_getopt_t *os,
   sb.show_last_committed = opt_state->verbose;
   sb.quiet = opt_state->quiet;
   sb.repos_locks = opt_state->update;
+  sb.dry_run = opt_state->dry_run;
   sb.xml_mode = opt_state->xml;
   sb.cached_changelists = master_cl_hash;
   sb.cl_pool = scratch_pool;

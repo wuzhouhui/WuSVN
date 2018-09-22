@@ -591,7 +591,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
 
   { "clean", svn_cl__clean, {0}, N_
     ("Remove unversioned files and directories.\n"
-     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force } },
+     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force, opt_dry_run } },
 
   { "cleanup", svn_cl__cleanup, {0}, N_
     ("Recursively clean up the working copy, removing write locks, resuming\n"
@@ -2762,7 +2762,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     }
 
   /* Think twice before removing unversioned files. */
-  if (opt_state.force == FALSE && subcommand->cmd_func == svn_cl__clean)
+  if (opt_state.force == FALSE
+      && opt_state.dry_run == FALSE
+      && subcommand->cmd_func == svn_cl__clean)
   {
     svn_error_clear(
         svn_cmdline_fprintf(stderr, pool,
