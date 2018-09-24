@@ -106,6 +106,7 @@ typedef enum svn_cl__longopt_t {
   opt_no_auth_cache,
   opt_no_autoprops,
   opt_no_ignore,
+  opt_ignore,
   opt_no_unlock,
   opt_non_interactive,
   opt_force_interactive,
@@ -244,6 +245,10 @@ const apr_getopt_option_t svn_cl__options[] =
                     N_("disregard default and svn:ignore and .svnignore\n"
                        "                             "
                        "and svn:global-ignores property ignores")},
+  {"ignore",        opt_ignore, 1,
+                    N_("ignore files that match pattern, take precedence\n"
+                       "                             "
+                       "of --no-ignore")},
   {"no-auth-cache", opt_no_auth_cache, 0,
                     N_("do not cache authentication tokens")},
   {"trust-server-cert", opt_trust_server_cert, 0,
@@ -591,7 +596,9 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
 
   { "clean", svn_cl__clean, {0}, N_
     ("Remove unversioned files and directories.\n"
-     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force, opt_dry_run } },
+     "usage: clean [PATH...]\n"),
+    { 'q', opt_no_ignore, opt_ignore, opt_force, opt_dry_run }
+  },
 
   { "cleanup", svn_cl__cleanup, {0}, N_
     ("Recursively clean up the working copy, removing write locks, resuming\n"
@@ -1958,6 +1965,17 @@ add_search_pattern_to_latest_group(svn_cl__opt_state_t *opt_state,
   APR_ARRAY_PUSH(group, const char *) = pattern;
 }
 
+static void
+add_ignore_pattern(svn_cl__opt_state_t *opt_state,
+                   const char *pattern,
+                   apr_pool_t *result_pool)
+{
+  if (opt_state->ignore_patterns == NULL)
+    opt_state->ignore_patterns = apr_array_make(result_pool, 1,
+                                                sizeof(const char *));
+  APR_ARRAY_PUSH(opt_state->ignore_patterns, const char *) = pattern;
+}
+
 
 /*** Main. ***/
 
@@ -2300,6 +2318,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         break;
       case opt_no_ignore:
         opt_state.no_ignore = TRUE;
+        break;
+      case opt_ignore:
+        SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
+        add_ignore_pattern(&opt_state, utf8_opt_arg, pool);
         break;
       case opt_no_auth_cache:
         opt_state.no_auth_cache = TRUE;

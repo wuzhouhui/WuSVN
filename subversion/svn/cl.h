@@ -247,6 +247,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
   svn_boolean_t show_inherited_props;  /* get inherited properties */
   apr_array_header_t* search_patterns; /* pattern arguments for --search */
+  apr_array_header_t* ignore_patterns; /* pattern arguments for --ignore */
   svn_boolean_t mergeinfo_log;     /* show log message in mergeinfo command */
   svn_boolean_t remove_unversioned;/* remove unversioned items */
   svn_boolean_t remove_ignored;    /* remove ignored items */
@@ -487,6 +488,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
                      svn_boolean_t skip_unrecognized,
                      svn_boolean_t repos_locks,
                      svn_boolean_t dry_run,
+                     const apr_array_header_t *ignore_patterns,
                      unsigned int *text_conflicts,
                      unsigned int *prop_conflicts,
                      unsigned int *tree_conflicts,
