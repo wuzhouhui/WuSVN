@@ -57,6 +57,7 @@ struct status_baton
   svn_boolean_t quiet;
   svn_boolean_t repos_locks;
   svn_boolean_t dry_run;
+  apr_array_header_t* ignore_patterns;
 
   apr_hash_t *cached_changelists;
   apr_pool_t *cl_pool;          /* where cached changelists are allocated */
@@ -160,6 +161,7 @@ do_remove_unversioned(void *baton,
                               sb->quiet,
                               sb->repos_locks,
                               sb->dry_run,
+                              sb->ignore_patterns,
                               &sb->text_conflicts,
                               &sb->prop_conflicts,
                               &sb->tree_conflicts,
@@ -318,6 +320,7 @@ svn_cl__clean(apr_getopt_t *os,
   sb.quiet = opt_state->quiet;
   sb.repos_locks = opt_state->update;
   sb.dry_run = opt_state->dry_run;
+  sb.ignore_patterns = opt_state->ignore_patterns;
   sb.xml_mode = opt_state->xml;
   sb.cached_changelists = master_cl_hash;
   sb.cl_pool = scratch_pool;
