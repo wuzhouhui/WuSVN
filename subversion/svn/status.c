@@ -635,6 +635,7 @@ remove_unversioned(const char *target_abspath,
              svn_boolean_t show_last_committed,
              svn_boolean_t repos_locks,
              svn_boolean_t dry_run,
+             const apr_array_header_t *ignore_patterns,
              const svn_client_status_t *status,
              unsigned int *text_conflicts,
              unsigned int *prop_conflicts,
@@ -648,6 +649,11 @@ remove_unversioned(const char *target_abspath,
 
   apr_status_t  apr_err;
   apr_finfo_t   finfo;
+  const char *base_name = svn_dirent_basename(path, NULL);
+
+  if (ignore_patterns
+        && svn_wc_match_ignore_list(base_name, ignore_patterns, pool))
+    return SVN_NO_ERROR;
 
   apr_err = apr_stat(&finfo, path, APR_FINFO_TYPE | APR_FINFO_LINK, pool);
   if (apr_err)
@@ -700,6 +706,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
                      svn_boolean_t quiet,
                      svn_boolean_t repos_locks,
                      svn_boolean_t dry_run,
+                     const apr_array_header_t *ignore_patterns,
                      unsigned int *text_conflicts,
                      unsigned int *prop_conflicts,
                      unsigned int *tree_conflicts,
@@ -708,6 +715,6 @@ svn_cl__remove_unversioned(const char *target_abspath,
 {
   return remove_unversioned(target_abspath, target_path, path, quiet,
                       detailed, show_last_committed, repos_locks, dry_run,
-                      status, text_conflicts, prop_conflicts, tree_conflicts,
-                      ctx, pool);
+                      ignore_patterns, status, text_conflicts, prop_conflicts,
+                      tree_conflicts, ctx, pool);
 }
