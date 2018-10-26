@@ -525,6 +525,16 @@ svn_version__at_least(svn_version_t *version,
 unsigned char *
 svn__encode_uint(unsigned char *p, apr_uint64_t val);
 
+/* Wrapper around svn__encode_uint using the LSB to store the sign:
+ *
+ * If VAL >= 0
+ *   UINT_VAL = 2 * VAL
+ * else
+ *   UINT_VAL = (- 2 * VAL) - 1
+ */
+unsigned char *
+svn__encode_int(unsigned char *p, apr_int64_t val);
+
 /* Decode an unsigned 7b/8b-encoded integer into *VAL and return a pointer
    to the byte after the integer.  The bytes to be decoded live in the
    range [P..END-1].  If these bytes do not contain a whole encoded
@@ -537,20 +547,29 @@ svn__decode_uint(apr_uint64_t *val,
                  const unsigned char *p,
                  const unsigned char *end);
 
-/* Get the data from IN, compress it according to the specified
- * COMPRESSION_METHOD and write the result to OUT.
+/* Wrapper around svn__decode_uint, reversing the transformation performed
+ * by svn__encode_int.
+ */
+const unsigned char *
+svn__decode_int(apr_int64_t *val,
+                const unsigned char *p,
+                const unsigned char *end);
+
+/* Compress the data from DATA with length LEN, it according to the
+ * specified COMPRESSION_METHOD and write the result to OUT.
  * SVN__COMPRESSION_NONE is valid for COMPRESSION_METHOD.
  */
 svn_error_t *
-svn__compress(svn_stringbuf_t *in,
+svn__compress(const void *data, apr_size_t len,
               svn_stringbuf_t *out,
               int compression_method);
 
-/* Get the compressed data from IN, decompress it and write the result to
- * OUT.  Return an error if the decompressed size is larger than LIMIT.
+/* Decompress the compressed data from DATA with length LEN and write the
+ * result to OUT.  Return an error if the decompressed size is larger than
+ * LIMIT.
  */
 svn_error_t *
-svn__decompress(svn_stringbuf_t *in,
+svn__decompress(const void *data, apr_size_t len,
                 svn_stringbuf_t *out,
                 apr_size_t limit);
 

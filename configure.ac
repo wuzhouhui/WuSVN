@@ -136,9 +136,18 @@ if test "$svn_lib_apr_memcache" = "yes"; then
             [Defined if apr_memcache (standalone or in apr-util) is present])
 fi
 
+AC_ARG_ENABLE(apache-whitelist,
+  AS_HELP_STRING([--enable-apache-whitelist=VER],
+                 [Whitelist a particular Apache version number,
+                  typically used to enable the use of a old version
+                  patched by a distribution.]),
+                 [apache_whitelist_ver=$enableval],
+                 [apache_whitelist_ver=no])
+HTTPD_WHITELIST="$apache_whitelist_ver"
+AC_SUBST(HTTPD_WHITELIST)
 
 dnl Find Apache with a recent-enough magic module number
-SVN_FIND_APACHE(20051115)
+SVN_FIND_APACHE(20051115, $apache_whitelist_ver)
 
 dnl Search for SQLite.  If you change SQLITE_URL from a .zip to
 dnl something else also update build/ac-macros/sqlite.m4 to reflect
@@ -199,7 +208,10 @@ localedir='${datadir}/locale'
 AC_SUBST(localedir)
 
 dnl For SVN_LOCALE_DIR, we have to expand it to something.  See SVN_BINDIR.
-if test "${datadir}" = '${prefix}/share' && test "${prefix}" = "NONE"; then
+if test "${prefix}" = "NONE" \
+  && ( test "${datadir}" = '${prefix}/share' \
+       || ( test "${datadir}" = '${datarootdir}' \
+            && test "${datarootdir}" = '${prefix}/share' ) ); then
   exp_localedir='${ac_default_prefix}/share/locale'
 else
   exp_localedir=$localedir
@@ -623,27 +635,27 @@ AC_SUBST(SVN_GNOME_KEYRING_INCLUDES)
 AC_SUBST(SVN_GNOME_KEYRING_LIBS)
 
 dnl Googlemock -----------------
-AC_ARG_ENABLE([gmock],
-  AS_HELP_STRING([--disable-gmock],
+AC_ARG_ENABLE([googlemock],
+  AS_HELP_STRING([--disable-googlemock],
                  [Do not use the Googlemock testing framework]),
   [],
-  [enable_gmock=yes])
+  [enable_googlemock=yes])
 
-AC_SUBST([GMOCK_SRCDIR], [$abs_srcdir/gmock-fused])
+AC_SUBST([GOOGLEMOCK_SRCDIR], [$abs_srcdir/googlemock])
 AC_MSG_CHECKING([whether use Googlemock])
-if test "$enable_gmock" != "no"; then
-  if test -d "$GMOCK_SRCDIR"; then
+if test "$enable_googlemock" != "no"; then
+  if test -d "$GOOGLEMOCK_SRCDIR"; then
     AC_MSG_RESULT([yes])
-    SVN_USE_GMOCK=true
+    SVN_USE_GOOGLEMOCK=true
   else
     AC_MSG_RESULT([no])
-    SVN_USE_GMOCK=false
+    SVN_USE_GOOGLEMOCK=false
   fi
 else
   AC_MSG_RESULT([no])
-  SVN_USE_GMOCK_SOURCES=false
+  SVN_USE_GOOGLEMOCK=false
 fi
-AC_SUBST([SVN_USE_GMOCK])
+AC_SUBST([SVN_USE_GOOGLEMOCK])
 
 dnl Ev2 experimental features ----------------------
 dnl Note: The Ev2 implementations will be built unconditionally, but by
@@ -1049,12 +1061,13 @@ AS_HELP_STRING([--enable-maintainer-mode],
         SVN_CFLAGS_ADD_IFELSE([-Wno-system-headers])
         SVN_CFLAGS_ADD_IFELSE([-Wno-format-nonliteral])
         SVN_CFLAGS_ADD_IFELSE([-Wmissing-variable-declarations])
+        SVN_CFLAGS_ADD_IFELSE([-Wno-unused-const-variable])
 
         CMAINTAINERFLAGS="$CFLAGS"
         CFLAGS="$CFLAGS_KEEP"
 
         dnl Add flags that all versions of GCC (should) support
-        CMAINTAINERFLAGS="-Wall -Wpointer-arith -Wwrite-strings -Wshadow -Wformat=2 -Wunused -Waggregate-return -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wno-multichar -Wredundant-decls -Wnested-externs -Winline -Wno-long-long -Wbad-function-cast $CMAINTAINERFLAGS"
+        CMAINTAINERFLAGS="-Wall -Wpointer-arith -Wwrite-strings -Wshadow -Wformat=2 -Wunused -Wstrict-prototypes -Wmissing-prototypes -Wmissing-declarations -Wno-multichar -Wredundant-decls -Wnested-externs -Winline -Wno-long-long -Wbad-function-cast $CMAINTAINERFLAGS"
       fi
       if test "$GXX" = "yes"; then
         AC_MSG_NOTICE([maintainer-mode: adding G++ warning flags])
@@ -1354,24 +1367,37 @@ AS_HELP_STRING([--enable-runtime-module-search],
       fi
       AC_DEFINE(SVN_USE_DSO, 1,
                 [Defined if svn should try to load DSOs])
+
+      dnl Mac OS X uses libname.MAJOR.SOVERSION.dylib
+      dnl Most other unixes use libname.MAJOR.so.SOVERSION
+      case "$host" in
+        *-*-darwin*)
+          AC_DEFINE(SVN_DSO_SUFFIX_FMT, ["%d.%d.dylib"],
+                    [Shared library file name suffix format])
+          ;;
+        *)
+          AC_DEFINE(SVN_DSO_SUFFIX_FMT, ["%d.so.%d"],
+                    [Shared library file name suffix format])
+          ;;
+      esac
     fi
 ])
 
 if test "$svn_enable_shared" = "no" || test "$use_dso" != "yes"; then
-  AC_DEFINE(SVN_LIBSVN_CLIENT_LINKS_RA_LOCAL, 1,
-      [Defined if libsvn_client should link against libsvn_ra_local])
+  AC_DEFINE(SVN_LIBSVN_RA_LINKS_RA_LOCAL, 1,
+      [Defined if libsvn_ra should link against libsvn_ra_local])
   svn_ra_lib_deps="\$(RA_LOCAL_DEPS)"
   svn_ra_lib_install_deps="install-ramod-lib"
   svn_ra_lib_link="\$(RA_LOCAL_LINK)"
 
-  AC_DEFINE(SVN_LIBSVN_CLIENT_LINKS_RA_SVN, 1,
-      [Defined if libsvn_client should link against libsvn_ra_svn])
+  AC_DEFINE(SVN_LIBSVN_RA_LINKS_RA_SVN, 1,
+      [Defined if libsvn_ra should link against libsvn_ra_svn])
   svn_ra_lib_deps="$svn_ra_lib_deps \$(RA_SVN_DEPS)"
   svn_ra_lib_link="$svn_ra_lib_link \$(RA_SVN_LINK)"
 
   if test "$svn_lib_serf" = "yes"; then
-    AC_DEFINE(SVN_LIBSVN_CLIENT_LINKS_RA_SERF, 1,
-          [Defined if libsvn_client should link against libsvn_ra_serf])
+    AC_DEFINE(SVN_LIBSVN_RA_LINKS_RA_SERF, 1,
+          [Defined if libsvn_ra should link against libsvn_ra_serf])
     svn_ra_lib_deps="$svn_ra_lib_deps \$(RA_SERF_DEPS)"
     svn_ra_lib_install_deps="$svn_ra_lib_install_deps install-serf-lib"
     svn_ra_lib_link="$svn_ra_lib_link \$(RA_SERF_LINK)"
@@ -1493,7 +1519,7 @@ AC_SUBST(JAVAHL_COMPAT_TESTS_TARGET)
 
 # ==== Miscellaneous bits ====================================================
 
-AC_CHECK_HEADERS([stdbool.h inttypes.h])
+AC_CHECK_HEADERS([stdbool.h stdint.h])
 
 # Strip '-no-cpp-precomp' from CPPFLAGS for the clang compiler
 ### I think we get this flag from APR, so the fix probably belongs there
@@ -1504,6 +1530,7 @@ fi
 # Need to strip '-no-cpp-precomp' from CPPFLAGS for SWIG as well.
 SWIG_CPPFLAGS="$CPPFLAGS"
 SVN_STRIP_FLAG(SWIG_CPPFLAGS, [-no-cpp-precomp ])
+SVN_STRIP_FLAG(SWIG_CPPFLAGS, [-Wdate-time ])
 AC_SUBST([SWIG_CPPFLAGS])
 
 dnl Since this is used only on Unix-y systems, define the path separator as '/'

@@ -152,7 +152,7 @@ class svn_client_commit_info_t:
     __swig_setmethods__["author"] = _client.svn_client_commit_info_t_author_set
     __swig_getmethods__["author"] = _client.svn_client_commit_info_t_author_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_commit_info_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -171,13 +171,13 @@ class svn_client_commit_info_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -186,9 +186,9 @@ class svn_client_commit_info_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -240,7 +240,7 @@ class svn_client_commit_item3_t:
     __swig_setmethods__["moved_from_abspath"] = _client.svn_client_commit_item3_t_moved_from_abspath_set
     __swig_getmethods__["moved_from_abspath"] = _client.svn_client_commit_item3_t_moved_from_abspath_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_commit_item3_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -259,13 +259,13 @@ class svn_client_commit_item3_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -274,9 +274,9 @@ class svn_client_commit_item3_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -315,7 +315,7 @@ class svn_client_commit_item2_t:
     __swig_setmethods__["wcprop_changes"] = _client.svn_client_commit_item2_t_wcprop_changes_set
     __swig_getmethods__["wcprop_changes"] = _client.svn_client_commit_item2_t_wcprop_changes_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_commit_item2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -334,13 +334,13 @@ class svn_client_commit_item2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -349,9 +349,9 @@ class svn_client_commit_item2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -388,7 +388,7 @@ class svn_client_commit_item_t:
     __swig_setmethods__["wcprop_changes"] = _client.svn_client_commit_item_t_wcprop_changes_set
     __swig_getmethods__["wcprop_changes"] = _client.svn_client_commit_item_t_wcprop_changes_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_commit_item_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -407,13 +407,13 @@ class svn_client_commit_item_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -422,9 +422,9 @@ class svn_client_commit_item_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -475,7 +475,7 @@ class svn_client_diff_summarize_t:
     __swig_setmethods__["node_kind"] = _client.svn_client_diff_summarize_t_node_kind_set
     __swig_getmethods__["node_kind"] = _client.svn_client_diff_summarize_t_node_kind_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_diff_summarize_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -494,13 +494,13 @@ class svn_client_diff_summarize_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -509,9 +509,9 @@ class svn_client_diff_summarize_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -590,7 +590,7 @@ class svn_client_ctx_t:
     __swig_setmethods__["tunnel_baton"] = _client.svn_client_ctx_t_tunnel_baton_set
     __swig_getmethods__["tunnel_baton"] = _client.svn_client_ctx_t_tunnel_baton_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_ctx_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -609,13 +609,13 @@ class svn_client_ctx_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -624,9 +624,9 @@ class svn_client_ctx_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -978,7 +978,7 @@ class svn_client_status_t:
     __swig_setmethods__["moved_to_abspath"] = _client.svn_client_status_t_moved_to_abspath_set
     __swig_getmethods__["moved_to_abspath"] = _client.svn_client_status_t_moved_to_abspath_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_status_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -997,13 +997,13 @@ class svn_client_status_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1012,9 +1012,9 @@ class svn_client_status_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1565,6 +1565,216 @@ def svn_client_revert2(*args):
 def svn_client_revert(*args):
   """svn_client_revert(apr_array_header_t paths, svn_boolean_t recursive, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
   return _client.svn_client_revert(*args)
+svn_client_conflict_option_undefined = _client.svn_client_conflict_option_undefined
+svn_client_conflict_option_postpone = _client.svn_client_conflict_option_postpone
+svn_client_conflict_option_base_text = _client.svn_client_conflict_option_base_text
+svn_client_conflict_option_incoming_text = _client.svn_client_conflict_option_incoming_text
+svn_client_conflict_option_working_text = _client.svn_client_conflict_option_working_text
+svn_client_conflict_option_incoming_text_where_conflicted = _client.svn_client_conflict_option_incoming_text_where_conflicted
+svn_client_conflict_option_working_text_where_conflicted = _client.svn_client_conflict_option_working_text_where_conflicted
+svn_client_conflict_option_merged_text = _client.svn_client_conflict_option_merged_text
+svn_client_conflict_option_unspecified = _client.svn_client_conflict_option_unspecified
+svn_client_conflict_option_accept_current_wc_state = _client.svn_client_conflict_option_accept_current_wc_state
+svn_client_conflict_option_update_move_destination = _client.svn_client_conflict_option_update_move_destination
+svn_client_conflict_option_update_any_moved_away_children = _client.svn_client_conflict_option_update_any_moved_away_children
+svn_client_conflict_option_incoming_add_ignore = _client.svn_client_conflict_option_incoming_add_ignore
+svn_client_conflict_option_incoming_added_file_text_merge = _client.svn_client_conflict_option_incoming_added_file_text_merge
+svn_client_conflict_option_incoming_added_file_replace_and_merge = _client.svn_client_conflict_option_incoming_added_file_replace_and_merge
+svn_client_conflict_option_incoming_added_dir_merge = _client.svn_client_conflict_option_incoming_added_dir_merge
+svn_client_conflict_option_incoming_added_dir_replace = _client.svn_client_conflict_option_incoming_added_dir_replace
+svn_client_conflict_option_incoming_added_dir_replace_and_merge = _client.svn_client_conflict_option_incoming_added_dir_replace_and_merge
+svn_client_conflict_option_incoming_delete_ignore = _client.svn_client_conflict_option_incoming_delete_ignore
+svn_client_conflict_option_incoming_delete_accept = _client.svn_client_conflict_option_incoming_delete_accept
+svn_client_conflict_option_incoming_move_file_text_merge = _client.svn_client_conflict_option_incoming_move_file_text_merge
+svn_client_conflict_option_incoming_move_dir_merge = _client.svn_client_conflict_option_incoming_move_dir_merge
+svn_client_conflict_option_local_move_file_text_merge = _client.svn_client_conflict_option_local_move_file_text_merge
+
+def svn_client_conflict_option_set_merged_propval(*args):
+  """svn_client_conflict_option_set_merged_propval(svn_client_conflict_option_t * option, svn_string_t const * merged_propval)"""
+  return _client.svn_client_conflict_option_set_merged_propval(*args)
+
+def svn_client_conflict_option_get_moved_to_repos_relpath_candidates(*args):
+  """svn_client_conflict_option_get_moved_to_repos_relpath_candidates(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_option_get_moved_to_repos_relpath_candidates(*args)
+
+def svn_client_conflict_option_set_moved_to_repos_relpath(*args):
+  """
+    svn_client_conflict_option_set_moved_to_repos_relpath(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_option_set_moved_to_repos_relpath(*args)
+
+def svn_client_conflict_option_get_moved_to_abspath_candidates(*args):
+  """svn_client_conflict_option_get_moved_to_abspath_candidates(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_option_get_moved_to_abspath_candidates(*args)
+
+def svn_client_conflict_option_set_moved_to_abspath(*args):
+  """
+    svn_client_conflict_option_set_moved_to_abspath(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_option_set_moved_to_abspath(*args)
+
+def svn_client_conflict_option_find_by_id(*args):
+  """svn_client_conflict_option_find_by_id(apr_array_header_t options, svn_client_conflict_option_id_t option_id) -> svn_client_conflict_option_t *"""
+  return _client.svn_client_conflict_option_find_by_id(*args)
+
+def svn_client_conflict_get(*args):
+  """svn_client_conflict_get(char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_get(*args)
+
+def svn_client_conflict_walk(*args):
+  """
+    svn_client_conflict_walk(char const * local_abspath, svn_depth_t depth, svn_client_conflict_walk_func_t conflict_walk_func, 
+        void * conflict_walk_func_baton, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_walk(*args)
+
+def svn_client_conflict_get_conflicted(*args):
+  """svn_client_conflict_get_conflicted(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_get_conflicted(*args)
+
+def svn_client_conflict_prop_get_description(*args):
+  """svn_client_conflict_prop_get_description(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_prop_get_description(*args)
+
+def svn_client_conflict_tree_get_description(*args):
+  """svn_client_conflict_tree_get_description(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_tree_get_description(*args)
+
+def svn_client_conflict_text_get_resolution_options(*args):
+  """svn_client_conflict_text_get_resolution_options(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_text_get_resolution_options(*args)
+
+def svn_client_conflict_prop_get_resolution_options(*args):
+  """svn_client_conflict_prop_get_resolution_options(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_prop_get_resolution_options(*args)
+
+def svn_client_conflict_tree_get_resolution_options(*args):
+  """svn_client_conflict_tree_get_resolution_options(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_tree_get_resolution_options(*args)
+
+def svn_client_conflict_tree_get_details(*args):
+  """svn_client_conflict_tree_get_details(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_tree_get_details(*args)
+
+def svn_client_conflict_option_get_id(*args):
+  """svn_client_conflict_option_get_id(svn_client_conflict_option_t * option) -> svn_client_conflict_option_id_t"""
+  return _client.svn_client_conflict_option_get_id(*args)
+
+def svn_client_conflict_option_get_label(*args):
+  """svn_client_conflict_option_get_label(svn_client_conflict_option_t * option, apr_pool_t result_pool) -> char const *"""
+  return _client.svn_client_conflict_option_get_label(*args)
+
+def svn_client_conflict_option_get_description(*args):
+  """svn_client_conflict_option_get_description(svn_client_conflict_option_t * option, apr_pool_t result_pool) -> char const *"""
+  return _client.svn_client_conflict_option_get_description(*args)
+
+def svn_client_conflict_get_recommended_option_id(*args):
+  """svn_client_conflict_get_recommended_option_id(svn_client_conflict_t * conflict) -> svn_client_conflict_option_id_t"""
+  return _client.svn_client_conflict_get_recommended_option_id(*args)
+
+def svn_client_conflict_get_local_abspath(*args):
+  """svn_client_conflict_get_local_abspath(svn_client_conflict_t * conflict) -> char const *"""
+  return _client.svn_client_conflict_get_local_abspath(*args)
+
+def svn_client_conflict_get_operation(*args):
+  """svn_client_conflict_get_operation(svn_client_conflict_t * conflict) -> svn_wc_operation_t"""
+  return _client.svn_client_conflict_get_operation(*args)
+
+def svn_client_conflict_get_incoming_change(*args):
+  """svn_client_conflict_get_incoming_change(svn_client_conflict_t * conflict) -> svn_wc_conflict_action_t"""
+  return _client.svn_client_conflict_get_incoming_change(*args)
+
+def svn_client_conflict_get_local_change(*args):
+  """svn_client_conflict_get_local_change(svn_client_conflict_t * conflict) -> svn_wc_conflict_reason_t"""
+  return _client.svn_client_conflict_get_local_change(*args)
+
+def svn_client_conflict_get_repos_info(*args):
+  """svn_client_conflict_get_repos_info(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_get_repos_info(*args)
+
+def svn_client_conflict_get_incoming_old_repos_location(*args):
+  """svn_client_conflict_get_incoming_old_repos_location(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_get_incoming_old_repos_location(*args)
+
+def svn_client_conflict_get_incoming_new_repos_location(*args):
+  """svn_client_conflict_get_incoming_new_repos_location(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_get_incoming_new_repos_location(*args)
+
+def svn_client_conflict_tree_get_victim_node_kind(*args):
+  """svn_client_conflict_tree_get_victim_node_kind(svn_client_conflict_t * conflict) -> svn_node_kind_t"""
+  return _client.svn_client_conflict_tree_get_victim_node_kind(*args)
+
+def svn_client_conflict_tree_resolve(*args):
+  """
+    svn_client_conflict_tree_resolve(svn_client_conflict_t * conflict, svn_client_conflict_option_t * option, svn_client_ctx_t ctx, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_tree_resolve(*args)
+
+def svn_client_conflict_tree_resolve_by_id(*args):
+  """
+    svn_client_conflict_tree_resolve_by_id(svn_client_conflict_t * conflict, svn_client_conflict_option_id_t option_id, svn_client_ctx_t ctx, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_tree_resolve_by_id(*args)
+
+def svn_client_conflict_tree_get_resolution(*args):
+  """svn_client_conflict_tree_get_resolution(svn_client_conflict_t * conflict) -> svn_client_conflict_option_id_t"""
+  return _client.svn_client_conflict_tree_get_resolution(*args)
+
+def svn_client_conflict_prop_get_reject_abspath(*args):
+  """svn_client_conflict_prop_get_reject_abspath(svn_client_conflict_t * conflict) -> char const *"""
+  return _client.svn_client_conflict_prop_get_reject_abspath(*args)
+
+def svn_client_conflict_prop_get_propvals(*args):
+  """svn_client_conflict_prop_get_propvals(svn_client_conflict_t * conflict, char const * propname, apr_pool_t result_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_prop_get_propvals(*args)
+
+def svn_client_conflict_prop_resolve(*args):
+  """
+    svn_client_conflict_prop_resolve(svn_client_conflict_t * conflict, char const * propname, svn_client_conflict_option_t * option, 
+        svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_prop_resolve(*args)
+
+def svn_client_conflict_prop_resolve_by_id(*args):
+  """
+    svn_client_conflict_prop_resolve_by_id(svn_client_conflict_t * conflict, char const * propname, svn_client_conflict_option_id_t option_id, 
+        svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_prop_resolve_by_id(*args)
+
+def svn_client_conflict_prop_get_resolution(*args):
+  """svn_client_conflict_prop_get_resolution(svn_client_conflict_t * conflict, char const * propname) -> svn_client_conflict_option_id_t"""
+  return _client.svn_client_conflict_prop_get_resolution(*args)
+
+def svn_client_conflict_text_get_mime_type(*args):
+  """svn_client_conflict_text_get_mime_type(svn_client_conflict_t * conflict) -> char const *"""
+  return _client.svn_client_conflict_text_get_mime_type(*args)
+
+def svn_client_conflict_text_get_contents(*args):
+  """svn_client_conflict_text_get_contents(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+  return _client.svn_client_conflict_text_get_contents(*args)
+
+def svn_client_conflict_text_resolve(*args):
+  """
+    svn_client_conflict_text_resolve(svn_client_conflict_t * conflict, svn_client_conflict_option_t * option, svn_client_ctx_t ctx, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_text_resolve(*args)
+
+def svn_client_conflict_text_resolve_by_id(*args):
+  """
+    svn_client_conflict_text_resolve_by_id(svn_client_conflict_t * conflict, svn_client_conflict_option_id_t option_id, svn_client_ctx_t ctx, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_conflict_text_resolve_by_id(*args)
+
+def svn_client_conflict_text_get_resolution(*args):
+  """svn_client_conflict_text_get_resolution(svn_client_conflict_t * conflict) -> svn_client_conflict_option_id_t"""
+  return _client.svn_client_conflict_text_get_resolution(*args)
 
 def svn_client_resolved(*args):
   """svn_client_resolved(char const * path, svn_boolean_t recursive, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
@@ -1590,7 +1800,7 @@ class svn_client_copy_source_t:
     __swig_setmethods__["peg_revision"] = _client.svn_client_copy_source_t_peg_revision_set
     __swig_getmethods__["peg_revision"] = _client.svn_client_copy_source_t_peg_revision_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_copy_source_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1609,13 +1819,13 @@ class svn_client_copy_source_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1624,9 +1834,9 @@ class svn_client_copy_source_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1925,6 +2135,15 @@ def svn_client_export(*args):
     """
   return _client.svn_client_export(*args)
 
+def svn_client_list4(*args):
+  """
+    svn_client_list4(char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t revision, 
+        apr_array_header_t patterns, svn_depth_t depth, apr_uint32_t dirent_fields, 
+        svn_boolean_t fetch_locks, svn_boolean_t include_externals, svn_client_list_func2_t list_func, 
+        void * baton, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_list4(*args)
+
 def svn_client_list3(*args):
   """
     svn_client_list3(char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t revision, 
@@ -2088,7 +2307,7 @@ class svn_info_t:
     __swig_setmethods__["tree_conflict"] = _client.svn_info_t_tree_conflict_set
     __swig_getmethods__["tree_conflict"] = _client.svn_info_t_tree_conflict_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_info_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2107,13 +2326,13 @@ class svn_info_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2122,9 +2341,9 @@ class svn_info_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2173,7 +2392,7 @@ class svn_client_info2_t:
     __swig_setmethods__["wc_info"] = _client.svn_client_info2_t_wc_info_set
     __swig_getmethods__["wc_info"] = _client.svn_client_info2_t_wc_info_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_info2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2192,13 +2411,13 @@ class svn_client_info2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2207,9 +2426,9 @@ class svn_client_info2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2319,6 +2538,112 @@ def svn_client_open_ra_session2(*args):
 def svn_client_open_ra_session(*args):
   """svn_client_open_ra_session(char const * url, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
   return _client.svn_client_open_ra_session(*args)
+class svn_client_conflict_t:
+    """Proxy of C svn_client_conflict_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_conflict_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_conflict_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+svn_client_conflict_t_swigregister = _client.svn_client_conflict_t_swigregister
+svn_client_conflict_t_swigregister(svn_client_conflict_t)
+
+class svn_client_conflict_option_t:
+    """Proxy of C svn_client_conflict_option_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_conflict_option_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_conflict_option_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+svn_client_conflict_option_t_swigregister = _client.svn_client_conflict_option_t_swigregister
+svn_client_conflict_option_t_swigregister(svn_client_conflict_option_t)
+
 
 def svn_proplist_invoke_receiver2(*args):
   """
@@ -2401,6 +2726,13 @@ def svn_client_invoke_status_func(*args):
     """
   return _client.svn_client_invoke_status_func(*args)
 
+def svn_client_invoke_conflict_walk_func(*args):
+  """
+    svn_client_invoke_conflict_walk_func(svn_client_conflict_walk_func_t _obj, void * baton, svn_client_conflict_t * conflict, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _client.svn_client_invoke_conflict_walk_func(*args)
+
 def svn_client_invoke_list_func2(*args):
   """
     svn_client_invoke_list_func2(svn_client_list_func2_t _obj, void * baton, char const * path, svn_dirent_t dirent, 
@@ -2442,7 +2774,7 @@ class svn_proplist_receiver2_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_proplist_receiver2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2461,13 +2793,13 @@ class svn_proplist_receiver2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2476,9 +2808,9 @@ class svn_proplist_receiver2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2498,7 +2830,7 @@ class svn_proplist_receiver_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_proplist_receiver_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2517,13 +2849,13 @@ class svn_proplist_receiver_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2532,9 +2864,9 @@ class svn_proplist_receiver_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2554,7 +2886,7 @@ class svn_client_get_commit_log3_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_get_commit_log3_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2573,13 +2905,13 @@ class svn_client_get_commit_log3_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2588,9 +2920,9 @@ class svn_client_get_commit_log3_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2610,7 +2942,7 @@ class svn_client_get_commit_log2_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_get_commit_log2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2629,13 +2961,13 @@ class svn_client_get_commit_log2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2644,9 +2976,9 @@ class svn_client_get_commit_log2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2666,7 +2998,7 @@ class svn_client_get_commit_log_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_get_commit_log_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2685,13 +3017,13 @@ class svn_client_get_commit_log_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2700,9 +3032,9 @@ class svn_client_get_commit_log_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2722,7 +3054,7 @@ class svn_client_blame_receiver3_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_blame_receiver3_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2741,13 +3073,13 @@ class svn_client_blame_receiver3_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2756,9 +3088,9 @@ class svn_client_blame_receiver3_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2778,7 +3110,7 @@ class svn_client_blame_receiver2_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_blame_receiver2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2797,13 +3129,13 @@ class svn_client_blame_receiver2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2812,9 +3144,9 @@ class svn_client_blame_receiver2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2834,7 +3166,7 @@ class svn_client_blame_receiver_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_blame_receiver_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2853,13 +3185,13 @@ class svn_client_blame_receiver_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2868,9 +3200,9 @@ class svn_client_blame_receiver_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2890,7 +3222,7 @@ class svn_client_diff_summarize_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_diff_summarize_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2909,13 +3241,13 @@ class svn_client_diff_summarize_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2924,9 +3256,9 @@ class svn_client_diff_summarize_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -2946,7 +3278,7 @@ class svn_client_import_filter_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_import_filter_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -2965,13 +3297,13 @@ class svn_client_import_filter_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2980,9 +3312,9 @@ class svn_client_import_filter_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -3002,7 +3334,7 @@ class svn_client_status_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_status_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -3021,13 +3353,13 @@ class svn_client_status_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -3036,9 +3368,9 @@ class svn_client_status_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -3049,16 +3381,16 @@ class svn_client_status_func_t:
 svn_client_status_func_t_swigregister = _client.svn_client_status_func_t_swigregister
 svn_client_status_func_t_swigregister(svn_client_status_func_t)
 
-class svn_client_list_func2_t:
-    """Proxy of C svn_client_list_func2_t struct"""
+class svn_client_conflict_walk_func_t:
+    """Proxy of C svn_client_conflict_walk_func_t struct"""
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_list_func2_t, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_conflict_walk_func_t, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_list_func2_t, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_conflict_walk_func_t, name)
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_list_func2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -3077,13 +3409,13 @@ class svn_client_list_func2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -3092,9 +3424,65 @@ class svn_client_list_func2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
 
+      return _swig_setattr(self, self.__class__, name, value)
 
+    def __call__(self, *args):
+      return svn_client_invoke_conflict_walk_func(self, *args)
 
+svn_client_conflict_walk_func_t_swigregister = _client.svn_client_conflict_walk_func_t_swigregister
+svn_client_conflict_walk_func_t_swigregister(svn_client_conflict_walk_func_t)
+
+class svn_client_list_func2_t:
+    """Proxy of C svn_client_list_func2_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_list_func2_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_list_func2_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -3114,7 +3502,7 @@ class svn_client_list_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_list_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -3133,13 +3521,13 @@ class svn_client_list_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -3148,9 +3536,9 @@ class svn_client_list_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -3170,7 +3558,7 @@ class svn_info_receiver_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_info_receiver_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -3189,13 +3577,13 @@ class svn_info_receiver_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -3204,9 +3592,9 @@ class svn_info_receiver_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -3226,7 +3614,7 @@ class svn_client_info_receiver2_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_info_receiver2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -3245,13 +3633,13 @@ class svn_client_info_receiver2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -3260,9 +3648,9 @@ class svn_client_info_receiver2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -3282,7 +3670,7 @@ class svn_client_patch_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_client_patch_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -3301,13 +3689,13 @@ class svn_client_patch_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -3316,9 +3704,9 @@ class svn_client_patch_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)

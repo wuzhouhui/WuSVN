@@ -3014,94 +3014,95 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_svn_auth_provider_object_t swig_types[97]
 #define SWIGTYPE_p_svn_auth_provider_t swig_types[98]
 #define SWIGTYPE_p_svn_auth_ssl_server_cert_info_t swig_types[99]
-#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[100]
-#define SWIGTYPE_p_svn_checksum_kind_t swig_types[101]
-#define SWIGTYPE_p_svn_checksum_t swig_types[102]
-#define SWIGTYPE_p_svn_commit_info_t swig_types[103]
-#define SWIGTYPE_p_svn_config_t swig_types[104]
-#define SWIGTYPE_p_svn_delta_editor_t swig_types[105]
-#define SWIGTYPE_p_svn_depth_t swig_types[106]
-#define SWIGTYPE_p_svn_diff_hunk_t swig_types[107]
-#define SWIGTYPE_p_svn_dirent_t swig_types[108]
-#define SWIGTYPE_p_svn_errno_t swig_types[109]
-#define SWIGTYPE_p_svn_error_t swig_types[110]
-#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[111]
-#define SWIGTYPE_p_svn_io_dirent2_t swig_types[112]
-#define SWIGTYPE_p_svn_io_dirent_t swig_types[113]
-#define SWIGTYPE_p_svn_io_file_del_t swig_types[114]
-#define SWIGTYPE_p_svn_location_segment_t swig_types[115]
-#define SWIGTYPE_p_svn_lock_t swig_types[116]
-#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[117]
-#define SWIGTYPE_p_svn_log_changed_path_t swig_types[118]
-#define SWIGTYPE_p_svn_log_entry_t swig_types[119]
-#define SWIGTYPE_p_svn_merge_range_t swig_types[120]
-#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[121]
-#define SWIGTYPE_p_svn_node_kind_t swig_types[122]
-#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[123]
-#define SWIGTYPE_p_svn_opt_revision_t swig_types[124]
-#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[125]
-#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[126]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[127]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[128]
-#define SWIGTYPE_p_svn_prop_kind swig_types[129]
-#define SWIGTYPE_p_svn_ra_callbacks2_t swig_types[130]
-#define SWIGTYPE_p_svn_ra_callbacks_t swig_types[131]
-#define SWIGTYPE_p_svn_ra_plugin_t swig_types[132]
-#define SWIGTYPE_p_svn_ra_reporter2_t swig_types[133]
-#define SWIGTYPE_p_svn_ra_reporter3_t swig_types[134]
-#define SWIGTYPE_p_svn_ra_reporter_t swig_types[135]
-#define SWIGTYPE_p_svn_ra_session_t swig_types[136]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[137]
-#define SWIGTYPE_p_svn_stream_t swig_types[138]
-#define SWIGTYPE_p_svn_string_t swig_types[139]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[140]
-#define SWIGTYPE_p_svn_tristate_t swig_types[141]
-#define SWIGTYPE_p_svn_txdelta_op_t swig_types[142]
-#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[143]
-#define SWIGTYPE_p_svn_txdelta_window_t swig_types[144]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[145]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[146]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[147]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[148]
-#define SWIGTYPE_p_svn_version_t swig_types[149]
-#define SWIGTYPE_p_svn_wc_adm_access_t swig_types[150]
-#define SWIGTYPE_p_svn_wc_committed_queue_t swig_types[151]
-#define SWIGTYPE_p_svn_wc_conflict_action_t swig_types[152]
-#define SWIGTYPE_p_svn_wc_conflict_choice_t swig_types[153]
-#define SWIGTYPE_p_svn_wc_conflict_description2_t swig_types[154]
-#define SWIGTYPE_p_svn_wc_conflict_description_t swig_types[155]
-#define SWIGTYPE_p_svn_wc_conflict_kind_t swig_types[156]
-#define SWIGTYPE_p_svn_wc_conflict_reason_t swig_types[157]
-#define SWIGTYPE_p_svn_wc_conflict_result_t swig_types[158]
-#define SWIGTYPE_p_svn_wc_conflict_version_t swig_types[159]
-#define SWIGTYPE_p_svn_wc_context_t swig_types[160]
-#define SWIGTYPE_p_svn_wc_diff_callbacks2_t swig_types[161]
-#define SWIGTYPE_p_svn_wc_diff_callbacks3_t swig_types[162]
-#define SWIGTYPE_p_svn_wc_diff_callbacks4_t swig_types[163]
-#define SWIGTYPE_p_svn_wc_diff_callbacks_t swig_types[164]
-#define SWIGTYPE_p_svn_wc_entry_callbacks2_t swig_types[165]
-#define SWIGTYPE_p_svn_wc_entry_callbacks_t swig_types[166]
-#define SWIGTYPE_p_svn_wc_entry_t swig_types[167]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[168]
-#define SWIGTYPE_p_svn_wc_external_item_t swig_types[169]
-#define SWIGTYPE_p_svn_wc_info_t swig_types[170]
-#define SWIGTYPE_p_svn_wc_merge_outcome_t swig_types[171]
-#define SWIGTYPE_p_svn_wc_notify_action_t swig_types[172]
-#define SWIGTYPE_p_svn_wc_notify_lock_state_t swig_types[173]
-#define SWIGTYPE_p_svn_wc_notify_state_t swig_types[174]
-#define SWIGTYPE_p_svn_wc_notify_t swig_types[175]
-#define SWIGTYPE_p_svn_wc_operation_t swig_types[176]
-#define SWIGTYPE_p_svn_wc_revision_status_t swig_types[177]
-#define SWIGTYPE_p_svn_wc_schedule_t swig_types[178]
-#define SWIGTYPE_p_svn_wc_status2_t swig_types[179]
-#define SWIGTYPE_p_svn_wc_status3_t swig_types[180]
-#define SWIGTYPE_p_svn_wc_status_t swig_types[181]
-#define SWIGTYPE_p_svn_wc_traversal_info_t swig_types[182]
-#define SWIGTYPE_p_unsigned_char swig_types[183]
-#define SWIGTYPE_p_unsigned_long swig_types[184]
-#define SWIGTYPE_p_void swig_types[185]
-static swig_type_info *swig_types[187];
-static swig_module_info swig_module = {swig_types, 186, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_cache_config_t swig_types[100]
+#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[101]
+#define SWIGTYPE_p_svn_checksum_kind_t swig_types[102]
+#define SWIGTYPE_p_svn_checksum_t swig_types[103]
+#define SWIGTYPE_p_svn_commit_info_t swig_types[104]
+#define SWIGTYPE_p_svn_config_t swig_types[105]
+#define SWIGTYPE_p_svn_delta_editor_t swig_types[106]
+#define SWIGTYPE_p_svn_depth_t swig_types[107]
+#define SWIGTYPE_p_svn_diff_hunk_t swig_types[108]
+#define SWIGTYPE_p_svn_dirent_t swig_types[109]
+#define SWIGTYPE_p_svn_errno_t swig_types[110]
+#define SWIGTYPE_p_svn_error_t swig_types[111]
+#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[112]
+#define SWIGTYPE_p_svn_io_dirent2_t swig_types[113]
+#define SWIGTYPE_p_svn_io_dirent_t swig_types[114]
+#define SWIGTYPE_p_svn_io_file_del_t swig_types[115]
+#define SWIGTYPE_p_svn_location_segment_t swig_types[116]
+#define SWIGTYPE_p_svn_lock_t swig_types[117]
+#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[118]
+#define SWIGTYPE_p_svn_log_changed_path_t swig_types[119]
+#define SWIGTYPE_p_svn_log_entry_t swig_types[120]
+#define SWIGTYPE_p_svn_merge_range_t swig_types[121]
+#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[122]
+#define SWIGTYPE_p_svn_node_kind_t swig_types[123]
+#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[124]
+#define SWIGTYPE_p_svn_opt_revision_t swig_types[125]
+#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[126]
+#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[127]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[128]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[129]
+#define SWIGTYPE_p_svn_prop_kind swig_types[130]
+#define SWIGTYPE_p_svn_ra_callbacks2_t swig_types[131]
+#define SWIGTYPE_p_svn_ra_callbacks_t swig_types[132]
+#define SWIGTYPE_p_svn_ra_plugin_t swig_types[133]
+#define SWIGTYPE_p_svn_ra_reporter2_t swig_types[134]
+#define SWIGTYPE_p_svn_ra_reporter3_t swig_types[135]
+#define SWIGTYPE_p_svn_ra_reporter_t swig_types[136]
+#define SWIGTYPE_p_svn_ra_session_t swig_types[137]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[138]
+#define SWIGTYPE_p_svn_stream_t swig_types[139]
+#define SWIGTYPE_p_svn_string_t swig_types[140]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[141]
+#define SWIGTYPE_p_svn_tristate_t swig_types[142]
+#define SWIGTYPE_p_svn_txdelta_op_t swig_types[143]
+#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[144]
+#define SWIGTYPE_p_svn_txdelta_window_t swig_types[145]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[146]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[147]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[148]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[149]
+#define SWIGTYPE_p_svn_version_t swig_types[150]
+#define SWIGTYPE_p_svn_wc_adm_access_t swig_types[151]
+#define SWIGTYPE_p_svn_wc_committed_queue_t swig_types[152]
+#define SWIGTYPE_p_svn_wc_conflict_action_t swig_types[153]
+#define SWIGTYPE_p_svn_wc_conflict_choice_t swig_types[154]
+#define SWIGTYPE_p_svn_wc_conflict_description2_t swig_types[155]
+#define SWIGTYPE_p_svn_wc_conflict_description_t swig_types[156]
+#define SWIGTYPE_p_svn_wc_conflict_kind_t swig_types[157]
+#define SWIGTYPE_p_svn_wc_conflict_reason_t swig_types[158]
+#define SWIGTYPE_p_svn_wc_conflict_result_t swig_types[159]
+#define SWIGTYPE_p_svn_wc_conflict_version_t swig_types[160]
+#define SWIGTYPE_p_svn_wc_context_t swig_types[161]
+#define SWIGTYPE_p_svn_wc_diff_callbacks2_t swig_types[162]
+#define SWIGTYPE_p_svn_wc_diff_callbacks3_t swig_types[163]
+#define SWIGTYPE_p_svn_wc_diff_callbacks4_t swig_types[164]
+#define SWIGTYPE_p_svn_wc_diff_callbacks_t swig_types[165]
+#define SWIGTYPE_p_svn_wc_entry_callbacks2_t swig_types[166]
+#define SWIGTYPE_p_svn_wc_entry_callbacks_t swig_types[167]
+#define SWIGTYPE_p_svn_wc_entry_t swig_types[168]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[169]
+#define SWIGTYPE_p_svn_wc_external_item_t swig_types[170]
+#define SWIGTYPE_p_svn_wc_info_t swig_types[171]
+#define SWIGTYPE_p_svn_wc_merge_outcome_t swig_types[172]
+#define SWIGTYPE_p_svn_wc_notify_action_t swig_types[173]
+#define SWIGTYPE_p_svn_wc_notify_lock_state_t swig_types[174]
+#define SWIGTYPE_p_svn_wc_notify_state_t swig_types[175]
+#define SWIGTYPE_p_svn_wc_notify_t swig_types[176]
+#define SWIGTYPE_p_svn_wc_operation_t swig_types[177]
+#define SWIGTYPE_p_svn_wc_revision_status_t swig_types[178]
+#define SWIGTYPE_p_svn_wc_schedule_t swig_types[179]
+#define SWIGTYPE_p_svn_wc_status2_t swig_types[180]
+#define SWIGTYPE_p_svn_wc_status3_t swig_types[181]
+#define SWIGTYPE_p_svn_wc_status_t swig_types[182]
+#define SWIGTYPE_p_svn_wc_traversal_info_t swig_types[183]
+#define SWIGTYPE_p_unsigned_char swig_types[184]
+#define SWIGTYPE_p_unsigned_long swig_types[185]
+#define SWIGTYPE_p_void swig_types[186]
+static swig_type_info *swig_types[188];
+static swig_module_info swig_module = {swig_types, 187, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -40285,6 +40286,7 @@ static swig_type_info _swigt__p_svn_auth_iterstate_t = {"_p_svn_auth_iterstate_t
 static swig_type_info _swigt__p_svn_auth_provider_object_t = {"_p_svn_auth_provider_object_t", "struct svn_auth_provider_object_t *|svn_auth_provider_object_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_provider_t = {"_p_svn_auth_provider_t", "struct svn_auth_provider_t *|svn_auth_provider_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_ssl_server_cert_info_t = {"_p_svn_auth_ssl_server_cert_info_t", "struct svn_auth_ssl_server_cert_info_t *|svn_auth_ssl_server_cert_info_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_cache_config_t = {"_p_svn_cache_config_t", "struct svn_cache_config_t *|svn_cache_config_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_ctx_t = {"_p_svn_checksum_ctx_t", "struct svn_checksum_ctx_t *|svn_checksum_ctx_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_kind_t = {"_p_svn_checksum_kind_t", "enum svn_checksum_kind_t *|svn_checksum_kind_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_t = {"_p_svn_checksum_t", "struct svn_checksum_t *|svn_checksum_t *", 0, 0, (void*)0, 0};
@@ -40473,6 +40475,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_auth_provider_object_t,
   &_swigt__p_svn_auth_provider_t,
   &_swigt__p_svn_auth_ssl_server_cert_info_t,
+  &_swigt__p_svn_cache_config_t,
   &_swigt__p_svn_checksum_ctx_t,
   &_swigt__p_svn_checksum_kind_t,
   &_swigt__p_svn_checksum_t,
@@ -40661,6 +40664,7 @@ static swig_cast_info _swigc__p_svn_auth_iterstate_t[] = {  {&_swigt__p_svn_auth
 static swig_cast_info _swigc__p_svn_auth_provider_object_t[] = {  {&_swigt__p_svn_auth_provider_object_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_provider_t[] = {  {&_swigt__p_svn_auth_provider_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_ssl_server_cert_info_t[] = {  {&_swigt__p_svn_auth_ssl_server_cert_info_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_cache_config_t[] = {  {&_swigt__p_svn_cache_config_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_ctx_t[] = {  {&_swigt__p_svn_checksum_ctx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_kind_t[] = {  {&_swigt__p_svn_checksum_kind_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_t[] = {  {&_swigt__p_svn_checksum_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -40849,6 +40853,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_auth_provider_object_t,
   _swigc__p_svn_auth_provider_t,
   _swigc__p_svn_auth_ssl_server_cert_info_t,
+  _swigc__p_svn_cache_config_t,
   _swigc__p_svn_checksum_ctx_t,
   _swigc__p_svn_checksum_kind_t,
   _swigc__p_svn_checksum_t,
@@ -41706,6 +41711,12 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "svn_wc_notify_failed_requires_target",SWIG_From_long((long)(svn_wc_notify_failed_requires_target)));
   SWIG_Python_SetConstant(d, "svn_wc_notify_info_external",SWIG_From_long((long)(svn_wc_notify_info_external)));
   SWIG_Python_SetConstant(d, "svn_wc_notify_commit_finalizing",SWIG_From_long((long)(svn_wc_notify_commit_finalizing)));
+  SWIG_Python_SetConstant(d, "svn_wc_notify_resolved_text",SWIG_From_long((long)(svn_wc_notify_resolved_text)));
+  SWIG_Python_SetConstant(d, "svn_wc_notify_resolved_prop",SWIG_From_long((long)(svn_wc_notify_resolved_prop)));
+  SWIG_Python_SetConstant(d, "svn_wc_notify_resolved_tree",SWIG_From_long((long)(svn_wc_notify_resolved_tree)));
+  SWIG_Python_SetConstant(d, "svn_wc_notify_begin_search_tree_conflict_details",SWIG_From_long((long)(svn_wc_notify_begin_search_tree_conflict_details)));
+  SWIG_Python_SetConstant(d, "svn_wc_notify_tree_conflict_details_progress",SWIG_From_long((long)(svn_wc_notify_tree_conflict_details_progress)));
+  SWIG_Python_SetConstant(d, "svn_wc_notify_end_search_tree_conflict_details",SWIG_From_long((long)(svn_wc_notify_end_search_tree_conflict_details)));
   SWIG_Python_SetConstant(d, "svn_wc_notify_state_inapplicable",SWIG_From_long((long)(svn_wc_notify_state_inapplicable)));
   SWIG_Python_SetConstant(d, "svn_wc_notify_state_unknown",SWIG_From_long((long)(svn_wc_notify_state_unknown)));
   SWIG_Python_SetConstant(d, "svn_wc_notify_state_unchanged",SWIG_From_long((long)(svn_wc_notify_state_unchanged)));

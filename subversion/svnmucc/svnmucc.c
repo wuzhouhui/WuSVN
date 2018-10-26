@@ -74,6 +74,7 @@ check_lib_versions(void)
   return svn_ver_check_list2(&my_version, checklist, svn_ver_equal);
 }
 
+/* Implements svn_commit_callback2_t */
 static svn_error_t *
 commit_callback(const svn_commit_info_t *commit_info,
                 void *baton,
@@ -84,6 +85,15 @@ commit_callback(const svn_commit_info_t *commit_info,
                              (commit_info->author
                               ? commit_info->author : "(no author)"),
                              commit_info->date));
+
+  /* Writing to stdout, as there maybe systems that consider the
+   * presence of stderr as an indication of commit failure.
+   * OTOH, this is only of informational nature to the user as
+   * the commit has succeeded. */
+  if (commit_info->post_commit_err)
+    SVN_ERR(svn_cmdline_printf(pool, _("\nWarning: %s\n"),
+                               commit_info->post_commit_err));
+
   return SVN_NO_ERROR;
 }
 
@@ -193,7 +203,7 @@ execute(const apr_array_header_t *actions,
               SVN_ERR(svn_stream_open_readonly(&src, action->path[1],
                                                pool, iterpool));
             else
-              SVN_ERR(svn_stream_for_stdin(&src, pool));
+              SVN_ERR(svn_stream_for_stdin2(&src, TRUE, pool));
 
 
             if (kind == svn_node_file)
@@ -470,7 +480,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     non_interactive_opt,
     force_interactive_opt,
     trust_server_cert_opt,
-    trust_server_cert_failures_opt,
+    trust_server_cert_failures_opt
   };
   static const apr_getopt_option_t options[] = {
     {"message", 'm', 1, ""},

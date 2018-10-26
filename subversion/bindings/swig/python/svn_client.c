@@ -2956,152 +2956,159 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void swig_types[39]
 #define SWIGTYPE_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[40]
 #define SWIGTYPE_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t swig_types[41]
-#define SWIGTYPE_p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t swig_types[42]
-#define SWIGTYPE_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t swig_types[43]
-#define SWIGTYPE_p_int swig_types[44]
-#define SWIGTYPE_p_long swig_types[45]
-#define SWIGTYPE_p_p_apr_array_header_t swig_types[46]
-#define SWIGTYPE_p_p_apr_hash_t swig_types[47]
-#define SWIGTYPE_p_p_char swig_types[48]
-#define SWIGTYPE_p_p_f_apr_off_t_apr_off_t_p_void_p_apr_pool_t__void swig_types[49]
-#define SWIGTYPE_p_p_f_p_p_q_const__char_p_p_q_const__char_p_apr_array_header_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[50]
-#define SWIGTYPE_p_p_f_p_p_q_const__char_p_p_q_const__char_p_q_const__apr_array_header_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[51]
-#define SWIGTYPE_p_p_f_p_p_svn_stream_t_p_p_svn_stream_t_p_svn_ra_close_tunnel_func_t_p_p_void_p_void_p_q_const__char_p_q_const__char_p_q_const__char_int_svn_cancel_func_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[52]
-#define SWIGTYPE_p_p_f_p_p_svn_wc_conflict_result_t_p_q_const__svn_wc_conflict_description2_t_p_void_p_apr_pool_t_p_apr_pool_t__p_svn_error_t swig_types[53]
-#define SWIGTYPE_p_p_f_p_p_svn_wc_conflict_result_t_p_q_const__svn_wc_conflict_description_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[54]
-#define SWIGTYPE_p_p_f_p_q_const__svn_client_diff_summarize_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[55]
-#define SWIGTYPE_p_p_f_p_void__p_svn_error_t swig_types[56]
-#define SWIGTYPE_p_p_f_p_void_apr_int64_t_svn_revnum_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[57]
-#define SWIGTYPE_p_p_f_p_void_apr_int64_t_svn_revnum_t_p_q_const__char_p_q_const__char_svn_revnum_t_p_q_const__char_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[58]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char__int swig_types[59]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_enum_svn_wc_notify_action_t_enum_svn_node_kind_t_p_q_const__char_enum_svn_wc_notify_state_t_enum_svn_wc_notify_state_t_long__void swig_types[60]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_apr_hash_t_p_apr_array_header_t_p_apr_pool_t__p_svn_error_t swig_types[61]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_apr_hash_t_p_apr_pool_t__p_svn_error_t swig_types[62]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_client_info2_t_p_apr_pool_t__p_svn_error_t swig_types[63]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_client_status_t_p_apr_pool_t__p_svn_error_t swig_types[64]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_dirent_t_p_q_const__svn_lock_t_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[65]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_dirent_t_p_q_const__svn_lock_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[66]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_info_t_p_apr_pool_t__p_svn_error_t swig_types[67]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_svn_wc_status2_t_p_apr_pool_t__p_svn_error_t swig_types[68]
-#define SWIGTYPE_p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void swig_types[69]
-#define SWIGTYPE_p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[70]
-#define SWIGTYPE_p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t swig_types[71]
-#define SWIGTYPE_p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t swig_types[72]
-#define SWIGTYPE_p_p_svn_auth_provider_object_t swig_types[73]
-#define SWIGTYPE_p_p_svn_client_commit_info_t swig_types[74]
-#define SWIGTYPE_p_p_svn_client_commit_item3_t swig_types[75]
-#define SWIGTYPE_p_p_svn_client_ctx_t swig_types[76]
-#define SWIGTYPE_p_p_svn_commit_info_t swig_types[77]
-#define SWIGTYPE_p_p_svn_ra_session_t swig_types[78]
-#define SWIGTYPE_p_p_svn_string_t swig_types[79]
-#define SWIGTYPE_p_svn_auth_baton_t swig_types[80]
-#define SWIGTYPE_p_svn_auth_cred_simple_t swig_types[81]
-#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_pw_t swig_types[82]
-#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_t swig_types[83]
-#define SWIGTYPE_p_svn_auth_cred_ssl_server_trust_t swig_types[84]
-#define SWIGTYPE_p_svn_auth_cred_username_t swig_types[85]
-#define SWIGTYPE_p_svn_auth_iterstate_t swig_types[86]
-#define SWIGTYPE_p_svn_auth_provider_object_t swig_types[87]
-#define SWIGTYPE_p_svn_auth_provider_t swig_types[88]
-#define SWIGTYPE_p_svn_auth_ssl_server_cert_info_t swig_types[89]
-#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[90]
-#define SWIGTYPE_p_svn_checksum_kind_t swig_types[91]
-#define SWIGTYPE_p_svn_checksum_t swig_types[92]
-#define SWIGTYPE_p_svn_client_commit_info_t swig_types[93]
-#define SWIGTYPE_p_svn_client_commit_item2_t swig_types[94]
-#define SWIGTYPE_p_svn_client_commit_item3_t swig_types[95]
-#define SWIGTYPE_p_svn_client_commit_item_t swig_types[96]
-#define SWIGTYPE_p_svn_client_copy_source_t swig_types[97]
-#define SWIGTYPE_p_svn_client_ctx_t swig_types[98]
-#define SWIGTYPE_p_svn_client_diff_summarize_kind_t swig_types[99]
-#define SWIGTYPE_p_svn_client_diff_summarize_t swig_types[100]
-#define SWIGTYPE_p_svn_client_info2_t swig_types[101]
-#define SWIGTYPE_p_svn_client_proplist_item_t swig_types[102]
-#define SWIGTYPE_p_svn_client_status_t swig_types[103]
-#define SWIGTYPE_p_svn_commit_info_t swig_types[104]
-#define SWIGTYPE_p_svn_config_t swig_types[105]
-#define SWIGTYPE_p_svn_delta_editor_t swig_types[106]
-#define SWIGTYPE_p_svn_depth_t swig_types[107]
-#define SWIGTYPE_p_svn_diff_file_options_t swig_types[108]
-#define SWIGTYPE_p_svn_diff_hunk_t swig_types[109]
-#define SWIGTYPE_p_svn_dirent_t swig_types[110]
-#define SWIGTYPE_p_svn_errno_t swig_types[111]
-#define SWIGTYPE_p_svn_error_t swig_types[112]
-#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[113]
-#define SWIGTYPE_p_svn_info_t swig_types[114]
-#define SWIGTYPE_p_svn_io_dirent2_t swig_types[115]
-#define SWIGTYPE_p_svn_io_dirent_t swig_types[116]
-#define SWIGTYPE_p_svn_io_file_del_t swig_types[117]
-#define SWIGTYPE_p_svn_location_segment_t swig_types[118]
-#define SWIGTYPE_p_svn_lock_t swig_types[119]
-#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[120]
-#define SWIGTYPE_p_svn_log_changed_path_t swig_types[121]
-#define SWIGTYPE_p_svn_log_entry_t swig_types[122]
-#define SWIGTYPE_p_svn_merge_range_t swig_types[123]
-#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[124]
-#define SWIGTYPE_p_svn_node_kind_t swig_types[125]
-#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[126]
-#define SWIGTYPE_p_svn_opt_revision_t swig_types[127]
-#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[128]
-#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[129]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[130]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[131]
-#define SWIGTYPE_p_svn_prop_kind swig_types[132]
-#define SWIGTYPE_p_svn_ra_callbacks2_t swig_types[133]
-#define SWIGTYPE_p_svn_ra_callbacks_t swig_types[134]
-#define SWIGTYPE_p_svn_ra_plugin_t swig_types[135]
-#define SWIGTYPE_p_svn_ra_reporter2_t swig_types[136]
-#define SWIGTYPE_p_svn_ra_reporter3_t swig_types[137]
-#define SWIGTYPE_p_svn_ra_reporter_t swig_types[138]
-#define SWIGTYPE_p_svn_ra_session_t swig_types[139]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[140]
-#define SWIGTYPE_p_svn_stream_t swig_types[141]
-#define SWIGTYPE_p_svn_string_t swig_types[142]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[143]
-#define SWIGTYPE_p_svn_tristate_t swig_types[144]
-#define SWIGTYPE_p_svn_txdelta_op_t swig_types[145]
-#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[146]
-#define SWIGTYPE_p_svn_txdelta_window_t swig_types[147]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[148]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[149]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[150]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[151]
-#define SWIGTYPE_p_svn_version_t swig_types[152]
-#define SWIGTYPE_p_svn_wc_adm_access_t swig_types[153]
-#define SWIGTYPE_p_svn_wc_committed_queue_t swig_types[154]
-#define SWIGTYPE_p_svn_wc_conflict_action_t swig_types[155]
-#define SWIGTYPE_p_svn_wc_conflict_choice_t swig_types[156]
-#define SWIGTYPE_p_svn_wc_conflict_description_t swig_types[157]
-#define SWIGTYPE_p_svn_wc_conflict_kind_t swig_types[158]
-#define SWIGTYPE_p_svn_wc_conflict_reason_t swig_types[159]
-#define SWIGTYPE_p_svn_wc_conflict_version_t swig_types[160]
-#define SWIGTYPE_p_svn_wc_context_t swig_types[161]
-#define SWIGTYPE_p_svn_wc_diff_callbacks2_t swig_types[162]
-#define SWIGTYPE_p_svn_wc_diff_callbacks3_t swig_types[163]
-#define SWIGTYPE_p_svn_wc_diff_callbacks4_t swig_types[164]
-#define SWIGTYPE_p_svn_wc_diff_callbacks_t swig_types[165]
-#define SWIGTYPE_p_svn_wc_entry_callbacks2_t swig_types[166]
-#define SWIGTYPE_p_svn_wc_entry_callbacks_t swig_types[167]
-#define SWIGTYPE_p_svn_wc_entry_t swig_types[168]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[169]
-#define SWIGTYPE_p_svn_wc_external_item_t swig_types[170]
-#define SWIGTYPE_p_svn_wc_info_t swig_types[171]
-#define SWIGTYPE_p_svn_wc_merge_outcome_t swig_types[172]
-#define SWIGTYPE_p_svn_wc_notify_action_t swig_types[173]
-#define SWIGTYPE_p_svn_wc_notify_lock_state_t swig_types[174]
-#define SWIGTYPE_p_svn_wc_notify_state_t swig_types[175]
-#define SWIGTYPE_p_svn_wc_notify_t swig_types[176]
-#define SWIGTYPE_p_svn_wc_operation_t swig_types[177]
-#define SWIGTYPE_p_svn_wc_revision_status_t swig_types[178]
-#define SWIGTYPE_p_svn_wc_schedule_t swig_types[179]
-#define SWIGTYPE_p_svn_wc_status2_t swig_types[180]
-#define SWIGTYPE_p_svn_wc_status3_t swig_types[181]
-#define SWIGTYPE_p_svn_wc_status_t swig_types[182]
-#define SWIGTYPE_p_svn_wc_traversal_info_t swig_types[183]
-#define SWIGTYPE_p_unsigned_long swig_types[184]
-#define SWIGTYPE_p_void swig_types[185]
-static swig_type_info *swig_types[187];
-static swig_module_info swig_module = {swig_types, 186, 0, 0, 0, 0};
+#define SWIGTYPE_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t swig_types[42]
+#define SWIGTYPE_p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t swig_types[43]
+#define SWIGTYPE_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t swig_types[44]
+#define SWIGTYPE_p_int swig_types[45]
+#define SWIGTYPE_p_long swig_types[46]
+#define SWIGTYPE_p_p_apr_array_header_t swig_types[47]
+#define SWIGTYPE_p_p_apr_hash_t swig_types[48]
+#define SWIGTYPE_p_p_char swig_types[49]
+#define SWIGTYPE_p_p_f_apr_off_t_apr_off_t_p_void_p_apr_pool_t__void swig_types[50]
+#define SWIGTYPE_p_p_f_p_p_q_const__char_p_p_q_const__char_p_apr_array_header_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[51]
+#define SWIGTYPE_p_p_f_p_p_q_const__char_p_p_q_const__char_p_q_const__apr_array_header_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[52]
+#define SWIGTYPE_p_p_f_p_p_svn_stream_t_p_p_svn_stream_t_p_svn_ra_close_tunnel_func_t_p_p_void_p_void_p_q_const__char_p_q_const__char_p_q_const__char_int_svn_cancel_func_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[53]
+#define SWIGTYPE_p_p_f_p_p_svn_wc_conflict_result_t_p_q_const__svn_wc_conflict_description2_t_p_void_p_apr_pool_t_p_apr_pool_t__p_svn_error_t swig_types[54]
+#define SWIGTYPE_p_p_f_p_p_svn_wc_conflict_result_t_p_q_const__svn_wc_conflict_description_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[55]
+#define SWIGTYPE_p_p_f_p_q_const__svn_client_diff_summarize_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[56]
+#define SWIGTYPE_p_p_f_p_void__p_svn_error_t swig_types[57]
+#define SWIGTYPE_p_p_f_p_void_apr_int64_t_svn_revnum_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[58]
+#define SWIGTYPE_p_p_f_p_void_apr_int64_t_svn_revnum_t_p_q_const__char_p_q_const__char_svn_revnum_t_p_q_const__char_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[59]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char__int swig_types[60]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_enum_svn_wc_notify_action_t_enum_svn_node_kind_t_p_q_const__char_enum_svn_wc_notify_state_t_enum_svn_wc_notify_state_t_long__void swig_types[61]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_apr_hash_t_p_apr_array_header_t_p_apr_pool_t__p_svn_error_t swig_types[62]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_apr_hash_t_p_apr_pool_t__p_svn_error_t swig_types[63]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_client_info2_t_p_apr_pool_t__p_svn_error_t swig_types[64]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_client_status_t_p_apr_pool_t__p_svn_error_t swig_types[65]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_dirent_t_p_q_const__svn_lock_t_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[66]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_dirent_t_p_q_const__svn_lock_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[67]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_info_t_p_apr_pool_t__p_svn_error_t swig_types[68]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__char_p_svn_wc_status2_t_p_apr_pool_t__p_svn_error_t swig_types[69]
+#define SWIGTYPE_p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void swig_types[70]
+#define SWIGTYPE_p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t swig_types[71]
+#define SWIGTYPE_p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t swig_types[72]
+#define SWIGTYPE_p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t swig_types[73]
+#define SWIGTYPE_p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t swig_types[74]
+#define SWIGTYPE_p_p_svn_auth_provider_object_t swig_types[75]
+#define SWIGTYPE_p_p_svn_client_commit_info_t swig_types[76]
+#define SWIGTYPE_p_p_svn_client_commit_item3_t swig_types[77]
+#define SWIGTYPE_p_p_svn_client_conflict_t swig_types[78]
+#define SWIGTYPE_p_p_svn_client_ctx_t swig_types[79]
+#define SWIGTYPE_p_p_svn_commit_info_t swig_types[80]
+#define SWIGTYPE_p_p_svn_ra_session_t swig_types[81]
+#define SWIGTYPE_p_p_svn_string_t swig_types[82]
+#define SWIGTYPE_p_svn_auth_baton_t swig_types[83]
+#define SWIGTYPE_p_svn_auth_cred_simple_t swig_types[84]
+#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_pw_t swig_types[85]
+#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_t swig_types[86]
+#define SWIGTYPE_p_svn_auth_cred_ssl_server_trust_t swig_types[87]
+#define SWIGTYPE_p_svn_auth_cred_username_t swig_types[88]
+#define SWIGTYPE_p_svn_auth_iterstate_t swig_types[89]
+#define SWIGTYPE_p_svn_auth_provider_object_t swig_types[90]
+#define SWIGTYPE_p_svn_auth_provider_t swig_types[91]
+#define SWIGTYPE_p_svn_auth_ssl_server_cert_info_t swig_types[92]
+#define SWIGTYPE_p_svn_cache_config_t swig_types[93]
+#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[94]
+#define SWIGTYPE_p_svn_checksum_kind_t swig_types[95]
+#define SWIGTYPE_p_svn_checksum_t swig_types[96]
+#define SWIGTYPE_p_svn_client_commit_info_t swig_types[97]
+#define SWIGTYPE_p_svn_client_commit_item2_t swig_types[98]
+#define SWIGTYPE_p_svn_client_commit_item3_t swig_types[99]
+#define SWIGTYPE_p_svn_client_commit_item_t swig_types[100]
+#define SWIGTYPE_p_svn_client_conflict_option_id_t swig_types[101]
+#define SWIGTYPE_p_svn_client_conflict_option_t swig_types[102]
+#define SWIGTYPE_p_svn_client_conflict_t swig_types[103]
+#define SWIGTYPE_p_svn_client_copy_source_t swig_types[104]
+#define SWIGTYPE_p_svn_client_ctx_t swig_types[105]
+#define SWIGTYPE_p_svn_client_diff_summarize_kind_t swig_types[106]
+#define SWIGTYPE_p_svn_client_diff_summarize_t swig_types[107]
+#define SWIGTYPE_p_svn_client_info2_t swig_types[108]
+#define SWIGTYPE_p_svn_client_proplist_item_t swig_types[109]
+#define SWIGTYPE_p_svn_client_status_t swig_types[110]
+#define SWIGTYPE_p_svn_commit_info_t swig_types[111]
+#define SWIGTYPE_p_svn_config_t swig_types[112]
+#define SWIGTYPE_p_svn_delta_editor_t swig_types[113]
+#define SWIGTYPE_p_svn_depth_t swig_types[114]
+#define SWIGTYPE_p_svn_diff_file_options_t swig_types[115]
+#define SWIGTYPE_p_svn_diff_hunk_t swig_types[116]
+#define SWIGTYPE_p_svn_dirent_t swig_types[117]
+#define SWIGTYPE_p_svn_errno_t swig_types[118]
+#define SWIGTYPE_p_svn_error_t swig_types[119]
+#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[120]
+#define SWIGTYPE_p_svn_info_t swig_types[121]
+#define SWIGTYPE_p_svn_io_dirent2_t swig_types[122]
+#define SWIGTYPE_p_svn_io_dirent_t swig_types[123]
+#define SWIGTYPE_p_svn_io_file_del_t swig_types[124]
+#define SWIGTYPE_p_svn_location_segment_t swig_types[125]
+#define SWIGTYPE_p_svn_lock_t swig_types[126]
+#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[127]
+#define SWIGTYPE_p_svn_log_changed_path_t swig_types[128]
+#define SWIGTYPE_p_svn_log_entry_t swig_types[129]
+#define SWIGTYPE_p_svn_merge_range_t swig_types[130]
+#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[131]
+#define SWIGTYPE_p_svn_node_kind_t swig_types[132]
+#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[133]
+#define SWIGTYPE_p_svn_opt_revision_t swig_types[134]
+#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[135]
+#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[136]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[137]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[138]
+#define SWIGTYPE_p_svn_prop_kind swig_types[139]
+#define SWIGTYPE_p_svn_ra_callbacks2_t swig_types[140]
+#define SWIGTYPE_p_svn_ra_callbacks_t swig_types[141]
+#define SWIGTYPE_p_svn_ra_plugin_t swig_types[142]
+#define SWIGTYPE_p_svn_ra_reporter2_t swig_types[143]
+#define SWIGTYPE_p_svn_ra_reporter3_t swig_types[144]
+#define SWIGTYPE_p_svn_ra_reporter_t swig_types[145]
+#define SWIGTYPE_p_svn_ra_session_t swig_types[146]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[147]
+#define SWIGTYPE_p_svn_stream_t swig_types[148]
+#define SWIGTYPE_p_svn_string_t swig_types[149]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[150]
+#define SWIGTYPE_p_svn_tristate_t swig_types[151]
+#define SWIGTYPE_p_svn_txdelta_op_t swig_types[152]
+#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[153]
+#define SWIGTYPE_p_svn_txdelta_window_t swig_types[154]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[155]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[156]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[157]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[158]
+#define SWIGTYPE_p_svn_version_t swig_types[159]
+#define SWIGTYPE_p_svn_wc_adm_access_t swig_types[160]
+#define SWIGTYPE_p_svn_wc_committed_queue_t swig_types[161]
+#define SWIGTYPE_p_svn_wc_conflict_action_t swig_types[162]
+#define SWIGTYPE_p_svn_wc_conflict_choice_t swig_types[163]
+#define SWIGTYPE_p_svn_wc_conflict_description_t swig_types[164]
+#define SWIGTYPE_p_svn_wc_conflict_kind_t swig_types[165]
+#define SWIGTYPE_p_svn_wc_conflict_reason_t swig_types[166]
+#define SWIGTYPE_p_svn_wc_conflict_version_t swig_types[167]
+#define SWIGTYPE_p_svn_wc_context_t swig_types[168]
+#define SWIGTYPE_p_svn_wc_diff_callbacks2_t swig_types[169]
+#define SWIGTYPE_p_svn_wc_diff_callbacks3_t swig_types[170]
+#define SWIGTYPE_p_svn_wc_diff_callbacks4_t swig_types[171]
+#define SWIGTYPE_p_svn_wc_diff_callbacks_t swig_types[172]
+#define SWIGTYPE_p_svn_wc_entry_callbacks2_t swig_types[173]
+#define SWIGTYPE_p_svn_wc_entry_callbacks_t swig_types[174]
+#define SWIGTYPE_p_svn_wc_entry_t swig_types[175]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[176]
+#define SWIGTYPE_p_svn_wc_external_item_t swig_types[177]
+#define SWIGTYPE_p_svn_wc_info_t swig_types[178]
+#define SWIGTYPE_p_svn_wc_merge_outcome_t swig_types[179]
+#define SWIGTYPE_p_svn_wc_notify_action_t swig_types[180]
+#define SWIGTYPE_p_svn_wc_notify_lock_state_t swig_types[181]
+#define SWIGTYPE_p_svn_wc_notify_state_t swig_types[182]
+#define SWIGTYPE_p_svn_wc_notify_t swig_types[183]
+#define SWIGTYPE_p_svn_wc_operation_t swig_types[184]
+#define SWIGTYPE_p_svn_wc_revision_status_t swig_types[185]
+#define SWIGTYPE_p_svn_wc_schedule_t swig_types[186]
+#define SWIGTYPE_p_svn_wc_status2_t swig_types[187]
+#define SWIGTYPE_p_svn_wc_status3_t swig_types[188]
+#define SWIGTYPE_p_svn_wc_status_t swig_types[189]
+#define SWIGTYPE_p_svn_wc_traversal_info_t swig_types[190]
+#define SWIGTYPE_p_unsigned_long swig_types[191]
+#define SWIGTYPE_p_void swig_types[192]
+static swig_type_info *swig_types[194];
+static swig_module_info swig_module = {swig_types, 193, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3589,6 +3596,11 @@ static svn_error_t * svn_client_invoke_import_filter_func(
 static svn_error_t * svn_client_invoke_status_func(
   svn_client_status_func_t _obj, void *baton, const char *path, const svn_client_status_t *status, apr_pool_t *scratch_pool) {
   return _obj(baton, path, status, scratch_pool);
+}
+
+static svn_error_t * svn_client_invoke_conflict_walk_func(
+  svn_client_conflict_walk_func_t _obj, void *baton, svn_client_conflict_t *conflict, apr_pool_t *scratch_pool) {
+  return _obj(baton, conflict, scratch_pool);
 }
 
 static svn_error_t * svn_client_invoke_list_func2(
@@ -21323,6 +21335,2808 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_set_merged_propval(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_option_t *arg1 = (svn_client_conflict_option_t *) 0 ;
+  svn_string_t *arg2 = (svn_string_t *) 0 ;
+  svn_string_t value2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_client_conflict_option_set_merged_propval",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    if (obj1 == Py_None)
+    arg2 = NULL;
+    else {
+      if (!PyString_Check(obj1)) {
+        PyErr_SetString(PyExc_TypeError, "not a string");
+        SWIG_fail;
+      }
+      value2.data = PyString_AS_STRING(obj1);
+      value2.len = PyString_GET_SIZE(obj1);
+      arg2 = &value2;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    svn_client_conflict_option_set_merged_propval(arg1,(struct svn_string_t const *)arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_get_moved_to_repos_relpath_candidates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_array_header_t **arg1 = (apr_array_header_t **) 0 ;
+  svn_client_conflict_option_t *arg2 = (svn_client_conflict_option_t *) 0 ;
+  apr_pool_t *arg3 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  apr_array_header_t *temp1 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg3 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_option_get_moved_to_repos_relpath_candidates",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg2 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_option_get_moved_to_repos_relpath_candidates(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_option_get_moved_to_repos_relpath_candidates arg 1 (apr_array_header_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_option_get_moved_to_repos_relpath_candidates is not implemented yet");
+    
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_set_moved_to_repos_relpath(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_option_t *arg1 = (svn_client_conflict_option_t *) 0 ;
+  int arg2 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_conflict_option_set_moved_to_repos_relpath",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (int)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_option_set_moved_to_repos_relpath(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_get_moved_to_abspath_candidates(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_array_header_t **arg1 = (apr_array_header_t **) 0 ;
+  svn_client_conflict_option_t *arg2 = (svn_client_conflict_option_t *) 0 ;
+  apr_pool_t *arg3 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  apr_array_header_t *temp1 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg3 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_option_get_moved_to_abspath_candidates",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg2 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_option_get_moved_to_abspath_candidates(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_option_get_moved_to_abspath_candidates arg 1 (apr_array_header_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_option_get_moved_to_abspath_candidates is not implemented yet");
+    
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_set_moved_to_abspath(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_option_t *arg1 = (svn_client_conflict_option_t *) 0 ;
+  int arg2 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_conflict_option_set_moved_to_abspath",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (int)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_option_set_moved_to_abspath(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_find_by_id(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_array_header_t *arg1 = (apr_array_header_t *) 0 ;
+  svn_client_conflict_option_id_t arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  svn_client_conflict_option_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_client_conflict_option_find_by_id",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (apr_array_header_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_apr_array_header_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_client_conflict_option_id_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_client_conflict_option_t *)svn_client_conflict_option_find_by_id(arg1,arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_client_conflict_option_t,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t **arg1 = (svn_client_conflict_t **) 0 ;
+  char *arg2 = (char *) 0 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  svn_client_conflict_t *temp1 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"sO|OO:svn_client_conflict_get",&arg2,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_get(arg1,(char const *)arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_get arg 1 (svn_client_conflict_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_get is not implemented yet");
+    
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_walk(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  svn_depth_t arg2 ;
+  svn_client_conflict_walk_func_t arg3 = (svn_client_conflict_walk_func_t) 0 ;
+  void *arg4 = (void *) 0 ;
+  svn_client_ctx_t *arg5 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg6 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"sOOOO|O:svn_client_conflict_walk",&arg1,&obj1,&obj2,&obj3,&obj4,&obj5)) SWIG_fail;
+  {
+    arg2 = (svn_depth_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_client_conflict_walk_func_t * tmp =
+    svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t, svn_argnum_obj2);
+    if (tmp == NULL || PyErr_Occurred()) {
+      SWIG_fail;
+    }
+    arg3 = *tmp;
+  }
+  {
+    if (obj3 == Py_None) {
+      arg4 = NULL;
+    } else if (SWIG_ConvertPtr(obj3, (void **) &arg4, 0, 0) == -1) {
+      arg4 = (void *) obj3;
+      PyErr_Clear();
+    }
+  }
+  {
+    arg5 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj4, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj4);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj5) {
+    /* Verify that the user supplied a valid pool */
+    if (obj5 != Py_None && obj5 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj5);
+      SWIG_arg_fail(svn_argnum_obj5);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_walk((char const *)arg1,arg2,arg3,arg4,arg5,arg6);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_conflicted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_boolean_t *arg1 = (svn_boolean_t *) 0 ;
+  apr_array_header_t **arg2 = (apr_array_header_t **) 0 ;
+  svn_boolean_t *arg3 = (svn_boolean_t *) 0 ;
+  svn_client_conflict_t *arg4 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  svn_boolean_t temp1 ;
+  int res1 = SWIG_TMPOBJ ;
+  apr_array_header_t *temp2 ;
+  svn_boolean_t temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg6 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_get_conflicted",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg4 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_get_conflicted(arg1,arg2,arg3,arg4,arg5,arg6);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  if (SWIG_IsTmpObj(res1)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg1)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res1) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg1), SWIGTYPE_p_int, new_flags));
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_get_conflicted arg 2 (apr_array_header_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_get_conflicted is not implemented yet");
+    
+  }
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_int, new_flags));
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_get_description(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  svn_client_conflict_t *arg2 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg3 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  char *temp1 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg3 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_prop_get_description",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg2 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_prop_get_description((char const **)arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg1);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_get_description(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  char **arg2 = (char **) 0 ;
+  svn_client_conflict_t *arg3 = (svn_client_conflict_t *) 0 ;
+  svn_client_ctx_t *arg4 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  char *temp1 ;
+  char *temp2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg6 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  if (!PyArg_ParseTuple(args,(char *)"OO|OO:svn_client_conflict_tree_get_description",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg3 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg4 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_tree_get_description((char const **)arg1,(char const **)arg2,arg3,arg4,arg5,arg6);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg1);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg2 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg2);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_text_get_resolution_options(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_array_header_t **arg1 = (apr_array_header_t **) 0 ;
+  svn_client_conflict_t *arg2 = (svn_client_conflict_t *) 0 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  apr_array_header_t *temp1 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"OO|OO:svn_client_conflict_text_get_resolution_options",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg2 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_text_get_resolution_options(arg1,arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_text_get_resolution_options arg 1 (apr_array_header_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_text_get_resolution_options is not implemented yet");
+    
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_get_resolution_options(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_array_header_t **arg1 = (apr_array_header_t **) 0 ;
+  svn_client_conflict_t *arg2 = (svn_client_conflict_t *) 0 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  apr_array_header_t *temp1 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"OO|OO:svn_client_conflict_prop_get_resolution_options",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg2 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_prop_get_resolution_options(arg1,arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_prop_get_resolution_options arg 1 (apr_array_header_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_prop_get_resolution_options is not implemented yet");
+    
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_get_resolution_options(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_array_header_t **arg1 = (apr_array_header_t **) 0 ;
+  svn_client_conflict_t *arg2 = (svn_client_conflict_t *) 0 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  apr_array_header_t *temp1 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  arg1 = &temp1;
+  if (!PyArg_ParseTuple(args,(char *)"OO|OO:svn_client_conflict_tree_get_resolution_options",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg2 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_tree_get_resolution_options(arg1,arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    /* FIXME: Missing argout typemap: svn_client_conflict_tree_get_resolution_options arg 1 (apr_array_header_t **) */
+    
+    
+    
+    
+    SWIG_exception(SWIG_ValueError, "svn_client_conflict_tree_get_resolution_options is not implemented yet");
+    
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_get_details(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  svn_client_ctx_t *arg2 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg3 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg3 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OO|O:svn_client_conflict_tree_get_details",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_tree_get_details(arg1,arg2,arg3);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_get_id(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_option_t *arg1 = (svn_client_conflict_option_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_client_conflict_option_id_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_option_get_id",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_client_conflict_option_id_t)svn_client_conflict_option_get_id(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_get_label(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_option_t *arg1 = (svn_client_conflict_option_t *) 0 ;
+  apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg2 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"O|O:svn_client_conflict_option_get_label",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (char *)svn_client_conflict_option_get_label(arg1,arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_option_get_description(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_option_t *arg1 = (svn_client_conflict_option_t *) 0 ;
+  apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg2 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"O|O:svn_client_conflict_option_get_description",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (char *)svn_client_conflict_option_get_description(arg1,arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_recommended_option_id(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_client_conflict_option_id_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_get_recommended_option_id",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_client_conflict_option_id_t)svn_client_conflict_get_recommended_option_id(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_local_abspath(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_get_local_abspath",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (char *)svn_client_conflict_get_local_abspath(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_operation(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_wc_operation_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_get_operation",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_wc_operation_t)svn_client_conflict_get_operation(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_incoming_change(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_wc_conflict_action_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_get_incoming_change",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_wc_conflict_action_t)svn_client_conflict_get_incoming_change(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_local_change(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_wc_conflict_reason_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_get_local_change",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_wc_conflict_reason_t)svn_client_conflict_get_local_change(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_repos_info(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  char **arg2 = (char **) 0 ;
+  svn_client_conflict_t *arg3 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  char *temp1 ;
+  char *temp2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_get_repos_info",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg3 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_get_repos_info((char const **)arg1,(char const **)arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg1);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg2 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg2);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_incoming_old_repos_location(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  svn_revnum_t *arg2 = (svn_revnum_t *) 0 ;
+  svn_node_kind_t *arg3 = (svn_node_kind_t *) 0 ;
+  svn_client_conflict_t *arg4 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  char *temp1 ;
+  svn_revnum_t temp2 ;
+  int res2 = SWIG_TMPOBJ ;
+  svn_node_kind_t temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg6 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_get_incoming_old_repos_location",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg4 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_get_incoming_old_repos_location((char const **)arg1,arg2,arg3,arg4,arg5,arg6);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg1);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_long((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_long, new_flags));
+  }
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_long((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_svn_node_kind_t, new_flags));
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_get_incoming_new_repos_location(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  svn_revnum_t *arg2 = (svn_revnum_t *) 0 ;
+  svn_node_kind_t *arg3 = (svn_node_kind_t *) 0 ;
+  svn_client_conflict_t *arg4 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  char *temp1 ;
+  svn_revnum_t temp2 ;
+  int res2 = SWIG_TMPOBJ ;
+  svn_node_kind_t temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg6 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_get_incoming_new_repos_location",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg4 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_get_incoming_new_repos_location((char const **)arg1,arg2,arg3,arg4,arg5,arg6);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg1);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  if (SWIG_IsTmpObj(res2)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_long((*arg2)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res2) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg2), SWIGTYPE_p_long, new_flags));
+  }
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_long((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_svn_node_kind_t, new_flags));
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_get_victim_node_kind(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_node_kind_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_tree_get_victim_node_kind",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_node_kind_t)svn_client_conflict_tree_get_victim_node_kind(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_resolve(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  svn_client_conflict_option_t *arg2 = (svn_client_conflict_option_t *) 0 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_conflict_tree_resolve",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_tree_resolve(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_resolve_by_id(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  svn_client_conflict_option_id_t arg2 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_conflict_tree_resolve_by_id",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_client_conflict_option_id_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_tree_resolve_by_id(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_tree_get_resolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_client_conflict_option_id_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_tree_get_resolution",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_client_conflict_option_id_t)svn_client_conflict_tree_get_resolution(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_get_reject_abspath(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_prop_get_reject_abspath",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (char *)svn_client_conflict_prop_get_reject_abspath(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_get_propvals(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_string_t **arg1 = (svn_string_t **) 0 ;
+  svn_string_t **arg2 = (svn_string_t **) 0 ;
+  svn_string_t **arg3 = (svn_string_t **) 0 ;
+  svn_string_t **arg4 = (svn_string_t **) 0 ;
+  svn_client_conflict_t *arg5 = (svn_client_conflict_t *) 0 ;
+  char *arg6 = (char *) 0 ;
+  apr_pool_t *arg7 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  svn_string_t *temp1 ;
+  svn_string_t *temp2 ;
+  svn_string_t *temp3 ;
+  svn_string_t *temp4 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg7 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"Os|O:svn_client_conflict_prop_get_propvals",&obj0,&arg6,&obj2)) SWIG_fail;
+  {
+    arg5 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_prop_get_propvals((struct svn_string_t const **)arg1,(struct svn_string_t const **)arg2,(struct svn_string_t const **)arg3,(struct svn_string_t const **)arg4,arg5,(char const *)arg6,arg7);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromStringAndSize((*arg1)->data, (*arg1)->len);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg2 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromStringAndSize((*arg2)->data, (*arg2)->len);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg3 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromStringAndSize((*arg3)->data, (*arg3)->len);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg4 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromStringAndSize((*arg4)->data, (*arg4)->len);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_resolve(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  svn_client_conflict_option_t *arg3 = (svn_client_conflict_option_t *) 0 ;
+  svn_client_ctx_t *arg4 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OsOO|O:svn_client_conflict_prop_resolve",&obj0,&arg2,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg4 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj3, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj3);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj4) {
+    /* Verify that the user supplied a valid pool */
+    if (obj4 != Py_None && obj4 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj4);
+      SWIG_arg_fail(svn_argnum_obj4);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_prop_resolve(arg1,(char const *)arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_resolve_by_id(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  svn_client_conflict_option_id_t arg3 ;
+  svn_client_ctx_t *arg4 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OsOO|O:svn_client_conflict_prop_resolve_by_id",&obj0,&arg2,&obj2,&obj3,&obj4)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_conflict_option_id_t)SWIG_As_long (obj2);
+    if (SWIG_arg_fail(svn_argnum_obj2)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg4 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj3, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj3);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj4) {
+    /* Verify that the user supplied a valid pool */
+    if (obj4 != Py_None && obj4 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj4);
+      SWIG_arg_fail(svn_argnum_obj4);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_prop_resolve_by_id(arg1,(char const *)arg2,arg3,arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_prop_get_resolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_client_conflict_option_id_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"Os:svn_client_conflict_prop_get_resolution",&obj0,&arg2)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_client_conflict_option_id_t)svn_client_conflict_prop_get_resolution(arg1,(char const *)arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_text_get_mime_type(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_text_get_mime_type",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (char *)svn_client_conflict_text_get_mime_type(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_text_get_contents(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char **arg1 = (char **) 0 ;
+  char **arg2 = (char **) 0 ;
+  char **arg3 = (char **) 0 ;
+  char **arg4 = (char **) 0 ;
+  svn_client_conflict_t *arg5 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+  apr_pool_t *arg7 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  char *temp1 ;
+  char *temp2 ;
+  char *temp3 ;
+  char *temp4 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg6 = _global_pool;
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg7 = _global_pool;
+  arg1 = &temp1;
+  arg2 = &temp2;
+  arg3 = &temp3;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"O|OO:svn_client_conflict_text_get_contents",&obj0,&obj1,&obj2)) SWIG_fail;
+  {
+    arg5 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  if (obj2) {
+    /* Verify that the user supplied a valid pool */
+    if (obj2 != Py_None && obj2 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj2);
+      SWIG_arg_fail(svn_argnum_obj2);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_text_get_contents((char const **)arg1,(char const **)arg2,(char const **)arg3,(char const **)arg4,arg5,arg6,arg7);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    PyObject *s;
+    if (*arg1 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg1);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg2 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg2);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg3 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg3);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    PyObject *s;
+    if (*arg4 == NULL) {
+      Py_INCREF(Py_None);
+      s = Py_None;
+    }
+    else {
+      s = PyString_FromString(*arg4);
+      if (s == NULL)
+      SWIG_fail;
+    }
+    resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_text_resolve(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  svn_client_conflict_option_t *arg2 = (svn_client_conflict_option_t *) 0 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_conflict_text_resolve",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_client_conflict_option_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_client_conflict_option_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_text_resolve(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_text_resolve_by_id(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  svn_client_conflict_option_id_t arg2 ;
+  svn_client_ctx_t *arg3 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_conflict_text_resolve_by_id",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_client_conflict_option_id_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_conflict_text_resolve_by_id(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_conflict_text_get_resolution(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_t *arg1 = (svn_client_conflict_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_client_conflict_option_id_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_client_conflict_text_get_resolution",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_client_conflict_option_id_t)svn_client_conflict_text_get_resolution(arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_svn_client_resolved(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   char *arg1 = (char *) 0 ;
@@ -25678,6 +28492,153 @@ SWIGINTERN PyObject *_wrap_svn_client_export(PyObject *SWIGUNUSEDPARM(self), PyO
   } else {
     int new_flags = SWIG_IsNewObj(res1) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
     resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg1), SWIGTYPE_p_long, new_flags));
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_client_list4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  svn_opt_revision_t *arg2 = (svn_opt_revision_t *) 0 ;
+  svn_opt_revision_t *arg3 = (svn_opt_revision_t *) 0 ;
+  apr_array_header_t *arg4 = (apr_array_header_t *) 0 ;
+  svn_depth_t arg5 ;
+  apr_uint32_t arg6 ;
+  svn_boolean_t arg7 ;
+  svn_boolean_t arg8 ;
+  svn_client_list_func2_t arg9 = (svn_client_list_func2_t) 0 ;
+  void *arg10 = (void *) 0 ;
+  svn_client_ctx_t *arg11 = (svn_client_ctx_t *) 0 ;
+  apr_pool_t *arg12 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  PyObject * obj6 = 0 ;
+  PyObject * obj7 = 0 ;
+  PyObject * obj8 = 0 ;
+  PyObject * obj9 = 0 ;
+  PyObject * obj10 = 0 ;
+  PyObject * obj11 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg12 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"sOOOOOOOOOO|O:svn_client_list4",&arg1,&obj1,&obj2,&obj3,&obj4,&obj5,&obj6,&obj7,&obj8,&obj9,&obj10,&obj11)) SWIG_fail;
+  {
+    arg2 = (svn_opt_revision_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_opt_revision_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_opt_revision_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_opt_revision_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg4 = (apr_array_header_t *)svn_swig_py_must_get_ptr(obj3, SWIGTYPE_p_apr_array_header_t, svn_argnum_obj3);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg5 = (svn_depth_t)SWIG_As_long (obj4);
+    if (SWIG_arg_fail(svn_argnum_obj4)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg6 = (apr_uint32_t)SWIG_As_unsigned_SS_long (obj5);
+    if (SWIG_arg_fail(svn_argnum_obj5)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg7 = (svn_boolean_t)SWIG_As_long (obj6);
+    if (SWIG_arg_fail(svn_argnum_obj6)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg8 = (svn_boolean_t)SWIG_As_long (obj7);
+    if (SWIG_arg_fail(svn_argnum_obj7)) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_client_list_func2_t * tmp =
+    svn_swig_py_must_get_ptr(obj8, SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_dirent_t_p_q_const__svn_lock_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t, svn_argnum_obj8);
+    if (tmp == NULL || PyErr_Occurred()) {
+      SWIG_fail;
+    }
+    arg9 = *tmp;
+  }
+  {
+    if (obj9 == Py_None) {
+      arg10 = NULL;
+    } else if (SWIG_ConvertPtr(obj9, (void **) &arg10, 0, 0) == -1) {
+      arg10 = (void *) obj9;
+      PyErr_Clear();
+    }
+  }
+  {
+    arg11 = (svn_client_ctx_t *)svn_swig_py_must_get_ptr(obj10, SWIGTYPE_p_svn_client_ctx_t, svn_argnum_obj10);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj11) {
+    /* Verify that the user supplied a valid pool */
+    if (obj11 != Py_None && obj11 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj11);
+      SWIG_arg_fail(svn_argnum_obj11);
+      SWIG_fail;
+    }
+  }
+  {
+    if (!arg2) {
+      SWIG_exception(SWIG_ValueError,"Received a NULL pointer.");
+    }
+  }
+  {
+    if (!arg3) {
+      SWIG_exception(SWIG_ValueError,"Received a NULL pointer.");
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_list4((char const *)arg1,(struct svn_opt_revision_t const *)arg2,(struct svn_opt_revision_t const *)arg3,arg4,arg5,arg6,arg7,arg8,arg9,arg10,arg11,arg12);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
   }
   {
     Py_XDECREF(_global_py_pool);
@@ -30765,6 +33726,20 @@ fail:
 }
 
 
+SWIGINTERN PyObject *svn_client_conflict_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_svn_client_conflict_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *svn_client_conflict_option_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_svn_client_conflict_option_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_svn_proplist_invoke_receiver2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   svn_proplist_receiver2_t arg1 = (svn_proplist_receiver2_t) 0 ;
@@ -31839,6 +34814,86 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_svn_client_invoke_conflict_walk_func(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_client_conflict_walk_func_t arg1 = (svn_client_conflict_walk_func_t) 0 ;
+  void *arg2 = (void *) 0 ;
+  svn_client_conflict_t *arg3 = (svn_client_conflict_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_client_invoke_conflict_walk_func",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    svn_client_conflict_walk_func_t * tmp =
+    svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t, svn_argnum_obj0);
+    if (tmp == NULL || PyErr_Occurred()) {
+      SWIG_fail;
+    }
+    arg1 = *tmp;
+  }
+  {
+    if (obj1 == Py_None) {
+      arg2 = NULL;
+    } else if (SWIG_ConvertPtr(obj1, (void **) &arg2, 0, 0) == -1) {
+      arg2 = (void *) obj1;
+      PyErr_Clear();
+    }
+  }
+  {
+    arg3 = (svn_client_conflict_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_client_conflict_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_client_invoke_conflict_walk_func(arg1,arg2,arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_svn_client_invoke_list_func2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   svn_client_list_func2_t arg1 = (svn_client_list_func2_t) 0 ;
@@ -32342,6 +35397,13 @@ SWIGINTERN PyObject *svn_client_status_func_t_swigregister(PyObject *SWIGUNUSEDP
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_p_f_p_void_p_q_const__char_p_q_const__svn_client_status_t_p_apr_pool_t__p_svn_error_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *svn_client_conflict_walk_func_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -33107,6 +36169,73 @@ static PyMethodDef SwigMethods[] = {
 		"    apr_pool_t pool) -> svn_error_t\n"
 		""},
 	 { (char *)"svn_client_revert", _wrap_svn_client_revert, METH_VARARGS, (char *)"svn_client_revert(apr_array_header_t paths, svn_boolean_t recursive, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_option_set_merged_propval", _wrap_svn_client_conflict_option_set_merged_propval, METH_VARARGS, (char *)"svn_client_conflict_option_set_merged_propval(svn_client_conflict_option_t * option, svn_string_t const * merged_propval)"},
+	 { (char *)"svn_client_conflict_option_get_moved_to_repos_relpath_candidates", _wrap_svn_client_conflict_option_get_moved_to_repos_relpath_candidates, METH_VARARGS, (char *)"svn_client_conflict_option_get_moved_to_repos_relpath_candidates(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_option_set_moved_to_repos_relpath", _wrap_svn_client_conflict_option_set_moved_to_repos_relpath, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_option_set_moved_to_repos_relpath(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_option_get_moved_to_abspath_candidates", _wrap_svn_client_conflict_option_get_moved_to_abspath_candidates, METH_VARARGS, (char *)"svn_client_conflict_option_get_moved_to_abspath_candidates(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_option_set_moved_to_abspath", _wrap_svn_client_conflict_option_set_moved_to_abspath, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_option_set_moved_to_abspath(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_option_find_by_id", _wrap_svn_client_conflict_option_find_by_id, METH_VARARGS, (char *)"svn_client_conflict_option_find_by_id(apr_array_header_t options, svn_client_conflict_option_id_t option_id) -> svn_client_conflict_option_t *"},
+	 { (char *)"svn_client_conflict_get", _wrap_svn_client_conflict_get, METH_VARARGS, (char *)"svn_client_conflict_get(char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_walk", _wrap_svn_client_conflict_walk, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_walk(char const * local_abspath, svn_depth_t depth, svn_client_conflict_walk_func_t conflict_walk_func, \n"
+		"    void * conflict_walk_func_baton, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_get_conflicted", _wrap_svn_client_conflict_get_conflicted, METH_VARARGS, (char *)"svn_client_conflict_get_conflicted(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_prop_get_description", _wrap_svn_client_conflict_prop_get_description, METH_VARARGS, (char *)"svn_client_conflict_prop_get_description(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_tree_get_description", _wrap_svn_client_conflict_tree_get_description, METH_VARARGS, (char *)"svn_client_conflict_tree_get_description(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_text_get_resolution_options", _wrap_svn_client_conflict_text_get_resolution_options, METH_VARARGS, (char *)"svn_client_conflict_text_get_resolution_options(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_prop_get_resolution_options", _wrap_svn_client_conflict_prop_get_resolution_options, METH_VARARGS, (char *)"svn_client_conflict_prop_get_resolution_options(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_tree_get_resolution_options", _wrap_svn_client_conflict_tree_get_resolution_options, METH_VARARGS, (char *)"svn_client_conflict_tree_get_resolution_options(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_tree_get_details", _wrap_svn_client_conflict_tree_get_details, METH_VARARGS, (char *)"svn_client_conflict_tree_get_details(svn_client_conflict_t * conflict, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_option_get_id", _wrap_svn_client_conflict_option_get_id, METH_VARARGS, (char *)"svn_client_conflict_option_get_id(svn_client_conflict_option_t * option) -> svn_client_conflict_option_id_t"},
+	 { (char *)"svn_client_conflict_option_get_label", _wrap_svn_client_conflict_option_get_label, METH_VARARGS, (char *)"svn_client_conflict_option_get_label(svn_client_conflict_option_t * option, apr_pool_t result_pool) -> char const *"},
+	 { (char *)"svn_client_conflict_option_get_description", _wrap_svn_client_conflict_option_get_description, METH_VARARGS, (char *)"svn_client_conflict_option_get_description(svn_client_conflict_option_t * option, apr_pool_t result_pool) -> char const *"},
+	 { (char *)"svn_client_conflict_get_recommended_option_id", _wrap_svn_client_conflict_get_recommended_option_id, METH_VARARGS, (char *)"svn_client_conflict_get_recommended_option_id(svn_client_conflict_t * conflict) -> svn_client_conflict_option_id_t"},
+	 { (char *)"svn_client_conflict_get_local_abspath", _wrap_svn_client_conflict_get_local_abspath, METH_VARARGS, (char *)"svn_client_conflict_get_local_abspath(svn_client_conflict_t * conflict) -> char const *"},
+	 { (char *)"svn_client_conflict_get_operation", _wrap_svn_client_conflict_get_operation, METH_VARARGS, (char *)"svn_client_conflict_get_operation(svn_client_conflict_t * conflict) -> svn_wc_operation_t"},
+	 { (char *)"svn_client_conflict_get_incoming_change", _wrap_svn_client_conflict_get_incoming_change, METH_VARARGS, (char *)"svn_client_conflict_get_incoming_change(svn_client_conflict_t * conflict) -> svn_wc_conflict_action_t"},
+	 { (char *)"svn_client_conflict_get_local_change", _wrap_svn_client_conflict_get_local_change, METH_VARARGS, (char *)"svn_client_conflict_get_local_change(svn_client_conflict_t * conflict) -> svn_wc_conflict_reason_t"},
+	 { (char *)"svn_client_conflict_get_repos_info", _wrap_svn_client_conflict_get_repos_info, METH_VARARGS, (char *)"svn_client_conflict_get_repos_info(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_get_incoming_old_repos_location", _wrap_svn_client_conflict_get_incoming_old_repos_location, METH_VARARGS, (char *)"svn_client_conflict_get_incoming_old_repos_location(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_get_incoming_new_repos_location", _wrap_svn_client_conflict_get_incoming_new_repos_location, METH_VARARGS, (char *)"svn_client_conflict_get_incoming_new_repos_location(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_tree_get_victim_node_kind", _wrap_svn_client_conflict_tree_get_victim_node_kind, METH_VARARGS, (char *)"svn_client_conflict_tree_get_victim_node_kind(svn_client_conflict_t * conflict) -> svn_node_kind_t"},
+	 { (char *)"svn_client_conflict_tree_resolve", _wrap_svn_client_conflict_tree_resolve, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_tree_resolve(svn_client_conflict_t * conflict, svn_client_conflict_option_t * option, svn_client_ctx_t ctx, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_tree_resolve_by_id", _wrap_svn_client_conflict_tree_resolve_by_id, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_tree_resolve_by_id(svn_client_conflict_t * conflict, svn_client_conflict_option_id_t option_id, svn_client_ctx_t ctx, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_tree_get_resolution", _wrap_svn_client_conflict_tree_get_resolution, METH_VARARGS, (char *)"svn_client_conflict_tree_get_resolution(svn_client_conflict_t * conflict) -> svn_client_conflict_option_id_t"},
+	 { (char *)"svn_client_conflict_prop_get_reject_abspath", _wrap_svn_client_conflict_prop_get_reject_abspath, METH_VARARGS, (char *)"svn_client_conflict_prop_get_reject_abspath(svn_client_conflict_t * conflict) -> char const *"},
+	 { (char *)"svn_client_conflict_prop_get_propvals", _wrap_svn_client_conflict_prop_get_propvals, METH_VARARGS, (char *)"svn_client_conflict_prop_get_propvals(svn_client_conflict_t * conflict, char const * propname, apr_pool_t result_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_prop_resolve", _wrap_svn_client_conflict_prop_resolve, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_prop_resolve(svn_client_conflict_t * conflict, char const * propname, svn_client_conflict_option_t * option, \n"
+		"    svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_prop_resolve_by_id", _wrap_svn_client_conflict_prop_resolve_by_id, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_prop_resolve_by_id(svn_client_conflict_t * conflict, char const * propname, svn_client_conflict_option_id_t option_id, \n"
+		"    svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_prop_get_resolution", _wrap_svn_client_conflict_prop_get_resolution, METH_VARARGS, (char *)"svn_client_conflict_prop_get_resolution(svn_client_conflict_t * conflict, char const * propname) -> svn_client_conflict_option_id_t"},
+	 { (char *)"svn_client_conflict_text_get_mime_type", _wrap_svn_client_conflict_text_get_mime_type, METH_VARARGS, (char *)"svn_client_conflict_text_get_mime_type(svn_client_conflict_t * conflict) -> char const *"},
+	 { (char *)"svn_client_conflict_text_get_contents", _wrap_svn_client_conflict_text_get_contents, METH_VARARGS, (char *)"svn_client_conflict_text_get_contents(svn_client_conflict_t * conflict, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_text_resolve", _wrap_svn_client_conflict_text_resolve, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_text_resolve(svn_client_conflict_t * conflict, svn_client_conflict_option_t * option, svn_client_ctx_t ctx, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_text_resolve_by_id", _wrap_svn_client_conflict_text_resolve_by_id, METH_VARARGS, (char *)"\n"
+		"svn_client_conflict_text_resolve_by_id(svn_client_conflict_t * conflict, svn_client_conflict_option_id_t option_id, svn_client_ctx_t ctx, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_conflict_text_get_resolution", _wrap_svn_client_conflict_text_get_resolution, METH_VARARGS, (char *)"svn_client_conflict_text_get_resolution(svn_client_conflict_t * conflict) -> svn_client_conflict_option_id_t"},
 	 { (char *)"svn_client_resolved", _wrap_svn_client_resolved, METH_VARARGS, (char *)"svn_client_resolved(char const * path, svn_boolean_t recursive, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_client_resolve", _wrap_svn_client_resolve, METH_VARARGS, (char *)"\n"
 		"svn_client_resolve(char const * path, svn_depth_t depth, svn_wc_conflict_choice_t conflict_choice, svn_client_ctx_t ctx, \n"
@@ -33292,6 +36421,12 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"svn_client_export", _wrap_svn_client_export, METH_VARARGS, (char *)"\n"
 		"svn_client_export(char const * from_path_or_url, char const * to_path, svn_opt_revision_t revision, \n"
 		"    svn_boolean_t force, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t\n"
+		""},
+	 { (char *)"svn_client_list4", _wrap_svn_client_list4, METH_VARARGS, (char *)"\n"
+		"svn_client_list4(char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t revision, \n"
+		"    apr_array_header_t patterns, svn_depth_t depth, apr_uint32_t dirent_fields, \n"
+		"    svn_boolean_t fetch_locks, svn_boolean_t include_externals, svn_client_list_func2_t list_func, \n"
+		"    void * baton, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t\n"
 		""},
 	 { (char *)"svn_client_list3", _wrap_svn_client_list3, METH_VARARGS, (char *)"\n"
 		"svn_client_list3(char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t revision, \n"
@@ -33480,6 +36615,8 @@ static PyMethodDef SwigMethods[] = {
 		"    apr_pool_t scratch_pool) -> svn_error_t\n"
 		""},
 	 { (char *)"svn_client_open_ra_session", _wrap_svn_client_open_ra_session, METH_VARARGS, (char *)"svn_client_open_ra_session(char const * url, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"},
+	 { (char *)"svn_client_conflict_t_swigregister", svn_client_conflict_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"svn_client_conflict_option_t_swigregister", svn_client_conflict_option_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_proplist_invoke_receiver2", _wrap_svn_proplist_invoke_receiver2, METH_VARARGS, (char *)"\n"
 		"svn_proplist_invoke_receiver2(svn_proplist_receiver2_t _obj, void * baton, char const * path, apr_hash_t prop_hash, \n"
 		"    apr_array_header_t inherited_props, apr_pool_t scratch_pool) -> svn_error_t\n"
@@ -33528,6 +36665,10 @@ static PyMethodDef SwigMethods[] = {
 		"svn_client_invoke_status_func(svn_client_status_func_t _obj, void * baton, char const * path, svn_client_status_t status, \n"
 		"    apr_pool_t scratch_pool) -> svn_error_t\n"
 		""},
+	 { (char *)"svn_client_invoke_conflict_walk_func", _wrap_svn_client_invoke_conflict_walk_func, METH_VARARGS, (char *)"\n"
+		"svn_client_invoke_conflict_walk_func(svn_client_conflict_walk_func_t _obj, void * baton, svn_client_conflict_t * conflict, \n"
+		"    apr_pool_t scratch_pool) -> svn_error_t\n"
+		""},
 	 { (char *)"svn_client_invoke_list_func2", _wrap_svn_client_invoke_list_func2, METH_VARARGS, (char *)"\n"
 		"svn_client_invoke_list_func2(svn_client_list_func2_t _obj, void * baton, char const * path, svn_dirent_t dirent, \n"
 		"    svn_lock_t lock, char const * abs_path, char const * external_parent_url, \n"
@@ -33557,6 +36698,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"svn_client_diff_summarize_func_t_swigregister", svn_client_diff_summarize_func_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_client_import_filter_func_t_swigregister", svn_client_import_filter_func_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_client_status_func_t_swigregister", svn_client_status_func_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"svn_client_conflict_walk_func_t_swigregister", svn_client_conflict_walk_func_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_client_list_func2_t_swigregister", svn_client_list_func2_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_client_list_func_t_swigregister", svn_client_list_func_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_info_receiver_t_swigregister", svn_info_receiver_t_swigregister, METH_VARARGS, NULL},
@@ -33610,6 +36752,7 @@ static swig_type_info _swigt__p_f_p_void_p_q_const__char_p_svn_wc_status2_t_p_ap
 static swig_type_info _swigt__p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void = {"_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void", "svn_wc_notify_func2_t|void (*)(void *,struct svn_wc_notify_t const *,apr_pool_t *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t = {"_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(*)(void *,svn_boolean_t *,char const *,char const *,char const *,apr_pool_t *)|svn_client_patch_func_t", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t = {"_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(*)(void *,svn_boolean_t *,char const *,svn_io_dirent2_t const *,apr_pool_t *)|svn_client_import_filter_func_t", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t = {"_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t", "svn_client_conflict_walk_func_t|struct svn_error_t *(*)(void *,svn_client_conflict_t *,apr_pool_t *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t = {"_p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(*)(void *,svn_log_entry_t *,apr_pool_t *)|svn_log_entry_receiver_t", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t = {"_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(*)(void *,svn_revnum_t,svn_revnum_t,apr_int64_t,svn_revnum_t,apr_hash_t *,svn_revnum_t,apr_hash_t *,char const *,char const *,svn_boolean_t,apr_pool_t *)|svn_client_blame_receiver3_t", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *|svn_boolean_t *|apr_status_t *", 0, 0, (void*)0, 0};
@@ -33640,10 +36783,12 @@ static swig_type_info _swigt__p_p_f_p_void_p_q_const__char_p_svn_wc_status2_t_p_
 static swig_type_info _swigt__p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void = {"_p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void", "void (**)(void *,struct svn_wc_notify_t const *,apr_pool_t *)|svn_wc_notify_func2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t = {"_p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(**)(void *,svn_boolean_t *,char const *,char const *,char const *,apr_pool_t *)|svn_client_patch_func_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t = {"_p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(**)(void *,svn_boolean_t *,char const *,svn_io_dirent2_t const *,apr_pool_t *)|svn_client_import_filter_func_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t = {"_p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t", "svn_client_conflict_walk_func_t *|struct svn_error_t *(**)(void *,svn_client_conflict_t *,apr_pool_t *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t = {"_p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(**)(void *,svn_revnum_t,svn_revnum_t,apr_int64_t,svn_revnum_t,apr_hash_t *,svn_revnum_t,apr_hash_t *,char const *,char const *,svn_boolean_t,apr_pool_t *)|svn_client_blame_receiver3_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_auth_provider_object_t = {"_p_p_svn_auth_provider_object_t", "struct svn_auth_provider_object_t **|svn_auth_provider_object_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_client_commit_info_t = {"_p_p_svn_client_commit_info_t", "struct svn_client_commit_info_t **|svn_client_commit_info_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_client_commit_item3_t = {"_p_p_svn_client_commit_item3_t", "struct svn_client_commit_item3_t **|svn_client_commit_item3_t **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_svn_client_conflict_t = {"_p_p_svn_client_conflict_t", "struct svn_client_conflict_t **|svn_client_conflict_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_client_ctx_t = {"_p_p_svn_client_ctx_t", "struct svn_client_ctx_t **|svn_client_ctx_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_commit_info_t = {"_p_p_svn_commit_info_t", "struct svn_commit_info_t **|svn_commit_info_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_ra_session_t = {"_p_p_svn_ra_session_t", "struct svn_ra_session_t **|svn_ra_session_t **", 0, 0, (void*)0, 0};
@@ -33658,6 +36803,7 @@ static swig_type_info _swigt__p_svn_auth_iterstate_t = {"_p_svn_auth_iterstate_t
 static swig_type_info _swigt__p_svn_auth_provider_object_t = {"_p_svn_auth_provider_object_t", "struct svn_auth_provider_object_t *|svn_auth_provider_object_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_provider_t = {"_p_svn_auth_provider_t", "struct svn_auth_provider_t *|svn_auth_provider_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_ssl_server_cert_info_t = {"_p_svn_auth_ssl_server_cert_info_t", "struct svn_auth_ssl_server_cert_info_t *|svn_auth_ssl_server_cert_info_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_cache_config_t = {"_p_svn_cache_config_t", "struct svn_cache_config_t *|svn_cache_config_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_ctx_t = {"_p_svn_checksum_ctx_t", "struct svn_checksum_ctx_t *|svn_checksum_ctx_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_kind_t = {"_p_svn_checksum_kind_t", "enum svn_checksum_kind_t *|svn_checksum_kind_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_t = {"_p_svn_checksum_t", "struct svn_checksum_t *|svn_checksum_t *", 0, 0, (void*)0, 0};
@@ -33665,6 +36811,9 @@ static swig_type_info _swigt__p_svn_client_commit_info_t = {"_p_svn_client_commi
 static swig_type_info _swigt__p_svn_client_commit_item2_t = {"_p_svn_client_commit_item2_t", "struct svn_client_commit_item2_t *|svn_client_commit_item2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_client_commit_item3_t = {"_p_svn_client_commit_item3_t", "struct svn_client_commit_item3_t *|svn_client_commit_item3_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_client_commit_item_t = {"_p_svn_client_commit_item_t", "struct svn_client_commit_item_t *|svn_client_commit_item_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_client_conflict_option_id_t = {"_p_svn_client_conflict_option_id_t", "enum svn_client_conflict_option_id_t *|svn_client_conflict_option_id_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_client_conflict_option_t = {"_p_svn_client_conflict_option_t", "struct svn_client_conflict_option_t *|svn_client_conflict_option_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_client_conflict_t = {"_p_svn_client_conflict_t", "struct svn_client_conflict_t *|svn_client_conflict_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_client_copy_source_t = {"_p_svn_client_copy_source_t", "struct svn_client_copy_source_t *|svn_client_copy_source_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_client_ctx_t = {"_p_svn_client_ctx_t", "struct svn_client_ctx_t *|svn_client_ctx_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_client_diff_summarize_kind_t = {"_p_svn_client_diff_summarize_kind_t", "enum svn_client_diff_summarize_kind_t *|svn_client_diff_summarize_kind_t *", 0, 0, (void*)0, 0};
@@ -33798,6 +36947,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void,
   &_swigt__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t,
+  &_swigt__p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_int,
@@ -33828,10 +36978,12 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void,
   &_swigt__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t,
+  &_swigt__p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_p_svn_auth_provider_object_t,
   &_swigt__p_p_svn_client_commit_info_t,
   &_swigt__p_p_svn_client_commit_item3_t,
+  &_swigt__p_p_svn_client_conflict_t,
   &_swigt__p_p_svn_client_ctx_t,
   &_swigt__p_p_svn_commit_info_t,
   &_swigt__p_p_svn_ra_session_t,
@@ -33846,6 +36998,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_auth_provider_object_t,
   &_swigt__p_svn_auth_provider_t,
   &_swigt__p_svn_auth_ssl_server_cert_info_t,
+  &_swigt__p_svn_cache_config_t,
   &_swigt__p_svn_checksum_ctx_t,
   &_swigt__p_svn_checksum_kind_t,
   &_swigt__p_svn_checksum_t,
@@ -33853,6 +37006,9 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_client_commit_item2_t,
   &_swigt__p_svn_client_commit_item3_t,
   &_swigt__p_svn_client_commit_item_t,
+  &_swigt__p_svn_client_conflict_option_id_t,
+  &_swigt__p_svn_client_conflict_option_t,
+  &_swigt__p_svn_client_conflict_t,
   &_swigt__p_svn_client_copy_source_t,
   &_swigt__p_svn_client_ctx_t,
   &_swigt__p_svn_client_diff_summarize_kind_t,
@@ -33986,6 +37142,7 @@ static swig_cast_info _swigc__p_f_p_void_p_q_const__char_p_svn_wc_status2_t_p_ap
 static swig_cast_info _swigc__p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void[] = {  {&_swigt__p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_int[] = {  {&_swigt__p_int, 0, 0, 0},{0, 0, 0, 0}};
@@ -34016,10 +37173,12 @@ static swig_cast_info _swigc__p_p_f_p_void_p_q_const__char_p_svn_wc_status2_t_p_
 static swig_cast_info _swigc__p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void[] = {  {&_swigt__p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_auth_provider_object_t[] = {  {&_swigt__p_p_svn_auth_provider_object_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_client_commit_info_t[] = {  {&_swigt__p_p_svn_client_commit_info_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_client_commit_item3_t[] = {  {&_swigt__p_p_svn_client_commit_item3_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_svn_client_conflict_t[] = {  {&_swigt__p_p_svn_client_conflict_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_client_ctx_t[] = {  {&_swigt__p_p_svn_client_ctx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_commit_info_t[] = {  {&_swigt__p_p_svn_commit_info_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_ra_session_t[] = {  {&_swigt__p_p_svn_ra_session_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -34034,6 +37193,7 @@ static swig_cast_info _swigc__p_svn_auth_iterstate_t[] = {  {&_swigt__p_svn_auth
 static swig_cast_info _swigc__p_svn_auth_provider_object_t[] = {  {&_swigt__p_svn_auth_provider_object_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_provider_t[] = {  {&_swigt__p_svn_auth_provider_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_ssl_server_cert_info_t[] = {  {&_swigt__p_svn_auth_ssl_server_cert_info_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_cache_config_t[] = {  {&_swigt__p_svn_cache_config_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_ctx_t[] = {  {&_swigt__p_svn_checksum_ctx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_kind_t[] = {  {&_swigt__p_svn_checksum_kind_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_t[] = {  {&_swigt__p_svn_checksum_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -34041,6 +37201,9 @@ static swig_cast_info _swigc__p_svn_client_commit_info_t[] = {  {&_swigt__p_svn_
 static swig_cast_info _swigc__p_svn_client_commit_item2_t[] = {  {&_swigt__p_svn_client_commit_item2_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_client_commit_item3_t[] = {  {&_swigt__p_svn_client_commit_item3_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_client_commit_item_t[] = {  {&_swigt__p_svn_client_commit_item_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_client_conflict_option_id_t[] = {  {&_swigt__p_svn_client_conflict_option_id_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_client_conflict_option_t[] = {  {&_swigt__p_svn_client_conflict_option_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_client_conflict_t[] = {  {&_swigt__p_svn_client_conflict_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_client_copy_source_t[] = {  {&_swigt__p_svn_client_copy_source_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_client_ctx_t[] = {  {&_swigt__p_svn_client_ctx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_client_diff_summarize_kind_t[] = {  {&_swigt__p_svn_client_diff_summarize_kind_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -34174,6 +37337,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void,
   _swigc__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t,
   _swigc__p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t,
+  _swigc__p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t,
   _swigc__p_f_p_void_p_svn_log_entry_t_p_apr_pool_t__p_svn_error_t,
   _swigc__p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t,
   _swigc__p_int,
@@ -34204,10 +37368,12 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_f_p_void_p_q_const__struct_svn_wc_notify_t_p_apr_pool_t__void,
   _swigc__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__char_p_q_const__char_p_apr_pool_t__p_svn_error_t,
   _swigc__p_p_f_p_void_p_svn_boolean_t_p_q_const__char_p_q_const__svn_io_dirent2_t_p_apr_pool_t__p_svn_error_t,
+  _swigc__p_p_f_p_void_p_svn_client_conflict_t_p_apr_pool_t__p_svn_error_t,
   _swigc__p_p_f_p_void_svn_revnum_t_svn_revnum_t_apr_int64_t_svn_revnum_t_p_apr_hash_t_svn_revnum_t_p_apr_hash_t_p_q_const__char_p_q_const__char_svn_boolean_t_p_apr_pool_t__p_svn_error_t,
   _swigc__p_p_svn_auth_provider_object_t,
   _swigc__p_p_svn_client_commit_info_t,
   _swigc__p_p_svn_client_commit_item3_t,
+  _swigc__p_p_svn_client_conflict_t,
   _swigc__p_p_svn_client_ctx_t,
   _swigc__p_p_svn_commit_info_t,
   _swigc__p_p_svn_ra_session_t,
@@ -34222,6 +37388,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_auth_provider_object_t,
   _swigc__p_svn_auth_provider_t,
   _swigc__p_svn_auth_ssl_server_cert_info_t,
+  _swigc__p_svn_cache_config_t,
   _swigc__p_svn_checksum_ctx_t,
   _swigc__p_svn_checksum_kind_t,
   _swigc__p_svn_checksum_t,
@@ -34229,6 +37396,9 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_client_commit_item2_t,
   _swigc__p_svn_client_commit_item3_t,
   _swigc__p_svn_client_commit_item_t,
+  _swigc__p_svn_client_conflict_option_id_t,
+  _swigc__p_svn_client_conflict_option_t,
+  _swigc__p_svn_client_conflict_t,
   _swigc__p_svn_client_copy_source_t,
   _swigc__p_svn_client_ctx_t,
   _swigc__p_svn_client_diff_summarize_kind_t,
@@ -35019,6 +38189,29 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "svn_client_diff_summarize_kind_deleted",SWIG_From_long((long)(svn_client_diff_summarize_kind_deleted)));
   SWIG_Python_SetConstant(d, "SVN_CLIENT_AUTH_USERNAME",SWIG_FromCharPtr("username"));
   SWIG_Python_SetConstant(d, "SVN_CLIENT_AUTH_PASSWORD",SWIG_FromCharPtr("password"));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_undefined",SWIG_From_long((long)(svn_client_conflict_option_undefined)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_postpone",SWIG_From_long((long)(svn_client_conflict_option_postpone)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_base_text",SWIG_From_long((long)(svn_client_conflict_option_base_text)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_text",SWIG_From_long((long)(svn_client_conflict_option_incoming_text)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_working_text",SWIG_From_long((long)(svn_client_conflict_option_working_text)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_text_where_conflicted",SWIG_From_long((long)(svn_client_conflict_option_incoming_text_where_conflicted)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_working_text_where_conflicted",SWIG_From_long((long)(svn_client_conflict_option_working_text_where_conflicted)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_merged_text",SWIG_From_long((long)(svn_client_conflict_option_merged_text)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_unspecified",SWIG_From_long((long)(svn_client_conflict_option_unspecified)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_accept_current_wc_state",SWIG_From_long((long)(svn_client_conflict_option_accept_current_wc_state)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_update_move_destination",SWIG_From_long((long)(svn_client_conflict_option_update_move_destination)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_update_any_moved_away_children",SWIG_From_long((long)(svn_client_conflict_option_update_any_moved_away_children)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_add_ignore",SWIG_From_long((long)(svn_client_conflict_option_incoming_add_ignore)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_added_file_text_merge",SWIG_From_long((long)(svn_client_conflict_option_incoming_added_file_text_merge)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_added_file_replace_and_merge",SWIG_From_long((long)(svn_client_conflict_option_incoming_added_file_replace_and_merge)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_added_dir_merge",SWIG_From_long((long)(svn_client_conflict_option_incoming_added_dir_merge)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_added_dir_replace",SWIG_From_long((long)(svn_client_conflict_option_incoming_added_dir_replace)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_added_dir_replace_and_merge",SWIG_From_long((long)(svn_client_conflict_option_incoming_added_dir_replace_and_merge)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_delete_ignore",SWIG_From_long((long)(svn_client_conflict_option_incoming_delete_ignore)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_delete_accept",SWIG_From_long((long)(svn_client_conflict_option_incoming_delete_accept)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_move_file_text_merge",SWIG_From_long((long)(svn_client_conflict_option_incoming_move_file_text_merge)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_incoming_move_dir_merge",SWIG_From_long((long)(svn_client_conflict_option_incoming_move_dir_merge)));
+  SWIG_Python_SetConstant(d, "svn_client_conflict_option_local_move_file_text_merge",SWIG_From_long((long)(svn_client_conflict_option_local_move_file_text_merge)));
   SWIG_Python_SetConstant(d, "SWIG_SVN_INFO_SIZE_UNKNOWN",SWIG_From_unsigned_SS_long((unsigned long)(-1)));
   {
     svn_cancel_func_t * tmp = malloc(sizeof(svn_cancel_func_t));

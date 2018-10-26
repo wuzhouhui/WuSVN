@@ -129,6 +129,8 @@ svn_repos_notify_pack_revprops = _repos.svn_repos_notify_pack_revprops
 svn_repos_notify_cleanup_revprops = _repos.svn_repos_notify_cleanup_revprops
 svn_repos_notify_format_bumped = _repos.svn_repos_notify_format_bumped
 svn_repos_notify_hotcopy_rev_range = _repos.svn_repos_notify_hotcopy_rev_range
+svn_repos_notify_pack_noop = _repos.svn_repos_notify_pack_noop
+svn_repos_notify_load_revprop_set = _repos.svn_repos_notify_load_revprop_set
 svn_repos_notify_warning_found_old_reference = _repos.svn_repos_notify_warning_found_old_reference
 svn_repos_notify_warning_found_old_mergeinfo = _repos.svn_repos_notify_warning_found_old_mergeinfo
 svn_repos_notify_warning_invalid_fspath = _repos.svn_repos_notify_warning_invalid_fspath
@@ -166,7 +168,7 @@ class svn_repos_notify_t:
     __swig_setmethods__["end_revision"] = _repos.svn_repos_notify_t_end_revision_set
     __swig_getmethods__["end_revision"] = _repos.svn_repos_notify_t_end_revision_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_notify_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -185,13 +187,13 @@ class svn_repos_notify_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -200,9 +202,9 @@ class svn_repos_notify_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -582,6 +584,15 @@ def svn_repos_stat(*args):
   """svn_repos_stat(svn_fs_root_t * root, char const * path, apr_pool_t pool) -> svn_error_t"""
   return _repos.svn_repos_stat(*args)
 
+def svn_repos_list(*args):
+  """
+    svn_repos_list(svn_fs_root_t * root, char const * path, apr_array_header_t patterns, svn_depth_t depth, 
+        svn_boolean_t path_info_only, svn_repos_authz_func_t authz_read_func, 
+        svn_repos_dirent_receiver_t receiver, void * receiver_baton, svn_cancel_func_t cancel_func, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_list(*args)
+
 def svn_repos_deleted_rev(*args):
   """svn_repos_deleted_rev(svn_fs_t * fs, char const * path, svn_revnum_t start, svn_revnum_t end, apr_pool_t pool) -> svn_error_t"""
   return _repos.svn_repos_deleted_rev(*args)
@@ -615,6 +626,80 @@ def svn_repos_node_location_segments(*args):
         apr_pool_t pool) -> svn_error_t
     """
   return _repos.svn_repos_node_location_segments(*args)
+class svn_repos_log_entry_t:
+    """Proxy of C svn_repos_log_entry_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_repos_log_entry_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_repos_log_entry_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_setmethods__["revision"] = _repos.svn_repos_log_entry_t_revision_set
+    __swig_getmethods__["revision"] = _repos.svn_repos_log_entry_t_revision_get
+    __swig_setmethods__["revprops"] = _repos.svn_repos_log_entry_t_revprops_set
+    __swig_getmethods__["revprops"] = _repos.svn_repos_log_entry_t_revprops_get
+    __swig_setmethods__["has_children"] = _repos.svn_repos_log_entry_t_has_children_set
+    __swig_getmethods__["has_children"] = _repos.svn_repos_log_entry_t_has_children_get
+    __swig_setmethods__["non_inheritable"] = _repos.svn_repos_log_entry_t_non_inheritable_set
+    __swig_getmethods__["non_inheritable"] = _repos.svn_repos_log_entry_t_non_inheritable_get
+    __swig_setmethods__["subtractive_merge"] = _repos.svn_repos_log_entry_t_subtractive_merge_set
+    __swig_getmethods__["subtractive_merge"] = _repos.svn_repos_log_entry_t_subtractive_merge_get
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+svn_repos_log_entry_t_swigregister = _repos.svn_repos_log_entry_t_swigregister
+svn_repos_log_entry_t_swigregister(svn_repos_log_entry_t)
+
+
+def svn_repos_get_logs5(*args):
+  """
+    svn_repos_get_logs5(svn_repos_t * repos, apr_array_header_t paths, svn_revnum_t start, svn_revnum_t end, 
+        int limit, svn_boolean_t strict_node_history, svn_boolean_t include_merged_revisions, 
+        apr_array_header_t revprops, svn_repos_authz_func_t authz_read_func, 
+        svn_repos_path_change_receiver_t path_change_receiver, void * path_change_receiver_baton, 
+        svn_repos_log_entry_receiver_t revision_receiver, void * revision_receiver_baton, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_get_logs5(*args)
 
 def svn_repos_get_logs4(*args):
   """
@@ -651,6 +736,15 @@ def svn_repos_get_logs(*args):
         svn_log_message_receiver_t receiver, apr_pool_t pool) -> svn_error_t
     """
   return _repos.svn_repos_get_logs(*args)
+
+def svn_repos_fs_get_mergeinfo2(*args):
+  """
+    svn_repos_fs_get_mergeinfo2(svn_repos_t * repos, apr_array_header_t paths, svn_revnum_t revision, svn_mergeinfo_inheritance_t inherit, 
+        svn_boolean_t include_descendants, svn_repos_authz_func_t authz_read_func, 
+        svn_repos_mergeinfo_receiver_t receiver, void * receiver_baton, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_fs_get_mergeinfo2(*args)
 
 def svn_repos_fs_get_mergeinfo(*args):
   """
@@ -829,7 +923,7 @@ class svn_repos_node_t:
     __swig_setmethods__["parent"] = _repos.svn_repos_node_t_parent_set
     __swig_getmethods__["parent"] = _repos.svn_repos_node_t_parent_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_node_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -848,13 +942,13 @@ class svn_repos_node_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -863,9 +957,9 @@ class svn_repos_node_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -940,6 +1034,15 @@ def svn_repos_verify_fs(*args):
     """
   return _repos.svn_repos_verify_fs(*args)
 
+def svn_repos_dump_fs4(*args):
+  """
+    svn_repos_dump_fs4(svn_repos_t * repos, svn_stream_t * stream, svn_revnum_t start_rev, svn_revnum_t end_rev, 
+        svn_boolean_t incremental, svn_boolean_t use_deltas, svn_boolean_t include_revprops, 
+        svn_boolean_t include_changes, svn_repos_notify_func_t notify_func, 
+        void * notify_baton, svn_cancel_func_t cancel_func, apr_pool_t pool) -> svn_error_t
+    """
+  return _repos.svn_repos_dump_fs4(*args)
+
 def svn_repos_dump_fs3(*args):
   """
     svn_repos_dump_fs3(svn_repos_t * repos, svn_stream_t * dumpstream, svn_revnum_t start_rev, svn_revnum_t end_rev, 
@@ -1010,6 +1113,15 @@ def svn_repos_load_fs(*args):
         apr_pool_t pool) -> svn_error_t
     """
   return _repos.svn_repos_load_fs(*args)
+
+def svn_repos_load_fs_revprops(*args):
+  """
+    svn_repos_load_fs_revprops(svn_repos_t * repos, svn_stream_t * dumpstream, svn_revnum_t start_rev, svn_revnum_t end_rev, 
+        svn_boolean_t validate_props, svn_boolean_t ignore_dates, svn_repos_notify_func_t notify_func, 
+        void * notify_baton, svn_cancel_func_t cancel_func, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_load_fs_revprops(*args)
 class svn_repos_parse_fns3_t:
     """Proxy of C svn_repos_parse_fns3_t struct"""
     __swig_setmethods__ = {}
@@ -1043,7 +1155,7 @@ class svn_repos_parse_fns3_t:
     __swig_setmethods__["close_revision"] = _repos.svn_repos_parse_fns3_t_close_revision_set
     __swig_getmethods__["close_revision"] = _repos.svn_repos_parse_fns3_t_close_revision_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_parse_fns3_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1062,13 +1174,13 @@ class svn_repos_parse_fns3_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1077,9 +1189,9 @@ class svn_repos_parse_fns3_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1180,7 +1292,7 @@ class svn_repos_parse_fns2_t:
     __swig_setmethods__["close_revision"] = _repos.svn_repos_parse_fns2_t_close_revision_set
     __swig_getmethods__["close_revision"] = _repos.svn_repos_parse_fns2_t_close_revision_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_parse_fns2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1199,13 +1311,13 @@ class svn_repos_parse_fns2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1214,9 +1326,9 @@ class svn_repos_parse_fns2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1284,7 +1396,7 @@ class svn_repos_parser_fns_t:
     __swig_setmethods__["close_revision"] = _repos.svn_repos_parser_fns_t_close_revision_set
     __swig_getmethods__["close_revision"] = _repos.svn_repos_parser_fns_t_close_revision_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_parse_fns_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1303,13 +1415,13 @@ class svn_repos_parser_fns_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1318,9 +1430,9 @@ class svn_repos_parser_fns_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1365,6 +1477,17 @@ def svn_repos_get_fs_build_parser(*args):
     """
   return _repos.svn_repos_get_fs_build_parser(*args)
 
+def svn_repos_authz_initialize(*args):
+  """svn_repos_authz_initialize(apr_pool_t pool) -> svn_error_t"""
+  return _repos.svn_repos_authz_initialize(*args)
+
+def svn_repos_authz_read3(*args):
+  """
+    svn_repos_authz_read3(char const * path, char const * groups_path, svn_boolean_t must_exist, svn_repos_t * repos_hint, 
+        apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_authz_read3(*args)
+
 def svn_repos_authz_read2(*args):
   """svn_repos_authz_read2(char const * path, char const * groups_path, svn_boolean_t must_exist, apr_pool_t pool) -> svn_error_t"""
   return _repos.svn_repos_authz_read2(*args)
@@ -1402,7 +1525,7 @@ class svn_repos_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1421,13 +1544,13 @@ class svn_repos_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1436,9 +1559,9 @@ class svn_repos_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1455,7 +1578,7 @@ class svn_authz_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_authz_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1474,13 +1597,13 @@ class svn_authz_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1489,9 +1612,9 @@ class svn_authz_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1621,6 +1744,20 @@ def svn_repos_invoke_history_func(*args):
     """
   return _repos.svn_repos_invoke_history_func(*args)
 
+def svn_repos_invoke_path_change_receiver(*args):
+  """
+    svn_repos_invoke_path_change_receiver(svn_repos_path_change_receiver_t _obj, void * baton, svn_fs_path_change3_t change, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_invoke_path_change_receiver(*args)
+
+def svn_repos_invoke_log_entry_receiver(*args):
+  """
+    svn_repos_invoke_log_entry_receiver(svn_repos_log_entry_receiver_t _obj, void * baton, svn_repos_log_entry_t log_entry, 
+        apr_pool_t scratch_pool) -> svn_error_t
+    """
+  return _repos.svn_repos_invoke_log_entry_receiver(*args)
+
 def svn_repos_invoke_file_rev_handler(*args):
   """
     svn_repos_invoke_file_rev_handler(svn_repos_file_rev_handler_t _obj, void * baton, char const * path, svn_revnum_t rev, 
@@ -1643,7 +1780,7 @@ class svn_repos_authz_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_authz_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1662,13 +1799,13 @@ class svn_repos_authz_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1677,9 +1814,9 @@ class svn_repos_authz_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1699,7 +1836,7 @@ class svn_repos_authz_callback_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_authz_callback_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1718,13 +1855,13 @@ class svn_repos_authz_callback_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1733,9 +1870,9 @@ class svn_repos_authz_callback_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1755,7 +1892,7 @@ class svn_repos_notify_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_notify_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1774,13 +1911,13 @@ class svn_repos_notify_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1789,9 +1926,9 @@ class svn_repos_notify_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1811,7 +1948,7 @@ class svn_repos_freeze_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_freeze_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1830,13 +1967,13 @@ class svn_repos_freeze_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1845,9 +1982,9 @@ class svn_repos_freeze_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1867,7 +2004,7 @@ class svn_repos_history_func_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_history_func_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1886,13 +2023,13 @@ class svn_repos_history_func_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1901,9 +2038,9 @@ class svn_repos_history_func_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1914,16 +2051,16 @@ class svn_repos_history_func_t:
 svn_repos_history_func_t_swigregister = _repos.svn_repos_history_func_t_swigregister
 svn_repos_history_func_t_swigregister(svn_repos_history_func_t)
 
-class svn_repos_file_rev_handler_t:
-    """Proxy of C svn_repos_file_rev_handler_t struct"""
+class svn_repos_path_change_receiver_t:
+    """Proxy of C svn_repos_path_change_receiver_t struct"""
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_repos_file_rev_handler_t, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_repos_path_change_receiver_t, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, svn_repos_file_rev_handler_t, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_repos_path_change_receiver_t, name)
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_file_rev_handler_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1942,13 +2079,13 @@ class svn_repos_file_rev_handler_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1957,9 +2094,121 @@ class svn_repos_file_rev_handler_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
 
+      return _swig_setattr(self, self.__class__, name, value)
 
+    def __call__(self, *args):
+      return svn_repos_invoke_path_change_receiver(self, *args)
 
+svn_repos_path_change_receiver_t_swigregister = _repos.svn_repos_path_change_receiver_t_swigregister
+svn_repos_path_change_receiver_t_swigregister(svn_repos_path_change_receiver_t)
+
+class svn_repos_log_entry_receiver_t:
+    """Proxy of C svn_repos_log_entry_receiver_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_repos_log_entry_receiver_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_repos_log_entry_receiver_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+    def __call__(self, *args):
+      return svn_repos_invoke_log_entry_receiver(self, *args)
+
+svn_repos_log_entry_receiver_t_swigregister = _repos.svn_repos_log_entry_receiver_t_swigregister
+svn_repos_log_entry_receiver_t_swigregister(svn_repos_log_entry_receiver_t)
+
+class svn_repos_file_rev_handler_t:
+    """Proxy of C svn_repos_file_rev_handler_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_repos_file_rev_handler_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_repos_file_rev_handler_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -1979,7 +2228,7 @@ class svn_repos_verify_callback_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_repos_verify_callback_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1998,13 +2247,13 @@ class svn_repos_verify_callback_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -2013,9 +2262,9 @@ class svn_repos_verify_callback_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)

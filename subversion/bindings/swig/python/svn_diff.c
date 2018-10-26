@@ -2950,62 +2950,64 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_svn_auth_provider_object_t swig_types[33]
 #define SWIGTYPE_p_svn_auth_provider_t swig_types[34]
 #define SWIGTYPE_p_svn_auth_ssl_server_cert_info_t swig_types[35]
-#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[36]
-#define SWIGTYPE_p_svn_checksum_kind_t swig_types[37]
-#define SWIGTYPE_p_svn_checksum_t swig_types[38]
-#define SWIGTYPE_p_svn_commit_info_t swig_types[39]
-#define SWIGTYPE_p_svn_config_t swig_types[40]
-#define SWIGTYPE_p_svn_depth_t swig_types[41]
-#define SWIGTYPE_p_svn_diff_conflict_display_style_t swig_types[42]
-#define SWIGTYPE_p_svn_diff_datasource_e swig_types[43]
-#define SWIGTYPE_p_svn_diff_file_ignore_space_t swig_types[44]
-#define SWIGTYPE_p_svn_diff_file_options_t swig_types[45]
-#define SWIGTYPE_p_svn_diff_fns2_t swig_types[46]
-#define SWIGTYPE_p_svn_diff_fns_t swig_types[47]
-#define SWIGTYPE_p_svn_diff_hunk_t swig_types[48]
-#define SWIGTYPE_p_svn_diff_operation_kind_e swig_types[49]
-#define SWIGTYPE_p_svn_diff_output_fns_t swig_types[50]
-#define SWIGTYPE_p_svn_diff_t swig_types[51]
-#define SWIGTYPE_p_svn_dirent_t swig_types[52]
-#define SWIGTYPE_p_svn_errno_t swig_types[53]
-#define SWIGTYPE_p_svn_error_t swig_types[54]
-#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[55]
-#define SWIGTYPE_p_svn_io_dirent2_t swig_types[56]
-#define SWIGTYPE_p_svn_io_dirent_t swig_types[57]
-#define SWIGTYPE_p_svn_io_file_del_t swig_types[58]
-#define SWIGTYPE_p_svn_location_segment_t swig_types[59]
-#define SWIGTYPE_p_svn_lock_t swig_types[60]
-#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[61]
-#define SWIGTYPE_p_svn_log_changed_path_t swig_types[62]
-#define SWIGTYPE_p_svn_log_entry_t swig_types[63]
-#define SWIGTYPE_p_svn_merge_range_t swig_types[64]
-#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[65]
-#define SWIGTYPE_p_svn_node_kind_t swig_types[66]
-#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[67]
-#define SWIGTYPE_p_svn_opt_revision_t swig_types[68]
-#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[69]
-#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[70]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[71]
-#define SWIGTYPE_p_svn_patch_file_t swig_types[72]
-#define SWIGTYPE_p_svn_patch_t swig_types[73]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[74]
-#define SWIGTYPE_p_svn_prop_kind swig_types[75]
-#define SWIGTYPE_p_svn_prop_patch_t swig_types[76]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[77]
-#define SWIGTYPE_p_svn_stream_t swig_types[78]
-#define SWIGTYPE_p_svn_string_t swig_types[79]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[80]
-#define SWIGTYPE_p_svn_tristate_t swig_types[81]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[82]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[83]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[84]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[85]
-#define SWIGTYPE_p_svn_version_t swig_types[86]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[87]
-#define SWIGTYPE_p_unsigned_long swig_types[88]
-#define SWIGTYPE_p_void swig_types[89]
-static swig_type_info *swig_types[91];
-static swig_module_info swig_module = {swig_types, 90, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_cache_config_t swig_types[36]
+#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[37]
+#define SWIGTYPE_p_svn_checksum_kind_t swig_types[38]
+#define SWIGTYPE_p_svn_checksum_t swig_types[39]
+#define SWIGTYPE_p_svn_commit_info_t swig_types[40]
+#define SWIGTYPE_p_svn_config_t swig_types[41]
+#define SWIGTYPE_p_svn_depth_t swig_types[42]
+#define SWIGTYPE_p_svn_diff_binary_patch_t swig_types[43]
+#define SWIGTYPE_p_svn_diff_conflict_display_style_t swig_types[44]
+#define SWIGTYPE_p_svn_diff_datasource_e swig_types[45]
+#define SWIGTYPE_p_svn_diff_file_ignore_space_t swig_types[46]
+#define SWIGTYPE_p_svn_diff_file_options_t swig_types[47]
+#define SWIGTYPE_p_svn_diff_fns2_t swig_types[48]
+#define SWIGTYPE_p_svn_diff_fns_t swig_types[49]
+#define SWIGTYPE_p_svn_diff_hunk_t swig_types[50]
+#define SWIGTYPE_p_svn_diff_operation_kind_e swig_types[51]
+#define SWIGTYPE_p_svn_diff_output_fns_t swig_types[52]
+#define SWIGTYPE_p_svn_diff_t swig_types[53]
+#define SWIGTYPE_p_svn_dirent_t swig_types[54]
+#define SWIGTYPE_p_svn_errno_t swig_types[55]
+#define SWIGTYPE_p_svn_error_t swig_types[56]
+#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[57]
+#define SWIGTYPE_p_svn_io_dirent2_t swig_types[58]
+#define SWIGTYPE_p_svn_io_dirent_t swig_types[59]
+#define SWIGTYPE_p_svn_io_file_del_t swig_types[60]
+#define SWIGTYPE_p_svn_location_segment_t swig_types[61]
+#define SWIGTYPE_p_svn_lock_t swig_types[62]
+#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[63]
+#define SWIGTYPE_p_svn_log_changed_path_t swig_types[64]
+#define SWIGTYPE_p_svn_log_entry_t swig_types[65]
+#define SWIGTYPE_p_svn_merge_range_t swig_types[66]
+#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[67]
+#define SWIGTYPE_p_svn_node_kind_t swig_types[68]
+#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[69]
+#define SWIGTYPE_p_svn_opt_revision_t swig_types[70]
+#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[71]
+#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[72]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[73]
+#define SWIGTYPE_p_svn_patch_file_t swig_types[74]
+#define SWIGTYPE_p_svn_patch_t swig_types[75]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[76]
+#define SWIGTYPE_p_svn_prop_kind swig_types[77]
+#define SWIGTYPE_p_svn_prop_patch_t swig_types[78]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[79]
+#define SWIGTYPE_p_svn_stream_t swig_types[80]
+#define SWIGTYPE_p_svn_string_t swig_types[81]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[82]
+#define SWIGTYPE_p_svn_tristate_t swig_types[83]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[84]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[85]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[86]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[87]
+#define SWIGTYPE_p_svn_version_t swig_types[88]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[89]
+#define SWIGTYPE_p_unsigned_long swig_types[90]
+#define SWIGTYPE_p_void swig_types[91]
+static swig_type_info *swig_types[93];
+static swig_module_info swig_module = {swig_types, 92, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -8510,6 +8512,108 @@ SWIGINTERN PyObject *svn_prop_patch_t_swigregister(PyObject *SWIGUNUSEDPARM(self
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_svn_diff_get_binary_diff_original_stream(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_diff_binary_patch_t *arg1 = (svn_diff_binary_patch_t *) 0 ;
+  apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  svn_stream_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg2 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"O|O:svn_diff_get_binary_diff_original_stream",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_diff_binary_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_diff_binary_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_stream_t *)svn_diff_get_binary_diff_original_stream((struct svn_diff_binary_patch_t const *)arg1,arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_stream_t,
+    _global_py_pool, args);
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_diff_get_binary_diff_result_stream(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_diff_binary_patch_t *arg1 = (svn_diff_binary_patch_t *) 0 ;
+  apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  svn_stream_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg2 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"O|O:svn_diff_get_binary_diff_result_stream",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_diff_binary_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_diff_binary_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj1) {
+    /* Verify that the user supplied a valid pool */
+    if (obj1 != Py_None && obj1 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj1);
+      SWIG_arg_fail(svn_argnum_obj1);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_stream_t *)svn_diff_get_binary_diff_result_stream((struct svn_diff_binary_patch_t const *)arg1,arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_stream_t,
+    _global_py_pool, args);
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_svn_patch_t_old_filename_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
@@ -8922,6 +9026,252 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_svn_patch_t_binary_patch_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  svn_diff_binary_patch_t *arg2 = (svn_diff_binary_patch_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_patch_t_binary_patch_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_diff_binary_patch_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_binary_patch_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (arg1) (arg1)->binary_patch = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_binary_patch_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_diff_binary_patch_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_patch_t_binary_patch_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_diff_binary_patch_t *) ((arg1)->binary_patch);
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_diff_binary_patch_t,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_old_executable_bit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  svn_tristate_t arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_patch_t_old_executable_bit_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_tristate_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  if (arg1) (arg1)->old_executable_bit = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_old_executable_bit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_tristate_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_patch_t_old_executable_bit_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_tristate_t) ((arg1)->old_executable_bit);
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_new_executable_bit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  svn_tristate_t arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_patch_t_new_executable_bit_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_tristate_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  if (arg1) (arg1)->new_executable_bit = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_new_executable_bit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_tristate_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_patch_t_new_executable_bit_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_tristate_t) ((arg1)->new_executable_bit);
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_old_symlink_bit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  svn_tristate_t arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_patch_t_old_symlink_bit_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_tristate_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  if (arg1) (arg1)->old_symlink_bit = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_old_symlink_bit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_tristate_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_patch_t_old_symlink_bit_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_tristate_t) ((arg1)->old_symlink_bit);
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_new_symlink_bit_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  svn_tristate_t arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_patch_t_new_symlink_bit_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (svn_tristate_t)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  if (arg1) (arg1)->new_symlink_bit = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_patch_t_new_symlink_bit_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_patch_t *arg1 = (struct svn_patch_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_tristate_t result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_patch_t_new_symlink_bit_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_patch_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_patch_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_tristate_t) ((arg1)->new_symlink_bit);
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_new_svn_patch_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   struct svn_patch_t *result = 0 ;
@@ -9215,6 +9565,13 @@ SWIGINTERN PyObject *svn_diff_hunk_t_swigregister(PyObject *SWIGUNUSEDPARM(self)
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_svn_diff_hunk_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *svn_diff_binary_patch_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_svn_diff_binary_patch_t, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -10476,6 +10833,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_svn_prop_patch_t", _wrap_new_svn_prop_patch_t, METH_VARARGS, (char *)"new_svn_prop_patch_t() -> svn_prop_patch_t"},
 	 { (char *)"delete_svn_prop_patch_t", _wrap_delete_svn_prop_patch_t, METH_VARARGS, (char *)"delete_svn_prop_patch_t(svn_prop_patch_t self)"},
 	 { (char *)"svn_prop_patch_t_swigregister", svn_prop_patch_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"svn_diff_get_binary_diff_original_stream", _wrap_svn_diff_get_binary_diff_original_stream, METH_VARARGS, (char *)"svn_diff_get_binary_diff_original_stream(svn_diff_binary_patch_t const * bpatch, apr_pool_t result_pool) -> svn_stream_t *"},
+	 { (char *)"svn_diff_get_binary_diff_result_stream", _wrap_svn_diff_get_binary_diff_result_stream, METH_VARARGS, (char *)"svn_diff_get_binary_diff_result_stream(svn_diff_binary_patch_t const * bpatch, apr_pool_t result_pool) -> svn_stream_t *"},
 	 { (char *)"svn_patch_t_old_filename_set", _wrap_svn_patch_t_old_filename_set, METH_VARARGS, (char *)"svn_patch_t_old_filename_set(svn_patch_t self, char const * old_filename)"},
 	 { (char *)"svn_patch_t_old_filename_get", _wrap_svn_patch_t_old_filename_get, METH_VARARGS, (char *)"svn_patch_t_old_filename_get(svn_patch_t self) -> char const *"},
 	 { (char *)"svn_patch_t_new_filename_set", _wrap_svn_patch_t_new_filename_set, METH_VARARGS, (char *)"svn_patch_t_new_filename_set(svn_patch_t self, char const * new_filename)"},
@@ -10492,6 +10851,16 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"svn_patch_t_mergeinfo_get", _wrap_svn_patch_t_mergeinfo_get, METH_VARARGS, (char *)"svn_patch_t_mergeinfo_get(svn_patch_t self) -> apr_hash_t"},
 	 { (char *)"svn_patch_t_reverse_mergeinfo_set", _wrap_svn_patch_t_reverse_mergeinfo_set, METH_VARARGS, (char *)"svn_patch_t_reverse_mergeinfo_set(svn_patch_t self, apr_hash_t reverse_mergeinfo)"},
 	 { (char *)"svn_patch_t_reverse_mergeinfo_get", _wrap_svn_patch_t_reverse_mergeinfo_get, METH_VARARGS, (char *)"svn_patch_t_reverse_mergeinfo_get(svn_patch_t self) -> apr_hash_t"},
+	 { (char *)"svn_patch_t_binary_patch_set", _wrap_svn_patch_t_binary_patch_set, METH_VARARGS, (char *)"svn_patch_t_binary_patch_set(svn_patch_t self, svn_diff_binary_patch_t * binary_patch)"},
+	 { (char *)"svn_patch_t_binary_patch_get", _wrap_svn_patch_t_binary_patch_get, METH_VARARGS, (char *)"svn_patch_t_binary_patch_get(svn_patch_t self) -> svn_diff_binary_patch_t *"},
+	 { (char *)"svn_patch_t_old_executable_bit_set", _wrap_svn_patch_t_old_executable_bit_set, METH_VARARGS, (char *)"svn_patch_t_old_executable_bit_set(svn_patch_t self, svn_tristate_t old_executable_bit)"},
+	 { (char *)"svn_patch_t_old_executable_bit_get", _wrap_svn_patch_t_old_executable_bit_get, METH_VARARGS, (char *)"svn_patch_t_old_executable_bit_get(svn_patch_t self) -> svn_tristate_t"},
+	 { (char *)"svn_patch_t_new_executable_bit_set", _wrap_svn_patch_t_new_executable_bit_set, METH_VARARGS, (char *)"svn_patch_t_new_executable_bit_set(svn_patch_t self, svn_tristate_t new_executable_bit)"},
+	 { (char *)"svn_patch_t_new_executable_bit_get", _wrap_svn_patch_t_new_executable_bit_get, METH_VARARGS, (char *)"svn_patch_t_new_executable_bit_get(svn_patch_t self) -> svn_tristate_t"},
+	 { (char *)"svn_patch_t_old_symlink_bit_set", _wrap_svn_patch_t_old_symlink_bit_set, METH_VARARGS, (char *)"svn_patch_t_old_symlink_bit_set(svn_patch_t self, svn_tristate_t old_symlink_bit)"},
+	 { (char *)"svn_patch_t_old_symlink_bit_get", _wrap_svn_patch_t_old_symlink_bit_get, METH_VARARGS, (char *)"svn_patch_t_old_symlink_bit_get(svn_patch_t self) -> svn_tristate_t"},
+	 { (char *)"svn_patch_t_new_symlink_bit_set", _wrap_svn_patch_t_new_symlink_bit_set, METH_VARARGS, (char *)"svn_patch_t_new_symlink_bit_set(svn_patch_t self, svn_tristate_t new_symlink_bit)"},
+	 { (char *)"svn_patch_t_new_symlink_bit_get", _wrap_svn_patch_t_new_symlink_bit_get, METH_VARARGS, (char *)"svn_patch_t_new_symlink_bit_get(svn_patch_t self) -> svn_tristate_t"},
 	 { (char *)"new_svn_patch_t", _wrap_new_svn_patch_t, METH_VARARGS, (char *)"new_svn_patch_t() -> svn_patch_t"},
 	 { (char *)"delete_svn_patch_t", _wrap_delete_svn_patch_t, METH_VARARGS, (char *)"delete_svn_patch_t(svn_patch_t self)"},
 	 { (char *)"svn_patch_t_swigregister", svn_patch_t_swigregister, METH_VARARGS, NULL},
@@ -10503,6 +10872,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"svn_diff_close_patch_file", _wrap_svn_diff_close_patch_file, METH_VARARGS, (char *)"svn_diff_close_patch_file(svn_patch_file_t * patch_file, apr_pool_t scratch_pool) -> svn_error_t"},
 	 { (char *)"svn_diff_t_swigregister", svn_diff_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_diff_hunk_t_swigregister", svn_diff_hunk_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"svn_diff_binary_patch_t_swigregister", svn_diff_binary_patch_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_patch_file_t_swigregister", svn_patch_file_t_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_diff_fns2_invoke_datasources_open", _wrap_svn_diff_fns2_invoke_datasources_open, METH_VARARGS, (char *)"\n"
 		"svn_diff_fns2_invoke_datasources_open(svn_diff_fns2_t _obj, void * diff_baton, apr_off_t * prefix_lines, apr_off_t * suffix_lines, \n"
@@ -10586,12 +10956,14 @@ static swig_type_info _swigt__p_svn_auth_iterstate_t = {"_p_svn_auth_iterstate_t
 static swig_type_info _swigt__p_svn_auth_provider_object_t = {"_p_svn_auth_provider_object_t", "struct svn_auth_provider_object_t *|svn_auth_provider_object_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_provider_t = {"_p_svn_auth_provider_t", "struct svn_auth_provider_t *|svn_auth_provider_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_ssl_server_cert_info_t = {"_p_svn_auth_ssl_server_cert_info_t", "struct svn_auth_ssl_server_cert_info_t *|svn_auth_ssl_server_cert_info_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_cache_config_t = {"_p_svn_cache_config_t", "struct svn_cache_config_t *|svn_cache_config_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_ctx_t = {"_p_svn_checksum_ctx_t", "struct svn_checksum_ctx_t *|svn_checksum_ctx_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_kind_t = {"_p_svn_checksum_kind_t", "enum svn_checksum_kind_t *|svn_checksum_kind_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_t = {"_p_svn_checksum_t", "struct svn_checksum_t *|svn_checksum_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_commit_info_t = {"_p_svn_commit_info_t", "struct svn_commit_info_t *|svn_commit_info_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_config_t = {"_p_svn_config_t", "struct svn_config_t *|svn_config_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_depth_t = {"_p_svn_depth_t", "enum svn_depth_t *|svn_depth_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_diff_binary_patch_t = {"_p_svn_diff_binary_patch_t", "struct svn_diff_binary_patch_t *|svn_diff_binary_patch_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_diff_conflict_display_style_t = {"_p_svn_diff_conflict_display_style_t", "enum svn_diff_conflict_display_style_t *|svn_diff_conflict_display_style_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_diff_datasource_e = {"_p_svn_diff_datasource_e", "enum svn_diff_datasource_e *|svn_diff_datasource_e *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_diff_file_ignore_space_t = {"_p_svn_diff_file_ignore_space_t", "enum svn_diff_file_ignore_space_t *|svn_diff_file_ignore_space_t *", 0, 0, (void*)0, 0};
@@ -10678,12 +11050,14 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_auth_provider_object_t,
   &_swigt__p_svn_auth_provider_t,
   &_swigt__p_svn_auth_ssl_server_cert_info_t,
+  &_swigt__p_svn_cache_config_t,
   &_swigt__p_svn_checksum_ctx_t,
   &_swigt__p_svn_checksum_kind_t,
   &_swigt__p_svn_checksum_t,
   &_swigt__p_svn_commit_info_t,
   &_swigt__p_svn_config_t,
   &_swigt__p_svn_depth_t,
+  &_swigt__p_svn_diff_binary_patch_t,
   &_swigt__p_svn_diff_conflict_display_style_t,
   &_swigt__p_svn_diff_datasource_e,
   &_swigt__p_svn_diff_file_ignore_space_t,
@@ -10770,12 +11144,14 @@ static swig_cast_info _swigc__p_svn_auth_iterstate_t[] = {  {&_swigt__p_svn_auth
 static swig_cast_info _swigc__p_svn_auth_provider_object_t[] = {  {&_swigt__p_svn_auth_provider_object_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_provider_t[] = {  {&_swigt__p_svn_auth_provider_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_ssl_server_cert_info_t[] = {  {&_swigt__p_svn_auth_ssl_server_cert_info_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_cache_config_t[] = {  {&_swigt__p_svn_cache_config_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_ctx_t[] = {  {&_swigt__p_svn_checksum_ctx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_kind_t[] = {  {&_swigt__p_svn_checksum_kind_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_t[] = {  {&_swigt__p_svn_checksum_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_commit_info_t[] = {  {&_swigt__p_svn_commit_info_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_config_t[] = {  {&_swigt__p_svn_config_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_depth_t[] = {  {&_swigt__p_svn_depth_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_diff_binary_patch_t[] = {  {&_swigt__p_svn_diff_binary_patch_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_diff_conflict_display_style_t[] = {  {&_swigt__p_svn_diff_conflict_display_style_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_diff_datasource_e[] = {  {&_swigt__p_svn_diff_datasource_e, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_diff_file_ignore_space_t[] = {  {&_swigt__p_svn_diff_file_ignore_space_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -10862,12 +11238,14 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_auth_provider_object_t,
   _swigc__p_svn_auth_provider_t,
   _swigc__p_svn_auth_ssl_server_cert_info_t,
+  _swigc__p_svn_cache_config_t,
   _swigc__p_svn_checksum_ctx_t,
   _swigc__p_svn_checksum_kind_t,
   _swigc__p_svn_checksum_t,
   _swigc__p_svn_commit_info_t,
   _swigc__p_svn_config_t,
   _swigc__p_svn_depth_t,
+  _swigc__p_svn_diff_binary_patch_t,
   _swigc__p_svn_diff_conflict_display_style_t,
   _swigc__p_svn_diff_datasource_e,
   _swigc__p_svn_diff_file_ignore_space_t,

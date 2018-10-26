@@ -37,7 +37,7 @@
 #include "private/svn_sqlite.h"
 #include "private/svn_mutex.h"
 
-#include "id.h"
+#include "rev_file.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -82,8 +82,6 @@ extern "C" {
 /* Names of special files and file extensions for transactions */
 #define PATH_CHANGES       "changes"       /* Records changes made so far */
 #define PATH_TXN_PROPS     "props"         /* Transaction properties */
-#define PATH_TXN_PROPS_FINAL "props-final" /* Final transaction properties
-                                              before moving to revprops */
 #define PATH_NEXT_IDS      "next-ids"      /* Next temporary ID assignments */
 #define PATH_PREFIX_NODE   "node."         /* Prefix for node filename */
 #define PATH_EXT_TXN       ".txn"          /* Extension of txn dir */
@@ -194,6 +192,11 @@ extern "C" {
 #else
 #define SVN_FS_FS__USE_LOCK_MUTEX 0
 #endif
+
+/* Maximum number of changes we deliver per request when listing the
+   changed paths for a given revision.   Anything > 0 will do.
+   At 100..300 bytes per entry, this limits the allocation to ~30kB. */
+#define SVN_FS_FS__CHANGES_BLOCK_SIZE 100
 
 /* Private FSFS-specific data shared between all svn_txn_t objects that
    relate to a particular transaction in a filesystem (as identified
@@ -353,6 +356,15 @@ typedef struct fs_fs_data_t
      rep key (revision/offset) to svn_stringbuf_t. */
   svn_cache__t *fulltext_cache;
 
+  /* The current prefix to be used for revprop cache entries.
+     If this is 0, a new unique prefix must be chosen. */
+  apr_uint64_t revprop_prefix;
+
+  /* Revision property cache.  Maps from (rev,prefix) to apr_hash_t.
+     Unparsed svn_string_t representations of the serialized hash
+     will be written to the cache but the getter returns apr_hash_t. */
+  svn_cache__t *revprop_cache;
+
   /* Node properties cache.  Maps from rep key to apr_hash_t. */
   svn_cache__t *properties_cache;
 
@@ -376,8 +388,8 @@ typedef struct fs_fs_data_t
   /* Cache for node_revision_t objects; the key is (revision, item_index) */
   svn_cache__t *node_revision_cache;
 
-  /* Cache for change lists as APR arrays of change_t * objects; the key
-     is the revision */
+  /* Cache for change lists n blocks as svn_fs_fs__changes_list_t * objects;
+     the key is the (revision, first-element-in-block) pair. */
   svn_cache__t *changes_cache;
 
   /* Cache for svn_fs_fs__rep_header_t objects; the key is a
@@ -469,6 +481,9 @@ typedef struct fs_fs_data_t
      or dump / load cycles). */
   const char *instance_id;
 
+  /* Ensure that all filesystem changes are written to disk. */
+  svn_boolean_t flush_to_disk;
+
   /* Pointer to svn_fs_open. */
   svn_error_t *(*svn_fs_open_)(svn_fs_t **, const char *, apr_hash_t *,
                                apr_pool_t *, apr_pool_t *);
@@ -515,7 +530,7 @@ typedef struct representation_t
   /* Revision where this representation is located. */
   svn_revnum_t revision;
 
-  /* Item index with the the revision. */
+  /* Item index with the revision. */
   apr_uint64_t item_index;
 
   /* The size of the representation in bytes as seen in the revision
@@ -523,7 +538,14 @@ typedef struct representation_t
   svn_filesize_t size;
 
   /* The size of the fulltext of the representation. If this is 0,
-   * the fulltext size is equal to representation size in the rev file, */
+   * for a plain rep, the real fulltext size is equal to the SIZE field.
+   * For a delta rep, this field is always the real fulltext size.
+   *
+   * Note that svn_fs_fs__fixup_expanded_size() checks for these special
+   * cases and ensures that this field contains the actual value.  We call
+   * it early after reading a representation struct, so most code does not
+   * have to worry about it.
+   */
   svn_filesize_t expanded_size;
 
   /* Is this a representation (still) within a transaction? */
@@ -568,8 +590,8 @@ typedef struct node_revision_t
   svn_revnum_t copyroot_rev;
   const char *copyroot_path;
 
-  /* number of predecessors this node revision has (recursively), or
-     -1 if not known (for backward compatibility). */
+  /* Number of predecessors this node revision has (recursively).
+     A difference from the BDB backend is that it cannot be -1. */
   int predecessor_count;
 
   /* representation key for this node's properties.  may be NULL if
@@ -605,6 +627,45 @@ typedef struct change_t
   /* API compatible change description */
   svn_fs_path_change2_t info;
 } change_t;
+
+
+/*** Context for reading changed paths lists iteratively. */
+typedef struct svn_fs_fs__changes_context_t
+{
+  /* Repository to fetch from. */
+  svn_fs_t *fs;
+
+  /* Revision that we read from. */
+  svn_revnum_t revision;
+
+  /* Revision file object to use when needed.  NULL until the first access. */
+  svn_fs_fs__revision_file_t *revision_file;
+
+  /* Pool to create REVISION_FILE in. */
+  apr_pool_t *rev_file_pool;
+
+  /* Index of the next change to fetch. */
+  apr_size_t next;
+
+  /* Offset, within the changed paths list on disk, of the next change to
+     fetch. */
+  apr_off_t next_offset;
+
+  /* Has the end of the list been reached? */
+  svn_boolean_t eol;
+
+} svn_fs_fs__changes_context_t;
+
+/*** Directory (only used at the cache interface) ***/
+typedef struct svn_fs_fs__dir_data_t
+{
+  /* Contents, i.e. all directory entries, sorted by name. */
+  apr_array_header_t *entries;
+
+  /* SVN_INVALID_FILESIZE for committed data, otherwise the length of the
+   * in-txn on-disk representation of that directory. */
+  svn_filesize_t txn_filesize;
+} svn_fs_fs__dir_data_t;
 
 
 #ifdef __cplusplus

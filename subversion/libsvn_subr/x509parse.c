@@ -691,8 +691,7 @@ x509_get_ext(apr_array_header_t *dnsnames,
           else
             {
               /* We found a dNSName entry */
-              x509_buf *dnsname = apr_palloc(dnsnames->pool,
-                                             sizeof(x509_buf));
+              x509_buf *dnsname = apr_palloc(dnsnames->pool, sizeof(*dnsname));
               dnsname->tag = ASN1_IA5_STRING; /* implicit based on dNSName */
               dnsname->len = len;
               dnsname->p = *p;
@@ -919,8 +918,7 @@ x509_name_to_certinfo(apr_array_header_t **result,
     svn_x509_name_attr_t *attr = apr_palloc(result_pool, sizeof(svn_x509_name_attr_t));
 
     attr->oid_len = name->oid.len;
-    attr->oid = apr_palloc(result_pool, attr->oid_len);
-    memcpy(attr->oid, name->oid.p, attr->oid_len);
+    attr->oid = apr_pmemdup(result_pool, name->oid.p, attr->oid_len);
     attr->utf8_value = x509name_to_utf8_string(name, result_pool);
     if (!attr->utf8_value)
       /* this should never happen */

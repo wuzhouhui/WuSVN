@@ -115,7 +115,7 @@ class svn_diff_fns2_t:
     __swig_setmethods__["token_discard_all"] = _diff.svn_diff_fns2_t_token_discard_all_set
     __swig_getmethods__["token_discard_all"] = _diff.svn_diff_fns2_t_token_discard_all_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_diff_fns2_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -134,13 +134,13 @@ class svn_diff_fns2_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -149,9 +149,9 @@ class svn_diff_fns2_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -204,7 +204,7 @@ class svn_diff_fns_t:
     __swig_setmethods__["token_discard_all"] = _diff.svn_diff_fns_t_token_discard_all_set
     __swig_getmethods__["token_discard_all"] = _diff.svn_diff_fns_t_token_discard_all_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_diff_fns_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -223,13 +223,13 @@ class svn_diff_fns_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -238,9 +238,9 @@ class svn_diff_fns_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -323,7 +323,7 @@ class svn_diff_output_fns_t:
     __swig_setmethods__["output_conflict"] = _diff.svn_diff_output_fns_t_output_conflict_set
     __swig_getmethods__["output_conflict"] = _diff.svn_diff_output_fns_t_output_conflict_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_diff_output_fns_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -342,13 +342,13 @@ class svn_diff_output_fns_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -357,9 +357,9 @@ class svn_diff_output_fns_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -422,7 +422,7 @@ class svn_diff_file_options_t:
     __swig_setmethods__["context_size"] = _diff.svn_diff_file_options_t_context_size_set
     __swig_getmethods__["context_size"] = _diff.svn_diff_file_options_t_context_size_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_diff_file_options_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -441,13 +441,13 @@ class svn_diff_file_options_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -456,9 +456,9 @@ class svn_diff_file_options_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -731,7 +731,7 @@ class svn_prop_patch_t:
     __swig_setmethods__["hunks"] = _diff.svn_prop_patch_t_hunks_set
     __swig_getmethods__["hunks"] = _diff.svn_prop_patch_t_hunks_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_prop_patch_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -750,13 +750,13 @@ class svn_prop_patch_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -765,9 +765,9 @@ class svn_prop_patch_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -782,6 +782,14 @@ class svn_prop_patch_t:
 svn_prop_patch_t_swigregister = _diff.svn_prop_patch_t_swigregister
 svn_prop_patch_t_swigregister(svn_prop_patch_t)
 
+
+def svn_diff_get_binary_diff_original_stream(*args):
+  """svn_diff_get_binary_diff_original_stream(svn_diff_binary_patch_t const * bpatch, apr_pool_t result_pool) -> svn_stream_t *"""
+  return _diff.svn_diff_get_binary_diff_original_stream(*args)
+
+def svn_diff_get_binary_diff_result_stream(*args):
+  """svn_diff_get_binary_diff_result_stream(svn_diff_binary_patch_t const * bpatch, apr_pool_t result_pool) -> svn_stream_t *"""
+  return _diff.svn_diff_get_binary_diff_result_stream(*args)
 class svn_patch_t:
     """Proxy of C svn_patch_t struct"""
     __swig_setmethods__ = {}
@@ -805,8 +813,18 @@ class svn_patch_t:
     __swig_getmethods__["mergeinfo"] = _diff.svn_patch_t_mergeinfo_get
     __swig_setmethods__["reverse_mergeinfo"] = _diff.svn_patch_t_reverse_mergeinfo_set
     __swig_getmethods__["reverse_mergeinfo"] = _diff.svn_patch_t_reverse_mergeinfo_get
+    __swig_setmethods__["binary_patch"] = _diff.svn_patch_t_binary_patch_set
+    __swig_getmethods__["binary_patch"] = _diff.svn_patch_t_binary_patch_get
+    __swig_setmethods__["old_executable_bit"] = _diff.svn_patch_t_old_executable_bit_set
+    __swig_getmethods__["old_executable_bit"] = _diff.svn_patch_t_old_executable_bit_get
+    __swig_setmethods__["new_executable_bit"] = _diff.svn_patch_t_new_executable_bit_set
+    __swig_getmethods__["new_executable_bit"] = _diff.svn_patch_t_new_executable_bit_get
+    __swig_setmethods__["old_symlink_bit"] = _diff.svn_patch_t_old_symlink_bit_set
+    __swig_getmethods__["old_symlink_bit"] = _diff.svn_patch_t_old_symlink_bit_get
+    __swig_setmethods__["new_symlink_bit"] = _diff.svn_patch_t_new_symlink_bit_set
+    __swig_getmethods__["new_symlink_bit"] = _diff.svn_patch_t_new_symlink_bit_get
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_patch_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -825,13 +843,13 @@ class svn_patch_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -840,9 +858,9 @@ class svn_patch_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -881,7 +899,7 @@ class svn_diff_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_diff_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -900,13 +918,13 @@ class svn_diff_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -915,9 +933,9 @@ class svn_diff_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
@@ -934,7 +952,7 @@ class svn_diff_hunk_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_diff_hunk_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -953,13 +971,13 @@ class svn_diff_hunk_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -968,15 +986,68 @@ class svn_diff_hunk_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)
 
 svn_diff_hunk_t_swigregister = _diff.svn_diff_hunk_t_swigregister
 svn_diff_hunk_t_swigregister(svn_diff_hunk_t)
+
+class svn_diff_binary_patch_t:
+    """Proxy of C svn_diff_binary_patch_t struct"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_diff_binary_patch_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_diff_binary_patch_t, name)
+    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+      # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+svn_diff_binary_patch_t_swigregister = _diff.svn_diff_binary_patch_t_swigregister
+svn_diff_binary_patch_t_swigregister(svn_diff_binary_patch_t)
 
 class svn_patch_file_t:
     """Proxy of C svn_patch_file_t struct"""
@@ -987,7 +1058,7 @@ class svn_patch_file_t:
     def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined")
     __repr__ = _swig_repr
     def set_parent_pool(self, parent_pool=None):
-      """Create a new proxy object for svn_patch_file_t"""
+      """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
       self.__dict__["_parent_pool"] = \
         parent_pool or libsvn.core.application_pool;
@@ -1006,13 +1077,13 @@ class svn_patch_file_t:
 
       value = _swig_getattr(self, self.__class__, name)
 
-
-
+      # If we got back a different object than we have, we need to copy all our
+      # metadata into it, so that it looks identical
       members = self.__dict__.get("_members")
       if members is not None:
         _copy_metadata_deep(value, members.get(name))
-          
 
+      # Verify that the new object is good
       _assert_valid_deep(value)
 
       return value
@@ -1021,9 +1092,9 @@ class svn_patch_file_t:
       """Set an attribute on this object"""
       self.assert_valid()
 
-
-
-
+      # Save a copy of the object, so that the garbage
+      # collector won't kill the object while it's in
+      # SWIG-land
       self.__dict__.setdefault("_members",{})[name] = value
 
       return _swig_setattr(self, self.__class__, name, value)

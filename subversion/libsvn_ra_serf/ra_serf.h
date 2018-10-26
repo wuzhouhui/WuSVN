@@ -26,7 +26,6 @@
 
 
 #include <serf.h>
-#include <expat.h>  /* for XML_Parser  */
 #include <apr_uri.h>
 
 #include "svn_types.h"
@@ -114,7 +113,7 @@ struct svn_ra_serf__session_t {
   /* Are we using ssl */
   svn_boolean_t using_ssl;
 
-  /* Should we ask for compressed responses? */
+  /* Should we use compression for network transmissions? */
   svn_boolean_t using_compression;
 
   /* The user agent string */
@@ -136,6 +135,10 @@ struct svn_ra_serf__session_t {
   /* The server is not Apache/mod_dav_svn (directly) and only supports
      HTTP/1.0. Thus, we cannot send chunked requests.  */
   svn_boolean_t http10;
+
+  /* We are talking to the server via http/2. Responses of scheduled
+     requests may come in any order */
+  svn_boolean_t http20;
 
   /* Should we use Transfer-Encoding: chunked for HTTP/1.1 servers. */
   svn_boolean_t using_chunked_requests;
@@ -255,6 +258,9 @@ struct svn_ra_serf__session_t {
   /* Indicates whether the server supports issuing replay REPORTs
      against rev resources (children of `rev_stub', elsestruct). */
   svn_boolean_t supports_rev_rsrc_replay;
+
+  /* Indicates whether the server can understand svndiff version 1. */
+  svn_boolean_t supports_svndiff1;
 };
 
 #define SVN_RA_SERF__HAVE_HTTPV2_SUPPORT(sess) ((sess)->me_resource != NULL)
@@ -1515,6 +1521,11 @@ svn_ra_serf__error_on_status(serf_status_line sline,
 svn_error_t *
 svn_ra_serf__unexpected_status(svn_ra_serf__handler_t *handler);
 
+/* Make sure handler is no longer scheduled on its connection. Resetting
+   the connection if necessary */
+void
+svn_ra_serf__unschedule_handler(svn_ra_serf__handler_t *handler);
+
 
 /* ###? */
 svn_error_t *
@@ -1556,6 +1567,39 @@ svn_error_t *
 svn_ra_serf__uri_parse(apr_uri_t *uri,
                        const char *url_str,
                        apr_pool_t *result_pool);
+
+
+/* Default limit for in-memory size of a request body. */
+#define SVN_RA_SERF__REQUEST_BODY_IN_MEM_SIZE 256 * 1024
+
+/* An opaque structure used to prepare a request body. */
+typedef struct svn_ra_serf__request_body_t svn_ra_serf__request_body_t;
+
+/* Constructor for svn_ra_serf__request_body_t.  Creates a new writable
+   buffer for the request body.  Request bodies under IN_MEMORY_SIZE
+   bytes will be held in memory, otherwise, the body content will be
+   spilled to a temporary file. */
+svn_ra_serf__request_body_t *
+svn_ra_serf__request_body_create(apr_size_t in_memory_size,
+                                 apr_pool_t *result_pool);
+
+/* Get the writable stream associated with BODY. */
+svn_stream_t *
+svn_ra_serf__request_body_get_stream(svn_ra_serf__request_body_t *body);
+
+/* Get a svn_ra_serf__request_body_delegate_t and baton for BODY. */
+void
+svn_ra_serf__request_body_get_delegate(svn_ra_serf__request_body_delegate_t *del,
+                                       void **baton,
+                                       svn_ra_serf__request_body_t *body);
+
+/* Release intermediate resources associated with BODY.  These resources
+   (such as open file handles) will be automatically released when the
+   pool used to construct BODY is cleared or destroyed, but this optional
+   function allows doing that explicitly. */
+svn_error_t *
+svn_ra_serf__request_body_cleanup(svn_ra_serf__request_body_t *body,
+                                  apr_pool_t *scratch_pool);
 
 
 #if defined(SVN_DEBUG)

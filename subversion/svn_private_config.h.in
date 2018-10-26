@@ -145,6 +145,9 @@
 /* Defined if plaintext password/passphrase storage is disabled */
 #undef SVN_DISABLE_PLAINTEXT_PASSWORD_STORAGE
 
+/* Shared library file name suffix format */
+#undef SVN_DSO_SUFFIX_FMT
+
 /* The desired major version for the Berkeley DB */
 #undef SVN_FS_WANT_DB_MAJOR
 
@@ -190,15 +193,6 @@
 /* Defined if support for Serf is enabled */
 #undef SVN_HAVE_SERF
 
-/* Defined if libsvn_client should link against libsvn_ra_local */
-#undef SVN_LIBSVN_CLIENT_LINKS_RA_LOCAL
-
-/* Defined if libsvn_client should link against libsvn_ra_serf */
-#undef SVN_LIBSVN_CLIENT_LINKS_RA_SERF
-
-/* Defined if libsvn_client should link against libsvn_ra_svn */
-#undef SVN_LIBSVN_CLIENT_LINKS_RA_SVN
-
 /* Defined if libsvn_fs should link against libsvn_fs_base */
 #undef SVN_LIBSVN_FS_LINKS_FS_BASE
 
@@ -207,6 +201,15 @@
 
 /* Defined if libsvn_fs should link against libsvn_fs_x */
 #undef SVN_LIBSVN_FS_LINKS_FS_X
+
+/* Defined if libsvn_ra should link against libsvn_ra_local */
+#undef SVN_LIBSVN_RA_LINKS_RA_LOCAL
+
+/* Defined if libsvn_ra should link against libsvn_ra_serf */
+#undef SVN_LIBSVN_RA_LINKS_RA_SERF
+
+/* Defined if libsvn_ra should link against libsvn_ra_svn */
+#undef SVN_LIBSVN_RA_LINKS_RA_SVN
 
 /* Defined to be the path to the installed locale dirs */
 #undef SVN_LOCALE_DIR

@@ -163,7 +163,8 @@ get_prog_name() {
 }
 
 # Don't assume sbin is in the PATH.
-# ### Presumably this is used to locate /usr/sbin/apxs or /usr/sbin/apache2
+# This is used to locate apxs when the script is invoked manually; when
+# invoked by 'make davautocheck' the APXS environment variable is set.
 PATH="$PATH:/usr/sbin:/usr/local/sbin"
 
 # Find the source and build directories. The build dir can be found if it is
@@ -320,12 +321,18 @@ fi
 # Stop any previous instances, os we can re-use the port.
 if [ -x $STOPSCRIPT ]; then $STOPSCRIPT ; sleep 1; fi
 
+ss > /dev/null 2>&1 || netstat > /dev/null 2>&1 || fail "unable to find ss or netstat required to find a free port"
+
 HTTPD_PORT=3691
-while netstat -an | grep $HTTPD_PORT | grep 'LISTEN' >/dev/null; do
+while \
+  (ss -ltn sport = :$HTTPD_PORT 2>&1 | grep :$HTTPD_PORT > /dev/null ) \
+  || \
+  (netstat -an 2>&1 | grep $HTTPD_PORT | grep 'LISTEN' > /dev/null ) \
+  do
   HTTPD_PORT=$(( HTTPD_PORT + 1 ))
   if [ $HTTPD_PORT -eq 65536 ]; then
     # Most likely the loop condition is true regardless of $HTTPD_PORT
-    fail "netstat claims you have no free ports for httpd to listen on."
+    fail "ss/netstat claim you have no free ports for httpd to listen on."
   fi
 done
 HTTPD_ROOT="$ABS_BUILDDIR/subversion/tests/cmdline/httpd-$(date '+%Y%m%d-%H%M%S')"
@@ -560,7 +567,7 @@ CustomLog           "$HTTPD_ROOT/ops" "%t %u %{SVN-REPOS-NAME}e %{SVN-ACTION}e" 
   </IfModule>
   <IfModule !mod_authz_core.c>
     Allow from all
-  </IfMOdule>
+  </IfModule>
   ${SVN_PATH_AUTHZ_LINE}
 </Location>
 <Location /authz-test-work/mixed>
@@ -589,7 +596,7 @@ CustomLog           "$HTTPD_ROOT/ops" "%t %u %{SVN-REPOS-NAME}e %{SVN-ACTION}e" 
   AuthUserFile      $HTTPD_USERS
   Require           valid-user
   AuthzSVNNoAuthWhenAnonymousAllowed On
-  SVNPathAuthz      On
+  SVNPathAuthz On
 </Location>
 <Location /authz-test-work/authn>
   DAV               svn
@@ -616,21 +623,7 @@ CustomLog           "$HTTPD_ROOT/ops" "%t %u %{SVN-REPOS-NAME}e %{SVN-ACTION}e" 
   AuthUserFile      $HTTPD_USERS
   Require           valid-user
   AuthzSVNAnonymous Off
-  SVNPathAuthz      On
-</Location>
-<Location /authz-test-work/authn-lcuser>
-  DAV               svn
-  SVNParentPath     "$ABS_BUILDDIR/subversion/tests/cmdline/svn-test-work/local_tmp"
-  AuthzSVNAccessFile "$ABS_BUILDDIR/subversion/tests/cmdline/svn-test-work/authz"
-  SVNAdvertiseV2Protocol ${ADVERTISE_V2_PROTOCOL}
-  SVNCacheRevProps  ${CACHE_REVPROPS_SETTING}
-  SVNListParentPath On
-  AuthType          Basic
-  AuthName          "Subversion Repository"
-  AuthUserFile      $HTTPD_USERS
-  Require           valid-user
-  AuthzForceUsernameCase Lower
-  ${SVN_PATH_AUTHZ_LINE}
+  SVNPathAuthz On
 </Location>
 <Location /authz-test-work/authn-lcuser>
   DAV               svn
@@ -659,7 +652,7 @@ CustomLog           "$HTTPD_ROOT/ops" "%t %u %{SVN-REPOS-NAME}e %{SVN-ACTION}e" 
   AuthGroupFile     $HTTPD_GROUPS
   Require           group random
   AuthzSVNAuthoritative Off
-  SVNPathAuthz      On
+  SVNPathAuthz On
 </Location>
 <IfModule mod_authz_core.c>
   <Location /authz-test-work/sallrany>
@@ -764,12 +757,7 @@ if [ $# -eq 1 ] && [ "x$1" = 'x--gdb' ]; then
   exit
 fi
 
-
-if type time > /dev/null; then
-  TIME_CMD=time
-else
-  TIME_CMD=""
-fi
+if type time > /dev/null ; then TIME_CMD() { time "$@"; } ; else TIME_CMD() { "$@"; } ; fi
 
 MAKE=${MAKE:-make}
 
@@ -788,13 +776,13 @@ else
 fi
 
 if [ $# = 0 ]; then
-  $TIME_CMD "$MAKE" check "BASE_URL=$BASE_URL" $SSL_MAKE_VAR
+  TIME_CMD "$MAKE" check "BASE_URL=$BASE_URL" $SSL_MAKE_VAR
   r=$?
 else
   (cd "$ABS_BUILDDIR/subversion/tests/cmdline/"
   TEST="$1"
   shift
-  $TIME_CMD "$ABS_SRCDIR/subversion/tests/cmdline/${TEST}_tests.py" "--url=$BASE_URL" $SSL_TEST_ARG "$@")
+  TIME_CMD "$ABS_SRCDIR/subversion/tests/cmdline/${TEST}_tests.py" "--url=$BASE_URL" $SSL_TEST_ARG "$@")
   r=$?
 fi
 

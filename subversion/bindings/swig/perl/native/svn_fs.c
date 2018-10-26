@@ -1490,123 +1490,130 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_char swig_types[5]
 #define SWIGTYPE_p_f_long_p_void_p_apr_pool_t__void swig_types[6]
 #define SWIGTYPE_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[7]
-#define SWIGTYPE_p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[8]
-#define SWIGTYPE_p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t swig_types[9]
-#define SWIGTYPE_p_f_p_void__p_svn_error_t swig_types[10]
-#define SWIGTYPE_p_f_p_void_apr_int64_t_svn_fs_pack_notify_action_t_p_apr_pool_t__p_svn_error_t swig_types[11]
-#define SWIGTYPE_p_f_p_void_apr_uint64_t_svn_fs_upgrade_notify_action_t_p_apr_pool_t__p_svn_error_t swig_types[12]
-#define SWIGTYPE_p_f_p_void_long_long_p_apr_pool_t__void swig_types[13]
-#define SWIGTYPE_p_f_p_void_p_apr_pool_t__p_svn_error_t swig_types[14]
-#define SWIGTYPE_p_f_p_void_p_q_const__char_p_q_const__svn_lock_t_p_svn_error_t_p_apr_pool_t__p_svn_error_t swig_types[15]
-#define SWIGTYPE_p_f_p_void_p_struct_svn_error_t__void swig_types[16]
-#define SWIGTYPE_p_f_p_void_p_svn_lock_t_p_apr_pool_t__p_svn_error_t swig_types[17]
-#define SWIGTYPE_p_int swig_types[18]
-#define SWIGTYPE_p_long swig_types[19]
-#define SWIGTYPE_p_p_apr_array_header_t swig_types[20]
-#define SWIGTYPE_p_p_apr_hash_t swig_types[21]
-#define SWIGTYPE_p_p_char swig_types[22]
-#define SWIGTYPE_p_p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t swig_types[23]
-#define SWIGTYPE_p_p_svn_checksum_t swig_types[24]
-#define SWIGTYPE_p_p_svn_fs_access_t swig_types[25]
-#define SWIGTYPE_p_p_svn_fs_history_t swig_types[26]
-#define SWIGTYPE_p_p_svn_fs_id_t swig_types[27]
-#define SWIGTYPE_p_p_svn_fs_info_placeholder_t swig_types[28]
-#define SWIGTYPE_p_p_svn_fs_root_t swig_types[29]
-#define SWIGTYPE_p_p_svn_fs_t swig_types[30]
-#define SWIGTYPE_p_p_svn_fs_txn_t swig_types[31]
-#define SWIGTYPE_p_p_svn_lock_t swig_types[32]
-#define SWIGTYPE_p_p_svn_stream_t swig_types[33]
-#define SWIGTYPE_p_p_svn_string_t swig_types[34]
-#define SWIGTYPE_p_p_svn_txdelta_stream_t swig_types[35]
-#define SWIGTYPE_p_p_svn_version_t swig_types[36]
-#define SWIGTYPE_p_p_void swig_types[37]
-#define SWIGTYPE_p_svn_auth_baton_t swig_types[38]
-#define SWIGTYPE_p_svn_auth_cred_simple_t swig_types[39]
-#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_pw_t swig_types[40]
-#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_t swig_types[41]
-#define SWIGTYPE_p_svn_auth_cred_ssl_server_trust_t swig_types[42]
-#define SWIGTYPE_p_svn_auth_cred_username_t swig_types[43]
-#define SWIGTYPE_p_svn_auth_iterstate_t swig_types[44]
-#define SWIGTYPE_p_svn_auth_provider_object_t swig_types[45]
-#define SWIGTYPE_p_svn_auth_provider_t swig_types[46]
-#define SWIGTYPE_p_svn_auth_ssl_server_cert_info_t swig_types[47]
-#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[48]
-#define SWIGTYPE_p_svn_checksum_kind_t swig_types[49]
-#define SWIGTYPE_p_svn_checksum_t swig_types[50]
-#define SWIGTYPE_p_svn_commit_info_t swig_types[51]
-#define SWIGTYPE_p_svn_config_t swig_types[52]
-#define SWIGTYPE_p_svn_delta_editor_t swig_types[53]
-#define SWIGTYPE_p_svn_depth_t swig_types[54]
-#define SWIGTYPE_p_svn_diff_conflict_display_style_t swig_types[55]
-#define SWIGTYPE_p_svn_diff_datasource_e swig_types[56]
-#define SWIGTYPE_p_svn_diff_file_ignore_space_t swig_types[57]
-#define SWIGTYPE_p_svn_diff_file_options_t swig_types[58]
-#define SWIGTYPE_p_svn_diff_fns2_t swig_types[59]
-#define SWIGTYPE_p_svn_diff_fns_t swig_types[60]
-#define SWIGTYPE_p_svn_diff_hunk_t swig_types[61]
-#define SWIGTYPE_p_svn_diff_operation_kind_e swig_types[62]
-#define SWIGTYPE_p_svn_diff_output_fns_t swig_types[63]
-#define SWIGTYPE_p_svn_diff_t swig_types[64]
-#define SWIGTYPE_p_svn_dirent_t swig_types[65]
-#define SWIGTYPE_p_svn_errno_t swig_types[66]
-#define SWIGTYPE_p_svn_error_t swig_types[67]
-#define SWIGTYPE_p_svn_fs_access_t swig_types[68]
-#define SWIGTYPE_p_svn_fs_dirent_t swig_types[69]
-#define SWIGTYPE_p_svn_fs_fsfs_info_t swig_types[70]
-#define SWIGTYPE_p_svn_fs_fsx_info_t swig_types[71]
-#define SWIGTYPE_p_svn_fs_history_t swig_types[72]
-#define SWIGTYPE_p_svn_fs_id_t swig_types[73]
-#define SWIGTYPE_p_svn_fs_info_placeholder_t swig_types[74]
-#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[75]
-#define SWIGTYPE_p_svn_fs_node_relation_t swig_types[76]
-#define SWIGTYPE_p_svn_fs_pack_notify_action_t swig_types[77]
-#define SWIGTYPE_p_svn_fs_path_change2_t swig_types[78]
-#define SWIGTYPE_p_svn_fs_path_change_kind_t swig_types[79]
-#define SWIGTYPE_p_svn_fs_path_change_t swig_types[80]
-#define SWIGTYPE_p_svn_fs_root_t swig_types[81]
-#define SWIGTYPE_p_svn_fs_t swig_types[82]
-#define SWIGTYPE_p_svn_fs_txn_t swig_types[83]
-#define SWIGTYPE_p_svn_fs_upgrade_notify_action_t swig_types[84]
-#define SWIGTYPE_p_svn_io_dirent2_t swig_types[85]
-#define SWIGTYPE_p_svn_io_dirent_t swig_types[86]
-#define SWIGTYPE_p_svn_io_file_del_t swig_types[87]
-#define SWIGTYPE_p_svn_location_segment_t swig_types[88]
-#define SWIGTYPE_p_svn_lock_t swig_types[89]
-#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[90]
-#define SWIGTYPE_p_svn_log_changed_path_t swig_types[91]
-#define SWIGTYPE_p_svn_log_entry_t swig_types[92]
-#define SWIGTYPE_p_svn_merge_range_t swig_types[93]
-#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[94]
-#define SWIGTYPE_p_svn_node_kind_t swig_types[95]
-#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[96]
-#define SWIGTYPE_p_svn_opt_revision_t swig_types[97]
-#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[98]
-#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[99]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[100]
-#define SWIGTYPE_p_svn_patch_file_t swig_types[101]
-#define SWIGTYPE_p_svn_patch_t swig_types[102]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[103]
-#define SWIGTYPE_p_svn_prop_kind swig_types[104]
-#define SWIGTYPE_p_svn_prop_patch_t swig_types[105]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[106]
-#define SWIGTYPE_p_svn_stream_t swig_types[107]
-#define SWIGTYPE_p_svn_string_t swig_types[108]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[109]
-#define SWIGTYPE_p_svn_tristate_t swig_types[110]
-#define SWIGTYPE_p_svn_txdelta_op_t swig_types[111]
-#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[112]
-#define SWIGTYPE_p_svn_txdelta_window_t swig_types[113]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[114]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[115]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[116]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[117]
-#define SWIGTYPE_p_svn_version_t swig_types[118]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[119]
-#define SWIGTYPE_p_unsigned_char swig_types[120]
-#define SWIGTYPE_p_unsigned_long swig_types[121]
-#define SWIGTYPE_p_void swig_types[122]
-static swig_type_info *swig_types[124];
-static swig_module_info swig_module = {swig_types, 123, 0, 0, 0, 0};
+#define SWIGTYPE_p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[8]
+#define SWIGTYPE_p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t swig_types[9]
+#define SWIGTYPE_p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t swig_types[10]
+#define SWIGTYPE_p_f_p_void__p_svn_error_t swig_types[11]
+#define SWIGTYPE_p_f_p_void_apr_int64_t_svn_fs_pack_notify_action_t_p_apr_pool_t__p_svn_error_t swig_types[12]
+#define SWIGTYPE_p_f_p_void_apr_uint64_t_svn_fs_upgrade_notify_action_t_p_apr_pool_t__p_svn_error_t swig_types[13]
+#define SWIGTYPE_p_f_p_void_long_long_p_apr_pool_t__void swig_types[14]
+#define SWIGTYPE_p_f_p_void_p_apr_pool_t__p_svn_error_t swig_types[15]
+#define SWIGTYPE_p_f_p_void_p_q_const__char_p_q_const__svn_lock_t_p_svn_error_t_p_apr_pool_t__p_svn_error_t swig_types[16]
+#define SWIGTYPE_p_f_p_void_p_struct_svn_error_t__void swig_types[17]
+#define SWIGTYPE_p_f_p_void_p_svn_lock_t_p_apr_pool_t__p_svn_error_t swig_types[18]
+#define SWIGTYPE_p_int swig_types[19]
+#define SWIGTYPE_p_long swig_types[20]
+#define SWIGTYPE_p_p_apr_array_header_t swig_types[21]
+#define SWIGTYPE_p_p_apr_hash_t swig_types[22]
+#define SWIGTYPE_p_p_char swig_types[23]
+#define SWIGTYPE_p_p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t swig_types[24]
+#define SWIGTYPE_p_p_svn_checksum_t swig_types[25]
+#define SWIGTYPE_p_p_svn_fs_access_t swig_types[26]
+#define SWIGTYPE_p_p_svn_fs_history_t swig_types[27]
+#define SWIGTYPE_p_p_svn_fs_id_t swig_types[28]
+#define SWIGTYPE_p_p_svn_fs_info_placeholder_t swig_types[29]
+#define SWIGTYPE_p_p_svn_fs_path_change3_t swig_types[30]
+#define SWIGTYPE_p_p_svn_fs_path_change_iterator_t swig_types[31]
+#define SWIGTYPE_p_p_svn_fs_root_t swig_types[32]
+#define SWIGTYPE_p_p_svn_fs_t swig_types[33]
+#define SWIGTYPE_p_p_svn_fs_txn_t swig_types[34]
+#define SWIGTYPE_p_p_svn_lock_t swig_types[35]
+#define SWIGTYPE_p_p_svn_stream_t swig_types[36]
+#define SWIGTYPE_p_p_svn_string_t swig_types[37]
+#define SWIGTYPE_p_p_svn_txdelta_stream_t swig_types[38]
+#define SWIGTYPE_p_p_svn_version_t swig_types[39]
+#define SWIGTYPE_p_p_void swig_types[40]
+#define SWIGTYPE_p_svn_auth_baton_t swig_types[41]
+#define SWIGTYPE_p_svn_auth_cred_simple_t swig_types[42]
+#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_pw_t swig_types[43]
+#define SWIGTYPE_p_svn_auth_cred_ssl_client_cert_t swig_types[44]
+#define SWIGTYPE_p_svn_auth_cred_ssl_server_trust_t swig_types[45]
+#define SWIGTYPE_p_svn_auth_cred_username_t swig_types[46]
+#define SWIGTYPE_p_svn_auth_iterstate_t swig_types[47]
+#define SWIGTYPE_p_svn_auth_provider_object_t swig_types[48]
+#define SWIGTYPE_p_svn_auth_provider_t swig_types[49]
+#define SWIGTYPE_p_svn_auth_ssl_server_cert_info_t swig_types[50]
+#define SWIGTYPE_p_svn_cache_config_t swig_types[51]
+#define SWIGTYPE_p_svn_checksum_ctx_t swig_types[52]
+#define SWIGTYPE_p_svn_checksum_kind_t swig_types[53]
+#define SWIGTYPE_p_svn_checksum_t swig_types[54]
+#define SWIGTYPE_p_svn_commit_info_t swig_types[55]
+#define SWIGTYPE_p_svn_config_t swig_types[56]
+#define SWIGTYPE_p_svn_delta_editor_t swig_types[57]
+#define SWIGTYPE_p_svn_depth_t swig_types[58]
+#define SWIGTYPE_p_svn_diff_binary_patch_t swig_types[59]
+#define SWIGTYPE_p_svn_diff_conflict_display_style_t swig_types[60]
+#define SWIGTYPE_p_svn_diff_datasource_e swig_types[61]
+#define SWIGTYPE_p_svn_diff_file_ignore_space_t swig_types[62]
+#define SWIGTYPE_p_svn_diff_file_options_t swig_types[63]
+#define SWIGTYPE_p_svn_diff_fns2_t swig_types[64]
+#define SWIGTYPE_p_svn_diff_fns_t swig_types[65]
+#define SWIGTYPE_p_svn_diff_hunk_t swig_types[66]
+#define SWIGTYPE_p_svn_diff_operation_kind_e swig_types[67]
+#define SWIGTYPE_p_svn_diff_output_fns_t swig_types[68]
+#define SWIGTYPE_p_svn_diff_t swig_types[69]
+#define SWIGTYPE_p_svn_dirent_t swig_types[70]
+#define SWIGTYPE_p_svn_errno_t swig_types[71]
+#define SWIGTYPE_p_svn_error_t swig_types[72]
+#define SWIGTYPE_p_svn_fs_access_t swig_types[73]
+#define SWIGTYPE_p_svn_fs_dirent_t swig_types[74]
+#define SWIGTYPE_p_svn_fs_fsfs_info_t swig_types[75]
+#define SWIGTYPE_p_svn_fs_fsx_info_t swig_types[76]
+#define SWIGTYPE_p_svn_fs_history_t swig_types[77]
+#define SWIGTYPE_p_svn_fs_id_t swig_types[78]
+#define SWIGTYPE_p_svn_fs_info_placeholder_t swig_types[79]
+#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[80]
+#define SWIGTYPE_p_svn_fs_node_relation_t swig_types[81]
+#define SWIGTYPE_p_svn_fs_pack_notify_action_t swig_types[82]
+#define SWIGTYPE_p_svn_fs_path_change2_t swig_types[83]
+#define SWIGTYPE_p_svn_fs_path_change3_t swig_types[84]
+#define SWIGTYPE_p_svn_fs_path_change_iterator_t swig_types[85]
+#define SWIGTYPE_p_svn_fs_path_change_kind_t swig_types[86]
+#define SWIGTYPE_p_svn_fs_path_change_t swig_types[87]
+#define SWIGTYPE_p_svn_fs_root_t swig_types[88]
+#define SWIGTYPE_p_svn_fs_t swig_types[89]
+#define SWIGTYPE_p_svn_fs_txn_t swig_types[90]
+#define SWIGTYPE_p_svn_fs_upgrade_notify_action_t swig_types[91]
+#define SWIGTYPE_p_svn_io_dirent2_t swig_types[92]
+#define SWIGTYPE_p_svn_io_dirent_t swig_types[93]
+#define SWIGTYPE_p_svn_io_file_del_t swig_types[94]
+#define SWIGTYPE_p_svn_location_segment_t swig_types[95]
+#define SWIGTYPE_p_svn_lock_t swig_types[96]
+#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[97]
+#define SWIGTYPE_p_svn_log_changed_path_t swig_types[98]
+#define SWIGTYPE_p_svn_log_entry_t swig_types[99]
+#define SWIGTYPE_p_svn_merge_range_t swig_types[100]
+#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[101]
+#define SWIGTYPE_p_svn_node_kind_t swig_types[102]
+#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[103]
+#define SWIGTYPE_p_svn_opt_revision_t swig_types[104]
+#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[105]
+#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[106]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[107]
+#define SWIGTYPE_p_svn_patch_file_t swig_types[108]
+#define SWIGTYPE_p_svn_patch_t swig_types[109]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[110]
+#define SWIGTYPE_p_svn_prop_kind swig_types[111]
+#define SWIGTYPE_p_svn_prop_patch_t swig_types[112]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[113]
+#define SWIGTYPE_p_svn_stream_t swig_types[114]
+#define SWIGTYPE_p_svn_string_t swig_types[115]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[116]
+#define SWIGTYPE_p_svn_tristate_t swig_types[117]
+#define SWIGTYPE_p_svn_txdelta_op_t swig_types[118]
+#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[119]
+#define SWIGTYPE_p_svn_txdelta_window_t swig_types[120]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[121]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[122]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[123]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[124]
+#define SWIGTYPE_p_svn_version_t swig_types[125]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[126]
+#define SWIGTYPE_p_unsigned_char swig_types[127]
+#define SWIGTYPE_p_unsigned_long swig_types[128]
+#define SWIGTYPE_p_void swig_types[129]
+static swig_type_info *swig_types[131];
+static swig_module_info swig_module = {swig_types, 130, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2024,6 +2031,11 @@ static svn_error_t * svn_fs_invoke_freeze_func(
   return _obj(baton, pool);
 }
 
+static svn_error_t * svn_fs_invoke_mergeinfo_receiver(
+  svn_fs_mergeinfo_receiver_t _obj, const char *path, svn_mergeinfo_t mergeinfo, void *baton, apr_pool_t *scratch_pool) {
+  return _obj(path, mergeinfo, baton, scratch_pool);
+}
+
 static svn_error_t * svn_fs_invoke_process_contents_func(
   svn_fs_process_contents_func_t _obj, const unsigned char *contents, apr_size_t len, void *baton, apr_pool_t *scratch_pool) {
   return _obj(contents, len, baton, scratch_pool);
@@ -2153,6 +2165,7 @@ XS(_wrap_svn_fs_initialize) {
     
     {
       _global_pool = arg1 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 0) || (items > 1)) {
       SWIG_croak("Usage: svn_fs_initialize(pool);");
@@ -2173,9 +2186,11 @@ XS(_wrap_svn_fs_initialize) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2185,6 +2200,93 @@ XS(_wrap_svn_fs_initialize) {
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_create2) {
+  {
+    svn_fs_t **arg1 = (svn_fs_t **) 0 ;
+    char *arg2 = (char *) 0 ;
+    apr_hash_t *arg3 = (apr_hash_t *) 0 ;
+    apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+    apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    svn_fs_t *temp1 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    {
+      _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    arg1 = &temp1;
+    if ((items < 2) || (items > 4)) {
+      SWIG_croak("Usage: svn_fs_create2(path,fs_config,result_pool,scratch_pool);");
+    }
+    res2 = SWIG_AsCharPtrAndSize(ST(0), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_create2" "', argument " "2"" of type '" "char const *""'");
+    }
+    arg2 = (char *)(buf2);
+    {
+      /* PERL-FIXME: Handle undef -> NULL. */
+      arg3 = svn_swig_pl_strings_to_hash(ST(1), _global_pool);
+    }
+    if (items > 2) {
+      
+    }
+    if (items > 3) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_create2(arg1,(char const *)arg2,arg3,arg4,arg5);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    {
+      if (argvi >= items) EXTEND(sp,1);  ST(argvi) = SWIG_NewPointerObj(*arg1, SWIGTYPE_p_svn_fs_t, 0); argvi++  ;
+    }
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    
+    
     
     SWIG_croak_null();
   }
@@ -2208,6 +2310,7 @@ XS(_wrap_svn_fs_create) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -2238,9 +2341,11 @@ XS(_wrap_svn_fs_create) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2283,9 +2388,11 @@ XS(_wrap_svn_fs_open2) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 4)) {
@@ -2319,9 +2426,11 @@ XS(_wrap_svn_fs_open2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2365,6 +2474,7 @@ XS(_wrap_svn_fs_open) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -2395,9 +2505,11 @@ XS(_wrap_svn_fs_open) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2441,6 +2553,7 @@ XS(_wrap_svn_fs_upgrade2) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_upgrade2(path,notify_func,notify_baton,cancel_func,cancel_baton,scratch_pool);");
@@ -2480,9 +2593,11 @@ XS(_wrap_svn_fs_upgrade2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2518,6 +2633,7 @@ XS(_wrap_svn_fs_upgrade) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_upgrade(path,pool);");
@@ -2543,9 +2659,11 @@ XS(_wrap_svn_fs_upgrade) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2579,6 +2697,7 @@ XS(_wrap_svn_fs_type) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -2605,9 +2724,11 @@ XS(_wrap_svn_fs_type) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2647,6 +2768,7 @@ XS(_wrap_svn_fs_path) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_path(fs,pool);");
@@ -2690,6 +2812,7 @@ XS(_wrap_svn_fs_config) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_config(fs,pool);");
@@ -2734,6 +2857,7 @@ XS(_wrap_svn_fs_delete_fs) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_delete_fs(path,pool);");
@@ -2759,9 +2883,11 @@ XS(_wrap_svn_fs_delete_fs) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2808,6 +2934,7 @@ XS(_wrap_svn_fs_hotcopy3) {
     
     {
       _global_pool = arg9 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 7) || (items > 8)) {
       SWIG_croak("Usage: svn_fs_hotcopy3(src_path,dest_path,clean,incremental,notify_func,notify_baton,cancel_func,cancel_baton,scratch_pool);");
@@ -2862,9 +2989,11 @@ XS(_wrap_svn_fs_hotcopy3) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -2918,6 +3047,7 @@ XS(_wrap_svn_fs_hotcopy2) {
     
     {
       _global_pool = arg7 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 5) || (items > 6)) {
       SWIG_croak("Usage: svn_fs_hotcopy2(src_path,dest_path,clean,incremental,cancel_func,cancel_baton,scratch_pool);");
@@ -2962,9 +3092,11 @@ XS(_wrap_svn_fs_hotcopy2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3009,6 +3141,7 @@ XS(_wrap_svn_fs_hotcopy) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_hotcopy(src_path,dest_path,clean,pool);");
@@ -3044,9 +3177,11 @@ XS(_wrap_svn_fs_hotcopy) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3084,6 +3219,7 @@ XS(_wrap_svn_fs_recover) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_recover(path,cancel_func,cancel_baton,pool);");
@@ -3113,9 +3249,11 @@ XS(_wrap_svn_fs_recover) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3149,6 +3287,7 @@ XS(_wrap_svn_fs_freeze) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_freeze(fs,freeze_func,freeze_baton,pool);");
@@ -3184,9 +3323,11 @@ XS(_wrap_svn_fs_freeze) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3227,6 +3368,7 @@ XS(_wrap_svn_fs_berkeley_logfiles) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -3258,9 +3400,11 @@ XS(_wrap_svn_fs_berkeley_logfiles) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3296,6 +3440,7 @@ XS(_wrap_svn_fs_new) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_new(fs_config,pool);");
@@ -3364,9 +3509,11 @@ XS(_wrap_svn_fs_create_berkeley) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3423,9 +3570,11 @@ XS(_wrap_svn_fs_open_berkeley) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3456,6 +3605,7 @@ XS(_wrap_svn_fs_berkeley_path) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_berkeley_path(fs,pool);");
@@ -3500,6 +3650,7 @@ XS(_wrap_svn_fs_delete_berkeley) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_delete_berkeley(path,pool);");
@@ -3525,9 +3676,11 @@ XS(_wrap_svn_fs_delete_berkeley) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3566,6 +3719,7 @@ XS(_wrap_svn_fs_hotcopy_berkeley) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_hotcopy_berkeley(src_path,dest_path,clean_logs,pool);");
@@ -3601,9 +3755,11 @@ XS(_wrap_svn_fs_hotcopy_berkeley) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3639,6 +3795,7 @@ XS(_wrap_svn_fs_berkeley_recover) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_berkeley_recover(path,pool);");
@@ -3664,9 +3821,11 @@ XS(_wrap_svn_fs_berkeley_recover) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3700,6 +3859,7 @@ XS(_wrap_svn_fs_create_access) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -3726,9 +3886,11 @@ XS(_wrap_svn_fs_create_access) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3789,9 +3951,11 @@ XS(_wrap_svn_fs_set_access) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3842,9 +4006,11 @@ XS(_wrap_svn_fs_get_access) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3898,9 +4064,11 @@ XS(_wrap_svn_fs_access_get_username) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -3973,9 +4141,11 @@ XS(_wrap_svn_fs_access_add_lock_token2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4034,9 +4204,11 @@ XS(_wrap_svn_fs_access_add_lock_token) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4152,6 +4324,7 @@ XS(_wrap_svn_fs_parse_id) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_parse_id(data,len,pool);");
@@ -4200,6 +4373,7 @@ XS(_wrap_svn_fs_unparse_id) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_unparse_id(id,pool);");
@@ -4254,6 +4428,7 @@ XS(_wrap_svn_fs_begin_txn2) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 3) || (items > 4)) {
@@ -4290,9 +4465,11 @@ XS(_wrap_svn_fs_begin_txn2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4337,6 +4514,7 @@ XS(_wrap_svn_fs_begin_txn) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -4368,9 +4546,11 @@ XS(_wrap_svn_fs_begin_txn) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4413,6 +4593,7 @@ XS(_wrap_svn_fs_commit_txn) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     arg2 = &temp2;
@@ -4440,9 +4621,11 @@ XS(_wrap_svn_fs_commit_txn) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4490,6 +4673,7 @@ XS(_wrap_svn_fs_abort_txn) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_abort_txn(txn,pool);");
@@ -4515,9 +4699,11 @@ XS(_wrap_svn_fs_abort_txn) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4552,6 +4738,7 @@ XS(_wrap_svn_fs_purge_txn) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_purge_txn(fs,txn_id,pool);");
@@ -4582,9 +4769,11 @@ XS(_wrap_svn_fs_purge_txn) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4619,6 +4808,7 @@ XS(_wrap_svn_fs_txn_name) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -4645,9 +4835,11 @@ XS(_wrap_svn_fs_txn_name) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4726,6 +4918,7 @@ XS(_wrap_svn_fs_open_txn) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -4757,9 +4950,11 @@ XS(_wrap_svn_fs_open_txn) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4799,6 +4994,7 @@ XS(_wrap_svn_fs_list_transactions) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -4825,9 +5021,11 @@ XS(_wrap_svn_fs_list_transactions) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4869,6 +5067,7 @@ XS(_wrap_svn_fs_txn_prop) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -4900,9 +5099,11 @@ XS(_wrap_svn_fs_txn_prop) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -4946,6 +5147,7 @@ XS(_wrap_svn_fs_txn_proplist) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -4972,9 +5174,11 @@ XS(_wrap_svn_fs_txn_proplist) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -5016,6 +5220,7 @@ XS(_wrap_svn_fs_change_txn_prop) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_change_txn_prop(txn,name,value,pool);");
@@ -5055,9 +5260,11 @@ XS(_wrap_svn_fs_change_txn_prop) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -5095,6 +5302,7 @@ XS(_wrap_svn_fs_change_txn_props) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_change_txn_props(txn,props,pool);");
@@ -5125,9 +5333,11 @@ XS(_wrap_svn_fs_change_txn_props) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -5165,6 +5375,7 @@ XS(_wrap_svn_fs_revision_root) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -5196,9 +5407,11 @@ XS(_wrap_svn_fs_revision_root) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -5238,6 +5451,7 @@ XS(_wrap_svn_fs_txn_root) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -5264,9 +5478,11 @@ XS(_wrap_svn_fs_txn_root) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -5433,6 +5649,7 @@ XS(_wrap_svn_fs_txn_root_name) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_txn_root_name(root,pool);");
@@ -5520,6 +5737,601 @@ XS(_wrap_svn_fs_revision_root_revision) {
       
     }
     ST(argvi) = SWIG_From_long  SWIG_PERL_CALL_ARGS_1((long)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_path_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_string_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    void *argp2 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_path_set(self,path);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_path_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    {
+      res2 = SWIG_ConvertPtr(ST(1), &argp2, SWIGTYPE_p_svn_string_t,  0 );
+      if (!SWIG_IsOK(res2)) {
+        SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_path_change3_t_path_set" "', argument " "2"" of type '" "svn_string_t""'"); 
+      }  
+      if (!argp2) {
+        SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "svn_fs_path_change3_t_path_set" "', argument " "2"" of type '" "svn_string_t""'");
+      } else {
+        arg2 = *((svn_string_t *)(argp2));
+      }
+    }
+    if (arg1) (arg1)->path = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_path_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_string_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_path_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_path_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result =  ((arg1)->path);
+    ST(argvi) = SWIG_NewPointerObj((svn_string_t *)memcpy((svn_string_t *)malloc(sizeof(svn_string_t)),&result,sizeof(svn_string_t)), SWIGTYPE_p_svn_string_t, SWIG_POINTER_OWN | 0); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_change_kind_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_fs_path_change_kind_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_change_kind_set(self,change_kind);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_change_kind_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_change_kind_set" "', argument " "2"" of type '" "svn_fs_path_change_kind_t""'");
+    } 
+    arg2 = (svn_fs_path_change_kind_t)(val2);
+    if (arg1) (arg1)->change_kind = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_change_kind_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_fs_path_change_kind_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_change_kind_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_change_kind_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_fs_path_change_kind_t) ((arg1)->change_kind);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_node_kind_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_node_kind_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_node_kind_set(self,node_kind);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_node_kind_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_node_kind_set" "', argument " "2"" of type '" "svn_node_kind_t""'");
+    } 
+    arg2 = (svn_node_kind_t)(val2);
+    if (arg1) (arg1)->node_kind = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_node_kind_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_node_kind_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_node_kind_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_node_kind_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_node_kind_t) ((arg1)->node_kind);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_text_mod_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_boolean_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_text_mod_set(self,text_mod);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_text_mod_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_text_mod_set" "', argument " "2"" of type '" "svn_boolean_t""'");
+    } 
+    arg2 = (svn_boolean_t)(val2);
+    if (arg1) (arg1)->text_mod = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_text_mod_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_boolean_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_text_mod_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_text_mod_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_boolean_t) ((arg1)->text_mod);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_prop_mod_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_boolean_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_prop_mod_set(self,prop_mod);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_prop_mod_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_prop_mod_set" "', argument " "2"" of type '" "svn_boolean_t""'");
+    } 
+    arg2 = (svn_boolean_t)(val2);
+    if (arg1) (arg1)->prop_mod = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_prop_mod_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_boolean_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_prop_mod_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_prop_mod_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_boolean_t) ((arg1)->prop_mod);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_mergeinfo_mod_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_tristate_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_mergeinfo_mod_set(self,mergeinfo_mod);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_mergeinfo_mod_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_mergeinfo_mod_set" "', argument " "2"" of type '" "svn_tristate_t""'");
+    } 
+    arg2 = (svn_tristate_t)(val2);
+    if (arg1) (arg1)->mergeinfo_mod = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_mergeinfo_mod_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_tristate_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_mergeinfo_mod_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_mergeinfo_mod_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_tristate_t) ((arg1)->mergeinfo_mod);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_copyfrom_known_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_boolean_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_copyfrom_known_set(self,copyfrom_known);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_copyfrom_known_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_copyfrom_known_set" "', argument " "2"" of type '" "svn_boolean_t""'");
+    } 
+    arg2 = (svn_boolean_t)(val2);
+    if (arg1) (arg1)->copyfrom_known = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_copyfrom_known_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_boolean_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_copyfrom_known_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_copyfrom_known_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_boolean_t) ((arg1)->copyfrom_known);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_copyfrom_rev_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    svn_revnum_t arg2 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    long val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_copyfrom_rev_set(self,copyfrom_rev);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_copyfrom_rev_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    ecode2 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "svn_fs_path_change3_t_copyfrom_rev_set" "', argument " "2"" of type '" "svn_revnum_t""'");
+    } 
+    arg2 = (svn_revnum_t)(val2);
+    if (arg1) (arg1)->copyfrom_rev = arg2;
+    ST(argvi) = sv_newmortal();
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_copyfrom_rev_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_revnum_t result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_copyfrom_rev_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_copyfrom_rev_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (svn_revnum_t) ((arg1)->copyfrom_rev);
+    ST(argvi) = SWIG_From_long  SWIG_PERL_CALL_ARGS_1((long)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_copyfrom_path_set) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    char *arg2 = (char *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    int argvi = 0;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_copyfrom_path_set(self,copyfrom_path);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_copyfrom_path_set" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_path_change3_t_copyfrom_path_set" "', argument " "2"" of type '" "char const *""'");
+    }
+    arg2 = (char *)(buf2);
+    if (arg2) {
+      size_t size = strlen((const char *)((const char *)(arg2))) + 1;
+      arg1->copyfrom_path = (char const *)(char *)memcpy((char *)malloc((size)*sizeof(char)), arg2, sizeof(char)*(size));
+    } else {
+      arg1->copyfrom_path = 0;
+    }
+    ST(argvi) = sv_newmortal();
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_t_copyfrom_path_get) {
+  {
+    struct svn_fs_path_change3_t *arg1 = (struct svn_fs_path_change3_t *) 0 ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    char *result = 0 ;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change3_t_copyfrom_path_get(self);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_t_copyfrom_path_get" "', argument " "1"" of type '" "struct svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (struct svn_fs_path_change3_t *)(argp1);
+    result = (char *) ((arg1)->copyfrom_path);
+    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -6396,6 +7208,7 @@ XS(_wrap_svn_fs_path_change2_create) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_path_change2_create(node_rev_id,change_kind,pool);");
@@ -6433,6 +7246,243 @@ XS(_wrap_svn_fs_path_change2_create) {
 }
 
 
+XS(_wrap_svn_fs_path_change3_create) {
+  {
+    svn_fs_path_change_kind_t arg1 ;
+    apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    int val1 ;
+    int ecode1 = 0 ;
+    int argvi = 0;
+    svn_fs_path_change3_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    if ((items < 1) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_create(change_kind,result_pool);");
+    }
+    ecode1 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "svn_fs_path_change3_create" "', argument " "1"" of type '" "svn_fs_path_change_kind_t""'");
+    } 
+    arg1 = (svn_fs_path_change_kind_t)(val1);
+    if (items > 1) {
+      
+    }
+    {
+      result = (svn_fs_path_change3_t *)svn_fs_path_change3_create(arg1,arg2);
+      
+      
+      
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_svn_fs_path_change3_t, 0 | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change3_dup) {
+  {
+    svn_fs_path_change3_t *arg1 = (svn_fs_path_change3_t *) 0 ;
+    apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_fs_path_change3_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    if ((items < 1) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_path_change3_dup(change,result_pool);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_path_change3_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_path_change3_dup" "', argument " "1"" of type '" "svn_fs_path_change3_t *""'"); 
+    }
+    arg1 = (svn_fs_path_change3_t *)(argp1);
+    if (items > 1) {
+      
+    }
+    {
+      result = (svn_fs_path_change3_t *)svn_fs_path_change3_dup(arg1,arg2);
+      
+      
+      
+    }
+    ST(argvi) = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_svn_fs_path_change3_t, 0 | SWIG_SHADOW); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_path_change_get) {
+  {
+    svn_fs_path_change3_t **arg1 = (svn_fs_path_change3_t **) 0 ;
+    svn_fs_path_change_iterator_t *arg2 = (svn_fs_path_change_iterator_t *) 0 ;
+    svn_fs_path_change3_t *temp1 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    arg1 = &temp1;
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: svn_fs_path_change_get(iterator);");
+    }
+    res2 = SWIG_ConvertPtr(ST(0), &argp2,SWIGTYPE_p_svn_fs_path_change_iterator_t, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_path_change_get" "', argument " "2"" of type '" "svn_fs_path_change_iterator_t *""'"); 
+    }
+    arg2 = (svn_fs_path_change_iterator_t *)(argp2);
+    {
+      result = (svn_error_t *)svn_fs_path_change_get(arg1,arg2);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    {
+      /* FIXME: Missing argout typemap: svn_fs_path_change_get arg 1 (svn_fs_path_change3_t **) */
+      
+      
+      
+      
+      SWIG_exception(SWIG_ValueError, "svn_fs_path_change_get is not implemented yet");
+      
+    }
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_paths_changed3) {
+  {
+    svn_fs_path_change_iterator_t **arg1 = (svn_fs_path_change_iterator_t **) 0 ;
+    svn_fs_root_t *arg2 = (svn_fs_root_t *) 0 ;
+    apr_pool_t *arg3 = (apr_pool_t *) 0 ;
+    apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    svn_fs_path_change_iterator_t *temp1 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    {
+      _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    arg1 = &temp1;
+    if ((items < 1) || (items > 3)) {
+      SWIG_croak("Usage: svn_fs_paths_changed3(root,result_pool,scratch_pool);");
+    }
+    res2 = SWIG_ConvertPtr(ST(0), &argp2,SWIGTYPE_p_svn_fs_root_t, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_paths_changed3" "', argument " "2"" of type '" "svn_fs_root_t *""'"); 
+    }
+    arg2 = (svn_fs_root_t *)(argp2);
+    if (items > 1) {
+      
+    }
+    if (items > 2) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_paths_changed3(arg1,arg2,arg3,arg4);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    {
+      /* FIXME: Missing argout typemap: svn_fs_paths_changed3 arg 1 (svn_fs_path_change_iterator_t **) */
+      
+      
+      
+      
+      SWIG_exception(SWIG_ValueError, "svn_fs_paths_changed3 is not implemented yet");
+      
+    }
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_svn_fs_paths_changed2) {
   {
     apr_hash_t **arg1 = (apr_hash_t **) 0 ;
@@ -6448,6 +7498,7 @@ XS(_wrap_svn_fs_paths_changed2) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -6474,9 +7525,11 @@ XS(_wrap_svn_fs_paths_changed2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6514,6 +7567,7 @@ XS(_wrap_svn_fs_paths_changed) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -6540,9 +7594,11 @@ XS(_wrap_svn_fs_paths_changed) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6585,6 +7641,7 @@ XS(_wrap_svn_fs_check_path) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -6616,9 +7673,11 @@ XS(_wrap_svn_fs_check_path) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6666,9 +7725,11 @@ XS(_wrap_svn_fs_node_history2) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 4)) {
@@ -6703,9 +7764,11 @@ XS(_wrap_svn_fs_node_history2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6751,6 +7814,7 @@ XS(_wrap_svn_fs_node_history) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -6782,9 +7846,11 @@ XS(_wrap_svn_fs_node_history) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6828,9 +7894,11 @@ XS(_wrap_svn_fs_history_prev2) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 4)) {
@@ -6865,9 +7933,11 @@ XS(_wrap_svn_fs_history_prev2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6912,6 +7982,7 @@ XS(_wrap_svn_fs_history_prev) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -6943,9 +8014,11 @@ XS(_wrap_svn_fs_history_prev) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -6988,6 +8061,7 @@ XS(_wrap_svn_fs_history_location) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     arg2 = &temp2;
@@ -7015,9 +8089,11 @@ XS(_wrap_svn_fs_history_location) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7072,6 +8148,7 @@ XS(_wrap_svn_fs_is_dir) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7103,9 +8180,11 @@ XS(_wrap_svn_fs_is_dir) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7153,6 +8232,7 @@ XS(_wrap_svn_fs_is_file) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7184,9 +8264,11 @@ XS(_wrap_svn_fs_is_file) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7233,6 +8315,7 @@ XS(_wrap_svn_fs_node_id) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7264,9 +8347,11 @@ XS(_wrap_svn_fs_node_id) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7318,6 +8403,7 @@ XS(_wrap_svn_fs_node_relation) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 5) || (items > 6)) {
       SWIG_croak("Usage: svn_fs_node_relation(relation,root_a,path_a,root_b,path_b,scratch_pool);");
@@ -7363,9 +8449,11 @@ XS(_wrap_svn_fs_node_relation) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7411,6 +8499,7 @@ XS(_wrap_svn_fs_node_created_rev) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7442,9 +8531,11 @@ XS(_wrap_svn_fs_node_created_rev) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7492,6 +8583,7 @@ XS(_wrap_svn_fs_node_origin_rev) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7523,9 +8615,11 @@ XS(_wrap_svn_fs_node_origin_rev) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7572,6 +8666,7 @@ XS(_wrap_svn_fs_node_created_path) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7603,9 +8698,11 @@ XS(_wrap_svn_fs_node_created_path) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7657,6 +8754,7 @@ XS(_wrap_svn_fs_node_prop) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 3) || (items > 4)) {
@@ -7693,9 +8791,11 @@ XS(_wrap_svn_fs_node_prop) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7745,6 +8845,7 @@ XS(_wrap_svn_fs_node_proplist) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7776,9 +8877,11 @@ XS(_wrap_svn_fs_node_proplist) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7823,6 +8926,7 @@ XS(_wrap_svn_fs_node_has_props) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -7854,9 +8958,11 @@ XS(_wrap_svn_fs_node_has_props) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -7907,6 +9013,7 @@ XS(_wrap_svn_fs_change_node_prop) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_change_node_prop(root,path,name,value,pool);");
@@ -7951,9 +9058,11 @@ XS(_wrap_svn_fs_change_node_prop) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8004,6 +9113,7 @@ XS(_wrap_svn_fs_props_different) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -8045,9 +9155,11 @@ XS(_wrap_svn_fs_props_different) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8106,6 +9218,7 @@ XS(_wrap_svn_fs_props_changed) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -8147,9 +9260,11 @@ XS(_wrap_svn_fs_props_changed) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8203,6 +9318,7 @@ XS(_wrap_svn_fs_copied_from) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     arg2 = &temp2;
@@ -8235,9 +9351,11 @@ XS(_wrap_svn_fs_copied_from) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8295,6 +9413,7 @@ XS(_wrap_svn_fs_closest_copy) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     arg2 = &temp2;
@@ -8327,9 +9446,11 @@ XS(_wrap_svn_fs_closest_copy) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8363,6 +9484,121 @@ XS(_wrap_svn_fs_closest_copy) {
 }
 
 
+XS(_wrap_svn_fs_get_mergeinfo3) {
+  {
+    svn_fs_root_t *arg1 = (svn_fs_root_t *) 0 ;
+    apr_array_header_t *arg2 = (apr_array_header_t *) 0 ;
+    svn_mergeinfo_inheritance_t arg3 ;
+    svn_boolean_t arg4 ;
+    svn_boolean_t arg5 ;
+    svn_fs_mergeinfo_receiver_t arg6 = (svn_fs_mergeinfo_receiver_t) 0 ;
+    void *arg7 = (void *) 0 ;
+    apr_pool_t *arg8 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int val3 ;
+    int ecode3 = 0 ;
+    int val4 ;
+    int ecode4 = 0 ;
+    int val5 ;
+    int ecode5 = 0 ;
+    int res7 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg8 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    if ((items < 7) || (items > 8)) {
+      SWIG_croak("Usage: svn_fs_get_mergeinfo3(root,paths,inherit,include_descendants,adjust_inherited_mergeinfo,receiver,baton,scratch_pool);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_root_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_get_mergeinfo3" "', argument " "1"" of type '" "svn_fs_root_t *""'"); 
+    }
+    arg1 = (svn_fs_root_t *)(argp1);
+    {
+      arg2 = svn_swig_pl_strings_to_array(ST(1),
+        _global_pool);
+    }
+    ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "svn_fs_get_mergeinfo3" "', argument " "3"" of type '" "svn_mergeinfo_inheritance_t""'");
+    } 
+    arg3 = (svn_mergeinfo_inheritance_t)(val3);
+    ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "svn_fs_get_mergeinfo3" "', argument " "4"" of type '" "svn_boolean_t""'");
+    } 
+    arg4 = (svn_boolean_t)(val4);
+    ecode5 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(4), &val5);
+    if (!SWIG_IsOK(ecode5)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "svn_fs_get_mergeinfo3" "', argument " "5"" of type '" "svn_boolean_t""'");
+    } 
+    arg5 = (svn_boolean_t)(val5);
+    {
+      int res = SWIG_ConvertFunctionPtr(ST(5), (void**)(&arg6), SWIGTYPE_p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t);
+      if (!SWIG_IsOK(res)) {
+        SWIG_exception_fail(SWIG_ArgError(res), "in method '" "svn_fs_get_mergeinfo3" "', argument " "6"" of type '" "svn_fs_mergeinfo_receiver_t""'"); 
+      }
+    }
+    res7 = SWIG_ConvertPtr(ST(6),SWIG_as_voidptrptr(&arg7), 0, 0);
+    if (!SWIG_IsOK(res7)) {
+      SWIG_exception_fail(SWIG_ArgError(res7), "in method '" "svn_fs_get_mergeinfo3" "', argument " "7"" of type '" "void *""'"); 
+    }
+    if (items > 7) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_get_mergeinfo3(arg1,(apr_array_header_t const *)arg2,arg3,arg4,arg5,arg6,arg7,arg8);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    
+    
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_svn_fs_get_mergeinfo2) {
   {
     svn_mergeinfo_catalog_t *arg1 = (svn_mergeinfo_catalog_t *) 0 ;
@@ -8389,9 +9625,11 @@ XS(_wrap_svn_fs_get_mergeinfo2) {
     
     {
       _global_pool = arg7 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg8 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 5) || (items > 7)) {
@@ -8440,9 +9678,11 @@ XS(_wrap_svn_fs_get_mergeinfo2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8503,6 +9743,7 @@ XS(_wrap_svn_fs_get_mergeinfo) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -8543,9 +9784,11 @@ XS(_wrap_svn_fs_get_mergeinfo) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8613,6 +9856,7 @@ XS(_wrap_svn_fs_merge) {
     
     {
       _global_pool = arg8 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 6) || (items > 7)) {
@@ -8664,9 +9908,11 @@ XS(_wrap_svn_fs_merge) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -8925,6 +10171,7 @@ XS(_wrap_svn_fs_dir_entries) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -8956,9 +10203,11 @@ XS(_wrap_svn_fs_dir_entries) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9002,9 +10251,11 @@ XS(_wrap_svn_fs_dir_optimal_order) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 4)) {
@@ -9039,9 +10290,11 @@ XS(_wrap_svn_fs_dir_optimal_order) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9091,6 +10344,7 @@ XS(_wrap_svn_fs_make_dir) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_make_dir(root,path,pool);");
@@ -9121,9 +10375,11 @@ XS(_wrap_svn_fs_make_dir) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9160,6 +10416,7 @@ XS(_wrap_svn_fs_delete) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_delete(root,path,pool);");
@@ -9190,9 +10447,11 @@ XS(_wrap_svn_fs_delete) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9236,6 +10495,7 @@ XS(_wrap_svn_fs_copy) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_copy(from_root,from_path,to_root,to_path,pool);");
@@ -9276,9 +10536,11 @@ XS(_wrap_svn_fs_copy) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9322,6 +10584,7 @@ XS(_wrap_svn_fs_revision_link) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_revision_link(from_root,to_root,path,pool);");
@@ -9357,9 +10620,11 @@ XS(_wrap_svn_fs_revision_link) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9400,6 +10665,7 @@ XS(_wrap_svn_fs_file_length) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -9431,9 +10697,11 @@ XS(_wrap_svn_fs_file_length) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9485,6 +10753,7 @@ XS(_wrap_svn_fs_file_checksum) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -9526,9 +10795,11 @@ XS(_wrap_svn_fs_file_checksum) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9582,6 +10853,7 @@ XS(_wrap_svn_fs_file_md5_checksum) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = temp1;
     if ((items < 2) || (items > 3)) {
@@ -9613,9 +10885,11 @@ XS(_wrap_svn_fs_file_md5_checksum) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9623,7 +10897,7 @@ XS(_wrap_svn_fs_file_md5_checksum) {
       }
     }
     {
-      /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,59,%append_output@*/ if (argvi >= items) EXTEND(sp,1); /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,56,%set_output@*/ ST(argvi) = sv_2mortal(newSVpv(svn_md5_digest_to_cstring(arg1,
+      /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,59,%append_output@*/ if (argvi >= items) EXTEND(sp,1); /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,56,%set_output@*/ ST(argvi) = sv_2mortal(newSVpv(svn_md5_digest_to_cstring(arg1,
             _global_pool),
           0)); argvi++ /*@SWIG@*/
       
@@ -9665,6 +10939,7 @@ XS(_wrap_svn_fs_file_contents) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -9696,9 +10971,11 @@ XS(_wrap_svn_fs_file_contents) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9706,7 +10983,11 @@ XS(_wrap_svn_fs_file_contents) {
       }
     }
     {
-      if (argvi >= items) EXTEND(sp,1);  ST(argvi) = svn_swig_pl_from_stream(*arg1); argvi++  ;
+      SV *tmp;
+      PUTBACK;
+      tmp = svn_swig_pl_from_stream(*arg1);
+      SPAGAIN;
+      if (argvi >= items) EXTEND(sp,1);  ST(argvi) = tmp; argvi++  ;
     }
     
     
@@ -9746,6 +11027,7 @@ XS(_wrap_svn_fs_try_process_file_contents) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -9787,9 +11069,11 @@ XS(_wrap_svn_fs_try_process_file_contents) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9838,6 +11122,7 @@ XS(_wrap_svn_fs_make_file) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_make_file(root,path,pool);");
@@ -9868,9 +11153,11 @@ XS(_wrap_svn_fs_make_file) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -9919,6 +11206,7 @@ XS(_wrap_svn_fs_apply_textdelta) {
     
     {
       _global_pool = arg7 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     arg2 = &temp2;
@@ -9961,9 +11249,11 @@ XS(_wrap_svn_fs_apply_textdelta) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10020,6 +11310,7 @@ XS(_wrap_svn_fs_apply_text) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 3) || (items > 4)) {
@@ -10056,9 +11347,11 @@ XS(_wrap_svn_fs_apply_text) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10066,7 +11359,11 @@ XS(_wrap_svn_fs_apply_text) {
       }
     }
     {
-      if (argvi >= items) EXTEND(sp,1);  ST(argvi) = svn_swig_pl_from_stream(*arg1); argvi++  ;
+      SV *tmp;
+      PUTBACK;
+      tmp = svn_swig_pl_from_stream(*arg1);
+      SPAGAIN;
+      if (argvi >= items) EXTEND(sp,1);  ST(argvi) = tmp; argvi++  ;
     }
     
     
@@ -10112,6 +11409,7 @@ XS(_wrap_svn_fs_contents_different) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -10153,9 +11451,11 @@ XS(_wrap_svn_fs_contents_different) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10214,6 +11514,7 @@ XS(_wrap_svn_fs_contents_changed) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -10255,9 +11556,11 @@ XS(_wrap_svn_fs_contents_changed) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10305,6 +11608,7 @@ XS(_wrap_svn_fs_youngest_rev) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -10331,9 +11635,11 @@ XS(_wrap_svn_fs_youngest_rev) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10378,9 +11684,11 @@ XS(_wrap_svn_fs_info_format) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     arg2 = &temp2;
@@ -10411,9 +11719,11 @@ XS(_wrap_svn_fs_info_format) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10468,9 +11778,11 @@ XS(_wrap_svn_fs_info_config_files) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 3)) {
@@ -10500,9 +11812,11 @@ XS(_wrap_svn_fs_info_config_files) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10549,6 +11863,7 @@ XS(_wrap_svn_fs_deltify_revision) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_deltify_revision(fs,revision,pool);");
@@ -10579,9 +11894,11 @@ XS(_wrap_svn_fs_deltify_revision) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10593,6 +11910,181 @@ XS(_wrap_svn_fs_deltify_revision) {
     
     XSRETURN(argvi);
   fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_refresh_revision_props) {
+  {
+    svn_fs_t *arg1 = (svn_fs_t *) 0 ;
+    apr_pool_t *arg2 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    void *argp1 = 0 ;
+    int res1 = 0 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    if ((items < 1) || (items > 2)) {
+      SWIG_croak("Usage: svn_fs_refresh_revision_props(fs,scratch_pool);");
+    }
+    res1 = SWIG_ConvertPtr(ST(0), &argp1,SWIGTYPE_p_svn_fs_t, 0 |  0 );
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "svn_fs_refresh_revision_props" "', argument " "1"" of type '" "svn_fs_t *""'"); 
+    }
+    arg1 = (svn_fs_t *)(argp1);
+    if (items > 1) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_refresh_revision_props(arg1,arg2);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_revision_prop2) {
+  {
+    svn_string_t **arg1 = (svn_string_t **) 0 ;
+    svn_fs_t *arg2 = (svn_fs_t *) 0 ;
+    svn_revnum_t arg3 ;
+    char *arg4 = (char *) 0 ;
+    svn_boolean_t arg5 ;
+    apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+    apr_pool_t *arg7 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    svn_string_t *temp1 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    long val3 ;
+    int ecode3 = 0 ;
+    int res4 ;
+    char *buf4 = 0 ;
+    int alloc4 = 0 ;
+    int val5 ;
+    int ecode5 = 0 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    {
+      _global_pool = arg7 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    arg1 = &temp1;
+    if ((items < 4) || (items > 6)) {
+      SWIG_croak("Usage: svn_fs_revision_prop2(fs,rev,propname,refresh,result_pool,scratch_pool);");
+    }
+    res2 = SWIG_ConvertPtr(ST(0), &argp2,SWIGTYPE_p_svn_fs_t, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_revision_prop2" "', argument " "2"" of type '" "svn_fs_t *""'"); 
+    }
+    arg2 = (svn_fs_t *)(argp2);
+    ecode3 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(1), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "svn_fs_revision_prop2" "', argument " "3"" of type '" "svn_revnum_t""'");
+    } 
+    arg3 = (svn_revnum_t)(val3);
+    res4 = SWIG_AsCharPtrAndSize(ST(2), &buf4, NULL, &alloc4);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "svn_fs_revision_prop2" "', argument " "4"" of type '" "char const *""'");
+    }
+    arg4 = (char *)(buf4);
+    ecode5 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(3), &val5);
+    if (!SWIG_IsOK(ecode5)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode5), "in method '" "svn_fs_revision_prop2" "', argument " "5"" of type '" "svn_boolean_t""'");
+    } 
+    arg5 = (svn_boolean_t)(val5);
+    if (items > 4) {
+      
+    }
+    if (items > 5) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_revision_prop2(arg1,arg2,arg3,(char const *)arg4,arg5,arg6,arg7);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    {
+      if (*arg1) {
+        if (argvi >= items) EXTEND(sp,1);  ST(argvi) = sv_2mortal(newSVpvn((*arg1)->data, (*arg1)->len)); argvi++  ;
+      } else {
+        if (argvi >= items) EXTEND(sp,1);  ST(argvi) = &PL_sv_undef; argvi++  ;
+      }
+    }
+    
+    
+    
+    if (alloc4 == SWIG_NEWOBJ) free((char*)buf4);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    if (alloc4 == SWIG_NEWOBJ) free((char*)buf4);
     
     
     
@@ -10623,6 +12115,7 @@ XS(_wrap_svn_fs_revision_prop) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 3) || (items > 4)) {
@@ -10659,9 +12152,11 @@ XS(_wrap_svn_fs_revision_prop) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10692,6 +12187,105 @@ XS(_wrap_svn_fs_revision_prop) {
 }
 
 
+XS(_wrap_svn_fs_revision_proplist2) {
+  {
+    apr_hash_t **arg1 = (apr_hash_t **) 0 ;
+    svn_fs_t *arg2 = (svn_fs_t *) 0 ;
+    svn_revnum_t arg3 ;
+    svn_boolean_t arg4 ;
+    apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+    apr_pool_t *arg6 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    apr_hash_t *temp1 ;
+    void *argp2 = 0 ;
+    int res2 = 0 ;
+    long val3 ;
+    int ecode3 = 0 ;
+    int val4 ;
+    int ecode4 = 0 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    {
+      _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    arg1 = &temp1;
+    if ((items < 3) || (items > 5)) {
+      SWIG_croak("Usage: svn_fs_revision_proplist2(fs,rev,refresh,result_pool,scratch_pool);");
+    }
+    res2 = SWIG_ConvertPtr(ST(0), &argp2,SWIGTYPE_p_svn_fs_t, 0 |  0 );
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_revision_proplist2" "', argument " "2"" of type '" "svn_fs_t *""'"); 
+    }
+    arg2 = (svn_fs_t *)(argp2);
+    ecode3 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(1), &val3);
+    if (!SWIG_IsOK(ecode3)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "svn_fs_revision_proplist2" "', argument " "3"" of type '" "svn_revnum_t""'");
+    } 
+    arg3 = (svn_revnum_t)(val3);
+    ecode4 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val4);
+    if (!SWIG_IsOK(ecode4)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode4), "in method '" "svn_fs_revision_proplist2" "', argument " "4"" of type '" "svn_boolean_t""'");
+    } 
+    arg4 = (svn_boolean_t)(val4);
+    if (items > 3) {
+      
+    }
+    if (items > 4) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_revision_proplist2(arg1,arg2,arg3,arg4,arg5,arg6);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    {
+      if (argvi >= items) EXTEND(sp,1);  ST(argvi) = svn_swig_pl_prophash_to_hash(*arg1); argvi++  ;
+    }
+    
+    
+    
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
 XS(_wrap_svn_fs_revision_proplist) {
   {
     apr_hash_t **arg1 = (apr_hash_t **) 0 ;
@@ -10710,6 +12304,7 @@ XS(_wrap_svn_fs_revision_proplist) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -10741,9 +12336,11 @@ XS(_wrap_svn_fs_revision_proplist) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10784,8 +12381,6 @@ XS(_wrap_svn_fs_change_rev_prop2) {
     int res3 ;
     char *buf3 = 0 ;
     int alloc3 = 0 ;
-    void *argp4 = 0 ;
-    int res4 = 0 ;
     svn_string_t value5 ;
     int argvi = 0;
     SV * _saved[1] ;
@@ -10794,6 +12389,7 @@ XS(_wrap_svn_fs_change_rev_prop2) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 5) || (items > 6)) {
       SWIG_croak("Usage: svn_fs_change_rev_prop2(fs,rev,name,old_value_p,value,pool);");
@@ -10813,11 +12409,10 @@ XS(_wrap_svn_fs_change_rev_prop2) {
       SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "svn_fs_change_rev_prop2" "', argument " "3"" of type '" "char const *""'");
     }
     arg3 = (char *)(buf3);
-    res4 = SWIG_ConvertPtr(ST(3), &argp4,SWIGTYPE_p_p_svn_string_t, 0 |  0 );
-    if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "svn_fs_change_rev_prop2" "', argument " "4"" of type '" "svn_string_t const *const *""'"); 
+    {
+      SWIG_exception(SWIG_ValueError, "svn_fs_change_rev_prop2 is not implemented yet");
+      
     }
-    arg4 = (svn_string_t **)(argp4);
     {
       if (SvOK(ST(4))) {
         value5.data = SvPV(ST(4), value5.len);
@@ -10844,9 +12439,11 @@ XS(_wrap_svn_fs_change_rev_prop2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10901,6 +12498,7 @@ XS(_wrap_svn_fs_change_rev_prop) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_change_rev_prop(fs,rev,name,value,pool);");
@@ -10945,9 +12543,11 @@ XS(_wrap_svn_fs_change_rev_prop) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -10997,6 +12597,7 @@ XS(_wrap_svn_fs_get_file_delta_stream) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 4) || (items > 5)) {
@@ -11038,9 +12639,11 @@ XS(_wrap_svn_fs_get_file_delta_stream) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11084,6 +12687,7 @@ XS(_wrap_svn_fs_get_uuid) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg2 = &temp2;
     if ((items < 1) || (items > 2)) {
@@ -11110,9 +12714,11 @@ XS(_wrap_svn_fs_get_uuid) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11156,6 +12762,7 @@ XS(_wrap_svn_fs_set_uuid) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_set_uuid(fs,uuid,pool);");
@@ -11186,9 +12793,11 @@ XS(_wrap_svn_fs_set_uuid) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11225,6 +12834,7 @@ XS(_wrap_svn_fs_lock_target_create) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_lock_target_create(token,current_rev,result_pool);");
@@ -11338,9 +12948,11 @@ XS(_wrap_svn_fs_lock_many) {
     
     {
       _global_pool = arg9 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg10 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 8) || (items > 10)) {
       SWIG_croak("Usage: svn_fs_lock_many(fs,lock_targets,comment,is_dav_comment,expiration_date,steal_lock,lock_callback,lock_baton,result_pool,scratch_pool);");
@@ -11404,9 +13016,11 @@ XS(_wrap_svn_fs_lock_many) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11479,6 +13093,7 @@ XS(_wrap_svn_fs_lock) {
     
     {
       _global_pool = arg10 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 8) || (items > 9)) {
@@ -11540,9 +13155,11 @@ XS(_wrap_svn_fs_lock) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11594,6 +13211,7 @@ XS(_wrap_svn_fs_generate_lock_token) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 2)) {
@@ -11620,9 +13238,11 @@ XS(_wrap_svn_fs_generate_lock_token) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11672,9 +13292,11 @@ XS(_wrap_svn_fs_unlock_many) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg7 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 5) || (items > 7)) {
       SWIG_croak("Usage: svn_fs_unlock_many(fs,unlock_targets,break_lock,lock_callback,lock_baton,result_pool,scratch_pool);");
@@ -11723,9 +13345,11 @@ XS(_wrap_svn_fs_unlock_many) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11777,6 +13401,7 @@ XS(_wrap_svn_fs_unlock) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_unlock(fs,path,token,break_lock,pool);");
@@ -11817,9 +13442,11 @@ XS(_wrap_svn_fs_unlock) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11862,6 +13489,7 @@ XS(_wrap_svn_fs_get_lock) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 2) || (items > 3)) {
@@ -11893,9 +13521,11 @@ XS(_wrap_svn_fs_get_lock) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -11943,6 +13573,7 @@ XS(_wrap_svn_fs_get_locks2) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 5) || (items > 6)) {
       SWIG_croak("Usage: svn_fs_get_locks2(fs,path,depth,get_locks_func,get_locks_baton,pool);");
@@ -11988,9 +13619,11 @@ XS(_wrap_svn_fs_get_locks2) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -12036,6 +13669,7 @@ XS(_wrap_svn_fs_get_locks) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_get_locks(fs,path,get_locks_func,get_locks_baton,pool);");
@@ -12076,9 +13710,11 @@ XS(_wrap_svn_fs_get_locks) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -12113,6 +13749,7 @@ XS(_wrap_svn_fs_print_modules) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_print_modules(output,pool);");
@@ -12120,6 +13757,7 @@ XS(_wrap_svn_fs_print_modules) {
     {
       apr_size_t len;
       char *buf;
+      apr_pool_t *pool;
       
       if (!SvOK(ST(0))) {
         arg1 = NULL;
@@ -12127,8 +13765,9 @@ XS(_wrap_svn_fs_print_modules) {
         buf = SvPV(ST(0), len);
         /* Another case of ugly pool handling, this should use the current
                    default pool, or make a new one if it doesn't exist yet */
-        arg1 = svn_stringbuf_ncreate(buf,len,
-          svn_swig_pl_make_pool ((SV *)NULL));
+        pool = svn_swig_pl_make_pool ((SV *)NULL);
+        SPAGAIN;
+        arg1 = svn_stringbuf_ncreate(buf,len, pool);
       } else {
         croak("Not a string");
       }
@@ -12149,9 +13788,11 @@ XS(_wrap_svn_fs_print_modules) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -12188,6 +13829,7 @@ XS(_wrap_svn_fs_pack) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_pack(db_path,notify_func,notify_baton,cancel_func,cancel_baton,pool);");
@@ -12227,9 +13869,11 @@ XS(_wrap_svn_fs_pack) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -12277,6 +13921,7 @@ XS(_wrap_svn_fs_verify) {
     
     {
       _global_pool = arg9 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 7) || (items > 8)) {
       SWIG_croak("Usage: svn_fs_verify(path,fs_config,start,end,notify_func,notify_baton,cancel_func,cancel_baton,scratch_pool);");
@@ -12330,9 +13975,11 @@ XS(_wrap_svn_fs_verify) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -12373,6 +14020,7 @@ XS(_wrap_svn_fs_verify_root) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 2)) {
       SWIG_croak("Usage: svn_fs_verify_root(root,scratch_pool);");
@@ -12398,9 +14046,11 @@ XS(_wrap_svn_fs_verify_root) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -12978,9 +14628,11 @@ XS(_wrap_svn_fs_info) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     arg1 = &temp1;
     if ((items < 1) || (items > 3)) {
@@ -13010,9 +14662,11 @@ XS(_wrap_svn_fs_info) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13056,9 +14710,11 @@ XS(_wrap_svn_fs_info_dup) {
     
     {
       _global_pool = arg2 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 1) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_info_dup(info,result_pool,scratch_pool);");
@@ -13161,6 +14817,7 @@ XS(_wrap_svn_fs_invoke_upgrade_notify) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_invoke_upgrade_notify(_obj,baton,number,action,scratch_pool);");
@@ -13201,9 +14858,11 @@ XS(_wrap_svn_fs_invoke_upgrade_notify) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13242,6 +14901,7 @@ XS(_wrap_svn_fs_invoke_progress_notify_func) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_invoke_progress_notify_func(_obj,revision,baton,pool);");
@@ -13304,6 +14964,7 @@ XS(_wrap_svn_fs_invoke_hotcopy_notify) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_invoke_hotcopy_notify(_obj,baton,start_revision,end_revision,scratch_pool);");
@@ -13368,6 +15029,7 @@ XS(_wrap_svn_fs_invoke_freeze_func) {
     
     {
       _global_pool = arg3 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 2) || (items > 3)) {
       SWIG_croak("Usage: svn_fs_invoke_freeze_func(_obj,baton,pool);");
@@ -13398,9 +15060,11 @@ XS(_wrap_svn_fs_invoke_freeze_func) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13412,6 +15076,95 @@ XS(_wrap_svn_fs_invoke_freeze_func) {
     
     XSRETURN(argvi);
   fail:
+    
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_svn_fs_invoke_mergeinfo_receiver) {
+  {
+    svn_fs_mergeinfo_receiver_t arg1 = (svn_fs_mergeinfo_receiver_t) 0 ;
+    char *arg2 = (char *) 0 ;
+    svn_mergeinfo_t arg3 = (svn_mergeinfo_t) 0 ;
+    void *arg4 = (void *) 0 ;
+    apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+    apr_pool_t *_global_pool ;
+    int res2 ;
+    char *buf2 = 0 ;
+    int alloc2 = 0 ;
+    void *argp3 = 0 ;
+    int res3 = 0 ;
+    int res4 ;
+    int argvi = 0;
+    svn_error_t *result = 0 ;
+    dXSARGS;
+    
+    {
+      _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
+    }
+    if ((items < 4) || (items > 5)) {
+      SWIG_croak("Usage: svn_fs_invoke_mergeinfo_receiver(_obj,path,mergeinfo,baton,scratch_pool);");
+    }
+    {
+      int res = SWIG_ConvertFunctionPtr(ST(0), (void**)(&arg1), SWIGTYPE_p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t);
+      if (!SWIG_IsOK(res)) {
+        SWIG_exception_fail(SWIG_ArgError(res), "in method '" "svn_fs_invoke_mergeinfo_receiver" "', argument " "1"" of type '" "svn_fs_mergeinfo_receiver_t""'"); 
+      }
+    }
+    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "svn_fs_invoke_mergeinfo_receiver" "', argument " "2"" of type '" "char const *""'");
+    }
+    arg2 = (char *)(buf2);
+    res3 = SWIG_ConvertPtr(ST(2), &argp3,SWIGTYPE_p_apr_hash_t, 0 |  0 );
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "svn_fs_invoke_mergeinfo_receiver" "', argument " "3"" of type '" "svn_mergeinfo_t""'"); 
+    }
+    arg3 = (svn_mergeinfo_t)(argp3);
+    res4 = SWIG_ConvertPtr(ST(3),SWIG_as_voidptrptr(&arg4), 0, 0);
+    if (!SWIG_IsOK(res4)) {
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "svn_fs_invoke_mergeinfo_receiver" "', argument " "4"" of type '" "void *""'"); 
+    }
+    if (items > 4) {
+      
+    }
+    {
+      result = (svn_error_t *)svn_fs_invoke_mergeinfo_receiver(arg1,(char const *)arg2,arg3,arg4,arg5);
+      
+      
+      
+    }
+    {
+      if (result) {
+        SV *exception_handler = perl_get_sv ("SVN::Error::handler", FALSE);
+        
+        if (SvOK(exception_handler)) {
+          SV *callback_result;
+          
+          PUTBACK;
+          svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
+            &callback_result, "S", result,
+            SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
+        } else {
+          ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
+          argvi++;
+        }
+      }
+    }
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+    
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
     
     
     
@@ -13439,6 +15192,7 @@ XS(_wrap_svn_fs_invoke_process_contents_func) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_invoke_process_contents_func(_obj,contents,len,baton,scratch_pool);");
@@ -13479,9 +15233,11 @@ XS(_wrap_svn_fs_invoke_process_contents_func) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13528,6 +15284,7 @@ XS(_wrap_svn_fs_invoke_lock_callback) {
     
     {
       _global_pool = arg6 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 5) || (items > 6)) {
       SWIG_croak("Usage: svn_fs_invoke_lock_callback(_obj,baton,path,lock,fs_err,scratch_pool);");
@@ -13573,9 +15330,11 @@ XS(_wrap_svn_fs_invoke_lock_callback) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13617,6 +15376,7 @@ XS(_wrap_svn_fs_invoke_get_locks_callback) {
     
     {
       _global_pool = arg4 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 3) || (items > 4)) {
       SWIG_croak("Usage: svn_fs_invoke_get_locks_callback(_obj,baton,lock,pool);");
@@ -13652,9 +15412,11 @@ XS(_wrap_svn_fs_invoke_get_locks_callback) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13695,6 +15457,7 @@ XS(_wrap_svn_fs_invoke_pack_notify) {
     
     {
       _global_pool = arg5 = svn_swig_pl_make_pool (ST(items-1));
+      SPAGAIN;
     }
     if ((items < 4) || (items > 5)) {
       SWIG_croak("Usage: svn_fs_invoke_pack_notify(_obj,baton,shard,action,pool);");
@@ -13735,9 +15498,11 @@ XS(_wrap_svn_fs_invoke_pack_notify) {
         if (SvOK(exception_handler)) {
           SV *callback_result;
           
+          PUTBACK;
           svn_swig_pl_callback_thunk (CALL_SV, exception_handler,
             &callback_result, "S", result,
             SWIGTYPE_p_svn_error_t);
+          SPAGAIN;
         } else {
           ST(argvi) = SWIG_NewPointerObj(result, SWIGTYPE_p_svn_error_t, 0);
           argvi++;
@@ -13765,13 +15530,14 @@ XS(_wrap_svn_fs_invoke_pack_notify) {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_apr_array_header_t = {"_p_apr_array_header_t", "apr_array_header_t *|svn_rangelist_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_apr_hash_t = {"_p_apr_hash_t", "apr_hash_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_apr_hash_t = {"_p_apr_hash_t", "svn_mergeinfo_t|apr_hash_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_apr_int32_t = {"_p_apr_int32_t", "apr_int32_t *|time_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_apr_int64_t = {"_p_apr_int64_t", "apr_int64_t *|svn_filesize_t *|apr_time_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_apr_pool_t = {"_p_apr_pool_t", "apr_pool_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_long_p_void_p_apr_pool_t__void = {"_p_f_long_p_void_p_apr_pool_t__void", "void (*)(long,void *,apr_pool_t *)|svn_fs_progress_notify_func_t", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t = {"_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t", "svn_opt_subcommand_t *|struct svn_error_t *(*)(apr_getopt_t *,void *,apr_pool_t *)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t = {"_p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t", "struct svn_error_t *(*)(char const *,svn_mergeinfo_t,void *,apr_pool_t *)|svn_fs_mergeinfo_receiver_t", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t = {"_p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t", "svn_fs_process_contents_func_t|struct svn_error_t *(*)(unsigned char const *,apr_size_t,void *,apr_pool_t *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t = {"_p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t", "struct svn_error_t *(*)(svn_txdelta_window_t *,void *)|svn_txdelta_window_handler_t", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void__p_svn_error_t = {"_p_f_p_void__p_svn_error_t", "svn_cancel_func_t|struct svn_error_t *(*)(void *)", 0, 0, (void*)0, 0};
@@ -13793,6 +15559,8 @@ static swig_type_info _swigt__p_p_svn_fs_access_t = {"_p_p_svn_fs_access_t", "st
 static swig_type_info _swigt__p_p_svn_fs_history_t = {"_p_p_svn_fs_history_t", "struct svn_fs_history_t **|svn_fs_history_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_fs_id_t = {"_p_p_svn_fs_id_t", "struct svn_fs_id_t **|svn_fs_id_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_fs_info_placeholder_t = {"_p_p_svn_fs_info_placeholder_t", "struct svn_fs_info_placeholder_t **|svn_fs_info_placeholder_t **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_svn_fs_path_change3_t = {"_p_p_svn_fs_path_change3_t", "struct svn_fs_path_change3_t **|svn_fs_path_change3_t **", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_p_svn_fs_path_change_iterator_t = {"_p_p_svn_fs_path_change_iterator_t", "struct svn_fs_path_change_iterator_t **|svn_fs_path_change_iterator_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_fs_root_t = {"_p_p_svn_fs_root_t", "struct svn_fs_root_t **|svn_fs_root_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_fs_t = {"_p_p_svn_fs_t", "struct svn_fs_t **|svn_fs_t **", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_svn_fs_txn_t = {"_p_p_svn_fs_txn_t", "struct svn_fs_txn_t **|svn_fs_txn_t **", 0, 0, (void*)0, 0};
@@ -13812,6 +15580,7 @@ static swig_type_info _swigt__p_svn_auth_iterstate_t = {"_p_svn_auth_iterstate_t
 static swig_type_info _swigt__p_svn_auth_provider_object_t = {"_p_svn_auth_provider_object_t", "struct svn_auth_provider_object_t *|svn_auth_provider_object_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_provider_t = {"_p_svn_auth_provider_t", "struct svn_auth_provider_t *|svn_auth_provider_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_auth_ssl_server_cert_info_t = {"_p_svn_auth_ssl_server_cert_info_t", "struct svn_auth_ssl_server_cert_info_t *|svn_auth_ssl_server_cert_info_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_cache_config_t = {"_p_svn_cache_config_t", "struct svn_cache_config_t *|svn_cache_config_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_ctx_t = {"_p_svn_checksum_ctx_t", "struct svn_checksum_ctx_t *|svn_checksum_ctx_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_kind_t = {"_p_svn_checksum_kind_t", "enum svn_checksum_kind_t *|svn_checksum_kind_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_checksum_t = {"_p_svn_checksum_t", "struct svn_checksum_t *|svn_checksum_t *", 0, 0, (void*)0, 0};
@@ -13819,6 +15588,7 @@ static swig_type_info _swigt__p_svn_commit_info_t = {"_p_svn_commit_info_t", "st
 static swig_type_info _swigt__p_svn_config_t = {"_p_svn_config_t", "struct svn_config_t *|svn_config_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_delta_editor_t = {"_p_svn_delta_editor_t", "struct svn_delta_editor_t *|svn_delta_editor_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_depth_t = {"_p_svn_depth_t", "enum svn_depth_t *|svn_depth_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_diff_binary_patch_t = {"_p_svn_diff_binary_patch_t", "struct svn_diff_binary_patch_t *|svn_diff_binary_patch_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_diff_conflict_display_style_t = {"_p_svn_diff_conflict_display_style_t", "enum svn_diff_conflict_display_style_t *|svn_diff_conflict_display_style_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_diff_datasource_e = {"_p_svn_diff_datasource_e", "enum svn_diff_datasource_e *|svn_diff_datasource_e *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_diff_file_ignore_space_t = {"_p_svn_diff_file_ignore_space_t", "enum svn_diff_file_ignore_space_t *|svn_diff_file_ignore_space_t *", 0, 0, (void*)0, 0};
@@ -13843,6 +15613,8 @@ static swig_type_info _swigt__p_svn_fs_lock_target_t = {"_p_svn_fs_lock_target_t
 static swig_type_info _swigt__p_svn_fs_node_relation_t = {"_p_svn_fs_node_relation_t", "enum svn_fs_node_relation_t *|svn_fs_node_relation_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_pack_notify_action_t = {"_p_svn_fs_pack_notify_action_t", "enum svn_fs_pack_notify_action_t *|svn_fs_pack_notify_action_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_path_change2_t = {"_p_svn_fs_path_change2_t", "struct svn_fs_path_change2_t *|svn_fs_path_change2_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_fs_path_change3_t = {"_p_svn_fs_path_change3_t", "struct svn_fs_path_change3_t *|svn_fs_path_change3_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_fs_path_change_iterator_t = {"_p_svn_fs_path_change_iterator_t", "struct svn_fs_path_change_iterator_t *|svn_fs_path_change_iterator_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_path_change_kind_t = {"_p_svn_fs_path_change_kind_t", "enum svn_fs_path_change_kind_t *|svn_fs_path_change_kind_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_path_change_t = {"_p_svn_fs_path_change_t", "struct svn_fs_path_change_t *|svn_fs_path_change_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_root_t = {"_p_svn_fs_root_t", "struct svn_fs_root_t *|svn_fs_root_t *", 0, 0, (void*)0, 0};
@@ -13897,6 +15669,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_char,
   &_swigt__p_f_long_p_void_p_apr_pool_t__void,
   &_swigt__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t,
+  &_swigt__p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t,
   &_swigt__p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t,
   &_swigt__p_f_p_void__p_svn_error_t,
@@ -13918,6 +15691,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_p_svn_fs_history_t,
   &_swigt__p_p_svn_fs_id_t,
   &_swigt__p_p_svn_fs_info_placeholder_t,
+  &_swigt__p_p_svn_fs_path_change3_t,
+  &_swigt__p_p_svn_fs_path_change_iterator_t,
   &_swigt__p_p_svn_fs_root_t,
   &_swigt__p_p_svn_fs_t,
   &_swigt__p_p_svn_fs_txn_t,
@@ -13937,6 +15712,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_auth_provider_object_t,
   &_swigt__p_svn_auth_provider_t,
   &_swigt__p_svn_auth_ssl_server_cert_info_t,
+  &_swigt__p_svn_cache_config_t,
   &_swigt__p_svn_checksum_ctx_t,
   &_swigt__p_svn_checksum_kind_t,
   &_swigt__p_svn_checksum_t,
@@ -13944,6 +15720,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_config_t,
   &_swigt__p_svn_delta_editor_t,
   &_swigt__p_svn_depth_t,
+  &_swigt__p_svn_diff_binary_patch_t,
   &_swigt__p_svn_diff_conflict_display_style_t,
   &_swigt__p_svn_diff_datasource_e,
   &_swigt__p_svn_diff_file_ignore_space_t,
@@ -13968,6 +15745,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_fs_node_relation_t,
   &_swigt__p_svn_fs_pack_notify_action_t,
   &_swigt__p_svn_fs_path_change2_t,
+  &_swigt__p_svn_fs_path_change3_t,
+  &_swigt__p_svn_fs_path_change_iterator_t,
   &_swigt__p_svn_fs_path_change_kind_t,
   &_swigt__p_svn_fs_path_change_t,
   &_swigt__p_svn_fs_root_t,
@@ -14022,6 +15801,7 @@ static swig_cast_info _swigc__p_apr_pool_t[] = {  {&_swigt__p_apr_pool_t, 0, 0, 
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_long_p_void_p_apr_pool_t__void[] = {  {&_swigt__p_f_long_p_void_p_apr_pool_t__void, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t[] = {  {&_swigt__p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t[] = {  {&_swigt__p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_f_p_void__p_svn_error_t[] = {  {&_swigt__p_f_p_void__p_svn_error_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -14043,6 +15823,8 @@ static swig_cast_info _swigc__p_p_svn_fs_access_t[] = {  {&_swigt__p_p_svn_fs_ac
 static swig_cast_info _swigc__p_p_svn_fs_history_t[] = {  {&_swigt__p_p_svn_fs_history_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_fs_id_t[] = {  {&_swigt__p_p_svn_fs_id_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_fs_info_placeholder_t[] = {  {&_swigt__p_p_svn_fs_info_placeholder_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_svn_fs_path_change3_t[] = {  {&_swigt__p_p_svn_fs_path_change3_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_p_svn_fs_path_change_iterator_t[] = {  {&_swigt__p_p_svn_fs_path_change_iterator_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_fs_root_t[] = {  {&_swigt__p_p_svn_fs_root_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_fs_t[] = {  {&_swigt__p_p_svn_fs_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_p_svn_fs_txn_t[] = {  {&_swigt__p_p_svn_fs_txn_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -14062,6 +15844,7 @@ static swig_cast_info _swigc__p_svn_auth_iterstate_t[] = {  {&_swigt__p_svn_auth
 static swig_cast_info _swigc__p_svn_auth_provider_object_t[] = {  {&_swigt__p_svn_auth_provider_object_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_provider_t[] = {  {&_swigt__p_svn_auth_provider_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_auth_ssl_server_cert_info_t[] = {  {&_swigt__p_svn_auth_ssl_server_cert_info_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_cache_config_t[] = {  {&_swigt__p_svn_cache_config_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_ctx_t[] = {  {&_swigt__p_svn_checksum_ctx_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_kind_t[] = {  {&_swigt__p_svn_checksum_kind_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_checksum_t[] = {  {&_swigt__p_svn_checksum_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -14069,6 +15852,7 @@ static swig_cast_info _swigc__p_svn_commit_info_t[] = {  {&_swigt__p_svn_commit_
 static swig_cast_info _swigc__p_svn_config_t[] = {  {&_swigt__p_svn_config_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_delta_editor_t[] = {  {&_swigt__p_svn_delta_editor_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_depth_t[] = {  {&_swigt__p_svn_depth_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_diff_binary_patch_t[] = {  {&_swigt__p_svn_diff_binary_patch_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_diff_conflict_display_style_t[] = {  {&_swigt__p_svn_diff_conflict_display_style_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_diff_datasource_e[] = {  {&_swigt__p_svn_diff_datasource_e, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_diff_file_ignore_space_t[] = {  {&_swigt__p_svn_diff_file_ignore_space_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -14093,6 +15877,8 @@ static swig_cast_info _swigc__p_svn_fs_lock_target_t[] = {  {&_swigt__p_svn_fs_l
 static swig_cast_info _swigc__p_svn_fs_node_relation_t[] = {  {&_swigt__p_svn_fs_node_relation_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_pack_notify_action_t[] = {  {&_swigt__p_svn_fs_pack_notify_action_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_path_change2_t[] = {  {&_swigt__p_svn_fs_path_change2_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_fs_path_change3_t[] = {  {&_swigt__p_svn_fs_path_change3_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_fs_path_change_iterator_t[] = {  {&_swigt__p_svn_fs_path_change_iterator_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_path_change_kind_t[] = {  {&_swigt__p_svn_fs_path_change_kind_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_path_change_t[] = {  {&_swigt__p_svn_fs_path_change_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_root_t[] = {  {&_swigt__p_svn_fs_root_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -14147,6 +15933,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_char,
   _swigc__p_f_long_p_void_p_apr_pool_t__void,
   _swigc__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t,
+  _swigc__p_f_p_q_const__char_svn_mergeinfo_t_p_void_p_apr_pool_t__p_svn_error_t,
   _swigc__p_f_p_q_const__unsigned_char_apr_size_t_p_void_p_apr_pool_t__p_svn_error_t,
   _swigc__p_f_p_svn_txdelta_window_t_p_void__p_svn_error_t,
   _swigc__p_f_p_void__p_svn_error_t,
@@ -14168,6 +15955,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_p_svn_fs_history_t,
   _swigc__p_p_svn_fs_id_t,
   _swigc__p_p_svn_fs_info_placeholder_t,
+  _swigc__p_p_svn_fs_path_change3_t,
+  _swigc__p_p_svn_fs_path_change_iterator_t,
   _swigc__p_p_svn_fs_root_t,
   _swigc__p_p_svn_fs_t,
   _swigc__p_p_svn_fs_txn_t,
@@ -14187,6 +15976,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_auth_provider_object_t,
   _swigc__p_svn_auth_provider_t,
   _swigc__p_svn_auth_ssl_server_cert_info_t,
+  _swigc__p_svn_cache_config_t,
   _swigc__p_svn_checksum_ctx_t,
   _swigc__p_svn_checksum_kind_t,
   _swigc__p_svn_checksum_t,
@@ -14194,6 +15984,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_config_t,
   _swigc__p_svn_delta_editor_t,
   _swigc__p_svn_depth_t,
+  _swigc__p_svn_diff_binary_patch_t,
   _swigc__p_svn_diff_conflict_display_style_t,
   _swigc__p_svn_diff_datasource_e,
   _swigc__p_svn_diff_file_ignore_space_t,
@@ -14218,6 +16009,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_fs_node_relation_t,
   _swigc__p_svn_fs_pack_notify_action_t,
   _swigc__p_svn_fs_path_change2_t,
+  _swigc__p_svn_fs_path_change3_t,
+  _swigc__p_svn_fs_path_change_iterator_t,
   _swigc__p_svn_fs_path_change_kind_t,
   _swigc__p_svn_fs_path_change_t,
   _swigc__p_svn_fs_root_t,
@@ -14279,6 +16072,7 @@ static swig_variable_info swig_variables[] = {
 static swig_command_info swig_commands[] = {
 {"SVN::_Fs::svn_fs_version", _wrap_svn_fs_version},
 {"SVN::_Fs::svn_fs_initialize", _wrap_svn_fs_initialize},
+{"SVN::_Fs::svn_fs_create2", _wrap_svn_fs_create2},
 {"SVN::_Fs::svn_fs_create", _wrap_svn_fs_create},
 {"SVN::_Fs::svn_fs_open2", _wrap_svn_fs_open2},
 {"SVN::_Fs::svn_fs_open", _wrap_svn_fs_open},
@@ -14333,6 +16127,24 @@ static swig_command_info swig_commands[] = {
 {"SVN::_Fs::svn_fs_txn_root_name", _wrap_svn_fs_txn_root_name},
 {"SVN::_Fs::svn_fs_txn_root_base_revision", _wrap_svn_fs_txn_root_base_revision},
 {"SVN::_Fs::svn_fs_revision_root_revision", _wrap_svn_fs_revision_root_revision},
+{"SVN::_Fs::svn_fs_path_change3_t_path_set", _wrap_svn_fs_path_change3_t_path_set},
+{"SVN::_Fs::svn_fs_path_change3_t_path_get", _wrap_svn_fs_path_change3_t_path_get},
+{"SVN::_Fs::svn_fs_path_change3_t_change_kind_set", _wrap_svn_fs_path_change3_t_change_kind_set},
+{"SVN::_Fs::svn_fs_path_change3_t_change_kind_get", _wrap_svn_fs_path_change3_t_change_kind_get},
+{"SVN::_Fs::svn_fs_path_change3_t_node_kind_set", _wrap_svn_fs_path_change3_t_node_kind_set},
+{"SVN::_Fs::svn_fs_path_change3_t_node_kind_get", _wrap_svn_fs_path_change3_t_node_kind_get},
+{"SVN::_Fs::svn_fs_path_change3_t_text_mod_set", _wrap_svn_fs_path_change3_t_text_mod_set},
+{"SVN::_Fs::svn_fs_path_change3_t_text_mod_get", _wrap_svn_fs_path_change3_t_text_mod_get},
+{"SVN::_Fs::svn_fs_path_change3_t_prop_mod_set", _wrap_svn_fs_path_change3_t_prop_mod_set},
+{"SVN::_Fs::svn_fs_path_change3_t_prop_mod_get", _wrap_svn_fs_path_change3_t_prop_mod_get},
+{"SVN::_Fs::svn_fs_path_change3_t_mergeinfo_mod_set", _wrap_svn_fs_path_change3_t_mergeinfo_mod_set},
+{"SVN::_Fs::svn_fs_path_change3_t_mergeinfo_mod_get", _wrap_svn_fs_path_change3_t_mergeinfo_mod_get},
+{"SVN::_Fs::svn_fs_path_change3_t_copyfrom_known_set", _wrap_svn_fs_path_change3_t_copyfrom_known_set},
+{"SVN::_Fs::svn_fs_path_change3_t_copyfrom_known_get", _wrap_svn_fs_path_change3_t_copyfrom_known_get},
+{"SVN::_Fs::svn_fs_path_change3_t_copyfrom_rev_set", _wrap_svn_fs_path_change3_t_copyfrom_rev_set},
+{"SVN::_Fs::svn_fs_path_change3_t_copyfrom_rev_get", _wrap_svn_fs_path_change3_t_copyfrom_rev_get},
+{"SVN::_Fs::svn_fs_path_change3_t_copyfrom_path_set", _wrap_svn_fs_path_change3_t_copyfrom_path_set},
+{"SVN::_Fs::svn_fs_path_change3_t_copyfrom_path_get", _wrap_svn_fs_path_change3_t_copyfrom_path_get},
 {"SVN::_Fs::svn_fs_path_change2_t_node_rev_id_set", _wrap_svn_fs_path_change2_t_node_rev_id_set},
 {"SVN::_Fs::svn_fs_path_change2_t_node_rev_id_get", _wrap_svn_fs_path_change2_t_node_rev_id_get},
 {"SVN::_Fs::svn_fs_path_change2_t_change_kind_set", _wrap_svn_fs_path_change2_t_change_kind_set},
@@ -14360,6 +16172,10 @@ static swig_command_info swig_commands[] = {
 {"SVN::_Fs::svn_fs_path_change_t_prop_mod_set", _wrap_svn_fs_path_change_t_prop_mod_set},
 {"SVN::_Fs::svn_fs_path_change_t_prop_mod_get", _wrap_svn_fs_path_change_t_prop_mod_get},
 {"SVN::_Fs::svn_fs_path_change2_create", _wrap_svn_fs_path_change2_create},
+{"SVN::_Fs::svn_fs_path_change3_create", _wrap_svn_fs_path_change3_create},
+{"SVN::_Fs::svn_fs_path_change3_dup", _wrap_svn_fs_path_change3_dup},
+{"SVN::_Fs::svn_fs_path_change_get", _wrap_svn_fs_path_change_get},
+{"SVN::_Fs::svn_fs_paths_changed3", _wrap_svn_fs_paths_changed3},
 {"SVN::_Fs::svn_fs_paths_changed2", _wrap_svn_fs_paths_changed2},
 {"SVN::_Fs::svn_fs_paths_changed", _wrap_svn_fs_paths_changed},
 {"SVN::_Fs::svn_fs_check_path", _wrap_svn_fs_check_path},
@@ -14383,6 +16199,7 @@ static swig_command_info swig_commands[] = {
 {"SVN::_Fs::svn_fs_props_changed", _wrap_svn_fs_props_changed},
 {"SVN::_Fs::svn_fs_copied_from", _wrap_svn_fs_copied_from},
 {"SVN::_Fs::svn_fs_closest_copy", _wrap_svn_fs_closest_copy},
+{"SVN::_Fs::svn_fs_get_mergeinfo3", _wrap_svn_fs_get_mergeinfo3},
 {"SVN::_Fs::svn_fs_get_mergeinfo2", _wrap_svn_fs_get_mergeinfo2},
 {"SVN::_Fs::svn_fs_get_mergeinfo", _wrap_svn_fs_get_mergeinfo},
 {"SVN::_Fs::svn_fs_merge", _wrap_svn_fs_merge},
@@ -14412,7 +16229,10 @@ static swig_command_info swig_commands[] = {
 {"SVN::_Fs::svn_fs_info_format", _wrap_svn_fs_info_format},
 {"SVN::_Fs::svn_fs_info_config_files", _wrap_svn_fs_info_config_files},
 {"SVN::_Fs::svn_fs_deltify_revision", _wrap_svn_fs_deltify_revision},
+{"SVN::_Fs::svn_fs_refresh_revision_props", _wrap_svn_fs_refresh_revision_props},
+{"SVN::_Fs::svn_fs_revision_prop2", _wrap_svn_fs_revision_prop2},
 {"SVN::_Fs::svn_fs_revision_prop", _wrap_svn_fs_revision_prop},
+{"SVN::_Fs::svn_fs_revision_proplist2", _wrap_svn_fs_revision_proplist2},
 {"SVN::_Fs::svn_fs_revision_proplist", _wrap_svn_fs_revision_proplist},
 {"SVN::_Fs::svn_fs_change_rev_prop2", _wrap_svn_fs_change_rev_prop2},
 {"SVN::_Fs::svn_fs_change_rev_prop", _wrap_svn_fs_change_rev_prop},
@@ -14456,6 +16276,7 @@ static swig_command_info swig_commands[] = {
 {"SVN::_Fs::svn_fs_invoke_progress_notify_func", _wrap_svn_fs_invoke_progress_notify_func},
 {"SVN::_Fs::svn_fs_invoke_hotcopy_notify", _wrap_svn_fs_invoke_hotcopy_notify},
 {"SVN::_Fs::svn_fs_invoke_freeze_func", _wrap_svn_fs_invoke_freeze_func},
+{"SVN::_Fs::svn_fs_invoke_mergeinfo_receiver", _wrap_svn_fs_invoke_mergeinfo_receiver},
 {"SVN::_Fs::svn_fs_invoke_process_contents_func", _wrap_svn_fs_invoke_process_contents_func},
 {"SVN::_Fs::svn_fs_invoke_lock_callback", _wrap_svn_fs_invoke_lock_callback},
 {"SVN::_Fs::svn_fs_invoke_get_locks_callback", _wrap_svn_fs_invoke_get_locks_callback},
@@ -14757,184 +16578,199 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   }
   
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_TYPE_BDB", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("bdb"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_TYPE_FSFS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_TYPE_FSX", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsx"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_BDB_TXN_NOSYNC", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("bdb-txn-nosync"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_BDB_LOG_AUTOREMOVE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("bdb-log-autoremove"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_CACHE_DELTAS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-cache-deltas"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_CACHE_FULLTEXTS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-cache-fulltexts"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_CACHE_REVPROPS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-cache-revprops"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_CACHE_NS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-cache-namespace"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_CACHE_NODEPROPS", TRUE | 0x2 | GV_ADDMULTI);
+    sv_setsv(sv, SWIG_FromCharPtr("fsfs-cache-nodeprops"));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_BLOCK_READ", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-block-read"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_SHARD_SIZE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-shard-size"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FSFS_LOG_ADDRESSING", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fsfs-log-addressing"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_FS_TYPE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("fs-type"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_PRE_1_4_COMPATIBLE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("pre-1.4-compatible"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_PRE_1_5_COMPATIBLE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("pre-1.5-compatible"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_PRE_1_6_COMPATIBLE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("pre-1.6-compatible"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_PRE_1_8_COMPATIBLE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("pre-1.8-compatible"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_COMPATIBLE_VERSION", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("compatible-version"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_CONFIG_NO_FLUSH_TO_DISK", TRUE | 0x2 | GV_ADDMULTI);
+    sv_setsv(sv, SWIG_FromCharPtr("no-flush-to-disk"));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_upgrade_pack_revprops", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_upgrade_pack_revprops)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_upgrade_cleanup_revprops", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_upgrade_cleanup_revprops)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_upgrade_format_bumped", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_upgrade_format_bumped)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_node_unrelated", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_node_unrelated)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_node_unchanged", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_node_unchanged)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_node_common_ancestor", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_node_common_ancestor)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_TXN_CHECK_OOD", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(0x00001)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_TXN_CHECK_LOCKS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(0x00002)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_FS_TXN_CLIENT_DATE", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(0x00004)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_path_change_modify", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_path_change_modify)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_path_change_add", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_path_change_add)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_path_change_delete", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_path_change_delete)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_path_change_replace", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_path_change_replace)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_path_change_reset", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_path_change_reset)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_pack_notify_start", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_pack_notify_start)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_pack_notify_end", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_pack_notify_end)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_pack_notify_start_revprop", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_pack_notify_start_revprop)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/home/evgeny/release/svnrm/1.9.4/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_fs_pack_notify_end_revprop", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_pack_notify_end_revprop)));
+    SvREADONLY_on(sv);
+  } while(0) /*@SWIG@*/;
+  /*@SWIG:/home/buildslave27/slave27/svn-trunk-nightly/uploads/roll/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+    SV *sv = get_sv((char*) SWIG_prefix "svn_fs_pack_notify_noop", TRUE | 0x2 | GV_ADDMULTI);
+    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_fs_pack_notify_noop)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
   ST(0) = &PL_sv_yes;

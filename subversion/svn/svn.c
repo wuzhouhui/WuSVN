@@ -33,7 +33,6 @@
 #include <apr_strings.h>
 #include <apr_tables.h>
 #include <apr_general.h>
-#include <apr_signal.h>
 
 #include "svn_cmdline.h"
 #include "svn_pools.h"
@@ -57,6 +56,7 @@
 #include "private/svn_opt_private.h"
 #include "private/svn_cmdline_private.h"
 #include "private/svn_subr_private.h"
+#include "private/svn_utf_private.h"
 
 #include "svn_private_config.h"
 
@@ -143,6 +143,7 @@ typedef enum svn_cl__longopt_t {
   opt_show_passwords,
   opt_pin_externals,
   opt_show_item,
+  opt_adds_as_modification
 } svn_cl__longopt_t;
 
 
@@ -415,15 +416,48 @@ const apr_getopt_option_t svn_cl__options[] =
                           "                             "
                           "current revision (recommended when tagging)")},
   {"show-item", opt_show_item, 1,
-                       N_("print only the item identified by ARG ('kind',\n"
+                       N_("print only the item identified by ARG:\n"
+                          "                             "
+                          "   'kind'       node kind of TARGET\n"
+                          "                             "
+                          "   'url'        URL of TARGET in the repository\n"
+                          "                             "
+                          "   'relative-url'\n"
+                          "                             "
+                          "                repository-relative URL of TARGET\n"
+                          "                             "
+                          "   'repos-root-url'\n"
+                          "                             "
+                          "                root URL of repository\n"
+                          "                             "
+                          "   'repos-uuid' UUID of repository\n"
+                          "                             "
+                          "   'revision'   specified or implied revision\n"
+                          "                             "
+                          "   'last-changed-revision'\n"
+                          "                             "
+                          "                last change of TARGET at or before\n"
+                          "                             "
+                          "                'revision'\n"
+                          "                             "
+                          "   'last-changed-date'\n"
+                          "                             "
+                          "                date of 'last-changed-revision'\n"
+                          "                             "
+                          "   'last-changed-author'\n"
+                          "                             "
+                          "                author of 'last-changed-revision'\n"
+                          "                             "
+                          "   'wc-root'    root of TARGET's working copy")},
+
+  {"adds-as-modification", opt_adds_as_modification, 0,
+                       N_("Local additions are merged with incoming additions "
                        "                             "
-                       "'url', 'relative-url', 'repos-root-url',\n"
+                       "instead of causing a tree conflict. Use of this\n"
                        "                             "
-                       "'repos-uuid', 'revision', 'last-changed-revision',\n"
+                       "option is not recommended! Use 'svn resolve' to\n"
                        "                             "
-                       "'last-changed-date', 'last-changed-author',\n"
-                       "                             "
-                       "'wc-root')")},
+                       "resolve tree conflicts instead.")},
 
   /* Long-opt Aliases
    *
@@ -619,8 +653,9 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "    WC  -> URL:  immediately commit a copy of WC to URL\n"
      "    URL -> WC:   check out URL into WC, schedule for addition\n"
      "    URL -> URL:  complete server-side copy;  used to branch and tag\n"
-     "  All the SRCs must be of the same type. When copying multiple sources,\n"
-     "  they will be added as children of DST, which must be a directory.\n"
+     "  All the SRCs must be of the same type. If DST is an existing directory,\n"
+     "  the sources will be added as children of DST. When copying multiple\n"
+     "  sources, DST must be an existing directory.\n"
      "\n"
      "  WARNING: For compatibility with previous versions of Subversion,\n"
      "  copies performed using two working copy paths (WC -> WC) will not\n"
@@ -734,23 +769,12 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "usage: info [TARGET[@REV]...]\n"
      "\n"
      "  Print information about each TARGET (default: '.').\n"
-     "  TARGET may be either a working-copy path or URL.  If specified, REV\n"
-     "  determines in which revision the target is first looked up.\n"
+     "  TARGET may be either a working-copy path or a URL.  If specified, REV\n"
+     "  determines in which revision the target is first looked up; the default\n"
+     "  is HEAD for a URL or BASE for a WC path.\n"
      "\n"
      "  With --show-item, print only the value of one item of information\n"
-     "  about TARGET. One of the following items can be selected:\n"
-     "     kind                  the kind of TARGET\n"
-     "     url                   the URL of TARGET in the repository\n"
-     "     relative-url          the repository-relative URL\n"
-     "     repos-root-url        the repository root URL\n"
-     "     repos-uuid            the repository UUID\n"
-     "     revision              the revision of TARGET (defaults to BASE\n"
-     "                           for working copy paths and HEAD for URLs)\n"
-     "     last-changed-revision the most recent revision in which TARGET\n"
-     "                           was changed\n"
-     "     last-changed-date     the date of the last-changed revision\n"
-     "     last-changed-author   the author of the last-changed revision\n"
-     "     wc-root               the root of TARGET's working copy\n"),
+     "  about TARGET.\n"),
     {'r', 'R', opt_depth, opt_targets, opt_incremental, opt_xml,
      opt_changelist, opt_include_externals, opt_show_item, opt_no_newline}
   },
@@ -775,7 +799,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "    Size (in bytes)\n"
      "    Date and time of the last commit\n"),
     {'r', 'v', 'R', opt_depth, opt_incremental, opt_xml,
-     opt_include_externals}, },
+     opt_include_externals, opt_search}, },
 
   { "lock", svn_cl__lock, {0}, N_
     ("Lock working copy paths or URLs in the repository, so that\n"
@@ -810,6 +834,17 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "  reverse ranges is allowed.\n"
      "\n"
      "  With -v, also print all affected paths with each log message.\n"
+     "  Each changed path is preceded with a symbol describing the change:\n"
+     "    A: The path was added or copied.\n"
+     "    D: The path was deleted.\n"
+     "    R: The path was replaced (deleted and re-added in the same revision).\n"
+     "    M: The path's file and/or property content was modified.\n"
+     "  If an added or replaced path was copied from somewhere else, the copy\n"
+     "  source path and revision are shown in parentheses.\n"
+     "  If a file or directory was moved from one path to another with 'svn move'\n"
+     "  the old path will be listed as deleted and the new path will be listed\n"
+     "  as copied from the old path at a prior revision.\n"
+     "\n"
      "  With -q, don't print the log message body itself (note that this is\n"
      "  compatible with -v).\n"
      "\n"
@@ -862,7 +897,12 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "\n"
      "    Show the log message for the revision in which /branches/foo\n"
      "    was created:\n"
-     "      svn log --stop-on-copy --limit 1 -r0:HEAD ^/branches/foo\n"),
+     "      svn log --stop-on-copy --limit 1 -r0:HEAD ^/branches/foo\n"
+     "\n"
+     "    If ^/trunk/foo.c was moved to ^/trunk/bar.c' in revision 22, 'svn log -v'\n"
+     "    shows a deletion and a copy in its changed paths list, such as:\n"
+     "       D /trunk/foo.c\n"
+     "       A /trunk/bar.c (from /trunk/foo.c:21)\n"),
     {'r', 'c', 'q', 'v', 'g', opt_targets, opt_stop_on_copy, opt_incremental,
      opt_xml, 'l', opt_with_all_revprops, opt_with_no_revprops,
      opt_with_revprop, opt_depth, opt_diff, opt_diff_cmd,
@@ -1267,8 +1307,9 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "                be committed later (with or without further changes)\n"
      "    URL -> URL: move an item in the repository directly, immediately\n"
      "                creating a new revision in the repository\n"
-     "  All the SRCs must be of the same type. When moving multiple sources,\n"
-     "  they will be added as children of DST, which must be a directory.\n"
+     "  All the SRCs must be of the same type. If DST is an existing directory,\n"
+     "  the sources will be added as children of DST. When moving multiple\n"
+     "  sources, DST must be an existing directory.\n"
      "\n"
      "  SRC and DST of WC -> WC moves must be committed in the same revision.\n"
      "  Furthermore, WC -> WC moves will refuse to move a mixed-revision subtree.\n"
@@ -1519,7 +1560,48 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "\n"
      "  The --accept=ARG option prevents interactive prompting and forces\n"
      "  conflicts on PATH to be resolved in the manner specified by ARG.\n"
-     "  In this mode, the command is not recursive by default (depth 'empty').\n"),
+     "  In this mode, the command is not recursive by default (depth 'empty').\n"
+     "\n"
+     "  A conflicted path cannot be committed with 'svn commit' until it\n"
+     "  has been marked as resolved with 'svn resolve'.\n"
+     "\n"
+     "  Subversion knows three types of conflicts:\n"
+     "  Text conflicts, Property conflicts, and Tree conflicts.\n"
+     "\n"
+     "  Text conflicts occur when overlapping changes to file contents were\n"
+     "  made. Text conflicts are usually resolved by editing the conflicted\n"
+     "  file or by using a merge tool (which may be an external program).\n"
+     "  'svn resolve' provides options which can be used to automatically\n"
+     "  edit files (such as 'mine-full' or 'theirs-conflict'), but these are\n"
+     "  only useful in situations where it is acceptable to discard local or\n"
+     "  incoming changes altogether.\n"
+     "\n"
+     "  Property conflicts are usually resolved by editing the value of the\n"
+     "  conflicted property (either from the interactive prompt, or with\n"
+     "  'svn propedit'). As with text conflicts, options exist to edit a\n"
+     "  property automatically, discarding some changes in favour of others.\n"
+     "\n"
+     "  Tree conflicts occur when a change to the directory structure was\n"
+     "  made, and when this change cannot be applied to the working copy\n"
+     "  without affecting other changes (text changes, property changes,\n"
+     "  or other changes to the directory structure). Brief information about\n"
+     "  tree conflicts is shown by the 'svn status' and 'svn info' commands.\n"
+     "  In interactive mode, 'svn resolve' will attempt to describe tree conflicts\n"
+     "  in detail, and may offer options to resolve the conflict automatically.\n"
+     "  It is recommended to use these automatic options whenever possible,\n"
+     "  rather than attempting manual tree conflict resolution.\n"
+     "\n"
+     "  If a tree conflict cannot be resolved automatically, it is recommended\n"
+     "  to figure out why the conflict occurred before attempting to resolve it.\n"
+     "  The 'svn log -v' command can be used to inspect structural changes\n"
+     "  made in past revisions, and perhaps even on other branches.\n"
+     "  'svn help log' describes how these structural changes are presented.\n"
+     "  Once the conflicting \"incoming\" change has been identified with 'svn log'\n"
+     "  the current \"local\" working copy state should be examined and adjusted\n"
+     "  in a way such that the conflict is resolved. This may involve editing\n"
+     "  files manually or with 'svn merge'. It may be necessary to discard some\n"
+     "  local changes with 'svn revert'. Files or directories might have to be\n"
+     "  copied, deleted, or moved.\n"),
     {opt_targets, 'R', opt_depth, 'q', opt_accept},
     {{opt_accept, N_("specify automatic conflict resolution source\n"
                      "                             "
@@ -1748,7 +1830,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "  targets of this operation.\n"),
     {'r', 'N', opt_depth, opt_set_depth, 'q', opt_merge_cmd, opt_force,
      opt_ignore_externals, opt_changelist, opt_editor_cmd, opt_accept,
-     opt_parents},
+     opt_parents, opt_adds_as_modification},
     { {opt_force,
        N_("handle unversioned obstructions as changes")} } },
 
@@ -1782,29 +1864,8 @@ check_lib_versions(void)
   return svn_ver_check_list2(&my_version, checklist, svn_ver_equal);
 }
 
-
-/* A flag to see if we've been cancelled by the client or not. */
-static volatile sig_atomic_t cancelled = FALSE;
-
-/* A signal handler to support cancellation. */
-static void
-signal_handler(int signum)
-{
-  apr_signal(signum, SIG_IGN);
-  cancelled = TRUE;
-}
-
-/* Our cancellation callback. */
-svn_error_t *
-svn_cl__check_cancel(void *baton)
-{
-  /* Cancel baton should be always NULL in command line client. */
-  SVN_ERR_ASSERT(baton == NULL);
-  if (cancelled)
-    return svn_error_create(SVN_ERR_CANCELLED, NULL, _("Caught signal"));
-  else
-    return SVN_NO_ERROR;
-}
+/* The cancelation handler setup by the cmdline library. */
+svn_cancel_func_t svn_cl__check_cancel = NULL;
 
 /* Add a --search argument to OPT_STATE.
  * These options start a new search pattern group. */
@@ -1877,6 +1938,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
   svn_boolean_t reading_file_from_stdin = FALSE;
   apr_hash_t *changelists;
   apr_hash_t *cfg_hash;
+  svn_membuf_t buf;
 
   received_opts = apr_array_make(pool, SVN_OPT_MAX_OPTIONS, sizeof(int));
 
@@ -1896,6 +1958,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 
   /* Init our changelists hash. */
   changelists = apr_hash_make(pool);
+
+  /* Init the temporary buffer. */
+  svn_membuf__create(&buf, 0, pool);
 
   /* Begin processing arguments. */
   opt_state.start_revision.kind = svn_opt_revision_unspecified;
@@ -2401,11 +2466,20 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         break;
       case opt_search:
         SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
-        add_search_pattern_group(&opt_state, utf8_opt_arg, pool);
+        SVN_ERR(svn_utf__xfrm(&utf8_opt_arg, utf8_opt_arg,
+                              strlen(utf8_opt_arg), TRUE, TRUE, &buf));
+        add_search_pattern_group(&opt_state,
+                                 apr_pstrdup(pool, utf8_opt_arg),
+                                 pool);
         break;
       case opt_search_and:
         SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
-        add_search_pattern_to_latest_group(&opt_state, utf8_opt_arg, pool);
+        SVN_ERR(svn_utf__xfrm(&utf8_opt_arg, utf8_opt_arg,
+                              strlen(utf8_opt_arg), TRUE, TRUE, &buf));
+        add_search_pattern_to_latest_group(&opt_state,
+                                           apr_pstrdup(pool, utf8_opt_arg),
+                                           pool);
+        break;
       case opt_remove_unversioned:
         opt_state.remove_unversioned = TRUE;
         break;
@@ -2425,6 +2499,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
       case opt_show_item:
         SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
         opt_state.show_item = utf8_opt_arg;
+        break;
+      case opt_adds_as_modification:
+        opt_state.adds_as_modification = TRUE;
         break;
       default:
         /* Hmmm. Perhaps this would be a good place to squirrel away
@@ -2780,6 +2857,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
 
   /* Create a client context object. */
   command_baton.opt_state = &opt_state;
+  command_baton.conflict_stats = conflict_stats;
   SVN_ERR(svn_client_create_context2(&ctx, cfg_hash, pool));
   command_baton.ctx = ctx;
 
@@ -2934,30 +3012,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     }
 
   /* Set up our cancellation support. */
+  svn_cl__check_cancel = svn_cmdline__setup_cancellation_handler();
   ctx->cancel_func = svn_cl__check_cancel;
-  apr_signal(SIGINT, signal_handler);
-#ifdef SIGBREAK
-  /* SIGBREAK is a Win32 specific signal generated by ctrl-break. */
-  apr_signal(SIGBREAK, signal_handler);
-#endif
-#ifdef SIGHUP
-  apr_signal(SIGHUP, signal_handler);
-#endif
-#ifdef SIGTERM
-  apr_signal(SIGTERM, signal_handler);
-#endif
-
-#ifdef SIGPIPE
-  /* Disable SIGPIPE generation for the platforms that have it. */
-  apr_signal(SIGPIPE, SIG_IGN);
-#endif
-
-#ifdef SIGXFSZ
-  /* Disable SIGXFSZ generation for the platforms that have it, otherwise
-   * working with large files when compiled against an APR that doesn't have
-   * large file support will crash the program, which is uncool. */
-  apr_signal(SIGXFSZ, SIG_IGN);
-#endif
 
   /* Set up Authentication stuff. */
   SVN_ERR(svn_cmdline_create_auth_baton2(
@@ -3021,20 +3077,12 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         opt_state.accept_which = svn_cl__accept_postpone;
     }
 
-  /* Install the default conflict handler. */
+  /* We don't use legacy libsvn_wc conflict handlers by default. */
   {
-    svn_cl__interactive_conflict_baton_t *b;
-
     ctx->conflict_func = NULL;
     ctx->conflict_baton = NULL;
-
-    ctx->conflict_func2 = svn_cl__conflict_func_interactive;
-    SVN_ERR(svn_cl__get_conflict_func_interactive_baton(
-                &b,
-                opt_state.accept_which,
-                ctx->config, opt_state.editor_cmd, conflict_stats,
-                ctx->cancel_func, ctx->cancel_baton, pool));
-    ctx->conflict_baton2 = b;
+    ctx->conflict_func2 = NULL;
+    ctx->conflict_baton2 = NULL;
   }
 
   /* And now we finally run the subcommand. */
@@ -3136,5 +3184,8 @@ main(int argc, const char *argv[])
     }
 
   svn_pool_destroy(pool);
+
+  svn_cmdline__cancellation_exit();
+
   return exit_code;
 }

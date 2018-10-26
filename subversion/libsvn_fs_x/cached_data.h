@@ -20,8 +20,8 @@
  * ====================================================================
  */
 
-#ifndef SVN_LIBSVN_FS__CACHED_DATA_H
-#define SVN_LIBSVN_FS__CACHED_DATA_H
+#ifndef SVN_LIBSVN_FS_X_CACHED_DATA_H
+#define SVN_LIBSVN_FS_X_CACHED_DATA_H
 
 #include "svn_pools.h"
 #include "svn_fs.h"
@@ -168,13 +168,24 @@ svn_fs_x__get_proplist(apr_hash_t **proplist,
                        apr_pool_t *result_pool,
                        apr_pool_t *scratch_pool);
 
-/* Fetch the list of change in revision REV in FS and return it in *CHANGES.
- * Allocate the result in POOL.
+/* Create a changes retrieval context object in *RESULT_POOL and return it
+ * in *CONTEXT.  It will allow svn_fs_x__get_changes to fetch consecutive
+ * blocks (one per invocation) from REV's changed paths list in FS.
+ * Use SCRATCH_POOL for temporary allocations. */
+svn_error_t *
+svn_fs_x__create_changes_context(svn_fs_x__changes_context_t **context,
+                                 svn_fs_t *fs,
+                                 svn_revnum_t rev,
+                                 apr_pool_t *result_pool,
+                                 apr_pool_t *scratch_pool);
+
+/* Fetch the block of changes from the CONTEXT and return it in *CHANGES.
+ * Allocate the result in RESULT_POOL and use SCRATCH_POOL for temporaries.
  */
 svn_error_t *
 svn_fs_x__get_changes(apr_array_header_t **changes,
-                      svn_fs_t *fs,
-                      svn_revnum_t rev,
-                      apr_pool_t *pool);
+                      svn_fs_x__changes_context_t *context,
+                      apr_pool_t *result_pool,
+                      apr_pool_t *scratch_pool);
 
 #endif

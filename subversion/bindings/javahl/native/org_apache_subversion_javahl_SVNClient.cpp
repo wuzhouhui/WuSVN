@@ -298,7 +298,7 @@ JNIEXPORT void JNICALL
 Java_org_apache_subversion_javahl_SVNClient_setTunnelAgent
 (JNIEnv *env, jobject jthis, jobject jtunnelcb)
 {
-  JNIEntry(SVNClient, setPrompt);
+  JNIEntry(SVNClient, setTunnelAgent);
   SVNClient *cl = SVNClient::getCppObject(jthis);
   if (cl == NULL)
     {
@@ -313,8 +313,9 @@ JNIEXPORT void JNICALL
 Java_org_apache_subversion_javahl_SVNClient_logMessages
 (JNIEnv *env, jobject jthis, jstring jpath, jobject jpegRevision,
  jobject jranges, jboolean jstopOnCopy, jboolean jdisoverPaths,
- jboolean jincludeMergedRevisions, jobject jrevProps, jlong jlimit,
- jobject jlogMessageCallback)
+ jboolean jincludeMergedRevisions,
+ jobject jrevProps, jboolean jallRevProps,
+ jlong jlimit, jobject jlogMessageCallback)
 {
   JNIEntry(SVNClient, logMessages);
 
@@ -366,7 +367,8 @@ Java_org_apache_subversion_javahl_SVNClient_logMessages
   cl->logMessages(path, pegRevision, revisionRanges,
                   jstopOnCopy ? true: false, jdisoverPaths ? true : false,
                   jincludeMergedRevisions ? true : false,
-                  revProps, int(jlimit), &callback);
+                  revProps, jallRevProps ? true : false,
+                  int(jlimit), &callback);
 }
 
 JNIEXPORT jlong JNICALL
@@ -1045,7 +1047,7 @@ Java_org_apache_subversion_javahl_SVNClient_propertySetRemote
  jbyteArray jval, jobject jmessage, jboolean jforce, jobject jrevpropTable,
  jobject jcallback)
 {
-  JNIEntry(SVNClient, propertySet);
+  JNIEntry(SVNClient, propertySetRemote);
   SVNClient *cl = SVNClient::getCppObject(jthis);
   if (cl == NULL)
     {
@@ -1083,7 +1085,7 @@ Java_org_apache_subversion_javahl_SVNClient_propertySetLocal
 (JNIEnv *env, jobject jthis, jobject jtargets, jstring jname,
  jbyteArray jval, jobject jdepth, jobject jchangelists, jboolean jforce)
 {
-  JNIEntry(SVNClient, propertySet);
+  JNIEntry(SVNClient, propertySetLocal);
   SVNClient *cl = SVNClient::getCppObject(jthis);
   if (cl == NULL)
     {
@@ -1968,7 +1970,7 @@ Java_org_apache_subversion_javahl_SVNClient_vacuum
  jboolean jfixRecordedTimestamps, jboolean jremoveUnusedPristines,
  jboolean jincludeExternals)
 {
-  JNIEntry(SVNClient, patch);
+  JNIEntry(SVNClient, vacuum);
   SVNClient *cl = SVNClient::getCppObject(jthis);
   if (cl == NULL)
     {
@@ -1987,7 +1989,7 @@ JNIEXPORT jobject JNICALL
 Java_org_apache_subversion_javahl_SVNClient_nativeOpenRemoteSession
 (JNIEnv *env, jobject jthis, jstring jpath, jint jretryAttempts)
 {
-  JNIEntry(SVNClient, openRemoteSession);
+  JNIEntry(SVNClient, nativeOpenRemoteSession);
   SVNClient *cl = SVNClient::getCppObject(jthis);
   if (cl == NULL)
     {

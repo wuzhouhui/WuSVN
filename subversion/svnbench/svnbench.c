@@ -30,8 +30,6 @@
 #include <string.h>
 #include <assert.h>
 
-#include <apr_signal.h>
-
 #include "svn_cmdline.h"
 #include "svn_dirent_uri.h"
 #include "svn_pools.h"
@@ -42,6 +40,8 @@
 
 #include "private/svn_opt_private.h"
 #include "private/svn_cmdline_private.h"
+#include "private/svn_string_private.h"
+#include "private/svn_utf_private.h"
 
 #include "svn_private_config.h"
 
@@ -68,7 +68,8 @@ typedef enum svn_cl__longopt_t {
   opt_with_no_revprops,
   opt_trust_server_cert,
   opt_trust_server_cert_failures,
-  opt_changelist
+  opt_changelist,
+  opt_search
 } svn_cl__longopt_t;
 
 
@@ -165,6 +166,8 @@ const apr_getopt_option_t svn_cl__options[] =
                     N_("use/display additional information from merge\n"
                        "                             "
                        "history")},
+  {"search", opt_search, 1,
+                       N_("use ARG as search pattern (glob syntax)")},
 
   /* Long-opt Aliases
    *
@@ -257,7 +260,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
      "    If locked, the letter 'O'.  (Use 'svn info URL' to see details)\n"
      "    Size (in bytes)\n"
      "    Date and time of the last commit\n"),
-    {'r', 'v', 'q', 'R', opt_depth} },
+    {'r', 'v', 'q', 'R', opt_depth, opt_search} },
 
   { "null-log", svn_cl__null_log, {0}, N_
     ("Fetch the log messages for a set of revision(s) and/or path(s).\n"
@@ -326,25 +329,42 @@ check_lib_versions(void)
 }
 
 
-/* A flag to see if we've been cancelled by the client or not. */
-static volatile sig_atomic_t cancelled = FALSE;
-
-/* A signal handler to support cancellation. */
-static void
-signal_handler(int signum)
+/* Baton for ra_progress_func() callback. */
+typedef struct ra_progress_baton_t
 {
-  apr_signal(signum, SIG_IGN);
-  cancelled = TRUE;
+  apr_off_t bytes_transferred;
+} ra_progress_baton_t;
+
+/* Implements svn_ra_progress_notify_func_t. */
+static void
+ra_progress_func(apr_off_t progress,
+                 apr_off_t total,
+                 void *baton,
+                 apr_pool_t *pool)
+{
+  ra_progress_baton_t *b = baton;
+  b->bytes_transferred = progress;
 }
 
 /* Our cancellation callback. */
-svn_error_t *
-svn_cl__check_cancel(void *baton)
+svn_cancel_func_t svn_cl__check_cancel = NULL;
+
+/* Add a --search argument to OPT_STATE.
+ * These options start a new search pattern group. */
+static void
+add_search_pattern_group(svn_cl__opt_state_t *opt_state,
+                         const char *pattern,
+                         apr_pool_t *result_pool)
 {
-  if (cancelled)
-    return svn_error_create(SVN_ERR_CANCELLED, NULL, _("Caught signal"));
-  else
-    return SVN_NO_ERROR;
+  apr_array_header_t *group = NULL;
+
+  if (opt_state->search_patterns == NULL)
+    opt_state->search_patterns = apr_array_make(result_pool, 1,
+                                                sizeof(apr_array_header_t *));
+
+  group = apr_array_make(result_pool, 1, sizeof(const char *));
+  APR_ARRAY_PUSH(group, const char *) = pattern;
+  APR_ARRAY_PUSH(opt_state->search_patterns, apr_array_header_t *) = group;
 }
 
 
@@ -371,8 +391,14 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
   svn_config_t *cfg_config;
   svn_boolean_t descend = TRUE;
   svn_boolean_t use_notifier = TRUE;
+  apr_time_t start_time, time_taken;
+  ra_progress_baton_t ra_progress_baton = {0};
+  svn_membuf_t buf;
 
   received_opts = apr_array_make(pool, SVN_OPT_MAX_OPTIONS, sizeof(int));
+
+  /* Init the temporary buffer. */
+  svn_membuf__create(&buf, 0, pool);
 
   /* Check library versions */
   SVN_ERR(check_lib_versions());
@@ -534,10 +560,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
                                             opt_arg, pool) != 0)
           {
             SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
-            return svn_error_createf
-                (SVN_ERR_CL_ARG_PARSING_ERROR, NULL,
-                 _("Syntax error in revision argument '%s'"),
-                 utf8_opt_arg);
+            return svn_error_createf(
+                     SVN_ERR_CL_ARG_PARSING_ERROR, NULL,
+                     _("Syntax error in revision argument '%s'"),
+                     utf8_opt_arg);
           }
         break;
       case 'v':
@@ -656,6 +682,14 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
       case 'g':
         opt_state.use_merge_history = TRUE;
         break;
+      case opt_search:
+        SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
+        SVN_ERR(svn_utf__xfrm(&utf8_opt_arg, utf8_opt_arg,
+                              strlen(utf8_opt_arg), TRUE, TRUE, &buf));
+        add_search_pattern_group(&opt_state,
+                                 apr_pstrdup(pool, utf8_opt_arg),
+                                 pool);
+        break;
       default:
         /* Hmmm. Perhaps this would be a good place to squirrel away
            opts that commands like svn diff might need. Hmmm indeed. */
@@ -755,9 +789,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
           if (subcommand->name[0] == '-')
             SVN_ERR(svn_cl__help(NULL, NULL, pool));
           else
-            svn_error_clear
-              (svn_cmdline_fprintf
-               (stderr, pool, _("Subcommand '%s' doesn't accept option '%s'\n"
+            svn_error_clear(
+              svn_cmdline_fprintf(
+                stderr, pool, _("Subcommand '%s' doesn't accept option '%s'\n"
                                 "Type 'svnbench help %s' for usage.\n"),
                 subcommand->name, optstr, subcommand->name));
           *exit_code = EXIT_FAILURE;
@@ -886,30 +920,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     }
 
   /* Set up our cancellation support. */
+  svn_cl__check_cancel = svn_cmdline__setup_cancellation_handler();
   ctx->cancel_func = svn_cl__check_cancel;
-  apr_signal(SIGINT, signal_handler);
-#ifdef SIGBREAK
-  /* SIGBREAK is a Win32 specific signal generated by ctrl-break. */
-  apr_signal(SIGBREAK, signal_handler);
-#endif
-#ifdef SIGHUP
-  apr_signal(SIGHUP, signal_handler);
-#endif
-#ifdef SIGTERM
-  apr_signal(SIGTERM, signal_handler);
-#endif
-
-#ifdef SIGPIPE
-  /* Disable SIGPIPE generation for the platforms that have it. */
-  apr_signal(SIGPIPE, SIG_IGN);
-#endif
-
-#ifdef SIGXFSZ
-  /* Disable SIGXFSZ generation for the platforms that have it, otherwise
-   * working with large files when compiled against an APR that doesn't have
-   * large file support will crash the program, which is uncool. */
-  apr_signal(SIGXFSZ, SIG_IGN);
-#endif
 
   /* Set up Authentication stuff. */
   SVN_ERR(svn_cmdline_create_auth_baton2(
@@ -938,8 +950,17 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
   ctx->conflict_func2 = NULL;
   ctx->conflict_baton2 = NULL;
 
+  if (!opt_state.quiet)
+    {
+      ctx->progress_func = ra_progress_func;
+      ctx->progress_baton = &ra_progress_baton;
+    }
+
   /* And now we finally run the subcommand. */
+  start_time = apr_time_now();
   err = (*subcommand->cmd_func)(os, &command_baton, pool);
+  time_taken = apr_time_now() - start_time;
+
   if (err)
     {
       /* For argument-related problems, suggest using the 'help'
@@ -967,6 +988,23 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         }
 
       return err;
+    }
+  else if ((subcommand->cmd_func != svn_cl__help) && !opt_state.quiet)
+    {
+      /* This formatting lines up nicely with the output of our sub-commands
+       * and gives musec resolution while not overflowing for 30 years. */
+      SVN_ERR(svn_cmdline_printf(pool,
+                                _("%15.6f seconds taken\n"),
+                                time_taken / 1.0e6));
+
+      /* Report how many bytes transferred over network if RA layer provided
+         this information. */
+      if (ra_progress_baton.bytes_transferred > 0)
+        SVN_ERR(svn_cmdline_printf(pool,
+                                   _("%15s bytes transferred over network\n"),
+                                   svn__i64toa_sep(
+                                     ra_progress_baton.bytes_transferred, ',',
+                                     pool)));
     }
 
   return SVN_NO_ERROR;
@@ -1001,5 +1039,8 @@ main(int argc, const char *argv[])
     }
 
   svn_pool_destroy(pool);
+
+  svn_cmdline__cancellation_exit();
+
   return exit_code;
 }
