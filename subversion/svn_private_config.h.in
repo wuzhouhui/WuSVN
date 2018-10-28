@@ -169,11 +169,17 @@
 /* Is Mac OS KeyChain support enabled? */
 #undef SVN_HAVE_KEYCHAIN_SERVICES
 
+/* Defined if KF5 available */
+#undef SVN_HAVE_KF5
+
 /* Defined if KWallet support is enabled */
 #undef SVN_HAVE_KWALLET
 
 /* Defined if libmagic support is enabled */
 #undef SVN_HAVE_LIBMAGIC
+
+/* Is libsecret support enabled? */
+#undef SVN_HAVE_LIBSECRET
 
 /* Is Mach-O low-level _dyld API available? */
 #undef SVN_HAVE_MACHO_ITERATE
@@ -192,6 +198,12 @@
 
 /* Defined if support for Serf is enabled */
 #undef SVN_HAVE_SERF
+
+/* Define to use internal LZ4 code */
+#undef SVN_INTERNAL_LZ4
+
+/* Define to use internal UTF8PROC code */
+#undef SVN_INTERNAL_UTF8PROC
 
 /* Defined if libsvn_fs should link against libsvn_fs_base */
 #undef SVN_LIBSVN_FS_LINKS_FS_BASE

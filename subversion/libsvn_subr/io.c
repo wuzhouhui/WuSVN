@@ -342,8 +342,13 @@ io_check_path(const char *path,
   /* Not using svn_io_stat() here because we want to check the
      apr_err return explicitly. */
   SVN_ERR(cstring_from_utf8(&path_apr, path, pool));
-
+#ifdef WIN32
+  /* on Windows, svn does not handle reparse points or hard links.
+     So ignore the 'resolve_symlinks' flag. */
+  flags = APR_FINFO_MIN;
+#else
   flags = resolve_symlinks ? APR_FINFO_MIN : (APR_FINFO_MIN | APR_FINFO_LINK);
+#endif
   apr_err = apr_stat(&finfo, path_apr, flags, pool);
 
   if (APR_STATUS_IS_ENOENT(apr_err))
@@ -2541,9 +2546,10 @@ stringbuf_from_aprfile(svn_stringbuf_t **result,
     {
       apr_finfo_t finfo = { 0 };
 
-      /* In some cases we get size 0 and no error for non files,
-          so we also check for the name. (= cached in apr_file_t) */
-      if (! apr_file_info_get(&finfo, APR_FINFO_SIZE, file) && finfo.fname)
+      /* In some cases we get size 0 and no error for non files, so we
+         also check for the name. (= cached in apr_file_t) and for FIFOs */
+      if (! apr_file_info_get(&finfo, APR_FINFO_SIZE | APR_FINFO_TYPE, file)
+          && finfo.fname && finfo.filetype != APR_PIPE)
         {
           /* we've got the file length. Now, read it in one go. */
           svn_boolean_t eof;
@@ -3940,21 +3946,20 @@ svn_io_file_write_full(apr_file_t *file, const void *buf,
                        apr_size_t nbytes, apr_size_t *bytes_written,
                        apr_pool_t *pool)
 {
-  /* We cannot simply call apr_file_write_full on Win32 as it may fail
-     for larger values of NBYTES. In that case, we have to emulate the
-     "_full" part here. Thus, always call apr_file_write directly on
-     Win32 as this minimizes overhead for small data buffers. */
 #ifdef WIN32
 #define MAXBUFSIZE 30*1024
   apr_size_t bw = nbytes;
   apr_size_t to_write = nbytes;
+  apr_status_t rv;
 
-  /* try a simple "write everything at once" first */
-  apr_status_t rv = apr_file_write(file, buf, &bw);
+  rv = apr_file_write_full(file, buf, nbytes, &bw);
   buf = (char *)buf + bw;
   to_write -= bw;
 
-  /* if the OS cannot handle that, use smaller chunks */
+  /* Issue #1789: On Windows, writing may fail for large values of NBYTES.
+     If that is the case, keep track of how many bytes have been written
+     by the apr_file_write_full() call, and attempt to write the remaining
+     part in smaller chunks. */
   if (rv == APR_FROM_OS_ERROR(ERROR_NOT_ENOUGH_MEMORY)
       && nbytes > MAXBUFSIZE)
     {
@@ -4072,7 +4077,7 @@ svn_io_file_trunc(apr_file_t *file, apr_off_t offset, apr_pool_t *pool)
 
      To prevent this, write 1 dummy byte just after the OFFSET at which we
      will trunc it.  That will force the APR file into write mode
-     internally and the flush() work-around below becomes affective. */
+     internally and the flush() work-around below becomes effective. */
   apr_off_t position = 0;
 
   /* A frequent usage is OFFSET==0, in which case we don't need to preserve

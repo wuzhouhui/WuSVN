@@ -89,13 +89,13 @@ class BackportTest(object):
 
   def __call__(self, test_func):
     """Return a decorator that: builds TEST_FUNC's sbox, creates
-    ^/subversion/trunk, and calls TEST_FUNC, then compare its output to the
-    expected dump file named after TEST_FUNC."""
+    ^/subversion/trunk, calls TEST_FUNC, and compares the resulting history
+    to the expected dump file, which is named after TEST_FUNC."""
 
     # .wraps() propagates the wrappee's docstring to the wrapper.
     @functools.wraps(test_func)
     def wrapped_test_func(sbox):
-      expected_dump_file = './%s.dump' % (test_func.func_name,)
+      expected_dump_file = './backport_tests_data/%s.dump' % (test_func.func_name,)
 
       sbox.build()
 

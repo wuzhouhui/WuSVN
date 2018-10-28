@@ -109,6 +109,8 @@ class ExpectedOutput(object):
   def __init__(self, expected, match_all=True):
     """Initialize the expected output to EXPECTED which is a string, or
        a list of strings.
+
+       See also: svntest.verify.createExpectedOutput().
     """
     assert expected is not None
     self.expected = expected
@@ -465,10 +467,11 @@ def verify_exit_code(message, actual, expected,
 # A simple dump file parser.  While sufficient for the current
 # testsuite it doesn't cope with all valid dump files.
 class DumpParser:
-  def __init__(self, lines):
+  def __init__(self, lines, ignore_sha1=False):
     self.current = 0
     self.lines = lines
     self.parsed = {}
+    self.ignore_sha1 = ignore_sha1
 
   def parse_line(self, regex, required=True):
     m = re.match(regex, self.lines[self.current])
@@ -658,6 +661,9 @@ class DumpParser:
       if not header in headers:
         node[key] = None
         continue
+      if self.ignore_sha1 and (key in ['copy_sha1', 'text_sha1']):
+        node[key] = None
+        continue
       m = re.match(regex, headers[header])
       if not m:
         raise SVNDumpParseError("expected '%s' at line %d\n%s"
@@ -733,8 +739,7 @@ def compare_dump_files(message, label, expected, actual,
   of lines as returned by run_and_verify_dump, and check that the same
   revisions, nodes, properties, etc. are present in both dumps.
   """
-
-  parsed_expected = DumpParser(expected).parse()
+  parsed_expected = DumpParser(expected, not svntest.main.fs_has_sha1()).parse()
   parsed_actual = DumpParser(actual).parse()
 
   if ignore_uuid:
@@ -858,7 +863,7 @@ def make_git_diff_header(target_path, repos_relpath,
     ])
     if text_changes:
       output.extend([
-        "--- /dev/null\t(" + old_tag + ")\n",
+        "--- a/" + repos_relpath + src_label + "\t(" + old_tag + ")\n",
         "+++ b/" + repos_relpath + dst_label + "\t(" + new_tag + ")\n"
       ])
   elif delete:
@@ -869,7 +874,7 @@ def make_git_diff_header(target_path, repos_relpath,
     if text_changes:
       output.extend([
         "--- a/" + repos_relpath + src_label + "\t(" + old_tag + ")\n",
-        "+++ /dev/null\t(" + new_tag + ")\n"
+        "+++ b/" + repos_relpath + dst_label + "\t(" + new_tag + ")\n"
       ])
   elif cp:
     if copyfrom_rev:
