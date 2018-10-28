@@ -1,6 +1,6 @@
 Subversion with my patches, based on 1.9.x
 
-MAIN PATCHES
+Main patches:
       1. Output paging automatically
       2. Ignore files if they match the patterns in .svnignore
       3. Syntax highlight
