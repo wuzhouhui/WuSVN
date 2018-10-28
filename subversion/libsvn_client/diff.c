@@ -2772,7 +2772,7 @@ svn_client_diff6_hltb(const apr_array_header_t *options,
   return svn_error_trace(do_diff(NULL, NULL, &dwi.ddi,
                                  path_or_url1, path_or_url2,
                                  revision1, revision2, &peg_revision,
-                                 FALSE, /* no_peg_revision */
+                                 TRUE, /* no_peg_revision */
                                  depth, ignore_ancestry, changelists,
                                  TRUE /* text_deltas */,
                                  diff_processor, ctx, pool, pool));
@@ -3036,7 +3036,7 @@ svn_client_diff_peg6_diffstat(const apr_array_header_t *options,
   SVN_ERR(do_diff(NULL, NULL, &dwi.ddi,
                                  path_or_url, path_or_url,
                                  start_revision, end_revision, peg_revision,
-                                 TRUE, /* no_peg_revision */
+                                 FALSE, /* no_peg_revision */
                                  depth, ignore_ancestry, changelists,
                                  TRUE /* text_deltas */,
                                  diff_processor, ctx, pool, pool));
