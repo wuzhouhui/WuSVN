@@ -136,7 +136,7 @@ svn_version_extended(svn_boolean_t verbose,
   info->build_date = __DATE__;
   info->build_time = __TIME__;
   info->build_host = SVN_BUILD_HOST;
-  info->hacker = "wuzhouhui250@gmail.com";
+  info->hacker = "Zhouhui Wu <wuzhouhui250@gmail.com>";
   info->copyright = apr_pstrdup
     (pool, _("Copyright (C) 2018 The Apache Software Foundation.\n"
              "This software consists of contributions made by many people;\n"
