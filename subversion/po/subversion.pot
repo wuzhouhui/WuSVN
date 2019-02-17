@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: dev@subversion.apache.org\n"
-"POT-Creation-Date: 2018-07-14 20:30+0000\n"
+"POT-Creation-Date: 2019-01-07 10:21+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1279,7 +1279,7 @@ msgstr ""
 msgid "Credentials not saved"
 msgstr ""
 
-#: ../include/svn_error_codes.h:1563 ../libsvn_subr/gpg_agent.c:456
+#: ../include/svn_error_codes.h:1563 ../libsvn_subr/gpg_agent.c:515
 msgid "Authentication failed"
 msgstr ""
 
@@ -1451,7 +1451,7 @@ msgstr ""
 #: ../libsvn_client/patch.c:3235 ../libsvn_client/relocate.c:153
 #: ../libsvn_client/resolved.c:119 ../libsvn_client/revert.c:149
 #: ../libsvn_client/status.c:368 ../libsvn_client/switch.c:471
-#: ../libsvn_client/update.c:701 ../libsvn_client/upgrade.c:111
+#: ../libsvn_client/update.c:749 ../libsvn_client/upgrade.c:111
 #: ../svn/util.c:986 ../svnbench/util.c:76
 #, c-format
 msgid "'%s' is not a local path"
@@ -1718,7 +1718,7 @@ msgid "Directory '%s' is not under version control"
 msgstr ""
 
 #: ../libsvn_client/copy.c:1073 ../libsvn_client/copy.c:1082
-#: ../libsvn_client/copy.c:1092 ../libsvn_client/copy.c:2766
+#: ../libsvn_client/copy.c:1092 ../libsvn_client/copy.c:2776
 #, c-format
 msgid "Path '%s' is not a directory"
 msgstr ""
@@ -1758,37 +1758,37 @@ msgstr ""
 msgid "Path '%s' not found in head revision"
 msgstr ""
 
-#: ../libsvn_client/copy.c:2874
+#: ../libsvn_client/copy.c:2884
 msgid "Cannot mix repository and working copy sources"
 msgstr ""
 
-#: ../libsvn_client/copy.c:2927
+#: ../libsvn_client/copy.c:2937
 #, c-format
 msgid "Cannot copy path '%s' into its own child '%s'"
 msgstr ""
 
-#: ../libsvn_client/copy.c:2963
+#: ../libsvn_client/copy.c:2973
 #, c-format
 msgid ""
 "Cannot move the external at '%s'; please edit the svn:externals property on "
 "'%s'."
 msgstr ""
 
-#: ../libsvn_client/copy.c:2978
+#: ../libsvn_client/copy.c:2988
 msgid "Moves between the working copy and the repository are not supported"
 msgstr ""
 
-#: ../libsvn_client/copy.c:2993
+#: ../libsvn_client/copy.c:3003
 #, c-format
 msgid "Cannot move URL '%s' into itself"
 msgstr ""
 
-#: ../libsvn_client/copy.c:2994
+#: ../libsvn_client/copy.c:3004
 #, c-format
 msgid "Cannot move path '%s' into itself"
 msgstr ""
 
-#: ../libsvn_client/copy.c:3061
+#: ../libsvn_client/copy.c:3071
 #, c-format
 msgid "'%s' does not have a URL associated with it"
 msgstr ""
@@ -2122,7 +2122,7 @@ msgstr ""
 msgid "When specifying working copy paths, only one target may be given"
 msgstr ""
 
-#: ../libsvn_client/log.c:428 ../libsvn_client/revisions.c:190
+#: ../libsvn_client/log.c:428 ../libsvn_client/revisions.c:197
 msgid "PREV, BASE, or COMMITTED revision keywords are invalid for URL"
 msgstr ""
 
@@ -2425,8 +2425,8 @@ msgid "strip count must be positive"
 msgstr ""
 
 #: ../libsvn_client/patch.c:3247 ../libsvn_fs_base/tree.c:4099
-#: ../libsvn_fs_base/tree.c:4104 ../libsvn_fs_fs/tree.c:3210
-#: ../libsvn_fs_fs/tree.c:3215 ../libsvn_fs_x/tree.c:3256
+#: ../libsvn_fs_base/tree.c:4104 ../libsvn_fs_fs/tree.c:3243
+#: ../libsvn_fs_fs/tree.c:3248 ../libsvn_fs_x/tree.c:3256
 #: ../libsvn_fs_x/tree.c:3261 ../libsvn_ra/compat.c:677
 #: ../libsvn_ra_local/ra_plugin.c:1266
 #, c-format
@@ -2538,7 +2538,12 @@ msgstr ""
 msgid "Path '%s' has no committed revision"
 msgstr ""
 
-#: ../libsvn_client/revisions.c:167
+#: ../libsvn_client/revisions.c:149
+#, c-format
+msgid "Path '%s' has no previous revision"
+msgstr ""
+
+#: ../libsvn_client/revisions.c:174
 #, c-format
 msgid "Unrecognized revision type requested for '%s'"
 msgstr ""
@@ -2584,7 +2589,7 @@ msgstr ""
 msgid "'%s' shares no common ancestry with '%s'"
 msgstr ""
 
-#: ../libsvn_client/update.c:762
+#: ../libsvn_client/update.c:810
 msgid "None of the targets are working copies"
 msgstr ""
 
@@ -2762,7 +2767,7 @@ msgstr ""
 msgid "Path '%s' contains '.' or '..' element"
 msgstr ""
 
-#: ../libsvn_fs/fs-loader.c:470 ../libsvn_fs_fs/tree.c:2438
+#: ../libsvn_fs/fs-loader.c:470 ../libsvn_fs_fs/tree.c:2471
 #: ../libsvn_subr/path.c:1229
 #, c-format
 msgid "Invalid control character '0x%02x' in path '%s'"
@@ -3522,12 +3527,12 @@ msgstr ""
 msgid "Expected FS format '%d'; found format '%d'"
 msgstr ""
 
-#: ../libsvn_fs_base/fs.c:1309
+#: ../libsvn_fs_base/fs.c:1310
 #, c-format
 msgid "BDB repositories do not support incremental hotcopy"
 msgstr ""
 
-#: ../libsvn_fs_base/fs.c:1413
+#: ../libsvn_fs_base/fs.c:1414
 msgid ""
 "Error copying logfile;  the DB_LOG_AUTOREMOVE feature\n"
 "may be interfering with the hotcopy algorithm.  If\n"
@@ -3535,7 +3540,7 @@ msgid ""
 "in DB_CONFIG"
 msgstr ""
 
-#: ../libsvn_fs_base/fs.c:1432
+#: ../libsvn_fs_base/fs.c:1433
 msgid ""
 "Error running catastrophic recovery on hotcopy;  the\n"
 "DB_LOG_AUTOREMOVE feature may be interfering with the\n"
@@ -3543,11 +3548,11 @@ msgid ""
 "this feature in DB_CONFIG"
 msgstr ""
 
-#: ../libsvn_fs_base/fs.c:1477
+#: ../libsvn_fs_base/fs.c:1478
 msgid "Module for working with a Berkeley DB repository."
 msgstr ""
 
-#: ../libsvn_fs_base/fs.c:1527
+#: ../libsvn_fs_base/fs.c:1528
 #, c-format
 msgid "Unsupported FS loader version (%d) for bdb"
 msgstr ""
@@ -3685,13 +3690,12 @@ msgstr ""
 msgid "committing Berkeley DB transaction"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:773 ../libsvn_fs_fs/tree.c:1115
-#: ../libsvn_fs_x/tree.c:1101
+#: ../libsvn_fs_base/tree.c:773 ../libsvn_fs_x/tree.c:1101
 #, c-format
 msgid "Failure opening '%s'"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:1460 ../libsvn_fs_fs/tree.c:1655
+#: ../libsvn_fs_base/tree.c:1460 ../libsvn_fs_fs/tree.c:1688
 #: ../libsvn_fs_x/tree.c:1652
 msgid "Cannot compare property value between two different filesystems"
 msgstr ""
@@ -3705,19 +3709,19 @@ msgstr ""
 msgid "Unexpected immutable node at '%s'"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:2074 ../libsvn_fs_fs/tree.c:1685
+#: ../libsvn_fs_base/tree.c:2074 ../libsvn_fs_fs/tree.c:1718
 #: ../libsvn_fs_x/tree.c:1685 ../libsvn_repos/commit.c:1257
 #, c-format
 msgid "Conflict at '%s'"
 msgstr ""
 
 #: ../libsvn_fs_base/tree.c:2127 ../libsvn_fs_base/tree.c:2879
-#: ../libsvn_fs_fs/tree.c:1783 ../libsvn_fs_fs/tree.c:2337
+#: ../libsvn_fs_fs/tree.c:1816 ../libsvn_fs_fs/tree.c:2370
 #: ../libsvn_fs_x/tree.c:1809 ../libsvn_fs_x/tree.c:2352
 msgid "Bad merge; ancestor, source, and target not all in same fs"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:2143 ../libsvn_fs_fs/tree.c:1799
+#: ../libsvn_fs_base/tree.c:2143 ../libsvn_fs_fs/tree.c:1832
 #: ../libsvn_fs_x/tree.c:1825
 #, c-format
 msgid "Bad merge; target '%s' has id '%s', same as ancestor"
@@ -3733,29 +3737,29 @@ msgstr ""
 msgid "Cannot deltify revisions prior to r%ld"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:3081 ../libsvn_fs_fs/tree.c:2519
+#: ../libsvn_fs_base/tree.c:3081 ../libsvn_fs_fs/tree.c:2552
 #: ../libsvn_fs_x/tree.c:2539
 msgid "The root directory cannot be deleted"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:3295 ../libsvn_fs_fs/tree.c:2589
+#: ../libsvn_fs_base/tree.c:3295 ../libsvn_fs_fs/tree.c:2622
 #: ../libsvn_fs_x/tree.c:2613
 #, c-format
 msgid "Cannot copy between two different filesystems ('%s' and '%s')"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:3304 ../libsvn_fs_fs/tree.c:2596
+#: ../libsvn_fs_base/tree.c:3304 ../libsvn_fs_fs/tree.c:2629
 #: ../libsvn_fs_x/tree.c:2620
 msgid "Copy from mutable tree not currently supported"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:3814 ../libsvn_fs_fs/tree.c:2991
+#: ../libsvn_fs_base/tree.c:3814 ../libsvn_fs_fs/tree.c:3024
 #: ../libsvn_fs_x/tree.c:3028
 #, c-format
 msgid "Base checksum mismatch on '%s'"
 msgstr ""
 
-#: ../libsvn_fs_base/tree.c:4090 ../libsvn_fs_fs/tree.c:3201
+#: ../libsvn_fs_base/tree.c:4090 ../libsvn_fs_fs/tree.c:3234
 #: ../libsvn_fs_x/tree.c:3247
 msgid "Cannot compare file contents between two different filesystems"
 msgstr ""
@@ -3782,7 +3786,7 @@ msgid "No representation found at offset %s for item %s in revision %ld"
 msgstr ""
 
 #: ../libsvn_fs_fs/cached_data.c:1522 ../libsvn_fs_fs/cached_data.c:1535
-#: ../libsvn_fs_fs/cached_data.c:3072 ../libsvn_fs_x/cached_data.c:1424
+#: ../libsvn_fs_fs/cached_data.c:3094 ../libsvn_fs_x/cached_data.c:1424
 #: ../libsvn_fs_x/cached_data.c:1437 ../libsvn_fs_x/cached_data.c:1713
 msgid "Reading one svndiff window read beyond the end of the representation"
 msgstr ""
@@ -3791,28 +3795,33 @@ msgstr ""
 msgid "svndiff window length is corrupt"
 msgstr ""
 
-#: ../libsvn_fs_fs/cached_data.c:2065 ../libsvn_fs_x/cached_data.c:2143
+#: ../libsvn_fs_fs/cached_data.c:2054
+#, c-format
+msgid "Length mismatch while reading representation: expected %s, got %s"
+msgstr ""
+
+#: ../libsvn_fs_fs/cached_data.c:2087 ../libsvn_fs_x/cached_data.c:2143
 msgid "Checksum mismatch while reading representation"
 msgstr ""
 
-#: ../libsvn_fs_fs/cached_data.c:2507 ../libsvn_fs_fs/cached_data.c:2521
-#: ../libsvn_fs_fs/cached_data.c:2528 ../libsvn_fs_x/cached_data.c:2508
+#: ../libsvn_fs_fs/cached_data.c:2529 ../libsvn_fs_fs/cached_data.c:2543
+#: ../libsvn_fs_fs/cached_data.c:2550 ../libsvn_fs_x/cached_data.c:2508
 #: ../libsvn_fs_x/cached_data.c:2522 ../libsvn_fs_x/cached_data.c:2529
 #, c-format
 msgid "Directory entry corrupt in '%s'"
 msgstr ""
 
-#: ../libsvn_fs_fs/cached_data.c:2777
+#: ../libsvn_fs_fs/cached_data.c:2799
 #, c-format
 msgid "malformed property list for node-revision '%s' in '%s'"
 msgstr ""
 
-#: ../libsvn_fs_fs/cached_data.c:2810
+#: ../libsvn_fs_fs/cached_data.c:2832
 #, c-format
 msgid "malformed property list for node-revision '%s'"
 msgstr ""
 
-#: ../libsvn_fs_fs/cached_data.c:3253
+#: ../libsvn_fs_fs/cached_data.c:3275
 #, c-format
 msgid ""
 "Low-level checksum mismatch while reading\n"
@@ -4508,14 +4517,14 @@ msgstr ""
 msgid "Can't set text contents of a directory"
 msgstr ""
 
-#: ../libsvn_fs_fs/transaction.c:2882 ../libsvn_fs_x/transaction.c:2802
+#: ../libsvn_fs_fs/transaction.c:2884 ../libsvn_fs_x/transaction.c:2802
 #, c-format
 msgid ""
 "predecessor count for the root node-revision is wrong: found (%d+%ld != %d), "
 "committing r%ld"
 msgstr ""
 
-#: ../libsvn_fs_fs/transaction.c:3040
+#: ../libsvn_fs_fs/transaction.c:3042
 msgid "Truncated protorev file detected"
 msgstr ""
 
@@ -4528,21 +4537,31 @@ msgstr ""
 msgid "No such transaction '%s'"
 msgstr ""
 
-#: ../libsvn_fs_fs/tree.c:2601 ../libsvn_fs_x/tree.c:2625
+#: ../libsvn_fs_fs/tree.c:891
+#, c-format
+msgid "Failure opening '%s' in transaction '%s'"
+msgstr ""
+
+#: ../libsvn_fs_fs/tree.c:894
+#, c-format
+msgid "Failure opening '%s' in revision %ld"
+msgstr ""
+
+#: ../libsvn_fs_fs/tree.c:2634 ../libsvn_fs_x/tree.c:2625
 msgid "Copy immutable tree not supported"
 msgstr ""
 
-#: ../libsvn_fs_fs/tree.c:3920 ../libsvn_fs_x/tree.c:3918
+#: ../libsvn_fs_fs/tree.c:3953 ../libsvn_fs_x/tree.c:3918
 #, c-format
 msgid "Node-revision #'%s' claims to have mergeinfo but doesn't"
 msgstr ""
 
-#: ../libsvn_fs_fs/tree.c:4036 ../libsvn_fs_x/tree.c:4034
+#: ../libsvn_fs_fs/tree.c:4069 ../libsvn_fs_x/tree.c:4034
 #, c-format
 msgid "Node-revision '%s@%ld' claims to have mergeinfo but doesn't"
 msgstr ""
 
-#: ../libsvn_fs_fs/tree.c:4236
+#: ../libsvn_fs_fs/tree.c:4269
 #, c-format
 msgid ""
 "Querying mergeinfo requires version %d of the FSFS filesystem schema; "
@@ -6813,12 +6832,12 @@ msgstr ""
 msgid "unknown error"
 msgstr ""
 
-#: ../libsvn_subr/gpg_agent.c:449 ../libsvn_subr/prompt.c:627
+#: ../libsvn_subr/gpg_agent.c:508 ../libsvn_subr/prompt.c:627
 #, c-format
 msgid "Password for '%s': "
 msgstr ""
 
-#: ../libsvn_subr/gpg_agent.c:450
+#: ../libsvn_subr/gpg_agent.c:509
 #, c-format
 msgid "Enter your Subversion password for %s"
 msgstr ""
@@ -7273,7 +7292,7 @@ msgstr ""
 msgid "Unable to make name in '%s'"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:101 ../libsvn_subr/mergeinfo.c:714
+#: ../libsvn_subr/mergeinfo.c:101 ../libsvn_subr/mergeinfo.c:713
 msgid "Pathname not terminated by ':'"
 msgstr ""
 
@@ -7307,33 +7326,33 @@ msgstr ""
 msgid "Range list parsing ended before hitting newline"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:670
+#: ../libsvn_subr/mergeinfo.c:669
 #, c-format
 msgid ""
 "Unable to parse overlapping revision ranges '%s' and '%s' with different "
 "inheritance types"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:722
+#: ../libsvn_subr/mergeinfo.c:721
 #, c-format
 msgid "Mergeinfo for '%s' maps to an empty revision range"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:726
+#: ../libsvn_subr/mergeinfo.c:725
 #, c-format
 msgid "Could not find end of line in range list line in '%s'"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:790
+#: ../libsvn_subr/mergeinfo.c:789
 #, c-format
 msgid "Could not parse mergeinfo string '%s'"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:2367
+#: ../libsvn_subr/mergeinfo.c:2376
 msgid "NULL mergeinfo catalog\n"
 msgstr ""
 
-#: ../libsvn_subr/mergeinfo.c:2372
+#: ../libsvn_subr/mergeinfo.c:2381
 msgid "empty mergeinfo catalog\n"
 msgstr ""
 
@@ -7854,7 +7873,7 @@ msgstr ""
 
 #: ../libsvn_subr/version.c:139
 msgid ""
-"Copyright (C) 2018 The Apache Software Foundation.\n"
+"Copyright (C) 2019 The Apache Software Foundation.\n"
 "This software consists of contributions made by many people;\n"
 "see the NOTICE file for more information.\n"
 "Subversion is open source software, see http://subversion.apache.org/\n"

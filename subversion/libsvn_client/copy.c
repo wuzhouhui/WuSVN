@@ -2457,7 +2457,7 @@ repos_to_wc_copy_single(svn_boolean_t *timestamp_sleep,
         {
           *timestamp_sleep = TRUE;
 
-          SVN_ERR(svn_client__copy_foreign(pair->src_abspath_or_url,
+          SVN_ERR(svn_client__copy_foreign(pair->src_original,
                                            dst_abspath,
                                            &pair->src_peg_revision,
                                            &pair->src_op_revision,
@@ -2759,6 +2759,16 @@ repos_to_wc_copy(svn_boolean_t *timestamp_sleep,
         {
           SVN_ERR(svn_client__make_local_parents(dst_parent, TRUE, ctx,
                                                  iterpool));
+        }
+      else if (make_parents && dst_parent_kind == svn_node_dir)
+        {
+          SVN_ERR(svn_wc_read_kind2(&dst_parent_kind, ctx->wc_ctx, dst_parent,
+                                    FALSE, TRUE, iterpool));
+          if (dst_parent_kind == svn_node_none)
+            {
+              SVN_ERR(svn_client__make_local_parents(dst_parent, TRUE, ctx,
+                                                     iterpool));
+            }
         }
       else if (dst_parent_kind != svn_node_dir)
         {
