@@ -479,7 +479,7 @@ typedef struct svn_diff_file_options_t
   /** Whether the "@@" lines of the unified diff output should include a prefix
     * of the nearest preceding line that starts with a character that might be
     * the initial character of a C language identifier.  The default is
-    * @c TRUE.
+    * @c FALSE.
     * @since New in 1.5.
     */
   svn_boolean_t show_c_function;
