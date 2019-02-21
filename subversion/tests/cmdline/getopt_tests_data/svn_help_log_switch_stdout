@@ -101,7 +101,7 @@ Valid options:
   --diff-cmd ARG           : use ARG as diff command
   --internal-diff          : override diff-cmd specified in config file
   -x [--extensions] ARG    : Specify differencing options for external diff or
-                             internal diff or blame. Default: '-up'. Options are
+                             internal diff or blame. Default: '-u'. Options are
                              separated by spaces. Internal diff and blame take:
                                -u, --unified: Show 3 lines of unified context
                                -b, --ignore-space-change: Ignore changes in
