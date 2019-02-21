@@ -210,7 +210,7 @@ const apr_getopt_option_t svn_cl__options[] =
   {"extensions",    'x', 1,
                     N_("Specify differencing options for external diff or\n"
                        "                             "
-                       "internal diff or blame. Default: '-up'. Options are\n"
+                       "internal diff or blame. Default: '-u'. Options are\n"
                        "                             "
                        "separated by spaces. Internal diff and blame take:\n"
                        "                             "
