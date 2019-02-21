@@ -1248,7 +1248,6 @@ svn_diff_file_options_parse(svn_diff_file_options_t *options,
 
   opt_parsing_error_baton.err = NULL;
   opt_parsing_error_baton.pool = pool;
-  options->show_c_function = TRUE;
 
   /* Make room for each option (starting at index 1) plus trailing NULL. */
   argv = apr_array_make(pool, args->nelts + 2, sizeof(char*));
