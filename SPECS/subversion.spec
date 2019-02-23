@@ -8,8 +8,8 @@
 %define swig_version 2.0.10
 %define apache_dir /usr
 %define pyver 2.7
-%define svn_version 1.9.7
-%define svn_release 9%{?dist}
+%define svn_version 1.9.10
+%define svn_release 1%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -21,7 +21,7 @@ License: Apache 2.0
 Group: Utilities/System
 URL: https://github.com/wuzhouhui/subversion
 
-Source: %{name}-%{version}.tar.gz
+Source: %{name}-1.9.7.tar.gz
 Source1: sqlite-amalgamation-3210000.zip
 Source2: subversion.conf
 
@@ -43,16 +43,24 @@ Patch15: 0001-shelve-limit-minimum-width-of-header-to-79-column.patch
 Patch16: 0001-diff-highlight-trailing-blanks-of-local-changes.patch
 Patch17: 0002-shelve-set-output-width-to-windows-s-col-minus-one.patch
 Patch18: 0003-clean-don-t-print-anything-about-changelist.patch
+Patch19: 0001-Upstream-1.9.9.patch
+Patch20: 0002-svn-clean-add-option-dry-run.patch
+Patch21: 0003-svn-clean-add-option-ignore.patch
+Patch22: 0004-Update-README.patch
+Patch23: 0005-Revert-Enable-extension-option-p-in-default.patch
+Patch24: 0006-test-update-expected-output-of-svn-help-diff.patch
+Patch25: 0007-svn-print-information-of-hacker.patch
+Patch26: 0008-Upstream-1.9.10.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
 
 Requires: apr >= %{apr_version}
 Requires: apr-util >= %{apu_version}
-Requires: less
+Requires: /bin/less
 
 BuildRequires: qt4-devel
-BuildRequires: gnome-keyring-devel
+BuildRequires: libgnome-keyring-devel
 BuildRequires: dbus-devel
 BuildRequires: kdelibs-devel
 BuildRequires: libdb-devel >= 4.2.52
@@ -69,7 +77,7 @@ BuildRequires: perl(ExtUtils::Embed)
 BuildRequires: swig >= %{swig_version}
 BuildRequires: zlib-devel
 BuildRequires: gcc-c++
-BuildRequires: serf-devel
+BuildRequires: libserf-devel
 
 Obsoletes: subversion-server
 
@@ -152,7 +160,7 @@ Tools for Subversion.
 %endif
 
 %prep
-%setup -n subversion-%{version}
+%setup -n subversion-1.9.7
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -171,6 +179,14 @@ Tools for Subversion.
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -193,7 +209,7 @@ export PYTHON=/usr/bin/python2.7
 	--with-apache-libexecdir=yes \
 	--with-gnome-keyring \
 	--enable-javahl \
-	--with-jdk=/usr/lib/jvm/java-1.8.0 \
+	--with-jdk=${JAVA_HOME} \
 	--without-jikes \
 	--with-sqlite=sqlite-amalgamation/sqlite3.c \
   --with-serf
@@ -368,6 +384,20 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Feb 23 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.10-1
+- Require /bin/less, instead of less
+- Require libgnome-keyring-devel when build
+- Require libserf-devel when build, get it from http://opensource.wandisco.com
+- Use env variable JAVA_HOME as argument of --with-jdk
+- Upstream 1.9.9
+- svn/clean: add option --dry-run
+- svn/clean: add option --ignore
+- Update README
+- Revert "Enable extension option -p in default"
+- test: update expected output of svn help diff
+- svn: print information of hacker
+- Upstream 1.9.10
+
 * Sat Mar 31 2018 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.7-9
 - diff: highlight trailing blanks of local changes
 - shelve: set output width to windows's col minus one

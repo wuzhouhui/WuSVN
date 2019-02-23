@@ -1,0 +1,2414 @@
+From 4bafbf9585e9e54eb16313c5e5778cc6277ea6af Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 17 Feb 2019 19:05:01 +0800
+Subject: [PATCH 8/8] Upstream 1.9.10
+
+---
+ CHANGES                                            |  42 ++++++
+ Makefile.in                                        |   9 +-
+ NOTICE                                             |   2 +-
+ configure                                          |  22 +--
+ subversion/bindings/javahl/native/Prompter.cpp     |   3 +-
+ subversion/bindings/javahl/native/SVNClient.cpp    |   6 +-
+ subversion/bindings/swig/perl/native/core.c        |  14 +-
+ subversion/bindings/swig/python/core.c             |  14 +-
+ subversion/bindings/swig/ruby/core.c               |  14 +-
+ subversion/include/private/svn_mergeinfo_private.h |  15 ++-
+ subversion/include/svn_version.h                   |   6 +-
+ subversion/libsvn_client/copy.c                    |  12 +-
+ subversion/libsvn_client/revisions.c               |   9 +-
+ subversion/libsvn_client/update.c                  | 150 ++++++++++++++-------
+ subversion/libsvn_fs_base/fs.c                     |   1 +
+ subversion/libsvn_fs_fs/cached_data.c              |  26 +++-
+ subversion/libsvn_fs_fs/recovery.c                 |  12 +-
+ subversion/libsvn_fs_fs/transaction.c              |  12 +-
+ subversion/libsvn_fs_fs/tree.c                     |  39 +++++-
+ subversion/libsvn_repos/reporter.c                 |   8 +-
+ subversion/libsvn_subr/auth.c                      |   2 -
+ subversion/libsvn_subr/deprecated.c                |   2 +-
+ subversion/libsvn_subr/gpg_agent.c                 | 115 ++++++++++++----
+ subversion/libsvn_subr/mergeinfo.c                 |  67 +++++----
+ subversion/libsvn_subr/version.c                   |   2 +-
+ subversion/libsvn_wc/wc-checks.h                   |   2 +-
+ subversion/libsvn_wc/wc-metadata.h                 |   2 +-
+ subversion/mod_authz_svn/mod_authz_svn.c           |   6 +-
+ subversion/mod_dav_svn/mod_dav_svn.c               |   5 +-
+ subversion/mod_dav_svn/repos.c                     |   7 +
+ subversion/po/de.po                                |   4 +-
+ subversion/po/subversion.pot                       | 131 ++++++++++--------
+ subversion/tests/cmdline/basic_tests.py            |  68 ++++++++++
+ subversion/tests/cmdline/commit_tests.py           |  34 +++++
+ subversion/tests/cmdline/copy_tests.py             | 140 +++++++++++++++++++
+ subversion/tests/cmdline/externals_tests.py        |  40 ++++++
+ subversion/tests/cmdline/svnadmin_tests.py         |  78 ++++++++++-
+ subversion/tests/libsvn_fs/fs-test.c               |  74 ++++++++++
+ subversion/tests/libsvn_subr/mergeinfo-test.c      |  29 ++++
+ subversion/tests/svn_test_main.c                   |   2 +-
+ tools/client-side/detach.py                        |   7 +
+ tools/examples/ExampleAuthn.java                   |   7 +-
+ 42 files changed, 990 insertions(+), 250 deletions(-)
+
+diff --git a/CHANGES b/CHANGES
+index 2cd58e7..d787f82 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -1,3 +1,45 @@
++
++
++Version 1.9.10
++(?? ??? 2019, from /branches/1.9.x)
++http://svn.apache.org/repos/asf/subversion/tags/1.9.10
++
++ User-visible changes:
++  - Client-side bugfixes:
++    * Fix: repos-to-WC copy with --parents doesn't create dirs (#4768)
++    * Fix: foreign repo copy with peg/operative revisions (#4785)
++    * Fix: assertion failure using -rPREV on a working copy at r0 (#4532)
++    * Fix: german translation for 'svn help merge' (r1837037)
++    * Fix: prune externals after 'update --set-depth=exclude' (r1830883 et al.)
++    * Fix: detection of GPG-agent (r1794166 et al.)
++    * Fix: null updates don't update last-changed-revision (#4700)
++    * Fix: merge "Unable to parse reversed revision range" (#4686)
++
++  - Server-side bugfixes:
++    * Fix: unexpected SVN_ERR_FS_NOT_DIRECTORY errors (#4791)
++    * Fix: mod_dav_svn's SVNUseUTF8 had no effect in some setups (r1844882)
++    * Fix: crash in mod_http2 (#4782)
++    * Fix: 'svnadmin upgrade' of BDB: Error out on too-new formats (r1804013)
++    * Fix: Enforce v1 HTTP protocol: error if PUT before CHECKOUT (r1833465)
++    * Fix: Let 'svnadmin recover' prune rep-cache even if disabled (r1838813)
++    * Add test and FSFS checksum verification for issue #4722 (r1826720 et al.)
++
++  - Other tool improvements and bugfixes:
++    * Install 'fsfs-stats' wrapper for 1.8 compat (r1802032 et al.)
++    * Note that 'tools/client-side/detach.py' doesn't work on 1.8+ (r1696722)
++
++  - Bindings bugfixes:
++    * JavaHL: Fix crash in client code when using external diff (r1845408)
++    * JavaHL: SSL server trust prompt: allow accepting temporarily (r1820718)
++
++ Developer-visible changes:
++  - General:
++    (none)
++
++  - API changes:
++    (none)
++
++
+ Version 1.9.9
+ (20 Jul 2018, from /branches/1.9.x)
+ http://svn.apache.org/repos/asf/subversion/tags/1.9.9
+diff --git a/Makefile.in b/Makefile.in
+index e63a09c..4cb696b 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -983,4 +983,11 @@ INSTALL_EXTRA_TOOLS=\
+   if test "$(DESTDIR)$(bindir)" != "$(DESTDIR)$(toolsdir)"; then \
+     ln -sf $(bindir)/svnmucc$(EXEEXT) $(DESTDIR)$(toolsdir)/svnmucc$(EXEEXT); \
+     ln -sf $(bindir)/svnbench$(EXEEXT) $(DESTDIR)$(toolsdir)/svn-bench$(EXEEXT); \
+-  fi
++  fi; \
++  printf '\043\041/bin/sh\n%s\n' \
++    'exec $(bindir)/svnfsfs stats $${2:+"-M"} $${2:+"$$2"} "$$1"' \
++    > $(DESTDIR)$(toolsdir)/fsfs-stats$(EXEEXT) && \
++  chmod +x $(DESTDIR)$(toolsdir)/fsfs-stats$(EXEEXT)
++# \043\041 is a "#!".  It's written this way because gmake and bmake disagree on
++# how to include a literal '#' in a command, and because '!' is special to some
++# shells.
+diff --git a/NOTICE b/NOTICE
+index 32397fb..da8895b 100644
+--- a/NOTICE
++++ b/NOTICE
+@@ -1,5 +1,5 @@
+ Apache Subversion
+-Copyright 2018 The Apache Software Foundation
++Copyright 2019 The Apache Software Foundation
+ 
+ This product includes software developed by many people, and distributed
+ under Contributor License Agreements to The Apache Software Foundation
+diff --git a/configure b/configure
+index 6bd1562..cae57df 100755
+--- a/configure
++++ b/configure
+@@ -1,6 +1,6 @@
+ #! /bin/sh
+ # Guess values for system-dependent variables and create Makefiles.
+-# Generated by GNU Autoconf 2.69 for subversion 1.9.9.
++# Generated by GNU Autoconf 2.69 for subversion 1.9.10.
+ #
+ # Report bugs to <http://subversion.apache.org/>.
+ #
+@@ -590,8 +590,8 @@ MAKEFLAGS=
+ # Identity of this package.
+ PACKAGE_NAME='subversion'
+ PACKAGE_TARNAME='subversion'
+-PACKAGE_VERSION='1.9.9'
+-PACKAGE_STRING='subversion 1.9.9'
++PACKAGE_VERSION='1.9.10'
++PACKAGE_STRING='subversion 1.9.10'
+ PACKAGE_BUGREPORT='http://subversion.apache.org/'
+ PACKAGE_URL=''
+ 
+@@ -1471,7 +1471,7 @@ if test "$ac_init_help" = "long"; then
+   # Omit some internal or obsolete options to make the list less imposing.
+   # This message is too long to be a string in the A/UX 3.1 sh.
+   cat <<_ACEOF
+-\`configure' configures subversion 1.9.9 to adapt to many kinds of systems.
++\`configure' configures subversion 1.9.10 to adapt to many kinds of systems.
+ 
+ Usage: $0 [OPTION]... [VAR=VALUE]...
+ 
+@@ -1537,7 +1537,7 @@ fi
+ 
+ if test -n "$ac_init_help"; then
+   case $ac_init_help in
+-     short | recursive ) echo "Configuration of subversion 1.9.9:";;
++     short | recursive ) echo "Configuration of subversion 1.9.10:";;
+    esac
+   cat <<\_ACEOF
+ 
+@@ -1751,7 +1751,7 @@ fi
+ test -n "$ac_init_help" && exit $ac_status
+ if $ac_init_version; then
+   cat <<\_ACEOF
+-subversion configure 1.9.9
++subversion configure 1.9.10
+ generated by GNU Autoconf 2.69
+ 
+ Copyright (C) 2012 Free Software Foundation, Inc.
+@@ -2295,7 +2295,7 @@ cat >config.log <<_ACEOF
+ This file contains any messages produced by compilers while
+ running configure, to aid debugging if configure makes a mistake.
+ 
+-It was created by subversion $as_me 1.9.9, which was
++It was created by subversion $as_me 1.9.10, which was
+ generated by GNU Autoconf 2.69.  Invocation command line was
+ 
+   $ $0 $@
+@@ -2675,8 +2675,8 @@ ac_configure="$SHELL $ac_aux_dir/configure"  # Please don't use this var.
+ 
+ 
+ 
+-{ $as_echo "$as_me:${as_lineno-$LINENO}: Configuring Subversion 1.9.9" >&5
+-$as_echo "$as_me: Configuring Subversion 1.9.9" >&6;}
++{ $as_echo "$as_me:${as_lineno-$LINENO}: Configuring Subversion 1.9.10" >&5
++$as_echo "$as_me: Configuring Subversion 1.9.10" >&6;}
+ 
+ abs_srcdir="`cd $srcdir && pwd`"
+ 
+@@ -26756,7 +26756,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF || ac_write_fail=1
+ # report actual input values of CONFIG_FILES etc. instead of their
+ # values after options handling.
+ ac_log="
+-This file was extended by subversion $as_me 1.9.9, which was
++This file was extended by subversion $as_me 1.9.10, which was
+ generated by GNU Autoconf 2.69.  Invocation command line was
+ 
+   CONFIG_FILES    = $CONFIG_FILES
+@@ -26822,7 +26822,7 @@ _ACEOF
+ cat >>$CONFIG_STATUS <<_ACEOF || ac_write_fail=1
+ ac_cs_config="`$as_echo "$ac_configure_args" | sed 's/^ //; s/[\\""\`\$]/\\\\&/g'`"
+ ac_cs_version="\\
+-subversion config.status 1.9.9
++subversion config.status 1.9.10
+ configured by $0, generated by GNU Autoconf 2.69,
+   with options \\"\$ac_cs_config\\"
+ 
+diff --git a/subversion/bindings/javahl/native/Prompter.cpp b/subversion/bindings/javahl/native/Prompter.cpp
+index bad7467..46e0e4c 100644
+--- a/subversion/bindings/javahl/native/Prompter.cpp
++++ b/subversion/bindings/javahl/native/Prompter.cpp
+@@ -342,8 +342,7 @@ svn_error_t *Prompter::dispatch_ssl_server_trust_prompt(
+   svn_auth_cred_ssl_server_trust_t *cred =
+     static_cast<svn_auth_cred_ssl_server_trust_t*>(apr_pcalloc(pool, sizeof(*cred)));
+   cred->may_save = save;
+-  if (save)
+-    cred->accepted_failures = failures;
++  cred->accepted_failures = failures;
+   *cred_p = cred;
+ 
+   return SVN_NO_ERROR;
+diff --git a/subversion/bindings/javahl/native/SVNClient.cpp b/subversion/bindings/javahl/native/SVNClient.cpp
+index 5bae852..f866b8e 100644
+--- a/subversion/bindings/javahl/native/SVNClient.cpp
++++ b/subversion/bindings/javahl/native/SVNClient.cpp
+@@ -1049,7 +1049,8 @@ void SVNClient::diff(const char *target1, Revision &revision1,
+                                    options.useGitDiffFormat(),
+                                    SVN_APR_LOCALE_CHARSET,
+                                    outputStream.getStream(subPool),
+-                                   NULL /* error file */,
++                                   // Discard stderr; TODO: Update JavaHL API
++                                   svn_stream_empty(subPool.getPool()),
+                                    changelists.array(subPool),
+                                    ctx,
+                                    subPool.getPool()),
+@@ -1078,7 +1079,8 @@ void SVNClient::diff(const char *target1, Revision &revision1,
+                                options.useGitDiffFormat(),
+                                SVN_APR_LOCALE_CHARSET,
+                                outputStream.getStream(subPool),
+-                               NULL /* error stream */,
++                               // Discard stderr; TODO: Update JavaHL API
++                               svn_stream_empty(subPool.getPool()),
+                                changelists.array(subPool),
+                                ctx,
+                                subPool.getPool()),
+diff --git a/subversion/bindings/swig/perl/native/core.c b/subversion/bindings/swig/perl/native/core.c
+index 2826065..9d49bb3 100644
+--- a/subversion/bindings/swig/perl/native/core.c
++++ b/subversion/bindings/swig/perl/native/core.c
+@@ -49565,12 +49565,12 @@ XS(SWIG_init) {
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_PATCH", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(9)));
++    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(10)));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_MICRO", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(9)));
++    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(10)));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+@@ -49580,7 +49580,7 @@ XS(SWIG_init) {
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_TAG", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr(" (r1835931)"));
++    sv_setsv(sv, SWIG_FromCharPtr(" (r1850359)"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+@@ -49590,22 +49590,22 @@ XS(SWIG_init) {
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_REVISION", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(1835931)));
++    sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(1850359)));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_NUM", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr("1.9.9"));
++    sv_setsv(sv, SWIG_FromCharPtr("1.9.10"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VER_NUMBER", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr("1.9.9"));
++    sv_setsv(sv, SWIG_FromCharPtr("1.9.10"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+     SV *sv = get_sv((char*) SWIG_prefix "SVN_VERSION", TRUE | 0x2 | GV_ADDMULTI);
+-    sv_setsv(sv, SWIG_FromCharPtr("1.9.9 (r1835931)"));
++    sv_setsv(sv, SWIG_FromCharPtr("1.9.10 (r1850359)"));
+     SvREADONLY_on(sv);
+   } while(0) /*@SWIG@*/;
+   /*@SWIG:/opt/svnrm19/prefix/share/swig/2.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+diff --git a/subversion/bindings/swig/python/core.c b/subversion/bindings/swig/python/core.c
+index 329e38c..01bb2f1 100644
+--- a/subversion/bindings/swig/python/core.c
++++ b/subversion/bindings/swig/python/core.c
+@@ -36652,15 +36652,15 @@ SWIG_init(void) {
+   SWIG_Python_SetConstant(d, "SVN_ALLOCATOR_RECOMMENDED_MAX_FREE",SWIG_From_long((long)((4096*1024))));
+   SWIG_Python_SetConstant(d, "SVN_VER_MAJOR",SWIG_From_long((long)(1)));
+   SWIG_Python_SetConstant(d, "SVN_VER_MINOR",SWIG_From_long((long)(9)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_PATCH",SWIG_From_long((long)(9)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_MICRO",SWIG_From_long((long)(9)));
++  SWIG_Python_SetConstant(d, "SVN_VER_PATCH",SWIG_From_long((long)(10)));
++  SWIG_Python_SetConstant(d, "SVN_VER_MICRO",SWIG_From_long((long)(10)));
+   SWIG_Python_SetConstant(d, "SVN_VER_LIBRARY",SWIG_From_long((long)(1)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_TAG",SWIG_FromCharPtr(" (r1835931)"));
++  SWIG_Python_SetConstant(d, "SVN_VER_TAG",SWIG_FromCharPtr(" (r1850359)"));
+   SWIG_Python_SetConstant(d, "SVN_VER_NUMTAG",SWIG_FromCharPtr(""));
+-  SWIG_Python_SetConstant(d, "SVN_VER_REVISION",SWIG_From_long((long)(1835931)));
+-  SWIG_Python_SetConstant(d, "SVN_VER_NUM",SWIG_FromCharPtr("1.9.9"));
+-  SWIG_Python_SetConstant(d, "SVN_VER_NUMBER",SWIG_FromCharPtr("1.9.9"));
+-  SWIG_Python_SetConstant(d, "SVN_VERSION",SWIG_FromCharPtr("1.9.9 (r1835931)"));
++  SWIG_Python_SetConstant(d, "SVN_VER_REVISION",SWIG_From_long((long)(1850359)));
++  SWIG_Python_SetConstant(d, "SVN_VER_NUM",SWIG_FromCharPtr("1.9.10"));
++  SWIG_Python_SetConstant(d, "SVN_VER_NUMBER",SWIG_FromCharPtr("1.9.10"));
++  SWIG_Python_SetConstant(d, "SVN_VERSION",SWIG_FromCharPtr("1.9.10 (r1850359)"));
+   SWIG_Python_SetConstant(d, "svn_prop_entry_kind",SWIG_From_long((long)(svn_prop_entry_kind)));
+   SWIG_Python_SetConstant(d, "svn_prop_wc_kind",SWIG_From_long((long)(svn_prop_wc_kind)));
+   SWIG_Python_SetConstant(d, "svn_prop_regular_kind",SWIG_From_long((long)(svn_prop_regular_kind)));
+diff --git a/subversion/bindings/swig/ruby/core.c b/subversion/bindings/swig/ruby/core.c
+index 7c9693e..e473a21 100644
+--- a/subversion/bindings/swig/ruby/core.c
++++ b/subversion/bindings/swig/ruby/core.c
+@@ -44077,15 +44077,15 @@ SWIGEXPORT void Init_core(void) {
+   rb_define_module_function(mCore, "svn_pool_create_allocator", _wrap_svn_pool_create_allocator, -1);
+   rb_define_const(mCore, "SVN_VER_MAJOR", SWIG_From_int((int)(1)));
+   rb_define_const(mCore, "SVN_VER_MINOR", SWIG_From_int((int)(9)));
+-  rb_define_const(mCore, "SVN_VER_PATCH", SWIG_From_int((int)(9)));
+-  rb_define_const(mCore, "SVN_VER_MICRO", SWIG_From_int((int)(9)));
++  rb_define_const(mCore, "SVN_VER_PATCH", SWIG_From_int((int)(10)));
++  rb_define_const(mCore, "SVN_VER_MICRO", SWIG_From_int((int)(10)));
+   rb_define_const(mCore, "SVN_VER_LIBRARY", SWIG_From_int((int)(1)));
+-  rb_define_const(mCore, "SVN_VER_TAG", SWIG_FromCharPtr(" (r1835931)"));
++  rb_define_const(mCore, "SVN_VER_TAG", SWIG_FromCharPtr(" (r1850359)"));
+   rb_define_const(mCore, "SVN_VER_NUMTAG", SWIG_FromCharPtr(""));
+-  rb_define_const(mCore, "SVN_VER_REVISION", SWIG_From_int((int)(1835931)));
+-  rb_define_const(mCore, "SVN_VER_NUM", SWIG_FromCharPtr("1.9.9"));
+-  rb_define_const(mCore, "SVN_VER_NUMBER", SWIG_FromCharPtr("1.9.9"));
+-  rb_define_const(mCore, "SVN_VERSION", SWIG_FromCharPtr("1.9.9 (r1835931)"));
++  rb_define_const(mCore, "SVN_VER_REVISION", SWIG_From_int((int)(1850359)));
++  rb_define_const(mCore, "SVN_VER_NUM", SWIG_FromCharPtr("1.9.10"));
++  rb_define_const(mCore, "SVN_VER_NUMBER", SWIG_FromCharPtr("1.9.10"));
++  rb_define_const(mCore, "SVN_VERSION", SWIG_FromCharPtr("1.9.10 (r1850359)"));
+   
+   SwigClassSvn_version_t.klass = rb_define_class_under(mCore, "Svn_version_t", rb_cObject);
+   SWIG_TypeClientData(SWIGTYPE_p_svn_version_t, (void *) &SwigClassSvn_version_t);
+diff --git a/subversion/include/private/svn_mergeinfo_private.h b/subversion/include/private/svn_mergeinfo_private.h
+index 716d0c9..a34cb39 100644
+--- a/subversion/include/private/svn_mergeinfo_private.h
++++ b/subversion/include/private/svn_mergeinfo_private.h
+@@ -52,18 +52,21 @@ svn_rangelist__set_inheritance(svn_rangelist_t *rangelist,
+  * Unlike svn_mergeinfo_parse(), this does not sort the ranges into order
+  * or combine adjacent and overlapping ranges.
+  *
+- * The compaction can be done with svn_rangelist__combine_adjacent_ranges().
++ * The compaction can be done with svn_rangelist__canonicalize().
+  */
+ svn_error_t *
+ svn_rangelist__parse(svn_rangelist_t **rangelist,
+                      const char *str,
+                      apr_pool_t *result_pool);
+ 
+-/* In-place combines adjacent ranges in a rangelist.
+-   SCRATCH_POOL is just used for providing error messages. */
+-svn_error_t *
+-svn_rangelist__combine_adjacent_ranges(svn_rangelist_t *rangelist,
+-                                       apr_pool_t *scratch_pool);
++/* Return TRUE, if all ranges in RANGELIST are in ascending order and do
++* not overlap and are not adjacent.
++*
++* If this returns FALSE, you probaly want to call
++* svn_rangelist__canonicalize().
++*/
++svn_boolean_t
++svn_rangelist__is_canonical(const svn_rangelist_t *rangelist);
+ 
+ /** Canonicalize the @a rangelist: sort the ranges, and combine adjacent or
+  * overlapping ranges into single ranges where possible.
+diff --git a/subversion/include/svn_version.h b/subversion/include/svn_version.h
+index 343cfac..69542bb 100644
+--- a/subversion/include/svn_version.h
++++ b/subversion/include/svn_version.h
+@@ -70,7 +70,7 @@ extern "C" {
+  *
+  * @since New in 1.1.
+  */
+-#define SVN_VER_PATCH      9
++#define SVN_VER_PATCH      10
+ 
+ 
+ /** @deprecated Provided for backward compatibility with the 1.0 API. */
+@@ -93,7 +93,7 @@ extern "C" {
+  *
+  * Always change this at the same time as SVN_VER_NUMTAG.
+  */
+-#define SVN_VER_TAG        " (r1835931)"
++#define SVN_VER_TAG        " (r1850359)"
+ 
+ 
+ /** Number tag: a string describing the version.
+@@ -117,7 +117,7 @@ extern "C" {
+  * file version. Its value remains 0 in the repository except in release
+  * tags where it is the revision from which the tag was created.
+  */
+-#define SVN_VER_REVISION   1835931
++#define SVN_VER_REVISION   1850359
+ 
+ 
+ /* Version strings composed from the above definitions. */
+diff --git a/subversion/libsvn_client/copy.c b/subversion/libsvn_client/copy.c
+index af6a75b..3c618db 100644
+--- a/subversion/libsvn_client/copy.c
++++ b/subversion/libsvn_client/copy.c
+@@ -2457,7 +2457,7 @@ repos_to_wc_copy_single(svn_boolean_t *timestamp_sleep,
+         {
+           *timestamp_sleep = TRUE;
+ 
+-          SVN_ERR(svn_client__copy_foreign(pair->src_abspath_or_url,
++          SVN_ERR(svn_client__copy_foreign(pair->src_original,
+                                            dst_abspath,
+                                            &pair->src_peg_revision,
+                                            &pair->src_op_revision,
+@@ -2760,6 +2760,16 @@ repos_to_wc_copy(svn_boolean_t *timestamp_sleep,
+           SVN_ERR(svn_client__make_local_parents(dst_parent, TRUE, ctx,
+                                                  iterpool));
+         }
++      else if (make_parents && dst_parent_kind == svn_node_dir)
++        {
++          SVN_ERR(svn_wc_read_kind2(&dst_parent_kind, ctx->wc_ctx, dst_parent,
++                                    FALSE, TRUE, iterpool));
++          if (dst_parent_kind == svn_node_none)
++            {
++              SVN_ERR(svn_client__make_local_parents(dst_parent, TRUE, ctx,
++                                                     iterpool));
++            }
++        }
+       else if (dst_parent_kind != svn_node_dir)
+         {
+           return svn_error_createf(SVN_ERR_WC_NOT_WORKING_COPY, NULL,
+diff --git a/subversion/libsvn_client/revisions.c b/subversion/libsvn_client/revisions.c
+index e61e7d4..8599ecd 100644
+--- a/subversion/libsvn_client/revisions.c
++++ b/subversion/libsvn_client/revisions.c
+@@ -142,7 +142,14 @@ svn_client__get_revision_number(svn_revnum_t *revnum,
+                                                           scratch_pool));
+ 
+         if (revision->kind == svn_opt_revision_previous)
+-          (*revnum)--;
++          {
++            if (*revnum == 0)
++              return svn_error_createf(
++                  SVN_ERR_CLIENT_BAD_REVISION, NULL,
++                  _("Path '%s' has no previous revision"),
++                  svn_dirent_local_style(local_abspath, scratch_pool));
++            --(*revnum);
++          }
+       }
+       break;
+ 
+diff --git a/subversion/libsvn_client/update.c b/subversion/libsvn_client/update.c
+index 3895aa2..602f7e3 100644
+--- a/subversion/libsvn_client/update.c
++++ b/subversion/libsvn_client/update.c
+@@ -182,6 +182,88 @@ record_conflict(svn_wc_conflict_result_t **result,
+   return SVN_NO_ERROR;
+ }
+ 
++/* Perform post-update processing of externals defined below LOCAL_ABSPATH. */
++static svn_error_t *
++handle_externals(svn_boolean_t *timestamp_sleep,
++                 const char *local_abspath,
++                 svn_depth_t depth,
++                 const char *repos_root_url,
++                 svn_ra_session_t *ra_session,
++                 svn_client_ctx_t *ctx,
++                 apr_pool_t *scratch_pool)
++{
++  apr_hash_t *new_externals;
++  apr_hash_t *new_depths;
++
++  SVN_ERR(svn_wc__externals_gather_definitions(&new_externals,
++                                               &new_depths,
++                                               ctx->wc_ctx, local_abspath,
++                                               depth,
++                                               scratch_pool, scratch_pool));
++
++  SVN_ERR(svn_client__handle_externals(new_externals,
++                                       new_depths,
++                                       repos_root_url, local_abspath,
++                                       depth, timestamp_sleep, ra_session,
++                                       ctx, scratch_pool));
++  return SVN_NO_ERROR;
++}
++
++/* Try to reuse the RA session by reparenting it to the anchor_url.
++ * This code is probably overly cautious since we only use this
++ * currently when parents are missing and so all the anchor_urls
++ * have to be in the same repo.
++ * Note that ra_session_p is an (optional) input parameter as well
++ * as an output parameter. */
++static svn_error_t *
++reuse_ra_session(svn_ra_session_t **ra_session_p,
++                 const char **corrected_url,
++                 const char *anchor_url,
++                 const char *anchor_abspath,
++                 svn_client_ctx_t *ctx,
++                 apr_pool_t *result_pool,
++                 apr_pool_t *scratch_pool)
++{
++  svn_ra_session_t *ra_session = *ra_session_p;
++
++  if (ra_session)
++    {
++      svn_error_t *err = svn_ra_reparent(ra_session, anchor_url, scratch_pool);
++      if (err)
++        {
++          if (err->apr_err == SVN_ERR_RA_ILLEGAL_URL)
++            {
++            /* session changed repos, can't reuse it */
++              svn_error_clear(err);
++              ra_session = NULL;
++            }
++          else
++            {
++              return svn_error_trace(err);
++            }
++        }
++      else
++        {
++          *corrected_url = NULL;
++        }
++    }
++
++  /* Open an RA session for the URL if one isn't already available */
++  if (!ra_session)
++    {
++      SVN_ERR(svn_client__open_ra_session_internal(&ra_session, corrected_url,
++                                                   anchor_url,
++                                                   anchor_abspath, NULL,
++                                                   TRUE /* write_dav_props */,
++                                                   TRUE /* read_dav_props */,
++                                                   ctx,
++                                                   result_pool, scratch_pool));
++      *ra_session_p = ra_session;
++    }
++
++  return SVN_NO_ERROR;
++}
++
+ /* This is a helper for svn_client__update_internal(), which see for
+    an explanation of most of these parameters.  Some stuff that's
+    unique is as follows:
+@@ -320,6 +402,18 @@ update_internal(svn_revnum_t *result_rev,
+                                  ctx->notify_func2, ctx->notify_baton2,
+                                  scratch_pool));
+ 
++          if (!ignore_externals)
++            {
++              /* We may now be able to remove externals below LOCAL_ABSPATH. */
++              SVN_ERR(reuse_ra_session(ra_session_p, &corrected_url,
++                                       anchor_url, anchor_abspath,
++                                       ctx, result_pool, scratch_pool));
++              ra_session = *ra_session_p;
++              SVN_ERR(handle_externals(timestamp_sleep, local_abspath, depth,
++                                       repos_root_url, ra_session, ctx,
++                                       scratch_pool));
++            }
++
+           /* Target excluded, we are done now */
+           return SVN_NO_ERROR;
+         }
+@@ -373,44 +467,9 @@ update_internal(svn_revnum_t *result_rev,
+       ctx->notify_func2(ctx->notify_baton2, notify, scratch_pool);
+     }
+ 
+-  /* Try to reuse the RA session by reparenting it to the anchor_url.
+-   * This code is probably overly cautious since we only use this
+-   * currently when parents are missing and so all the anchor_urls
+-   * have to be in the same repo. */
+-  if (ra_session)
+-    {
+-      svn_error_t *err = svn_ra_reparent(ra_session, anchor_url, scratch_pool);
+-      if (err)
+-        {
+-          if (err->apr_err == SVN_ERR_RA_ILLEGAL_URL)
+-            {
+-            /* session changed repos, can't reuse it */
+-              svn_error_clear(err);
+-              ra_session = NULL;
+-            }
+-          else
+-            {
+-              return svn_error_trace(err);
+-            }
+-        }
+-      else
+-        {
+-          corrected_url = NULL;
+-        }
+-    }
+-
+-  /* Open an RA session for the URL if one isn't already available */
+-  if (!ra_session)
+-    {
+-      SVN_ERR(svn_client__open_ra_session_internal(&ra_session, &corrected_url,
+-                                                   anchor_url,
+-                                                   anchor_abspath, NULL,
+-                                                   TRUE /* write_dav_props */,
+-                                                   TRUE /* read_dav_props */,
+-                                                   ctx,
+-                                                   result_pool, scratch_pool));
+-      *ra_session_p = ra_session;
+-    }
++  SVN_ERR(reuse_ra_session(ra_session_p, &corrected_url, anchor_url,
++                           anchor_abspath, ctx, result_pool, scratch_pool));
++  ra_session = *ra_session_p;
+ 
+   /* If we got a corrected URL from the RA subsystem, we'll need to
+      relocate our working copy first. */
+@@ -513,19 +572,8 @@ update_internal(svn_revnum_t *result_rev,
+   if ((SVN_DEPTH_IS_RECURSIVE(depth) || cropping_target)
+       && (! ignore_externals))
+     {
+-      apr_hash_t *new_externals;
+-      apr_hash_t *new_depths;
+-      SVN_ERR(svn_wc__externals_gather_definitions(&new_externals,
+-                                                   &new_depths,
+-                                                   ctx->wc_ctx, local_abspath,
+-                                                   depth,
+-                                                   scratch_pool, scratch_pool));
+-
+-      SVN_ERR(svn_client__handle_externals(new_externals,
+-                                           new_depths,
+-                                           repos_root_url, local_abspath,
+-                                           depth, timestamp_sleep, ra_session,
+-                                           ctx, scratch_pool));
++      SVN_ERR(handle_externals(timestamp_sleep, local_abspath, depth,
++                               repos_root_url, ra_session, ctx, scratch_pool));
+     }
+ 
+   /* Let everyone know we're finished here (unless we're asked not to). */
+diff --git a/subversion/libsvn_fs_base/fs.c b/subversion/libsvn_fs_base/fs.c
+index 06dfbaf..596e73f 100644
+--- a/subversion/libsvn_fs_base/fs.c
++++ b/subversion/libsvn_fs_base/fs.c
+@@ -948,6 +948,7 @@ base_upgrade(svn_fs_t *fs,
+       err = SVN_NO_ERROR;
+     }
+   SVN_ERR(err);
++  SVN_ERR(check_format(old_format_number));
+ 
+   /* Bump the format file's stored version number. */
+   SVN_ERR(svn_io_write_version_file(version_file_path,
+diff --git a/subversion/libsvn_fs_fs/cached_data.c b/subversion/libsvn_fs_fs/cached_data.c
+index 178e035..5973c32 100644
+--- a/subversion/libsvn_fs_fs/cached_data.c
++++ b/subversion/libsvn_fs_fs/cached_data.c
+@@ -1994,13 +1994,14 @@ skip_contents(struct rep_read_baton *baton,
+ 
+ /* BATON is of type `rep_read_baton'; read the next *LEN bytes of the
+    representation and store them in *BUF.  Sum as we read and verify
+-   the MD5 sum at the end. */
++   the MD5 sum at the end.  This is a READ_FULL_FN for svn_stream_t. */
+ static svn_error_t *
+ rep_read_contents(void *baton,
+                   char *buf,
+                   apr_size_t *len)
+ {
+   struct rep_read_baton *rb = baton;
++  apr_size_t len_requested = *len;
+ 
+   /* Get data from the fulltext cache for as long as we can. */
+   if (rb->fulltext_cache)
+@@ -2040,6 +2041,28 @@ rep_read_contents(void *baton,
+   if (rb->current_fulltext)
+     svn_stringbuf_appendbytes(rb->current_fulltext, buf, *len);
+ 
++  /* This is a FULL_READ_FN so a short read implies EOF and we can
++     verify the length. */
++  rb->off += *len;
++  if (*len < len_requested && rb->off != rb->len)
++      {
++        /* A warning rather than an error to allow the data to be
++           retrieved when the length is wrong but the data is
++           present, i.e. if repository corruption has stored the wrong
++           expanded length. */
++        svn_error_t *err = svn_error_createf(SVN_ERR_FS_CORRUPT, NULL,
++                            _("Length mismatch while reading representation:"
++                              " expected %s,"
++                              " got %s"),
++                            apr_psprintf(rb->pool, "%" SVN_FILESIZE_T_FMT,
++                                         rb->len),
++                            apr_psprintf(rb->pool, "%" SVN_FILESIZE_T_FMT,
++                                         rb->off));
++
++        rb->fs->warning(rb->fs->warning_baton, err);
++        svn_error_clear(err);
++      }
++
+   /* Perform checksumming.  We want to check the checksum as soon as
+      the last byte of data is read, in case the caller never performs
+      a short read, but we don't want to finalize the MD5 context
+@@ -2047,7 +2070,6 @@ rep_read_contents(void *baton,
+   if (!rb->checksum_finalized)
+     {
+       SVN_ERR(svn_checksum_update(rb->md5_checksum_ctx, buf, *len));
+-      rb->off += *len;
+       if (rb->off == rb->len)
+         {
+           svn_checksum_t *md5_checksum;
+diff --git a/subversion/libsvn_fs_fs/recovery.c b/subversion/libsvn_fs_fs/recovery.c
+index 125d47a..8893c1a 100644
+--- a/subversion/libsvn_fs_fs/recovery.c
++++ b/subversion/libsvn_fs_fs/recovery.c
+@@ -473,9 +473,15 @@ recover_body(void *baton, apr_pool_t *pool)
+     }
+ 
+   /* Prune younger-than-(newfound-youngest) revisions from the rep
+-     cache if sharing is enabled taking care not to create the cache
+-     if it does not exist. */
+-  if (ffd->rep_sharing_allowed)
++     cache, taking care not to create the cache if it does not exist.
++
++     We do this whenever rep-cache.db exists, whether it's currently enabled
++     or not, to prevent a data loss that could result from having revisions
++     created after this 'recover' operation referring to rep-cache.db rows
++     that were created before the recover and that point to revisions younger-
++     than-(newfound-youngest).
++   */
++  if (ffd->format >= SVN_FS_FS__MIN_REP_SHARING_FORMAT)
+     {
+       svn_boolean_t rep_cache_exists;
+ 
+diff --git a/subversion/libsvn_fs_fs/transaction.c b/subversion/libsvn_fs_fs/transaction.c
+index bc93a5c..4e09260 100644
+--- a/subversion/libsvn_fs_fs/transaction.c
++++ b/subversion/libsvn_fs_fs/transaction.c
+@@ -2523,6 +2523,8 @@ svn_fs_fs__set_proplist(svn_fs_t *fs,
+     {
+       noderev->prop_rep = apr_pcalloc(pool, sizeof(*noderev->prop_rep));
+       noderev->prop_rep->txn_id = *svn_fs_fs__id_txn_id(noderev->id);
++      SVN_ERR(set_uniquifier(fs, noderev->prop_rep, pool));
++      noderev->prop_rep->revision = SVN_INVALID_REVNUM;
+       SVN_ERR(svn_fs_fs__put_node_revision(fs, noderev->id, noderev, FALSE,
+                                            pool));
+     }
+@@ -3052,7 +3054,8 @@ write_final_rev(const svn_fs_id_t **new_id_p,
+                              ? SVN_FS_FS__ITEM_TYPE_DIR_PROPS
+                              : SVN_FS_FS__ITEM_TYPE_FILE_PROPS;
+       SVN_ERR(svn_fs_fs__get_proplist(&proplist, fs, noderev, pool));
+-
++      noderev->prop_rep->txn_id = *txn_id;
++      SVN_ERR(set_uniquifier(fs, noderev->prop_rep, pool));
+       noderev->prop_rep->revision = rev;
+ 
+       if (ffd->deltify_properties)
+@@ -3121,14 +3124,11 @@ write_final_rev(const svn_fs_id_t **new_id_p,
+         }
+     }
+ 
+-  /* don't serialize SHA1 for dirs to disk (waste of space) */
++  /* don't serialize SHA1 for dir content to disk (waste of space) */
++  /* ### Could clients record bogus last-changed-revisions (issue #4700)? */
+   if (noderev->data_rep && noderev->kind == svn_node_dir)
+     noderev->data_rep->has_sha1 = FALSE;
+ 
+-  /* don't serialize SHA1 for props to disk (waste of space) */
+-  if (noderev->prop_rep)
+-    noderev->prop_rep->has_sha1 = FALSE;
+-
+   /* Workaround issue #4031: is-fresh-txn-root in revision files. */
+   noderev->is_fresh_txn_root = FALSE;
+ 
+diff --git a/subversion/libsvn_fs_fs/tree.c b/subversion/libsvn_fs_fs/tree.c
+index fd0b301..b9f5b7d 100644
+--- a/subversion/libsvn_fs_fs/tree.c
++++ b/subversion/libsvn_fs_fs/tree.c
+@@ -877,6 +877,25 @@ try_match_last_node(dag_node_t **node_p,
+   return SVN_NO_ERROR;
+ }
+ 
++/* Helper for open_path() that constructs and returns an appropriate
++   SVN_ERR_FS_NOT_DIRECTORY error. */
++static svn_error_t *
++err_not_directory(svn_fs_root_t *root,
++                  const char *path,
++                  apr_pool_t *scratch_pool)
++{
++  const char *msg;
++
++  msg = root->is_txn_root
++      ? apr_psprintf(scratch_pool,
++                     _("Failure opening '%s' in transaction '%s'"),
++                     path, root->txn)
++      : apr_psprintf(scratch_pool,
++                     _("Failure opening '%s' in revision %ld"),
++                     path, root->rev);
++
++  return svn_error_quick_wrap(SVN_FS__ERR_NOT_DIRECTORY(root->fs, path), msg);
++}
+ 
+ /* Open the node identified by PATH in ROOT, allocating in POOL.  Set
+    *PARENT_PATH_P to a path from the node up to ROOT.  The resulting
+@@ -973,12 +992,26 @@ open_path(parent_path_t **parent_path_p,
+           SVN_ERR(dag_node_cache_get(&here, root, directory, pool));
+ 
+           /* Did the shortcut work? */
+-          if (here)
++          if (here && svn_fs_fs__dag_node_kind(here) == svn_node_dir)
+             {
+               apr_size_t dirname_len = strlen(directory);
+               path_so_far->len = dirname_len;
+               rest = path + dirname_len + 1;
+             }
++          else if (here)
++            {
++              /* The parent node is not a directory.  We are looking for some
++                 sub-path, so that sub-path will not exist.  That will be o.k.
++                 if we are just here to check for the path's existence, but
++                 should result in an error otherwise. */
++              if (flags & open_path_allow_null)
++                {
++                  *parent_path_p = NULL;
++                  return SVN_NO_ERROR;
++                }
++              else
++                return svn_error_trace(err_not_directory(root, directory, pool));
++            }
+         }
+     }
+ 
+@@ -1111,8 +1144,8 @@ open_path(parent_path_t **parent_path_p,
+             }
+ 
+           /* It's really a problem ... */
+-          SVN_ERR_W(SVN_FS__ERR_NOT_DIRECTORY(fs, path_so_far->data),
+-                    apr_psprintf(iterpool, _("Failure opening '%s'"), path));
++          return svn_error_trace(
++                   err_not_directory(root, path_so_far->data, iterpool));
+         }
+ 
+       rest = next;
+diff --git a/subversion/libsvn_repos/reporter.c b/subversion/libsvn_repos/reporter.c
+index 76c7201..f1c8dfc 100644
+--- a/subversion/libsvn_repos/reporter.c
++++ b/subversion/libsvn_repos/reporter.c
+@@ -971,11 +971,11 @@ update_entry(report_baton_t *b, svn_revnum_t s_rev, const char *s_path,
+           if (s_root == NULL)
+             SVN_ERR(get_source_root(b, &s_root, s_rev));
+ 
+-          SVN_ERR(svn_fs_props_different(&changed, s_root, s_path,
+-                                         b->t_root, t_path, pool));
++          SVN_ERR(svn_fs_props_changed(&changed, s_root, s_path,
++                                       b->t_root, t_path, pool));
+           if (!changed)
+-            SVN_ERR(svn_fs_contents_different(&changed, s_root, s_path,
+-                                              b->t_root, t_path, pool));
++            SVN_ERR(svn_fs_contents_changed(&changed, s_root, s_path,
++                                            b->t_root, t_path, pool));
+         }
+ 
+       if ((distance == 0 || !changed) && !any_path_info(b, e_path)
+diff --git a/subversion/libsvn_subr/auth.c b/subversion/libsvn_subr/auth.c
+index 303c41e..363ffad 100644
+--- a/subversion/libsvn_subr/auth.c
++++ b/subversion/libsvn_subr/auth.c
+@@ -394,13 +394,11 @@ svn_auth_save_credentials(svn_auth_iterstate_t *state,
+   svn_auth_provider_object_t *provider;
+   svn_boolean_t save_succeeded = FALSE;
+   const char *no_auth_cache;
+-  svn_auth_baton_t *auth_baton;
+   void *creds;
+ 
+   if (! state || state->table->providers->nelts <= state->provider_idx)
+     return SVN_NO_ERROR;
+ 
+-  auth_baton = state->auth_baton;
+   creds = svn_hash_gets(state->auth_baton->creds_cache, state->cache_key);
+   if (! creds)
+     return SVN_NO_ERROR;
+diff --git a/subversion/libsvn_subr/deprecated.c b/subversion/libsvn_subr/deprecated.c
+index 68e3bd2..2c554b3 100644
+--- a/subversion/libsvn_subr/deprecated.c
++++ b/subversion/libsvn_subr/deprecated.c
+@@ -1251,7 +1251,7 @@ svn_rangelist_merge(svn_rangelist_t **rangelist,
+                                pool, pool));
+ 
+   return svn_error_trace(
+-            svn_rangelist__combine_adjacent_ranges(*rangelist, pool));
++            svn_rangelist__canonicalize(*rangelist, pool));
+ }
+ 
+ svn_error_t *
+diff --git a/subversion/libsvn_subr/gpg_agent.c b/subversion/libsvn_subr/gpg_agent.c
+index 36fe30d..99bdba3 100644
+--- a/subversion/libsvn_subr/gpg_agent.c
++++ b/subversion/libsvn_subr/gpg_agent.c
+@@ -65,9 +65,12 @@
+ #include <sys/un.h>
+ 
+ #include <apr_pools.h>
++#include <apr_strings.h>
++#include <apr_user.h>
+ #include "svn_auth.h"
+ #include "svn_config.h"
+ #include "svn_error.h"
++#include "svn_io.h"
+ #include "svn_pools.h"
+ #include "svn_cmdline.h"
+ #include "svn_checksum.h"
+@@ -225,30 +228,31 @@ bye_gpg_agent(int sd)
+   close(sd);
+ }
+ 
+-/* Locate a running GPG Agent, and return an open file descriptor
+- * for communication with the agent in *NEW_SD. If no running agent
+- * can be found, set *NEW_SD to -1. */
+-static svn_error_t *
+-find_running_gpg_agent(int *new_sd, apr_pool_t *pool)
++/* This implements a method of finding the socket which is a mix of the
++ * description from GPG 1.x's gpg-agent man page under the
++ * --use-standard-socket option and the logic from GPG 2.x's socket discovery
++ * code in common/homedir.c.
++ *
++ * The man page says the standard socket is "named 'S.gpg-agent' located
++ * in the home directory."  GPG's home directory is either the directory
++ * specified by $GNUPGHOME or ~/.gnupg.  GPG >= 2.1.13 will check for a
++ * socket under (/var)/run/UID/gnupg before ~/.gnupg if no environment
++ * variables are set.
++ *
++ * $GPG_AGENT_INFO takes precedence, if set, otherwise $GNUPGHOME will be
++ * used.  For GPG >= 2.1.13, $GNUPGHOME will be used directly only if it
++ * refers to the canonical home -- ~/.gnupg.  Otherwise, the path specified
++ * by $GNUPGHOME is hashed (SHA1 + z-base-32) and the socket is expected to
++ * be present under (/var)/run/UID/gnupg/d.HASH. This last mechanism is not
++ * yet supported here. */
++static const char *
++find_gpg_agent_socket(apr_pool_t *result_pool, apr_pool_t *scratch_pool)
+ {
+-  char *buffer;
+   char *gpg_agent_info = NULL;
+   char *gnupghome = NULL;
+   const char *socket_name = NULL;
+-  const char *request = NULL;
+-  const char *p = NULL;
+-  char *ep = NULL;
+-  int sd;
+-
+-  *new_sd = -1;
+ 
+-  /* This implements the method of finding the socket as described in
+-   * the gpg-agent man page under the --use-standard-socket option.
+-   * The manage page says the standard socket is "named 'S.gpg-agent' located
+-   * in the home directory."  GPG's home directory is either the directory
+-   * specified by $GNUPGHOME or ~/.gnupg. */
+-  gpg_agent_info = getenv("GPG_AGENT_INFO");
+-  if (gpg_agent_info != NULL)
++  if ((gpg_agent_info = getenv("GPG_AGENT_INFO")) != NULL)
+     {
+       apr_array_header_t *socket_details;
+ 
+@@ -256,26 +260,81 @@ find_running_gpg_agent(int *new_sd, apr_pool_t *pool)
+        * The path to the socket, the pid of the gpg-agent process and
+        * finally the version of the protocol the agent talks. */
+       socket_details = svn_cstring_split(gpg_agent_info, ":", TRUE,
+-                                         pool);
++                                         scratch_pool);
+       socket_name = APR_ARRAY_IDX(socket_details, 0, const char *);
+     }
+   else if ((gnupghome = getenv("GNUPGHOME")) != NULL)
+     {
+-      const char *homedir = svn_dirent_canonicalize(gnupghome, pool);
+-      socket_name = svn_dirent_join(homedir, "S.gpg-agent", pool);
++      const char *homedir = svn_dirent_canonicalize(gnupghome, scratch_pool);
++      socket_name = svn_dirent_join(homedir, "S.gpg-agent", scratch_pool);
+     }
+   else
+     {
+-      const char *homedir = svn_user_get_homedir(pool);
++      int i = 0;
++      const char *maybe_socket[] = {NULL, NULL, NULL, NULL};
++      const char *homedir;
+ 
+-      if (!homedir)
+-        return SVN_NO_ERROR;
++#ifdef APR_HAS_USER
++      apr_uid_t uid;
++      apr_gid_t gid;
+ 
+-      homedir = svn_dirent_canonicalize(homedir, pool);
+-      socket_name = svn_dirent_join_many(pool, homedir, ".gnupg",
+-                                         "S.gpg-agent", SVN_VA_NULL);
++      if (apr_uid_current(&uid, &gid, scratch_pool) == APR_SUCCESS)
++        {
++          const char *uidbuf = apr_psprintf(scratch_pool, "%lu",
++                                            (unsigned long)uid);
++          maybe_socket[i++] = svn_dirent_join_many(scratch_pool, "/run/user",
++                                                   uidbuf, "gnupg",
++                                                   "S.gpg-agent",
++                                                   SVN_VA_NULL);
++          maybe_socket[i++] = svn_dirent_join_many(scratch_pool,
++                                                   "/var/run/user",
++                                                   uidbuf, "gnupg",
++                                                   "S.gpg-agent",
++                                                   SVN_VA_NULL);
++        }
++#endif
++
++      homedir = svn_user_get_homedir(scratch_pool);
++      if (homedir)
++        {
++          homedir = svn_dirent_canonicalize(homedir, scratch_pool);
++          maybe_socket[i++] = svn_dirent_join_many(scratch_pool, homedir,
++                                                   ".gnupg", "S.gpg-agent",
++                                                   SVN_VA_NULL);
++        }
++
++      for (i = 0; !socket_name && maybe_socket[i]; i++)
++        {
++          apr_finfo_t finfo;
++          svn_error_t *err = svn_io_stat(&finfo, maybe_socket[i],
++                                         APR_FINFO_TYPE, scratch_pool);
++          if (!err && finfo.filetype == APR_SOCK)
++            socket_name = maybe_socket[i];
++          svn_error_clear(err);
++        }
+     }
+ 
++  if (socket_name)
++    socket_name = apr_pstrdup(result_pool, socket_name);
++
++  return socket_name;
++}
++
++/* Locate a running GPG Agent, and return an open file descriptor
++ * for communication with the agent in *NEW_SD. If no running agent
++ * can be found, set *NEW_SD to -1. */
++static svn_error_t *
++find_running_gpg_agent(int *new_sd, apr_pool_t *pool)
++{
++  char *buffer;
++  const char *socket_name = find_gpg_agent_socket(pool, pool);
++  const char *request = NULL;
++  const char *p = NULL;
++  char *ep = NULL;
++  int sd;
++
++  *new_sd = -1;
++
+   if (socket_name != NULL)
+     {
+       struct sockaddr_un addr;
+diff --git a/subversion/libsvn_subr/mergeinfo.c b/subversion/libsvn_subr/mergeinfo.c
+index e46d672..faaf806 100644
+--- a/subversion/libsvn_subr/mergeinfo.c
++++ b/subversion/libsvn_subr/mergeinfo.c
+@@ -608,49 +608,48 @@ svn_rangelist__parse(svn_rangelist_t **rangelist,
+   return SVN_NO_ERROR;
+ }
+ 
+-/* Return TRUE, if all ranges in RANGELIST are in ascending order and do
+- * not overlap and are not adjacent.
+- *
+- * ### Can yield false negatives: ranges of differing inheritance are
+- * allowed to be adjacent.
+- *
+- * If this returns FALSE, you probaly want to qsort() the
+- * ranges and then call svn_rangelist__combine_adjacent_ranges().
+- */
+-static svn_boolean_t
+-is_rangelist_normalized(svn_rangelist_t *rangelist)
++svn_boolean_t
++svn_rangelist__is_canonical(const svn_rangelist_t *rangelist)
+ {
+   int i;
+   svn_merge_range_t **ranges = (svn_merge_range_t **)rangelist->elts;
+ 
+-  for (i = 0; i < rangelist->nelts-1; ++i)
+-    if (ranges[i]->end >= ranges[i+1]->start)
+-      return FALSE;
+-
+-  return TRUE;
+-}
+-
+-svn_error_t *
+-svn_rangelist__canonicalize(svn_rangelist_t *rangelist,
+-                            apr_pool_t *scratch_pool)
+-{
+-  if (! is_rangelist_normalized(rangelist))
++  /* Check for reversed and empty ranges */
++  for (i = 0; i < rangelist->nelts; ++i)
+     {
+-      svn_sort__array(rangelist, svn_sort_compare_ranges);
++      if (ranges[i]->start >= ranges[i]->end)
++        return FALSE;
++    }
+ 
+-      SVN_ERR(svn_rangelist__combine_adjacent_ranges(rangelist, scratch_pool));
++  /* Check for overlapping ranges */
++  for (i = 0; i < rangelist->nelts - 1; ++i)
++    {
++      if (ranges[i]->end > ranges[i + 1]->start)
++        return FALSE; /* Overlapping range */
++      else if (ranges[i]->end == ranges[i+1]->start
++               && ranges[i]->inheritable == ranges[i + 1]->inheritable)
++        {
++          return FALSE; /* Ranges should have been combined */
++        }
+     }
+ 
+-  return SVN_NO_ERROR;
++  return TRUE;
+ }
+ 
++/* In-place combines adjacent ranges in a rangelist.
++   SCRATCH_POOL is just used for providing error messages. */
+ svn_error_t *
+-svn_rangelist__combine_adjacent_ranges(svn_rangelist_t *rangelist,
+-                                       apr_pool_t *scratch_pool)
++svn_rangelist__canonicalize(svn_rangelist_t *rangelist,
++                            apr_pool_t *scratch_pool)
+ {
+   int i;
+   svn_merge_range_t *range, *lastrange;
+ 
++  if (svn_rangelist__is_canonical(rangelist))
++    return SVN_NO_ERROR; /* Nothing to do */
++
++  svn_sort__array(rangelist, svn_sort_compare_ranges);
++
+   lastrange = APR_ARRAY_IDX(rangelist, 0, svn_merge_range_t *);
+ 
+   for (i = 1; i < rangelist->nelts; i++)
+@@ -895,7 +894,7 @@ adjust_remaining_ranges(svn_rangelist_t *rangelist,
+               new_modified_range->end = modified_range->end;
+               new_modified_range->inheritable = FALSE;
+               modified_range->end = next_range->start;
+-              (*range_index)+=2;
++              (*range_index) += 2 + elements_to_delete;
+               svn_sort__array_insert(rangelist, &new_modified_range,
+                                      *range_index);
+               /* Recurse with the new range. */
+@@ -964,6 +963,12 @@ svn_rangelist_merge2(svn_rangelist_t *rangelist,
+   int i = 0;
+   int j = 0;
+ 
++#ifdef SVN_DEBUG
++  svn_boolean_t was_normalized =
++                    (svn_rangelist__is_canonical(rangelist)
++                     && svn_rangelist__is_canonical(changes));
++#endif
++
+   /* We may modify CHANGES, so make a copy in SCRATCH_POOL. */
+   changes = svn_rangelist_dup(changes, scratch_pool);
+ 
+@@ -1189,6 +1194,10 @@ svn_rangelist_merge2(svn_rangelist_t *rangelist,
+       svn_sort__array_insert(rangelist, &change_copy, rangelist->nelts);
+     }
+ 
++#ifdef SVN_DEBUG
++  SVN_ERR_ASSERT(!was_normalized || svn_rangelist__is_canonical(rangelist));
++#endif
++
+   return SVN_NO_ERROR;
+ }
+ 
+diff --git a/subversion/libsvn_subr/version.c b/subversion/libsvn_subr/version.c
+index f037909..0f84aaf 100644
+--- a/subversion/libsvn_subr/version.c
++++ b/subversion/libsvn_subr/version.c
+@@ -138,7 +138,7 @@ svn_version_extended(svn_boolean_t verbose,
+   info->build_host = SVN_BUILD_HOST;
+   info->hacker = "Zhouhui Wu <wuzhouhui250@gmail.com>";
+   info->copyright = apr_pstrdup
+-    (pool, _("Copyright (C) 2018 The Apache Software Foundation.\n"
++    (pool, _("Copyright (C) 2019 The Apache Software Foundation.\n"
+              "This software consists of contributions made by many people;\n"
+              "see the NOTICE file for more information.\n"
+              "Subversion is open source software, see "
+diff --git a/subversion/libsvn_wc/wc-checks.h b/subversion/libsvn_wc/wc-checks.h
+index 31788e2..504eb7e 100644
+--- a/subversion/libsvn_wc/wc-checks.h
++++ b/subversion/libsvn_wc/wc-checks.h
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from wc-checks.sql and /opt/svnrm19/tempdir/subversion-1.9.9/subversion/libsvn_wc/token-map.h.
++/* This file is automatically generated from wc-checks.sql and /opt/svnrm19/tempdir/subversion-1.9.10/subversion/libsvn_wc/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_VERIFICATION_TRIGGERS 0
+diff --git a/subversion/libsvn_wc/wc-metadata.h b/subversion/libsvn_wc/wc-metadata.h
+index 1e4e050..20e2aa4 100644
+--- a/subversion/libsvn_wc/wc-metadata.h
++++ b/subversion/libsvn_wc/wc-metadata.h
+@@ -1,4 +1,4 @@
+-/* This file is automatically generated from wc-metadata.sql and /opt/svnrm19/tempdir/subversion-1.9.9/subversion/libsvn_wc/token-map.h.
++/* This file is automatically generated from wc-metadata.sql and /opt/svnrm19/tempdir/subversion-1.9.10/subversion/libsvn_wc/token-map.h.
+  * Do not edit this file -- edit the source and rerun gen-make.py */
+ 
+ #define STMT_CREATE_SCHEMA 0
+diff --git a/subversion/mod_authz_svn/mod_authz_svn.c b/subversion/mod_authz_svn/mod_authz_svn.c
+index 0adeaf9..e31dbb8 100644
+--- a/subversion/mod_authz_svn/mod_authz_svn.c
++++ b/subversion/mod_authz_svn/mod_authz_svn.c
+@@ -912,7 +912,7 @@ access_checker(request_rec *r)
+         {
+           /* Set the note to force authn regardless of what access_checker_ex
+              hook requires */
+-          apr_table_setn(r->notes, FORCE_AUTHN_NOTE, (const char*)1);
++          apr_table_setn(r->notes, FORCE_AUTHN_NOTE, "1");
+ 
+           /* provide the proper return so the access_checker hook doesn't
+            * prevent the code from continuing on to the other auth hooks */
+@@ -978,7 +978,7 @@ access_checker(request_rec *r)
+            * ap_some_authn_rquired() without triggering an infinite
+            * loop since the call will trigger this function to be
+            * called again. */
+-          apr_table_setn(r->notes, IN_SOME_AUTHN_NOTE, (const char*)1);
++          apr_table_setn(r->notes, IN_SOME_AUTHN_NOTE, "1");
+           authn_required = ap_some_authn_required(r);
+           apr_table_unset(r->notes, IN_SOME_AUTHN_NOTE);
+           if (authn_required)
+@@ -1021,7 +1021,7 @@ check_user_id(request_rec *r)
+   status = req_check_access(r, conf, &repos_path, &dest_repos_path);
+   if (status == OK)
+     {
+-      apr_table_setn(r->notes, "authz_svn-anon-ok", (const char*)1);
++      apr_table_setn(r->notes, "authz_svn-anon-ok", "1");
+       log_access_verdict(APLOG_MARK, r, 1, FALSE, repos_path, dest_repos_path);
+       return OK;
+     }
+diff --git a/subversion/mod_dav_svn/mod_dav_svn.c b/subversion/mod_dav_svn/mod_dav_svn.c
+index 3217c4c..604f231 100644
+--- a/subversion/mod_dav_svn/mod_dav_svn.c
++++ b/subversion/mod_dav_svn/mod_dav_svn.c
+@@ -221,6 +221,9 @@ merge_server_config(apr_pool_t *p, void *base, void *overrides)
+       newconf->compression_level = child->compression_level;
+     }
+ 
++  newconf->use_utf8 = INHERIT_VALUE(parent, child, use_utf8);                 
++  svn_utf_initialize2(newconf->use_utf8, p); 
++
+   return newconf;
+ }
+ 
+@@ -1229,7 +1232,7 @@ static int dav_svn__translate_name(request_rec *r)
+ 
+   /* Leave a note to ourselves so that we know not to decline in the
+    * map_to_storage hook. */
+-  apr_table_setn(r->notes, NO_MAP_TO_STORAGE_NOTE, (const char*)1);
++  apr_table_setn(r->notes, NO_MAP_TO_STORAGE_NOTE, "1");
+   return OK;
+ }
+ 
+diff --git a/subversion/mod_dav_svn/repos.c b/subversion/mod_dav_svn/repos.c
+index 9bf5ea0..4e7ab00 100644
+--- a/subversion/mod_dav_svn/repos.c
++++ b/subversion/mod_dav_svn/repos.c
+@@ -2796,6 +2796,13 @@ open_stream(const dav_resource *resource,
+                                     "Resource body changes may only be made to "
+                                     "working resources (at this time).");
+         }
++      if (!resource->info->root.root)
++        {
++          return dav_svn__new_error(resource->pool, HTTP_METHOD_NOT_ALLOWED,
++                                    0,
++                                    "Resource body changes may only be made to "
++                                    "checked-out resources (at this time).");
++        }
+     }
+ 
+   /* ### TODO:  Can we support range writes someday? */
+diff --git a/subversion/po/de.po b/subversion/po/de.po
+index 9a27a13..4657881 100644
+--- a/subversion/po/de.po
++++ b/subversion/po/de.po
+@@ -13117,8 +13117,8 @@ msgstr ""
+ "     Unterschied zwischen der linken und der rechten Seite wird auf »trunk«\n"
+ "     als Ziel angewandt.\n"
+ "\n"
+-"     Um die Zusammenführung zur Reintegratoin auszuführen, verwenden Sie\n"
+-"     eine Arbeitskopie des Entwicklungszweigs »feature« und führen Sie\n"
++"     Um die Zusammenführung zur Reintegration auszuführen, verwenden Sie\n"
++"     eine Arbeitskopie des Hauptzweigs »trunk« und führen Sie\n"
+ "     dieses Kommando im obersten Verzeichnis aus:\n"
+ "\n"
+ "         svn merge ^/feature\n"
+diff --git a/subversion/po/subversion.pot b/subversion/po/subversion.pot
+index b7c2575..52543ac 100644
+--- a/subversion/po/subversion.pot
++++ b/subversion/po/subversion.pot
+@@ -8,7 +8,7 @@ msgid ""
+ msgstr ""
+ "Project-Id-Version: PACKAGE VERSION\n"
+ "Report-Msgid-Bugs-To: dev@subversion.apache.org\n"
+-"POT-Creation-Date: 2018-07-14 20:30+0000\n"
++"POT-Creation-Date: 2019-01-07 10:21+0000\n"
+ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+ "Language-Team: LANGUAGE <LL@li.org>\n"
+@@ -1279,7 +1279,7 @@ msgstr ""
+ msgid "Credentials not saved"
+ msgstr ""
+ 
+-#: ../include/svn_error_codes.h:1563 ../libsvn_subr/gpg_agent.c:456
++#: ../include/svn_error_codes.h:1563 ../libsvn_subr/gpg_agent.c:515
+ msgid "Authentication failed"
+ msgstr ""
+ 
+@@ -1451,7 +1451,7 @@ msgstr ""
+ #: ../libsvn_client/patch.c:3235 ../libsvn_client/relocate.c:153
+ #: ../libsvn_client/resolved.c:119 ../libsvn_client/revert.c:149
+ #: ../libsvn_client/status.c:368 ../libsvn_client/switch.c:471
+-#: ../libsvn_client/update.c:701 ../libsvn_client/upgrade.c:111
++#: ../libsvn_client/update.c:749 ../libsvn_client/upgrade.c:111
+ #: ../svn/util.c:986 ../svnbench/util.c:76
+ #, c-format
+ msgid "'%s' is not a local path"
+@@ -1718,7 +1718,7 @@ msgid "Directory '%s' is not under version control"
+ msgstr ""
+ 
+ #: ../libsvn_client/copy.c:1073 ../libsvn_client/copy.c:1082
+-#: ../libsvn_client/copy.c:1092 ../libsvn_client/copy.c:2766
++#: ../libsvn_client/copy.c:1092 ../libsvn_client/copy.c:2776
+ #, c-format
+ msgid "Path '%s' is not a directory"
+ msgstr ""
+@@ -1758,37 +1758,37 @@ msgstr ""
+ msgid "Path '%s' not found in head revision"
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:2874
++#: ../libsvn_client/copy.c:2884
+ msgid "Cannot mix repository and working copy sources"
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:2927
++#: ../libsvn_client/copy.c:2937
+ #, c-format
+ msgid "Cannot copy path '%s' into its own child '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:2963
++#: ../libsvn_client/copy.c:2973
+ #, c-format
+ msgid ""
+ "Cannot move the external at '%s'; please edit the svn:externals property on "
+ "'%s'."
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:2978
++#: ../libsvn_client/copy.c:2988
+ msgid "Moves between the working copy and the repository are not supported"
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:2993
++#: ../libsvn_client/copy.c:3003
+ #, c-format
+ msgid "Cannot move URL '%s' into itself"
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:2994
++#: ../libsvn_client/copy.c:3004
+ #, c-format
+ msgid "Cannot move path '%s' into itself"
+ msgstr ""
+ 
+-#: ../libsvn_client/copy.c:3061
++#: ../libsvn_client/copy.c:3071
+ #, c-format
+ msgid "'%s' does not have a URL associated with it"
+ msgstr ""
+@@ -2122,7 +2122,7 @@ msgstr ""
+ msgid "When specifying working copy paths, only one target may be given"
+ msgstr ""
+ 
+-#: ../libsvn_client/log.c:428 ../libsvn_client/revisions.c:190
++#: ../libsvn_client/log.c:428 ../libsvn_client/revisions.c:197
+ msgid "PREV, BASE, or COMMITTED revision keywords are invalid for URL"
+ msgstr ""
+ 
+@@ -2425,8 +2425,8 @@ msgid "strip count must be positive"
+ msgstr ""
+ 
+ #: ../libsvn_client/patch.c:3247 ../libsvn_fs_base/tree.c:4099
+-#: ../libsvn_fs_base/tree.c:4104 ../libsvn_fs_fs/tree.c:3210
+-#: ../libsvn_fs_fs/tree.c:3215 ../libsvn_fs_x/tree.c:3256
++#: ../libsvn_fs_base/tree.c:4104 ../libsvn_fs_fs/tree.c:3243
++#: ../libsvn_fs_fs/tree.c:3248 ../libsvn_fs_x/tree.c:3256
+ #: ../libsvn_fs_x/tree.c:3261 ../libsvn_ra/compat.c:677
+ #: ../libsvn_ra_local/ra_plugin.c:1266
+ #, c-format
+@@ -2538,7 +2538,12 @@ msgstr ""
+ msgid "Path '%s' has no committed revision"
+ msgstr ""
+ 
+-#: ../libsvn_client/revisions.c:167
++#: ../libsvn_client/revisions.c:149
++#, c-format
++msgid "Path '%s' has no previous revision"
++msgstr ""
++
++#: ../libsvn_client/revisions.c:174
+ #, c-format
+ msgid "Unrecognized revision type requested for '%s'"
+ msgstr ""
+@@ -2584,7 +2589,7 @@ msgstr ""
+ msgid "'%s' shares no common ancestry with '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_client/update.c:762
++#: ../libsvn_client/update.c:810
+ msgid "None of the targets are working copies"
+ msgstr ""
+ 
+@@ -2762,7 +2767,7 @@ msgstr ""
+ msgid "Path '%s' contains '.' or '..' element"
+ msgstr ""
+ 
+-#: ../libsvn_fs/fs-loader.c:470 ../libsvn_fs_fs/tree.c:2438
++#: ../libsvn_fs/fs-loader.c:470 ../libsvn_fs_fs/tree.c:2471
+ #: ../libsvn_subr/path.c:1229
+ #, c-format
+ msgid "Invalid control character '0x%02x' in path '%s'"
+@@ -3522,12 +3527,12 @@ msgstr ""
+ msgid "Expected FS format '%d'; found format '%d'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/fs.c:1309
++#: ../libsvn_fs_base/fs.c:1310
+ #, c-format
+ msgid "BDB repositories do not support incremental hotcopy"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/fs.c:1413
++#: ../libsvn_fs_base/fs.c:1414
+ msgid ""
+ "Error copying logfile;  the DB_LOG_AUTOREMOVE feature\n"
+ "may be interfering with the hotcopy algorithm.  If\n"
+@@ -3535,7 +3540,7 @@ msgid ""
+ "in DB_CONFIG"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/fs.c:1432
++#: ../libsvn_fs_base/fs.c:1433
+ msgid ""
+ "Error running catastrophic recovery on hotcopy;  the\n"
+ "DB_LOG_AUTOREMOVE feature may be interfering with the\n"
+@@ -3543,11 +3548,11 @@ msgid ""
+ "this feature in DB_CONFIG"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/fs.c:1477
++#: ../libsvn_fs_base/fs.c:1478
+ msgid "Module for working with a Berkeley DB repository."
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/fs.c:1527
++#: ../libsvn_fs_base/fs.c:1528
+ #, c-format
+ msgid "Unsupported FS loader version (%d) for bdb"
+ msgstr ""
+@@ -3685,13 +3690,12 @@ msgstr ""
+ msgid "committing Berkeley DB transaction"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:773 ../libsvn_fs_fs/tree.c:1115
+-#: ../libsvn_fs_x/tree.c:1101
++#: ../libsvn_fs_base/tree.c:773 ../libsvn_fs_x/tree.c:1101
+ #, c-format
+ msgid "Failure opening '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:1460 ../libsvn_fs_fs/tree.c:1655
++#: ../libsvn_fs_base/tree.c:1460 ../libsvn_fs_fs/tree.c:1688
+ #: ../libsvn_fs_x/tree.c:1652
+ msgid "Cannot compare property value between two different filesystems"
+ msgstr ""
+@@ -3705,19 +3709,19 @@ msgstr ""
+ msgid "Unexpected immutable node at '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:2074 ../libsvn_fs_fs/tree.c:1685
++#: ../libsvn_fs_base/tree.c:2074 ../libsvn_fs_fs/tree.c:1718
+ #: ../libsvn_fs_x/tree.c:1685 ../libsvn_repos/commit.c:1257
+ #, c-format
+ msgid "Conflict at '%s'"
+ msgstr ""
+ 
+ #: ../libsvn_fs_base/tree.c:2127 ../libsvn_fs_base/tree.c:2879
+-#: ../libsvn_fs_fs/tree.c:1783 ../libsvn_fs_fs/tree.c:2337
++#: ../libsvn_fs_fs/tree.c:1816 ../libsvn_fs_fs/tree.c:2370
+ #: ../libsvn_fs_x/tree.c:1809 ../libsvn_fs_x/tree.c:2352
+ msgid "Bad merge; ancestor, source, and target not all in same fs"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:2143 ../libsvn_fs_fs/tree.c:1799
++#: ../libsvn_fs_base/tree.c:2143 ../libsvn_fs_fs/tree.c:1832
+ #: ../libsvn_fs_x/tree.c:1825
+ #, c-format
+ msgid "Bad merge; target '%s' has id '%s', same as ancestor"
+@@ -3733,29 +3737,29 @@ msgstr ""
+ msgid "Cannot deltify revisions prior to r%ld"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:3081 ../libsvn_fs_fs/tree.c:2519
++#: ../libsvn_fs_base/tree.c:3081 ../libsvn_fs_fs/tree.c:2552
+ #: ../libsvn_fs_x/tree.c:2539
+ msgid "The root directory cannot be deleted"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:3295 ../libsvn_fs_fs/tree.c:2589
++#: ../libsvn_fs_base/tree.c:3295 ../libsvn_fs_fs/tree.c:2622
+ #: ../libsvn_fs_x/tree.c:2613
+ #, c-format
+ msgid "Cannot copy between two different filesystems ('%s' and '%s')"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:3304 ../libsvn_fs_fs/tree.c:2596
++#: ../libsvn_fs_base/tree.c:3304 ../libsvn_fs_fs/tree.c:2629
+ #: ../libsvn_fs_x/tree.c:2620
+ msgid "Copy from mutable tree not currently supported"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:3814 ../libsvn_fs_fs/tree.c:2991
++#: ../libsvn_fs_base/tree.c:3814 ../libsvn_fs_fs/tree.c:3024
+ #: ../libsvn_fs_x/tree.c:3028
+ #, c-format
+ msgid "Base checksum mismatch on '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_base/tree.c:4090 ../libsvn_fs_fs/tree.c:3201
++#: ../libsvn_fs_base/tree.c:4090 ../libsvn_fs_fs/tree.c:3234
+ #: ../libsvn_fs_x/tree.c:3247
+ msgid "Cannot compare file contents between two different filesystems"
+ msgstr ""
+@@ -3782,7 +3786,7 @@ msgid "No representation found at offset %s for item %s in revision %ld"
+ msgstr ""
+ 
+ #: ../libsvn_fs_fs/cached_data.c:1522 ../libsvn_fs_fs/cached_data.c:1535
+-#: ../libsvn_fs_fs/cached_data.c:3072 ../libsvn_fs_x/cached_data.c:1424
++#: ../libsvn_fs_fs/cached_data.c:3094 ../libsvn_fs_x/cached_data.c:1424
+ #: ../libsvn_fs_x/cached_data.c:1437 ../libsvn_fs_x/cached_data.c:1713
+ msgid "Reading one svndiff window read beyond the end of the representation"
+ msgstr ""
+@@ -3791,28 +3795,33 @@ msgstr ""
+ msgid "svndiff window length is corrupt"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/cached_data.c:2065 ../libsvn_fs_x/cached_data.c:2143
++#: ../libsvn_fs_fs/cached_data.c:2054
++#, c-format
++msgid "Length mismatch while reading representation: expected %s, got %s"
++msgstr ""
++
++#: ../libsvn_fs_fs/cached_data.c:2087 ../libsvn_fs_x/cached_data.c:2143
+ msgid "Checksum mismatch while reading representation"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/cached_data.c:2507 ../libsvn_fs_fs/cached_data.c:2521
+-#: ../libsvn_fs_fs/cached_data.c:2528 ../libsvn_fs_x/cached_data.c:2508
++#: ../libsvn_fs_fs/cached_data.c:2529 ../libsvn_fs_fs/cached_data.c:2543
++#: ../libsvn_fs_fs/cached_data.c:2550 ../libsvn_fs_x/cached_data.c:2508
+ #: ../libsvn_fs_x/cached_data.c:2522 ../libsvn_fs_x/cached_data.c:2529
+ #, c-format
+ msgid "Directory entry corrupt in '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/cached_data.c:2777
++#: ../libsvn_fs_fs/cached_data.c:2799
+ #, c-format
+ msgid "malformed property list for node-revision '%s' in '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/cached_data.c:2810
++#: ../libsvn_fs_fs/cached_data.c:2832
+ #, c-format
+ msgid "malformed property list for node-revision '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/cached_data.c:3253
++#: ../libsvn_fs_fs/cached_data.c:3275
+ #, c-format
+ msgid ""
+ "Low-level checksum mismatch while reading\n"
+@@ -4508,14 +4517,14 @@ msgstr ""
+ msgid "Can't set text contents of a directory"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/transaction.c:2882 ../libsvn_fs_x/transaction.c:2802
++#: ../libsvn_fs_fs/transaction.c:2884 ../libsvn_fs_x/transaction.c:2802
+ #, c-format
+ msgid ""
+ "predecessor count for the root node-revision is wrong: found (%d+%ld != %d), "
+ "committing r%ld"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/transaction.c:3040
++#: ../libsvn_fs_fs/transaction.c:3042
+ msgid "Truncated protorev file detected"
+ msgstr ""
+ 
+@@ -4528,21 +4537,31 @@ msgstr ""
+ msgid "No such transaction '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/tree.c:2601 ../libsvn_fs_x/tree.c:2625
++#: ../libsvn_fs_fs/tree.c:891
++#, c-format
++msgid "Failure opening '%s' in transaction '%s'"
++msgstr ""
++
++#: ../libsvn_fs_fs/tree.c:894
++#, c-format
++msgid "Failure opening '%s' in revision %ld"
++msgstr ""
++
++#: ../libsvn_fs_fs/tree.c:2634 ../libsvn_fs_x/tree.c:2625
+ msgid "Copy immutable tree not supported"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/tree.c:3920 ../libsvn_fs_x/tree.c:3918
++#: ../libsvn_fs_fs/tree.c:3953 ../libsvn_fs_x/tree.c:3918
+ #, c-format
+ msgid "Node-revision #'%s' claims to have mergeinfo but doesn't"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/tree.c:4036 ../libsvn_fs_x/tree.c:4034
++#: ../libsvn_fs_fs/tree.c:4069 ../libsvn_fs_x/tree.c:4034
+ #, c-format
+ msgid "Node-revision '%s@%ld' claims to have mergeinfo but doesn't"
+ msgstr ""
+ 
+-#: ../libsvn_fs_fs/tree.c:4236
++#: ../libsvn_fs_fs/tree.c:4269
+ #, c-format
+ msgid ""
+ "Querying mergeinfo requires version %d of the FSFS filesystem schema; "
+@@ -6813,12 +6832,12 @@ msgstr ""
+ msgid "unknown error"
+ msgstr ""
+ 
+-#: ../libsvn_subr/gpg_agent.c:449 ../libsvn_subr/prompt.c:627
++#: ../libsvn_subr/gpg_agent.c:508 ../libsvn_subr/prompt.c:627
+ #, c-format
+ msgid "Password for '%s': "
+ msgstr ""
+ 
+-#: ../libsvn_subr/gpg_agent.c:450
++#: ../libsvn_subr/gpg_agent.c:509
+ #, c-format
+ msgid "Enter your Subversion password for %s"
+ msgstr ""
+@@ -7273,7 +7292,7 @@ msgstr ""
+ msgid "Unable to make name in '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:101 ../libsvn_subr/mergeinfo.c:714
++#: ../libsvn_subr/mergeinfo.c:101 ../libsvn_subr/mergeinfo.c:713
+ msgid "Pathname not terminated by ':'"
+ msgstr ""
+ 
+@@ -7307,33 +7326,33 @@ msgstr ""
+ msgid "Range list parsing ended before hitting newline"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:670
++#: ../libsvn_subr/mergeinfo.c:669
+ #, c-format
+ msgid ""
+ "Unable to parse overlapping revision ranges '%s' and '%s' with different "
+ "inheritance types"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:722
++#: ../libsvn_subr/mergeinfo.c:721
+ #, c-format
+ msgid "Mergeinfo for '%s' maps to an empty revision range"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:726
++#: ../libsvn_subr/mergeinfo.c:725
+ #, c-format
+ msgid "Could not find end of line in range list line in '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:790
++#: ../libsvn_subr/mergeinfo.c:789
+ #, c-format
+ msgid "Could not parse mergeinfo string '%s'"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:2367
++#: ../libsvn_subr/mergeinfo.c:2376
+ msgid "NULL mergeinfo catalog\n"
+ msgstr ""
+ 
+-#: ../libsvn_subr/mergeinfo.c:2372
++#: ../libsvn_subr/mergeinfo.c:2381
+ msgid "empty mergeinfo catalog\n"
+ msgstr ""
+ 
+@@ -7854,7 +7873,7 @@ msgstr ""
+ 
+ #: ../libsvn_subr/version.c:139
+ msgid ""
+-"Copyright (C) 2018 The Apache Software Foundation.\n"
++"Copyright (C) 2019 The Apache Software Foundation.\n"
+ "This software consists of contributions made by many people;\n"
+ "see the NOTICE file for more information.\n"
+ "Subversion is open source software, see http://subversion.apache.org/\n"
+diff --git a/subversion/tests/cmdline/basic_tests.py b/subversion/tests/cmdline/basic_tests.py
+index 58f7554..071d489 100755
+--- a/subversion/tests/cmdline/basic_tests.py
++++ b/subversion/tests/cmdline/basic_tests.py
+@@ -3048,6 +3048,15 @@ def peg_rev_on_non_existent_wc_path(sbox):
+                                      'cat', '-r2', sbox.ospath('mu3') + '@3')
+ 
+ 
++@Issue(4532)
++def diff_previous_revision_of_r0(sbox):
++  """diff -rPREV on WC at revision 0"""
++
++  sbox.build(empty=True)
++  svntest.actions.run_and_verify_svn(None, 'svn: E195002: ',
++                                     'diff', '-rPREV', sbox.ospath(''))
++
++
+ # With 'svn mkdir --parents' the target directory may already exist on disk.
+ # In that case it was wrongly performing a recursive 'add' on its contents.
+ def mkdir_parents_target_exists_on_disk(sbox):
+@@ -3073,6 +3082,62 @@ def mkdir_parents_target_exists_on_disk(sbox):
+   svntest.actions.run_and_verify_status(wc_dir, expected_status)
+ 
+ 
++@Issue(4700)
++def null_update_last_changed_revision(sbox):
++  "null 'update' updates last changed rev"
++
++  sbox.build()
++  wc_dir = sbox.wc_dir
++
++  # r2: Random text change.
++  old_contents = open(sbox.path("iota")).read()
++  sbox.simple_append("iota", "Line 2.\n")
++  sbox.simple_commit(message='r2')
++  sbox.simple_update()
++
++  # r3: Revert r2.
++  sbox.simple_append("iota", old_contents, truncate=True)
++  sbox.simple_commit(message='r3')
++  sbox.simple_update()
++
++  # Perform a null update.
++  #
++  # This used to say '3'; probably because iota@3 and iota@1 were textually
++  # identical. It seems this problem was introduced in r1760570.
++  sbox.simple_update(revision='1')
++  svntest.actions.run_and_verify_svn(["1\n"], [],
++                                     'info', sbox.path('iota'),
++                                     '--show-item', 'last-changed-revision')
++
++@Issue(4700)
++@XFail(svntest.main.is_fs_type_bdb)
++def null_prop_update_last_changed_revision(sbox):
++  "null 'property update' updates last changed rev"
++
++  sbox.build()
++  wc_dir = sbox.wc_dir
++
++  sbox.simple_propset("prop", "value", "iota")
++  sbox.simple_commit(message='r2')
++  sbox.simple_update()
++
++  # r3: change the property
++  sbox.simple_propset("prop", "changed", "iota")
++  sbox.simple_commit(message='r3')
++  sbox.simple_update()
++
++  # r4: Revert r3.
++  sbox.simple_propset("prop", "value", "iota")
++  sbox.simple_commit(message='r4')
++  sbox.simple_update()
++
++  # Perform a null update.
++  sbox.simple_update(revision='2')
++  svntest.actions.run_and_verify_svn(["2\n"], [],
++                                     'info', sbox.path('iota'),
++                                     '--show-item', 'last-changed-revision')
++
++
+ ########################################################################
+ # Run the tests
+ 
+@@ -3141,7 +3206,10 @@ test_list = [ None,
+               rm_missing_with_case_clashing_ondisk_item,
+               delete_conflicts_one_of_many,
+               peg_rev_on_non_existent_wc_path,
++              diff_previous_revision_of_r0,
+               mkdir_parents_target_exists_on_disk,
++              null_update_last_changed_revision,
++              null_prop_update_last_changed_revision,
+              ]
+ 
+ if __name__ == '__main__':
+diff --git a/subversion/tests/cmdline/commit_tests.py b/subversion/tests/cmdline/commit_tests.py
+index b9a7037..4f4a6f9 100755
+--- a/subversion/tests/cmdline/commit_tests.py
++++ b/subversion/tests/cmdline/commit_tests.py
+@@ -3113,6 +3113,39 @@ def commit_xml(sbox):
+   sbox.simple_append('index.html', '<Q></R>', True)
+   sbox.simple_commit()
+ 
++@Issue(4722)
++def commit_issue4722_checksum(sbox):
++  "commit that triggered checksum failure"
++
++  sbox.build()
++
++  # This bug only ever affected FSFS in 1.9.7.  The test could be
++  # considered a bit "fragile" as any change to the on-disk
++  # representation may well make it pass trivially.  On the other hand
++  # it should still pass irrespective of that representation, and for
++  # all other repository types.
++
++  # Enough data to allow the bug to occur
++  with open(sbox.ospath('f'), 'w') as fp:
++    for i in range(0, 2001):
++      fp.write('abcdefghijklmnopqrstuvwxyz')
++  sbox.simple_add('f')
++  sbox.simple_commit()
++
++  # Just the right data to trigger the bug
++  with open(sbox.ospath('f'), 'w') as fp:
++    for i in range(0, 8713):
++      fp.write(str(i))
++    fp.write("11111")
++  sbox.simple_commit()
++
++  # Trigger deduplication which is when the bug occurred
++  with open(sbox.ospath('f'), 'w') as fp:
++    for i in range(0, 2001):
++      fp.write('abcdefghijklmnopqrstuvwxyz')
++  sbox.simple_commit()
++
++
+ ########################################################################
+ # Run the tests
+ 
+@@ -3190,6 +3223,7 @@ test_list = [ None,
+               commit_mergeinfo_ood,
+               mkdir_conflict_proper_error,
+               commit_xml,
++              commit_issue4722_checksum,
+              ]
+ 
+ if __name__ == '__main__':
+diff --git a/subversion/tests/cmdline/copy_tests.py b/subversion/tests/cmdline/copy_tests.py
+index e873ea2..3cbc956 100755
+--- a/subversion/tests/cmdline/copy_tests.py
++++ b/subversion/tests/cmdline/copy_tests.py
+@@ -1021,6 +1021,56 @@ def repos_to_wc(sbox):
+                                      os.path.join(D_dir, 'B'))
+ 
+ #----------------------------------------------------------------------
++def foreign_repos_to_wc(sbox):
++  "foreign repository to WC copy"
++
++  sbox.build()
++  wc_dir = sbox.wc_dir
++
++  def move_url(repo_url, source, dest):
++    svntest.main.run_svn(False, 'move', '-m', svntest.main.make_log_msg(),
++                         repo_url + '/' + source,
++                         repo_url + '/' + dest)
++
++  # We have a standard repository and working copy.  Now we create a
++  # second repository with the same greek tree, but different UUID.
++  repo_dir       = sbox.repo_dir
++  other_repo_dir, other_repo_url = sbox.add_repo_path('other')
++  svntest.main.copy_repos(repo_dir, other_repo_dir, 1, 1)
++  move_url(other_repo_url, 'A', 'A2')
++  move_url(other_repo_url, 'A2', 'A3')
++
++  # URL->wc copy:
++  # copy a file and a directory from a foreign repository.
++  # we should get some scheduled additions *without history*.
++  E_url = other_repo_url + "/A2/B/E"
++  pi_url = other_repo_url + "/A2/D/G/pi"
++  peg_rev = '2'
++  op_rev = '1'
++  E_url_resolved = E_url.replace('/A2/', '/A/')
++  pi_url_resolved = pi_url.replace('/A2/', '/A/')
++
++  expected_output = svntest.verify.UnorderedOutput([
++    '--- Copying from foreign repository URL \'%s\':\n' % E_url_resolved,
++    'A         %s\n' % sbox.ospath('E'),
++    'A         %s\n' % sbox.ospath('E/beta'),
++    'A         %s\n' % sbox.ospath('E/alpha'),
++  ])
++  svntest.actions.run_and_verify_svn(expected_output, [],
++                                     'copy', '-r' + op_rev,
++                                     E_url + '@' + peg_rev,
++                                     wc_dir)
++
++  expected_output = [
++    '--- Copying from foreign repository URL \'%s\':\n' % pi_url_resolved,
++    'A         %s\n' % sbox.ospath('pi'),
++  ]
++  svntest.actions.run_and_verify_svn(expected_output, [],
++                                     'copy', '-r' + op_rev,
++                                     pi_url + '@' + peg_rev,
++                                     wc_dir)
++
++#----------------------------------------------------------------------
+ # Issue 1084: ra_svn move/copy bug
+ @Issue(1084)
+ def copy_to_root(sbox):
+@@ -3504,6 +3554,50 @@ def copy_make_parents_wc_wc(sbox):
+                                         expected_output,
+                                         expected_status)
+ 
++
++#----------------------------------------------------------------------
++# Test copying and creating parents in the wc with dst directory being
++# precreated and unversioned
++
++def copy_make_parents_wc_wc_existing_unversioned_dst(sbox):
++  "svn cp --parents WC_PATH WC_PATH (ex. unver. dst)"
++
++  sbox.build()
++  wc_dir = sbox.wc_dir
++
++  iota_path = sbox.ospath('iota')
++  new_iota_path = sbox.ospath('X/Y/Z/iota')
++  os.makedirs(os.path.dirname(new_iota_path))
++
++  # Copy iota
++  svntest.actions.run_and_verify_svn(None, [],
++                                     'cp', '--parents',
++                                     iota_path, new_iota_path)
++
++  # Create expected output
++  expected_output = svntest.wc.State(wc_dir, {
++    'X'          : Item(verb='Adding'),
++    'X/Y'        : Item(verb='Adding'),
++    'X/Y/Z'      : Item(verb='Adding'),
++    'X/Y/Z/iota' : Item(verb='Adding'),
++    })
++
++  # Create expected status tree
++  expected_status = svntest.actions.get_virginal_state(wc_dir, 1)
++
++  # Add the moved files
++  expected_status.add({
++    'X'           : Item(status='  ', wc_rev=2),
++    'X/Y'         : Item(status='  ', wc_rev=2),
++    'X/Y/Z'       : Item(status='  ', wc_rev=2),
++    'X/Y/Z/iota'  : Item(status='  ', wc_rev=2),
++    })
++
++  svntest.actions.run_and_verify_commit(wc_dir,
++                                        expected_output,
++                                        expected_status)
++
++
+ #----------------------------------------------------------------------
+ # Test copying and creating parents from the repo to the wc
+ 
+@@ -3546,6 +3640,49 @@ def copy_make_parents_repo_wc(sbox):
+ 
+ 
+ #----------------------------------------------------------------------
++# Test copying and creating parents from the repo to the wc with dst
++# directory being precreated and unversioned
++
++def copy_make_parents_repo_wc_existing_unversioned_dst(sbox):
++  "svn cp --parents URL WC_PATH with (ex. unver. dst)"
++
++  sbox.build()
++  wc_dir = sbox.wc_dir
++
++  iota_url = sbox.repo_url + '/iota'
++  new_iota_path = sbox.ospath('X/Y/Z/iota')
++  os.makedirs(os.path.dirname(new_iota_path))
++
++  # Copy iota
++  svntest.actions.run_and_verify_svn(None, [],
++                                     'cp', '--parents',
++                                     iota_url, new_iota_path)
++
++  # Create expected output
++  expected_output = svntest.wc.State(wc_dir, {
++    'X'           : Item(verb='Adding'),
++    'X/Y'         : Item(verb='Adding'),
++    'X/Y/Z'       : Item(verb='Adding'),
++    'X/Y/Z/iota'  : Item(verb='Adding'),
++    })
++
++  # Create expected status tree
++  expected_status = svntest.actions.get_virginal_state(wc_dir, 1)
++
++  # Add the moved files
++  expected_status.add({
++    'X'           : Item(status='  ', wc_rev=2),
++    'X/Y'         : Item(status='  ', wc_rev=2),
++    'X/Y/Z'       : Item(status='  ', wc_rev=2),
++    'X/Y/Z/iota'  : Item(status='  ', wc_rev=2),
++    })
++
++  svntest.actions.run_and_verify_commit(wc_dir,
++                                        expected_output,
++                                        expected_status)
++
++
++#----------------------------------------------------------------------
+ # Test copying and creating parents from the wc to the repo
+ 
+ def copy_make_parents_wc_repo(sbox):
+@@ -5904,7 +6041,9 @@ test_list = [ None,
+               copy_peg_rev_url,
+               old_dir_wc_to_wc,
+               copy_make_parents_wc_wc,
++              copy_make_parents_wc_wc_existing_unversioned_dst,
+               copy_make_parents_repo_wc,
++              copy_make_parents_repo_wc_existing_unversioned_dst,
+               copy_make_parents_wc_repo,
+               copy_make_parents_repo_repo,
+               URI_encoded_repos_to_wc,
+@@ -5955,6 +6094,7 @@ test_list = [ None,
+               ext_wc_copy_deleted,
+               copy_subtree_deleted,
+               resurrect_at_root,
++              foreign_repos_to_wc,
+              ]
+ 
+ if __name__ == '__main__':
+diff --git a/subversion/tests/cmdline/externals_tests.py b/subversion/tests/cmdline/externals_tests.py
+index 34f471f..d04636a 100755
+--- a/subversion/tests/cmdline/externals_tests.py
++++ b/subversion/tests/cmdline/externals_tests.py
+@@ -4354,6 +4354,45 @@ def external_externally_removed(sbox):
+   sbox.simple_propdel('svn:externals', '')
+   sbox.simple_update() # Should succeed
+ 
++# Like issue #3741 'externals not removed when working copy is made shallow'
++# but with --set-depth=exclude instead of --set-depth=empty.
++def update_dir_external_exclude(sbox):
++  "exclude update should remove externals"
++
++  sbox.build()
++
++  # Create an external in r2
++  sbox.simple_propset('svn:externals', '^/A/D/H X', 'A/B/E')
++  sbox.simple_commit()
++  sbox.simple_update()
++
++  # Now make A/B/E shallow by updating with "--set-depth exclude"
++  expected_output = svntest.wc.State(sbox.wc_dir, {
++    'A/B/E'       : Item(status='D '),
++    'A/B/E/X'     : Item(verb='Removed external'),
++  })
++  svntest.actions.run_and_verify_update(sbox.wc_dir,
++                                        expected_output, None, None,
++                                        [], False,
++                                        '--set-depth=exclude',
++                                        sbox.ospath('A/B/E'))
++
++  # And bring the external back by updating with "--set-depth infinity"
++  expected_output = svntest.wc.State(sbox.wc_dir, {
++    'A/B/E'         : Item(status='A '),
++    'A/B/E/alpha'   : Item(status='A '),
++    'A/B/E/beta'    : Item(status='A '),
++    'A/B/E/X/chi'   : Item(status='A '),
++    'A/B/E/X/omega' : Item(status='A '),
++    'A/B/E/X/psi'   : Item(status='A '),
++  })
++  svntest.actions.run_and_verify_update(sbox.wc_dir,
++                                        expected_output, None, None,
++                                        [], False,
++                                        '--set-depth=infinity',
++                                        sbox.ospath('A/B/E'))
++
++
+ ########################################################################
+ # Run the tests
+ 
+@@ -4429,6 +4468,7 @@ test_list = [ None,
+               file_external_to_normal_file,
+               file_external_recorded_info,
+               external_externally_removed,
++              update_dir_external_exclude,
+              ]
+ 
+ if __name__ == '__main__':
+diff --git a/subversion/tests/cmdline/svnadmin_tests.py b/subversion/tests/cmdline/svnadmin_tests.py
+index 470db65..b212240 100755
+--- a/subversion/tests/cmdline/svnadmin_tests.py
++++ b/subversion/tests/cmdline/svnadmin_tests.py
+@@ -53,6 +53,23 @@ Wimp = svntest.testcase.Wimp_deco
+ SkipDumpLoadCrossCheck = svntest.testcase.SkipDumpLoadCrossCheck_deco
+ Item = svntest.wc.StateItem
+ 
++def read_rep_cache(repo_dir):
++  """Return the rep-cache contents as a dict {hash: (rev, index, ...)}.
++  """
++  db_path = os.path.join(repo_dir, 'db', 'rep-cache.db')
++  db1 = svntest.sqlite3.connect(db_path)
++  schema1 = db1.execute("pragma user_version").fetchone()[0]
++  # Can't test newer rep-cache schemas with an old built-in SQLite.
++  if schema1 >= 2 and svntest.sqlite3.sqlite_version_info < (3, 8, 2):
++    raise svntest.Failure("Can't read rep-cache schema %d using old "
++                          "Python-SQLite version %s < (3,8,2)" %
++                           (schema1,
++                            svntest.sqlite3.sqlite_version_info))
++
++  content = { row[0]: row[1:] for row in
++              db1.execute("select * from rep_cache") }
++  return content
++
+ def check_hotcopy_bdb(src, dst):
+   "Verify that the SRC BDB repository has been correctly copied to DST."
+   ### TODO: This function should be extended to verify all hotcopied files,
+@@ -1636,12 +1653,12 @@ def verify_non_utf8_paths(sbox):
+     if line == "A\n":
+       # replace 'A' with a latin1 character -- the new path is not valid UTF-8
+       fp_new.write("\xE6\n")
+-    elif line == "text: 1 279 32 32 d63ecce65d8c428b86f4f8b0920921fe\n":
++    elif line == "text: 1 340 32 32 a6be7b4cf075fd39e6a99eb69a31232b\n":
+       # phys, PLAIN directories: fix up the representation checksum
+-      fp_new.write("text: 1 279 32 32 b50b1d5ed64075b5f632f3b8c30cd6b2\n")
+-    elif line == "text: 1 292 44 32 a6be7b4cf075fd39e6a99eb69a31232b\n":
++      fp_new.write("text: 1 340 32 32 f2e93e73272cac0f18fccf16f224eb93\n")
++    elif line == "text: 1 340 44 32 a6be7b4cf075fd39e6a99eb69a31232b\n":
+       # phys, deltified directories: fix up the representation checksum
+-      fp_new.write("text: 1 292 44 32 f2e93e73272cac0f18fccf16f224eb93\n")
++      fp_new.write("text: 1 340 44 32 f2e93e73272cac0f18fccf16f224eb93\n")
+     elif line == "text: 1 6 31 31 90f306aa9bfd72f456072076a2bd94f7\n":
+       # log addressing: fix up the representation checksum
+       fp_new.write("text: 1 6 31 31 db2d4a0bad5dff0aea9a288dec02f1fb\n")
+@@ -3108,6 +3125,57 @@ def dump_no_op_change(sbox):
+   svntest.actions.run_and_verify_svn(expected, [], 'log',  '-v',
+                                      sbox2.repo_url + '/bar')
+ 
++def check_recover_prunes_rep_cache(sbox, enable_rep_sharing):
++  """Check 'recover' prunes the rep-cache while enable-rep-sharing is
++     true/false.
++  """
++  # Remember the initial rep cache content.
++  rep_cache_r1 = read_rep_cache(sbox.repo_dir)
++  #print '\n'.join([h + ": " + repr(ref) for h, ref in rep_cache_r1.items()])
++
++  # Commit one new rep and check the rep-cache is extended.
++  sbox.simple_append('iota', 'New line.\n')
++  sbox.simple_commit()
++  rep_cache_r2 = read_rep_cache(sbox.repo_dir)
++  assert len(rep_cache_r2) == len(rep_cache_r1) + 1
++
++  # To test 'recover' while rep-sharing is disabled, disable it now.
++  if not enable_rep_sharing:
++    fsfs_conf = svntest.main.get_fsfs_conf_file_path(sbox.repo_dir)
++    svntest.main.file_append(fsfs_conf,
++                             "[rep-sharing]\n"
++                             "enable-rep-sharing = false\n")
++
++  # Break r2 in such a way that 'recover' will discard it
++  head_rev_path = fsfs_file(sbox.repo_dir, 'revs', '2')
++  os.remove(head_rev_path)
++  current_path = os.path.join(sbox.repo_dir, 'db', 'current')
++  svntest.main.file_write(current_path, '1\n')
++
++  # Recover back to r1.
++  svntest.actions.run_and_verify_svnadmin(None, [],
++                                          "recover", sbox.repo_dir)
++
++  # Check the rep-cache is pruned.
++  rep_cache_recovered = read_rep_cache(sbox.repo_dir)
++  assert rep_cache_recovered == rep_cache_r1
++
++@Issue(4077)
++@SkipUnless(svntest.main.is_fs_type_fsfs)
++def recover_prunes_rep_cache_when_enabled(sbox):
++  "recover prunes rep cache when enabled"
++  sbox.build()
++
++  check_recover_prunes_rep_cache(sbox, enable_rep_sharing=True)
++
++@Issue(4077)
++@SkipUnless(svntest.main.is_fs_type_fsfs)
++def recover_prunes_rep_cache_when_disabled(sbox):
++  "recover prunes rep cache when disabled"
++  sbox.build()
++
++  check_recover_prunes_rep_cache(sbox, enable_rep_sharing=False)
++
+ ########################################################################
+ # Run the tests
+ 
+@@ -3166,6 +3234,8 @@ test_list = [ None,
+               load_no_svndate_r0,
+               hotcopy_read_only,
+               dump_no_op_change,
++              recover_prunes_rep_cache_when_enabled,
++              recover_prunes_rep_cache_when_disabled,
+              ]
+ 
+ if __name__ == '__main__':
+diff --git a/subversion/tests/libsvn_fs/fs-test.c b/subversion/tests/libsvn_fs/fs-test.c
+index de5036d..b48fe45 100644
+--- a/subversion/tests/libsvn_fs/fs-test.c
++++ b/subversion/tests/libsvn_fs/fs-test.c
+@@ -7219,6 +7219,78 @@ closest_copy_test_svn_4677(const svn_test_opts_t *opts,
+   return SVN_NO_ERROR;
+ }
+ 
++static svn_error_t *
++test_closest_copy_file_replaced_with_dir(const svn_test_opts_t *opts,
++                                         apr_pool_t *pool)
++{
++  svn_fs_t *fs;
++  svn_fs_txn_t *txn;
++  svn_fs_root_t *txn_root;
++  svn_fs_root_t *rev_root;
++  svn_revnum_t youngest_rev;
++  svn_fs_root_t *copy_root;
++  const char *copy_path;
++
++  /* Prepare a filesystem. */
++  SVN_ERR(svn_test__create_fs(&fs, "test-closest-copy-file-replaced-with-dir",
++                              opts, pool));
++
++  youngest_rev = 0;
++
++  /* Modeled after the case described in the thread:
++       "[PATCH] A test for "Can't get entries" error"
++       https://lists.apache.org/thread.html/693a95b0da834387e78a7f08df2392b634397d32f37428c81c02f8c5@%3Cdev.subversion.apache.org%3E
++  */
++  /* r1: Add a directory with a file. */
++  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
++  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
++  SVN_ERR(svn_fs_make_dir(txn_root, "/A", pool));
++  SVN_ERR(svn_fs_make_file(txn_root, "/A/mu", pool));
++  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
++  SVN_TEST_INT_ASSERT(youngest_rev, 1);
++
++  /* r2: Copy the directory. */
++  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
++  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
++  SVN_ERR(svn_fs_revision_root(&rev_root, fs, 1, pool));
++  SVN_ERR(svn_fs_copy(rev_root, "/A", txn_root, "/B", pool));
++  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
++  SVN_TEST_INT_ASSERT(youngest_rev, 2);
++
++  /* r3: Delete the file. */
++  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
++  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
++  SVN_ERR(svn_fs_delete(txn_root, "/B/mu", pool));
++  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
++  SVN_TEST_INT_ASSERT(youngest_rev, 3);
++
++  /* r4: Replace the file with a new directory containing a file. */
++  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
++  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
++  SVN_ERR(svn_fs_make_dir(txn_root, "/B/mu", pool));
++  SVN_ERR(svn_fs_make_file(txn_root, "/B/mu/iota", pool));
++  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
++  SVN_TEST_INT_ASSERT(youngest_rev, 4);
++
++  /* Test a couple of svn_fs_closest_copy() calls; the second call used
++     to fail with an unexpected SVN_ERR_FS_NOT_DIRECTORY error. */
++
++  SVN_ERR(svn_fs_revision_root(&rev_root, fs, 2, pool));
++  SVN_ERR(svn_fs_closest_copy(&copy_root, &copy_path, rev_root, "/B/mu", pool));
++
++  SVN_TEST_ASSERT(copy_root != NULL);
++  SVN_TEST_INT_ASSERT(svn_fs_revision_root_revision(copy_root), 2);
++  SVN_TEST_STRING_ASSERT(copy_path, "/B");
++
++  SVN_ERR(svn_fs_revision_root(&rev_root, fs, 4, pool));
++  SVN_ERR(svn_fs_closest_copy(&copy_root, &copy_path, rev_root, "/B/mu/iota", pool));
++
++  SVN_TEST_ASSERT(copy_root == NULL);
++  SVN_TEST_ASSERT(copy_path == NULL);
++
++  return SVN_NO_ERROR;
++}
++
+ /* ------------------------------------------------------------------------ */
+ 
+ /* The test table.  */
+@@ -7363,6 +7435,8 @@ static struct svn_test_descriptor_t test_funcs[] =
+                              SVN_TEST_PASS_IF_FS_TYPE_IS(SVN_FS_TYPE_FSFS)),
+     SVN_TEST_OPTS_PASS(closest_copy_test_svn_4677,
+                        "test issue SVN-4677 regression"),
++    SVN_TEST_OPTS_PASS(test_closest_copy_file_replaced_with_dir,
++                       "svn_fs_closest_copy after replacing file with dir"),
+     SVN_TEST_NULL
+   };
+ 
+diff --git a/subversion/tests/libsvn_subr/mergeinfo-test.c b/subversion/tests/libsvn_subr/mergeinfo-test.c
+index 5f4d37e..83b43f3 100644
+--- a/subversion/tests/libsvn_subr/mergeinfo-test.c
++++ b/subversion/tests/libsvn_subr/mergeinfo-test.c
+@@ -1670,6 +1670,33 @@ test_remove_prefix_from_catalog(apr_pool_t *pool)
+   return SVN_NO_ERROR;
+ }
+ 
++static svn_error_t *
++test_rangelist_merge_overlap(apr_pool_t *pool)
++{
++  const char *rangelist_str = "19473-19612*,19615-19630*,19631-19634";
++  const char *changes_str = "15014-20515*";
++  const char *expected_str = "15014-19630*,19631-19634,19635-20515*";
++  /* wrong result: "15014-19630*,19634-19631*,19631-19634,19635-20515*" */
++  svn_rangelist_t *rangelist, *changes;
++  svn_string_t *result_string;
++
++  /* prepare the inputs */
++  SVN_ERR(svn_rangelist__parse(&rangelist, rangelist_str, pool));
++  SVN_ERR(svn_rangelist__parse(&changes, changes_str, pool));
++  SVN_TEST_ASSERT(svn_rangelist__is_canonical(rangelist));
++  SVN_TEST_ASSERT(svn_rangelist__is_canonical(changes));
++
++  /* perform the merge */
++  SVN_ERR(svn_rangelist_merge2(rangelist, changes, pool, pool));
++
++  /* check the output */
++  SVN_TEST_ASSERT(svn_rangelist__is_canonical(rangelist));
++  SVN_ERR(svn_rangelist_to_string(&result_string, rangelist, pool));
++  SVN_TEST_STRING_ASSERT(result_string->data, expected_str);
++
++  return SVN_NO_ERROR;
++}
++
+ 
+ /* The test table.  */
+ 
+@@ -1714,6 +1741,8 @@ static struct svn_test_descriptor_t test_funcs[] =
+                    "diff of rangelists"),
+     SVN_TEST_PASS2(test_remove_prefix_from_catalog,
+                    "removal of prefix paths from catalog keys"),
++    SVN_TEST_PASS2(test_rangelist_merge_overlap,
++                   "merge of rangelists with overlaps (issue 4686)"),
+     SVN_TEST_NULL
+   };
+ 
+diff --git a/subversion/tests/svn_test_main.c b/subversion/tests/svn_test_main.c
+index 46c0c45..367eb80 100644
+--- a/subversion/tests/svn_test_main.c
++++ b/subversion/tests/svn_test_main.c
+@@ -180,7 +180,7 @@ static void set_cleanup_pool(apr_pool_t *pool)
+ }
+ 
+ /* Get the thread-specific cleanup pool. */
+-static apr_pool_t *get_cleanup_pool()
++static apr_pool_t *get_cleanup_pool(void)
+ {
+   void *data;
+   apr_status_t status = apr_threadkey_private_get(&data, cleanup_pool_key);
+diff --git a/tools/client-side/detach.py b/tools/client-side/detach.py
+index 84c725a..4f450e9 100755
+--- a/tools/client-side/detach.py
++++ b/tools/client-side/detach.py
+@@ -19,6 +19,13 @@
+ #    under the License.
+ # ====================================================================
+ 
++# Note: This script has a hardcoded check for a 1.7 WC format. It won't work
++# with 1.8+ WCs. For one thing, it doesn't handle WC move-tracking metadata.
++# As stated in the exception it's unfinished and not ready for use. See the
++# dev@ email thread "detach.py script isn't updated for 1.8/1.9" started on
++# 2015-08-12 at e.g. <http://svn.haxx.se/dev/archive-2015-08/0071.shtml> or
++# <http://mail-archives.apache.org/mod_mbox/subversion-dev/201508.mbox/%3C55CA829A.2080509@gmx.de%3E>.
++
+ # TODO: if this was part of core subversion, we'd have all sorts of nifty
+ #       checks, and could use a lot of existing code.
+ 
+diff --git a/tools/examples/ExampleAuthn.java b/tools/examples/ExampleAuthn.java
+index 9e0a23e..8fb73b5 100644
+--- a/tools/examples/ExampleAuthn.java
++++ b/tools/examples/ExampleAuthn.java
+@@ -68,8 +68,11 @@ public class ExampleAuthn {
+                              SSLServerCertFailures failures,
+                              SSLServerCertInfo info,
+                              boolean maySave) {
+-          System.out.println("sslServerTrustPrompt not implemented!");
+-          return SSLServerTrustResult.acceptTemporarily();
++          System.out.println("sslServerTrustPrompt");
++          System.out.println("(r)eject or (t)emporary?");
++          String s = System.console().readLine();
++          return s.equals("t") ? SSLServerTrustResult.acceptTemporarily()
++                               : SSLServerTrustResult.reject();
+         }
+ 
+         public SSLClientCertResult
+-- 
+1.8.3.1
+

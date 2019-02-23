@@ -1,0 +1,54 @@
+From edc30b925f507328a42bb3e2de91ef5560278877 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui@kingsoft.com>
+Date: Thu, 21 Feb 2019 14:37:50 +0800
+Subject: [PATCH 5/8] Revert "Enable extension option -p in default"
+
+This reverts commit a8a6e85216a00f456c20d6373b15535d783fabd2,
+because it brokes API compatibility.
+---
+ subversion/include/svn_diff.h      | 2 +-
+ subversion/libsvn_diff/diff_file.c | 1 -
+ subversion/svn/svn.c               | 2 +-
+ 3 files changed, 2 insertions(+), 3 deletions(-)
+
+diff --git a/subversion/include/svn_diff.h b/subversion/include/svn_diff.h
+index bfb7ee4..7543d7b 100644
+--- a/subversion/include/svn_diff.h
++++ b/subversion/include/svn_diff.h
+@@ -479,7 +479,7 @@ typedef struct svn_diff_file_options_t
+   /** Whether the "@@" lines of the unified diff output should include a prefix
+     * of the nearest preceding line that starts with a character that might be
+     * the initial character of a C language identifier.  The default is
+-    * @c TRUE.
++    * @c FALSE.
+     * @since New in 1.5.
+     */
+   svn_boolean_t show_c_function;
+diff --git a/subversion/libsvn_diff/diff_file.c b/subversion/libsvn_diff/diff_file.c
+index b21e94a..3ee6e59 100644
+--- a/subversion/libsvn_diff/diff_file.c
++++ b/subversion/libsvn_diff/diff_file.c
+@@ -1250,7 +1250,6 @@ svn_diff_file_options_parse(svn_diff_file_options_t *options,
+ 
+   opt_parsing_error_baton.err = NULL;
+   opt_parsing_error_baton.pool = pool;
+-  options->show_c_function = TRUE;
+ 
+   argv[0] = "";
+   memcpy(argv + 1, args->elts, sizeof(char*) * args->nelts);
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index eb2b3df..9c40687 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -210,7 +210,7 @@ const apr_getopt_option_t svn_cl__options[] =
+   {"extensions",    'x', 1,
+                     N_("Specify differencing options for external diff or\n"
+                        "                             "
+-                       "internal diff or blame. Default: '-up'. Options are\n"
++                       "internal diff or blame. Default: '-u'. Options are\n"
+                        "                             "
+                        "separated by spaces. Internal diff and blame take:\n"
+                        "                             "
+-- 
+1.8.3.1
+
