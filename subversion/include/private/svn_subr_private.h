@@ -27,6 +27,7 @@
 #include "svn_types.h"
 #include "svn_io.h"
 #include "svn_config.h"
+#include "svn_version.h"
 
 
 #ifdef __cplusplus
@@ -738,6 +739,7 @@ const char *svn_zlib__compiled_version(void);
 /* Return the zlib version we run against. */
 const char *svn_zlib__runtime_version(void);
 
+
 /* Return the lz4 version we compiled against. */
 const char *svn_lz4__compiled_version(void);
 
@@ -745,6 +747,18 @@ const char *svn_lz4__compiled_version(void);
  * major * 100 * 100 + minor * 100 + release
  */
 int svn_lz4__runtime_version(void);
+
+/**
+ * Accessor for svn_version_extended_t.
+ *
+ * @return The name of person who modifies subversion's source code.
+ *
+ * @note Maybe empty.
+ *
+ * @since New in 1.9.
+ */
+const char *
+svn_version_ext_build_hacker(const svn_version_extended_t *ext_info);
 
 #ifdef __cplusplus
 }
