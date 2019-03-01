@@ -48,6 +48,7 @@
 #include "svn_ctype.h"
 
 #include "private/svn_opt_private.h"
+#include "private/svn_subr_private.h"
 
 #include "opt.h"
 #include "svn_private_config.h"

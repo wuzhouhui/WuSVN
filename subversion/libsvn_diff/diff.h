@@ -33,6 +33,7 @@
 
 #include "svn_diff.h"
 #include "svn_types.h"
+#include "private/svn_diff_private.h"
 
 #define SVN_DIFF__UNIFIED_CONTEXT_SIZE 3
 
