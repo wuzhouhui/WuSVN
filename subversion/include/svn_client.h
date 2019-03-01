@@ -2577,22 +2577,6 @@ svn_client_status6(svn_revnum_t *result_rev,
                    void *status_baton,
                    apr_pool_t *scratch_pool);
 
-svn_error_t *
-svn_client_clean(svn_revnum_t *result_rev,
-                   svn_client_ctx_t *ctx,
-                   const char *path,
-                   const svn_opt_revision_t *revision,
-                   svn_depth_t depth,
-                   svn_boolean_t get_all,
-                   svn_boolean_t check_out_of_date,
-                   svn_boolean_t check_working_copy,
-                   svn_boolean_t no_ignore,
-                   svn_boolean_t ignore_externals,
-                   svn_boolean_t depth_as_sticky,
-                   const apr_array_header_t *changelists,
-                   svn_client_status_func_t status_func,
-                   void *status_baton,
-                   apr_pool_t *scratch_pool);
 
 /**
  * Same as svn_client_status6(), but with @a check_out_of_date set to
@@ -3139,29 +3123,6 @@ svn_client_diff6(const apr_array_header_t *diff_options,
                  svn_client_ctx_t *ctx,
                  apr_pool_t *pool);
 
-svn_error_t *
-svn_client_diff6_diffstat(const apr_array_header_t *diff_options,
-                 const char *path_or_url1,
-                 const svn_opt_revision_t *revision1,
-                 const char *path_or_url2,
-                 const svn_opt_revision_t *revision2,
-                 const char *relative_to_dir,
-                 svn_depth_t depth,
-                 svn_boolean_t ignore_ancestry,
-                 svn_boolean_t no_diff_added,
-                 svn_boolean_t no_diff_deleted,
-                 svn_boolean_t show_copies_as_adds,
-                 svn_boolean_t ignore_content_type,
-                 svn_boolean_t ignore_properties,
-                 svn_boolean_t properties_only,
-                 svn_boolean_t use_git_diff_format,
-                 const char *header_encoding,
-                 svn_stream_t *outstream,
-                 svn_stream_t *errstream,
-                 const apr_array_header_t *changelists,
-                 svn_client_ctx_t *ctx,
-                 apr_pool_t *pool);
-
 /** Similar to svn_client_diff6(), but with @a outfile and @a errfile,
  * instead of @a outstream and @a errstream, and with @a
  * no_diff_added, @a ignore_properties, and @a properties_only always
@@ -3325,31 +3286,6 @@ svn_client_diff_peg6(const apr_array_header_t *diff_options,
                      const apr_array_header_t *changelists,
                      svn_client_ctx_t *ctx,
                      apr_pool_t *pool);
-
-
-svn_error_t *
-svn_client_diff_peg6_diffstat(const apr_array_header_t *diff_options,
-                     const char *path_or_url,
-                     const svn_opt_revision_t *peg_revision,
-                     const svn_opt_revision_t *start_revision,
-                     const svn_opt_revision_t *end_revision,
-                     const char *relative_to_dir,
-                     svn_depth_t depth,
-                     svn_boolean_t ignore_ancestry,
-                     svn_boolean_t no_diff_added,
-                     svn_boolean_t no_diff_deleted,
-                     svn_boolean_t show_copies_as_adds,
-                     svn_boolean_t ignore_content_type,
-                     svn_boolean_t ignore_properties,
-                     svn_boolean_t properties_only,
-                     svn_boolean_t use_git_diff_format,
-                     const char *header_encoding,
-                     svn_stream_t *outstream,
-                     svn_stream_t *errstream,
-                     const apr_array_header_t *changelists,
-                     svn_client_ctx_t *ctx,
-                     apr_pool_t *pool);
-
 
 /** Similar to svn_client_diff6_peg6(), but with @a outfile and @a errfile,
  * instead of @a outstream and @a errstream, and with @a

@@ -40,6 +40,7 @@
 #include "private/svn_sorts_private.h"
 #include "private/svn_utf_private.h"
 #include "private/svn_color.h"
+#include "private/svn_client_private.h"
 
 #include "cl.h"
 #include "cl-log.h"

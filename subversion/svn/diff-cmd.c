@@ -43,6 +43,7 @@
 #include "svn_private_config.h"
 
 #include "private/svn_diff_private.h"
+#include "private/svn_client_private.h"
 
 
 /*** Code. ***/
