@@ -8,3 +8,5 @@ Main patches:
       5. Add option -v for subcommand commit, for print unified diff in log
          message template
       6. Add option --stat for subcommand diff and log
+      7. Support client side pre-commit hook, hook scripts locate in
+         .svn/hooks
