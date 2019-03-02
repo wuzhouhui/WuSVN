@@ -172,7 +172,10 @@ svn_cl__commit(apr_getopt_t *os,
   svn_opt_push_implicit_dot_target(targets, pool);
 
   /* Execute pre-commit hook if possible */
-  SVN_ERR(pre_commit(ctx, APR_ARRAY_IDX(targets, 0, const char *), pool));
+  if (opt_state->bypass_hooks == FALSE)
+    {
+      SVN_ERR(pre_commit(ctx, APR_ARRAY_IDX(targets, 0, const char *), pool));
+    }
 
   SVN_ERR(svn_cl__eat_peg_revisions(&targets, targets, pool));
 
