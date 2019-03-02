@@ -73,6 +73,7 @@ typedef enum svn_cl__longopt_t {
   opt_auth_password_from_stdin,
   opt_auth_username,
   opt_autoprops,
+  opt_bypass_hooks,
   opt_changelist,
   opt_config_dir,
   opt_config_options,
@@ -494,6 +495,7 @@ const apr_getopt_option_t svn_cl__options[] =
   {"list", opt_list, 0, N_("list shelved patches")},
   {"keep-shelved", opt_keep_shelved, 0, N_("do not delete the shelved patch")},
   {"delete", opt_delete, 0, N_("delete the shelved patch")},
+  {"bypass-hooks", opt_bypass_hooks, 0, N_("Bypass client side hooks\n")},
 
   /* Long-opt Aliases
    *
@@ -692,7 +694,9 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
        "  externals reached by recursion. Do not commit externals with a\n"
        "  fixed revision.\n"),
     {'q', 'N', opt_depth, opt_targets, opt_no_unlock, SVN_CL__LOG_MSG_OPTIONS,
-     opt_changelist, opt_keep_changelists, 'v', opt_include_externals},
+     opt_changelist, opt_keep_changelists, 'v', opt_include_externals,
+     opt_bypass_hooks
+    },
     { 'v', N_("show unified diff that this commit will produce") } },
 
   { "copy", svn_cl__copy, {"cp"}, N_
@@ -2735,6 +2739,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
       case opt_vacuum_pristines:
         opt_state.vacuum_pristines = TRUE;
         break;
+      case opt_bypass_hooks:
+        opt_state.bypass_hooks = TRUE;
       default:
         /* Hmmm. Perhaps this would be a good place to squirrel away
            opts that commands like svn diff might need. Hmmm indeed. */
