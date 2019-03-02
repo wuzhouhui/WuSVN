@@ -828,7 +828,7 @@ _svn()
 	commit|ci)
 		cmdOpts="$mOpts $qOpts $nOpts --targets --editor-cmd $pOpts \
 		         --no-unlock $cOpts --keep-changelists \
-		         --include-externals -v --verbose"
+		         --include-externals -v --verbose --bypass-hooks"
 		;;
 	copy|cp)
 		cmdOpts="$mOpts $rOpts $qOpts --editor-cmd $pOpts --parents \

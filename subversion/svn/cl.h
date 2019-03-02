@@ -256,6 +256,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t pin_externals;     /* pin externals to last-changed revisions */
   const char *show_item;           /* print only the given item */
   svn_boolean_t list;
+  svn_boolean_t bypass_hooks;      /* bypass client side hooks */
 } svn_cl__opt_state_t;
 
 
