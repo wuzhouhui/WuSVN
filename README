@@ -1,4 +1,4 @@
-Subversion with my patches, based on 1.10.x
+WuSVN, the customized Subversion with my patches, based on 1.10.x
 
 Main patches:
       1. Output paging automatically
