@@ -115,7 +115,7 @@ pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
    * exist and executable, we will run it.
    */
 
-  SVN_ERR(svn_io_check_path(abspath, &kind, pool));
+  SVN_ERR(svn_io_check_resolved_path(abspath, &kind, pool));
   if (kind == svn_node_none)
     {
       return SVN_NO_ERROR;
