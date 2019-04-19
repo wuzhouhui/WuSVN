@@ -1,0 +1,365 @@
+From 03e011e26a00c77ce3356080800d7bb203e07744 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui@kingsoft.com>
+Date: Fri, 1 Mar 2019 10:48:45 +0800
+Subject: [PATCH 1/6] Put functions and data structs of hacker into private
+ header
+
+I don't want to add or delete any public interface, so we are compatible
+with official Subversion as much as possible.
+---
+ subversion/include/private/svn_client_private.h | 63 ++++++++++++++++++++++++
+ subversion/include/private/svn_diff_private.h   | 23 +++++++++
+ subversion/include/private/svn_subr_private.h   | 13 +++++
+ subversion/include/svn_client.h                 | 64 -------------------------
+ subversion/include/svn_diff.h                   | 24 ----------
+ subversion/include/svn_version.h                | 12 -----
+ subversion/libsvn_diff/diff.h                   |  1 +
+ subversion/libsvn_subr/opt.c                    |  1 +
+ subversion/svn/diff-cmd.c                       |  1 +
+ subversion/svn/log-cmd.c                        |  1 +
+ 10 files changed, 103 insertions(+), 100 deletions(-)
+
+diff --git a/subversion/include/private/svn_client_private.h b/subversion/include/private/svn_client_private.h
+index 892fc4b..75196db 100644
+--- a/subversion/include/private/svn_client_private.h
++++ b/subversion/include/private/svn_client_private.h
+@@ -341,6 +341,69 @@ svn_client__mergeinfo_log(svn_boolean_t finding_merged,
+                           apr_pool_t *result_pool,
+                           apr_pool_t *scratch_pool);
+ 
++svn_error_t *
++svn_client_clean(svn_revnum_t *result_rev,
++                   svn_client_ctx_t *ctx,
++                   const char *path,
++                   const svn_opt_revision_t *revision,
++                   svn_depth_t depth,
++                   svn_boolean_t get_all,
++                   svn_boolean_t check_out_of_date,
++                   svn_boolean_t check_working_copy,
++                   svn_boolean_t no_ignore,
++                   svn_boolean_t ignore_externals,
++                   svn_boolean_t depth_as_sticky,
++                   const apr_array_header_t *changelists,
++                   svn_client_status_func_t status_func,
++                   void *status_baton,
++                   apr_pool_t *scratch_pool);
++
++svn_error_t *
++svn_client_diff6_diffstat(const apr_array_header_t *diff_options,
++                 const char *path_or_url1,
++                 const svn_opt_revision_t *revision1,
++                 const char *path_or_url2,
++                 const svn_opt_revision_t *revision2,
++                 const char *relative_to_dir,
++                 svn_depth_t depth,
++                 svn_boolean_t ignore_ancestry,
++                 svn_boolean_t no_diff_added,
++                 svn_boolean_t no_diff_deleted,
++                 svn_boolean_t show_copies_as_adds,
++                 svn_boolean_t ignore_content_type,
++                 svn_boolean_t ignore_properties,
++                 svn_boolean_t properties_only,
++                 svn_boolean_t use_git_diff_format,
++                 const char *header_encoding,
++                 svn_stream_t *outstream,
++                 svn_stream_t *errstream,
++                 const apr_array_header_t *changelists,
++                 svn_client_ctx_t *ctx,
++                 apr_pool_t *pool);
++
++svn_error_t *
++svn_client_diff_peg6_diffstat(const apr_array_header_t *diff_options,
++                     const char *path_or_url,
++                     const svn_opt_revision_t *peg_revision,
++                     const svn_opt_revision_t *start_revision,
++                     const svn_opt_revision_t *end_revision,
++                     const char *relative_to_dir,
++                     svn_depth_t depth,
++                     svn_boolean_t ignore_ancestry,
++                     svn_boolean_t no_diff_added,
++                     svn_boolean_t no_diff_deleted,
++                     svn_boolean_t show_copies_as_adds,
++                     svn_boolean_t ignore_content_type,
++                     svn_boolean_t ignore_properties,
++                     svn_boolean_t properties_only,
++                     svn_boolean_t use_git_diff_format,
++                     const char *header_encoding,
++                     svn_stream_t *outstream,
++                     svn_stream_t *errstream,
++                     const apr_array_header_t *changelists,
++                     svn_client_ctx_t *ctx,
++                     apr_pool_t *pool);
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+diff --git a/subversion/include/private/svn_diff_private.h b/subversion/include/private/svn_diff_private.h
+index 8eaecfb..69625e5 100644
+--- a/subversion/include/private/svn_diff_private.h
++++ b/subversion/include/private/svn_diff_private.h
+@@ -154,6 +154,29 @@ svn_client_diff6_hltb(const apr_array_header_t *diff_options,
+                  svn_client_ctx_t *ctx,
+                  apr_pool_t *pool);
+ 
++typedef struct svn_dfstat_ctx_s svn_dfstat_ctx_t;
++
++svn_error_t *
++svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx);
++
++void
++svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx);
++
++enum svn_dfstat_cmt {
++	svn_dfstat_normal = 0,
++	svn_dfstat_bin,
++};
++
++svn_error_t *
++svn_diff_stat(svn_dfstat_ctx_t *ctx,
++    const svn_diff_t *diff,
++    const char *file_path,
++    enum svn_dfstat_cmt cmt);
++
++svn_error_t *
++svn_diff_output_dfstat(svn_stream_t *out,
++    svn_dfstat_ctx_t *head);
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+diff --git a/subversion/include/private/svn_subr_private.h b/subversion/include/private/svn_subr_private.h
+index 095d71c..aaf5387 100644
+--- a/subversion/include/private/svn_subr_private.h
++++ b/subversion/include/private/svn_subr_private.h
+@@ -27,6 +27,7 @@
+ #include "svn_types.h"
+ #include "svn_io.h"
+ #include "svn_config.h"
++#include "svn_version.h"
+ 
+ 
+ #ifdef __cplusplus
+@@ -701,6 +702,18 @@ const char *svn_zlib__compiled_version(void);
+ /* Return the zlib version we run against. */
+ const char *svn_zlib__runtime_version(void);
+ 
++/**
++ * Accessor for svn_version_extended_t.
++ *
++ * @return The name of person who modifies subversion's source code.
++ *
++ * @note Maybe empty.
++ *
++ * @since New in 1.9.
++ */
++const char *
++svn_version_ext_build_hacker(const svn_version_extended_t *ext_info);
++
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+diff --git a/subversion/include/svn_client.h b/subversion/include/svn_client.h
+index 3793625..b80f3b0 100644
+--- a/subversion/include/svn_client.h
++++ b/subversion/include/svn_client.h
+@@ -2577,22 +2577,6 @@ svn_client_status6(svn_revnum_t *result_rev,
+                    void *status_baton,
+                    apr_pool_t *scratch_pool);
+ 
+-svn_error_t *
+-svn_client_clean(svn_revnum_t *result_rev,
+-                   svn_client_ctx_t *ctx,
+-                   const char *path,
+-                   const svn_opt_revision_t *revision,
+-                   svn_depth_t depth,
+-                   svn_boolean_t get_all,
+-                   svn_boolean_t check_out_of_date,
+-                   svn_boolean_t check_working_copy,
+-                   svn_boolean_t no_ignore,
+-                   svn_boolean_t ignore_externals,
+-                   svn_boolean_t depth_as_sticky,
+-                   const apr_array_header_t *changelists,
+-                   svn_client_status_func_t status_func,
+-                   void *status_baton,
+-                   apr_pool_t *scratch_pool);
+ 
+ /**
+  * Same as svn_client_status6(), but with @a check_out_of_date set to
+@@ -3139,29 +3123,6 @@ svn_client_diff6(const apr_array_header_t *diff_options,
+                  svn_client_ctx_t *ctx,
+                  apr_pool_t *pool);
+ 
+-svn_error_t *
+-svn_client_diff6_diffstat(const apr_array_header_t *diff_options,
+-                 const char *path_or_url1,
+-                 const svn_opt_revision_t *revision1,
+-                 const char *path_or_url2,
+-                 const svn_opt_revision_t *revision2,
+-                 const char *relative_to_dir,
+-                 svn_depth_t depth,
+-                 svn_boolean_t ignore_ancestry,
+-                 svn_boolean_t no_diff_added,
+-                 svn_boolean_t no_diff_deleted,
+-                 svn_boolean_t show_copies_as_adds,
+-                 svn_boolean_t ignore_content_type,
+-                 svn_boolean_t ignore_properties,
+-                 svn_boolean_t properties_only,
+-                 svn_boolean_t use_git_diff_format,
+-                 const char *header_encoding,
+-                 svn_stream_t *outstream,
+-                 svn_stream_t *errstream,
+-                 const apr_array_header_t *changelists,
+-                 svn_client_ctx_t *ctx,
+-                 apr_pool_t *pool);
+-
+ /** Similar to svn_client_diff6(), but with @a outfile and @a errfile,
+  * instead of @a outstream and @a errstream, and with @a
+  * no_diff_added, @a ignore_properties, and @a properties_only always
+@@ -3326,31 +3287,6 @@ svn_client_diff_peg6(const apr_array_header_t *diff_options,
+                      svn_client_ctx_t *ctx,
+                      apr_pool_t *pool);
+ 
+-
+-svn_error_t *
+-svn_client_diff_peg6_diffstat(const apr_array_header_t *diff_options,
+-                     const char *path_or_url,
+-                     const svn_opt_revision_t *peg_revision,
+-                     const svn_opt_revision_t *start_revision,
+-                     const svn_opt_revision_t *end_revision,
+-                     const char *relative_to_dir,
+-                     svn_depth_t depth,
+-                     svn_boolean_t ignore_ancestry,
+-                     svn_boolean_t no_diff_added,
+-                     svn_boolean_t no_diff_deleted,
+-                     svn_boolean_t show_copies_as_adds,
+-                     svn_boolean_t ignore_content_type,
+-                     svn_boolean_t ignore_properties,
+-                     svn_boolean_t properties_only,
+-                     svn_boolean_t use_git_diff_format,
+-                     const char *header_encoding,
+-                     svn_stream_t *outstream,
+-                     svn_stream_t *errstream,
+-                     const apr_array_header_t *changelists,
+-                     svn_client_ctx_t *ctx,
+-                     apr_pool_t *pool);
+-
+-
+ /** Similar to svn_client_diff6_peg6(), but with @a outfile and @a errfile,
+  * instead of @a outstream and @a errstream, and with @a
+  * no_diff_added, @a ignore_properties, and @a properties_only always
+diff --git a/subversion/include/svn_diff.h b/subversion/include/svn_diff.h
+index 7543d7b..5b8f8d7 100644
+--- a/subversion/include/svn_diff.h
++++ b/subversion/include/svn_diff.h
+@@ -81,8 +81,6 @@ svn_diff_version(void);
+  */
+ typedef struct svn_diff_t svn_diff_t;
+ 
+-typedef struct svn_dfstat_ctx_s svn_dfstat_ctx_t;
+-
+ /**
+  * There are four types of datasources.  In GNU diff3 terminology,
+  * the first three types correspond to the phrases "older", "mine",
+@@ -1295,28 +1293,6 @@ svn_error_t *
+ svn_diff_close_patch_file(svn_patch_file_t *patch_file,
+                           apr_pool_t *scratch_pool);
+ 
+-
+-svn_error_t *
+-svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx);
+-
+-void
+-svn_diff_destroy_dfctx(svn_dfstat_ctx_t *ctx);
+-
+-enum svn_dfstat_cmt {
+-	svn_dfstat_normal = 0,
+-	svn_dfstat_bin,
+-};
+-
+-svn_error_t *
+-svn_diff_stat(svn_dfstat_ctx_t *ctx,
+-    const svn_diff_t *diff,
+-    const char *file_path,
+-    enum svn_dfstat_cmt cmt);
+-
+-svn_error_t *
+-svn_diff_output_dfstat(svn_stream_t *out,
+-    svn_dfstat_ctx_t *head);
+-
+ #ifdef __cplusplus
+ }
+ #endif /* __cplusplus */
+diff --git a/subversion/include/svn_version.h b/subversion/include/svn_version.h
+index 69542bb..45ea1a4 100644
+--- a/subversion/include/svn_version.h
++++ b/subversion/include/svn_version.h
+@@ -357,18 +357,6 @@ svn_version_ext_build_host(const svn_version_extended_t *ext_info);
+ /**
+  * Accessor for svn_version_extended_t.
+  *
+- * @return The name of person who modifies subversion's source code.
+- *
+- * @note Maybe empty.
+- *
+- * @since New in 1.9.
+- */
+-const char *
+-svn_version_ext_build_hacker(const svn_version_extended_t *ext_info);
+-
+-/**
+- * Accessor for svn_version_extended_t.
+- *
+  * @return The localized copyright notice.
+  *
+  * @since New in 1.8.
+diff --git a/subversion/libsvn_diff/diff.h b/subversion/libsvn_diff/diff.h
+index 81d2d46..fd2aa10 100644
+--- a/subversion/libsvn_diff/diff.h
++++ b/subversion/libsvn_diff/diff.h
+@@ -33,6 +33,7 @@
+ 
+ #include "svn_diff.h"
+ #include "svn_types.h"
++#include "private/svn_diff_private.h"
+ 
+ #define SVN_DIFF__UNIFIED_CONTEXT_SIZE 3
+ 
+diff --git a/subversion/libsvn_subr/opt.c b/subversion/libsvn_subr/opt.c
+index 54253f7..0dc7261 100644
+--- a/subversion/libsvn_subr/opt.c
++++ b/subversion/libsvn_subr/opt.c
+@@ -48,6 +48,7 @@
+ #include "svn_ctype.h"
+ 
+ #include "private/svn_opt_private.h"
++#include "private/svn_subr_private.h"
+ 
+ #include "opt.h"
+ #include "svn_private_config.h"
+diff --git a/subversion/svn/diff-cmd.c b/subversion/svn/diff-cmd.c
+index 562a9cd..d294e80 100644
+--- a/subversion/svn/diff-cmd.c
++++ b/subversion/svn/diff-cmd.c
+@@ -43,6 +43,7 @@
+ #include "svn_private_config.h"
+ 
+ #include "private/svn_diff_private.h"
++#include "private/svn_client_private.h"
+ 
+ 
+ /*** Code. ***/
+diff --git a/subversion/svn/log-cmd.c b/subversion/svn/log-cmd.c
+index b30d390..83e2ad6 100644
+--- a/subversion/svn/log-cmd.c
++++ b/subversion/svn/log-cmd.c
+@@ -39,6 +39,7 @@
+ #include "private/svn_cmdline_private.h"
+ #include "private/svn_sorts_private.h"
+ #include "private/svn_color.h"
++#include "private/svn_client_private.h"
+ 
+ #include "cl.h"
+ #include "cl-log.h"
+-- 
+1.8.3.1
+

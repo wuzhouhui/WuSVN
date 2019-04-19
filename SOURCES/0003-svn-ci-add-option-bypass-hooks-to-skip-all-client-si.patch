@@ -1,0 +1,99 @@
+From eafe566ae9a8366b60b47258ca07f31e69e5e572 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 2 Mar 2019 21:47:19 +0800
+Subject: [PATCH 3/6] svn/ci: add option --bypass-hooks to skip all client side
+ hooks
+
+The name of option come from --bypass-hooks of svnadmin
+---
+ subversion/svn/cl.h               | 1 +
+ subversion/svn/commit-cmd.c       | 5 ++++-
+ subversion/svn/svn.c              | 9 ++++++++-
+ tools/client-side/bash_completion | 2 +-
+ 4 files changed, 14 insertions(+), 3 deletions(-)
+
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 6aa53a5..2de50f9 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -256,6 +256,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t pin_externals;     /* pin externals to last-changed revisions */
+   const char *show_item;           /* print only the given item */
+   svn_boolean_t list;
++  svn_boolean_t bypass_hooks;      /* bypass client side hooks */
+ } svn_cl__opt_state_t;
+ 
+ 
+diff --git a/subversion/svn/commit-cmd.c b/subversion/svn/commit-cmd.c
+index 9f09d62..678d12d 100644
+--- a/subversion/svn/commit-cmd.c
++++ b/subversion/svn/commit-cmd.c
+@@ -172,7 +172,10 @@ svn_cl__commit(apr_getopt_t *os,
+   svn_opt_push_implicit_dot_target(targets, pool);
+ 
+   /* Execute pre-commit hook if possible */
+-  SVN_ERR(pre_commit(ctx, APR_ARRAY_IDX(targets, 0, const char *), pool));
++  if (opt_state->bypass_hooks == FALSE)
++    {
++      SVN_ERR(pre_commit(ctx, APR_ARRAY_IDX(targets, 0, const char *), pool));
++    }
+ 
+   SVN_ERR(svn_cl__eat_peg_revisions(&targets, targets, pool));
+ 
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 9c40687..0204002 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -72,6 +72,7 @@ typedef enum svn_cl__longopt_t {
+   opt_auth_password = SVN_OPT_FIRST_LONGOPT_ID,
+   opt_auth_username,
+   opt_autoprops,
++  opt_bypass_hooks,
+   opt_changelist,
+   opt_config_dir,
+   opt_config_options,
+@@ -449,6 +450,8 @@ const apr_getopt_option_t svn_cl__options[] =
+   {"keep-shelved", opt_keep_shelved, 0, N_("do not delete the shelved patch")},
+   {"delete", opt_delete, 0, N_("delete the shelved patch")},
+ 
++  {"bypass-hooks", opt_bypass_hooks, 0, N_("Bypass client side hooks\n")},
++
+   /* Long-opt Aliases
+    *
+    * These have NULL desriptions, but an option code that matches some
+@@ -638,7 +641,9 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+        "  externals reached by recursion. Do not commit externals with a\n"
+        "  fixed revision.\n"),
+     {'q', 'N', opt_depth, opt_targets, opt_no_unlock, SVN_CL__LOG_MSG_OPTIONS,
+-     opt_changelist, opt_keep_changelists, 'v', opt_include_externals},
++     opt_changelist, opt_keep_changelists, 'v', opt_include_externals,
++     opt_bypass_hooks
++    },
+     { 'v', N_("show unified diff that this commit will produce") } },
+ 
+   { "copy", svn_cl__copy, {"cp"}, N_
+@@ -2585,6 +2590,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+         SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
+         opt_state.show_item = utf8_opt_arg;
+         break;
++      case opt_bypass_hooks:
++        opt_state.bypass_hooks = TRUE;
+       default:
+         /* Hmmm. Perhaps this would be a good place to squirrel away
+            opts that commands like svn diff might need. Hmmm indeed. */
+diff --git a/tools/client-side/bash_completion b/tools/client-side/bash_completion
+index 63f7606..edbaec2 100644
+--- a/tools/client-side/bash_completion
++++ b/tools/client-side/bash_completion
+@@ -828,7 +828,7 @@ _svn()
+ 	commit|ci)
+ 		cmdOpts="$mOpts $qOpts $nOpts --targets --editor-cmd $pOpts \
+ 		         --no-unlock $cOpts --keep-changelists \
+-		         --include-externals -v --verbose"
++		         --include-externals -v --verbose --bypass-hooks"
+ 		;;
+ 	copy|cp)
+ 		cmdOpts="$mOpts $rOpts $qOpts --editor-cmd $pOpts --parents \
+-- 
+1.8.3.1
+

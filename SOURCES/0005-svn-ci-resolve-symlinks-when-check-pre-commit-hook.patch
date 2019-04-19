@@ -1,0 +1,25 @@
+From d003120373e9560113331567bdfd4c117a2910d2 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui@kingsoft.com>
+Date: Fri, 8 Mar 2019 08:57:37 +0800
+Subject: [PATCH 5/6] svn/ci: resolve symlinks when check pre-commit hook
+
+---
+ subversion/svn/commit-cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/svn/commit-cmd.c b/subversion/svn/commit-cmd.c
+index 678d12d..3e4bd7e 100644
+--- a/subversion/svn/commit-cmd.c
++++ b/subversion/svn/commit-cmd.c
+@@ -115,7 +115,7 @@ pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
+    * exist and executable, we will run it.
+    */
+ 
+-  SVN_ERR(svn_io_check_path(abspath, &kind, pool));
++  SVN_ERR(svn_io_check_resolved_path(abspath, &kind, pool));
+   if (kind == svn_node_none)
+     {
+       return SVN_NO_ERROR;
+-- 
+1.8.3.1
+

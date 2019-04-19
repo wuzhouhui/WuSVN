@@ -1,0 +1,49 @@
+From fbb0972bd4dbd15f6944dac3bad0e97c1b81d9a4 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 16 Mar 2019 10:40:52 +0800
+Subject: [PATCH 6/6] Release 1.9.10.1
+
+---
+ subversion/include/svn_version.h         | 2 +-
+ subversion/tests/cmdline/getopt_tests.py | 5 +++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/subversion/include/svn_version.h b/subversion/include/svn_version.h
+index 45ea1a4..d6340b3 100644
+--- a/subversion/include/svn_version.h
++++ b/subversion/include/svn_version.h
+@@ -108,7 +108,7 @@ extern "C" {
+  *
+  * Always change this at the same time as SVN_VER_TAG.
+  */
+-#define SVN_VER_NUMTAG     ""
++#define SVN_VER_NUMTAG     ".1"
+ 
+ 
+ /** Revision number: The repository revision number of this release.
+diff --git a/subversion/tests/cmdline/getopt_tests.py b/subversion/tests/cmdline/getopt_tests.py
+index e12a37a..b4f0b9c 100755
+--- a/subversion/tests/cmdline/getopt_tests.py
++++ b/subversion/tests/cmdline/getopt_tests.py
+@@ -93,7 +93,8 @@ rep_lines_res = [
+                  # In 'svn --version', this line varies, for example:
+                  # "Subversion Client, version 0.10.2-dev (under development)"
+                  # "Subversion Client, version 0.10.2 (r1729)"
+-                 (re.compile(r'version \d+\.\d+\.\d+(-[^ ]*)? \(.*\)'),
++                 # "Subversion Client, version 0.10.2.1 (r1729)"
++                 (re.compile(r'version \d+\.\d+\.\d+(\.\d+|-[^ ]*)? \(.*\)'),
+                   'version X.Y.Z '),
+                  # The copyright end date keeps changing; fix forever.
+                  (re.compile(r'Copyright \(C\) 20\d\d The Apache '
+@@ -101,7 +102,7 @@ rep_lines_res = [
+                   'Copyright (C) YYYY The Apache Software Foundation'),
+                  # In 'svn --version --quiet', we print only the version
+                  # number in a single line.
+-                 (re.compile(r'^\d+\.\d+\.\d+(-[a-zA-Z0-9]+)?$'), 'X.Y.Z\n'),
++                 (re.compile(r'^\d+\.\d+\.\d+(\.\d+|-[a-zA-Z0-9]+)?$'), 'X.Y.Z\n'),
+                 ]
+ 
+ # This is a trigger pattern that selects the secondary set of
+-- 
+1.8.3.1
+
