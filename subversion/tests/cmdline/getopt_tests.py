@@ -93,8 +93,7 @@ rep_lines_res = [
                  # In 'svn --version', this line varies, for example:
                  # "Subversion Client, version 0.10.2-dev (under development)"
                  # "Subversion Client, version 0.10.2 (r1729)"
-                 # "Subversion Client, version 0.10.2.1 (r1729)"
-                 (re.compile(r'version \d+\.\d+\.\d+(\.\d+|-[^ ]*)? \(.*\)'),
+                 (re.compile(r'version \d+\.\d+\.\d+(-[^ ]*)? \(.*\)'),
                   'version X.Y.Z '),
                  # The copyright end date keeps changing; fix forever.
                  (re.compile(r'Copyright \(C\) 20\d\d The Apache '
@@ -102,7 +101,7 @@ rep_lines_res = [
                   'Copyright (C) YYYY The Apache Software Foundation'),
                  # In 'svn --version --quiet', we print only the version
                  # number in a single line.
-                 (re.compile(r'^\d+\.\d+\.\d+(\.\d+|-[a-zA-Z0-9]+)?$'), 'X.Y.Z\n'),
+                 (re.compile(r'^\d+\.\d+\.\d+(-[a-zA-Z0-9]+)?$'), 'X.Y.Z\n'),
                 ]
 
 # This is a trigger pattern that selects the secondary set of

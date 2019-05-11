@@ -108,7 +108,7 @@ extern "C" {
  *
  * Always change this at the same time as SVN_VER_TAG.
  */
-#define SVN_VER_NUMTAG     ".1"
+#define SVN_VER_NUMTAG     ""
 
 
 /** Revision number: The repository revision number of this release.
