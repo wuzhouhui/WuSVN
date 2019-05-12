@@ -9,7 +9,7 @@
 %define apache_dir /usr
 %define pyver 2.7
 %define svn_version 1.9.10
-%define svn_release 2%{?dist}
+%define svn_release 3%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -57,6 +57,9 @@ Patch29: 0003-svn-ci-add-option-bypass-hooks-to-skip-all-client-si.patch
 Patch30: 0004-Update-README-to-include-new-name-of-this-software.patch
 Patch31: 0005-svn-ci-resolve-symlinks-when-check-pre-commit-hook.patch
 Patch32: 0006-Release-1.9.10.1.patch
+Patch33: 0001-svn-auth-output-paging-automatically.patch
+Patch34: 0001-svn-mergeinfo-paging-outputs-of-svn-mergeinfo.patch
+Patch35: 0002-Revert-Release-1.9.10.1.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -199,6 +202,9 @@ Tools for Subversion.
 %patch30 -p1
 %patch31 -p1
 %patch32 -p1
+%patch33 -p1
+%patch34 -p1
+%patch35 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -396,6 +402,11 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun May 12 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.10-3
+- svn/auth: output paging automatically
+- svn/mergeinfo: paging outputs of svn mergeinfo
+- Revert "Release 1.9.10.1"
+
 * Fri Apr 19 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.10-2
 - Put functions and data structs of hacker into private header
 - svn/ci: support client side hooks, only pre-commit for now

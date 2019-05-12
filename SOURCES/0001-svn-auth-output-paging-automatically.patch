@@ -1,0 +1,24 @@
+From 06e74baec128401f4c1c2e9a90413f35cf56de23 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 14 Feb 2018 16:16:30 +0800
+Subject: [PATCH] svn/auth: output paging automatically
+
+---
+ subversion/svn/svn.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 1f8f1b0..f3e4c82 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -3107,6 +3107,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+ 		  subcommand->cmd_func == svn_cl__log ||
+ 		  subcommand->cmd_func == svn_cl__status ||
+ 		  subcommand->cmd_func == svn_cl__list ||
++		  subcommand->cmd_func == svn_cl__auth ||
+ 		  subcommand->cmd_func == svn_cl__help) &&
+       subcommand != &pseudo_cmd) {
+     int fd[2];
+-- 
+1.8.3.1
+
