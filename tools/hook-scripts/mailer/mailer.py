@@ -22,7 +22,7 @@
 #
 # mailer.py: send email describing a commit
 #
-# $HeadURL: http://svn.apache.org/repos/asf/subversion/trunk/tools/hook-scripts/mailer/mailer.py $
+# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.10.x/tools/hook-scripts/mailer/mailer.py $
 # $LastChangedDate: 2017-01-07 19:35:49 +0000 (Sat, 07 Jan 2017) $
 # $LastChangedBy: julianfoad $
 # $LastChangedRevision: 1777846 $

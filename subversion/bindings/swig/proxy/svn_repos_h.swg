@@ -14,6 +14,7 @@
   svn_repos_authz_func_t,
   svn_repos_authz_callback_t,
   svn_repos_notify_func_t,
+  svn_repos_dump_filter_func_t,
   svn_repos_freeze_func_t,
   svn_repos_history_func_t,
   svn_repos_path_change_receiver_t,
@@ -25,6 +26,7 @@
   svn_repos_authz_func_t *,
   svn_repos_authz_callback_t *,
   svn_repos_notify_func_t *,
+  svn_repos_dump_filter_func_t *,
   svn_repos_freeze_func_t *,
   svn_repos_history_func_t *,
   svn_repos_path_change_receiver_t *,
@@ -55,6 +57,7 @@
   void *handler_baton,
   void *lock_baton,
   void *verify_baton,
+  void *filter_baton,
   void *parse_baton,
   void *revision_baton,
   void *node_baton
@@ -212,6 +215,11 @@ static void svn_repos_invoke_notify_func(
   _obj(baton, notify, scratch_pool);
 }
 
+static svn_error_t * svn_repos_invoke_dump_filter_func(
+  svn_repos_dump_filter_func_t _obj, svn_boolean_t *include, svn_fs_root_t *root, const char *path, void *baton, apr_pool_t *scratch_pool) {
+  return _obj(include, root, path, baton, scratch_pool);
+}
+
 static svn_error_t * svn_repos_invoke_freeze_func(
   svn_repos_freeze_func_t _obj, void *baton, apr_pool_t *pool) {
   return _obj(baton, pool);
@@ -271,6 +279,7 @@ static svn_error_t * svn_repos_invoke_verify_callback(
 %funcptr_proxy(svn_repos_authz_func_t, svn_repos_invoke_authz_func);
 %funcptr_proxy(svn_repos_authz_callback_t, svn_repos_invoke_authz_callback);
 %funcptr_proxy(svn_repos_notify_func_t, svn_repos_invoke_notify_func);
+%funcptr_proxy(svn_repos_dump_filter_func_t, svn_repos_invoke_dump_filter_func);
 %funcptr_proxy(svn_repos_freeze_func_t, svn_repos_invoke_freeze_func);
 %funcptr_proxy(svn_repos_history_func_t, svn_repos_invoke_history_func);
 %funcptr_proxy(svn_repos_path_change_receiver_t, svn_repos_invoke_path_change_receiver);

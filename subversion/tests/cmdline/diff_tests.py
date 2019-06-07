@@ -3531,7 +3531,7 @@ def diff_git_empty_files(sbox):
   expected_output = make_git_diff_header(new_path, "new", "nonexistent",
                                          "working copy",
                                          add=True, text_changes=False) + [
-  ] + make_git_diff_header(iota_path, "iota", "revision 2", "working copy",
+  ] + make_git_diff_header(iota_path, "iota", "revision 2", "nonexistent",
                            delete=True, text_changes=False)
 
   # Two files in diff may be in any order.
@@ -5043,7 +5043,7 @@ def diff_symlinks(sbox):
     '===================================================================\n',
     'diff --git a/to-iota b/to-iota\n',
     'new file mode 120644\n',
-    '--- /dev/null\t(nonexistent)\n',
+    '--- a/to-iota\t(nonexistent)\n',
     '+++ b/to-iota\t(working copy)\n',
     '@@ -0,0 +1 @@\n',
     '+iota\n',
@@ -5139,6 +5139,26 @@ def diff_peg_resolve(sbox):
                                      'diff',
                                      repo_url + '/branches/A2',
                                      wc_dir, '-r1:2')
+
+@XFail()
+@Issue(4706)
+def diff_unversioned_files_git(sbox):
+  "diff unversioned files in git format"
+  sbox.build()
+  wc_dir = sbox.wc_dir
+
+  svntest.main.file_write(sbox.ospath('foo'), "foo\n")
+  svntest.main.file_write(sbox.ospath('A/bar'), "bar\n")
+  expected_output = make_diff_header("foo", "working copy", "working copy",
+                                     "foo", "A/bar") + [
+                      "@@ -1 +1 @@\n",
+                      "-foo\n",
+                      "+bar\n"
+                    ]
+  svntest.actions.run_and_verify_svn(expected_output, [],
+                                     'diff', '--git',
+                                     '--old', sbox.ospath('foo'),
+                                     '--new', sbox.ospath('A/bar'))
 
 
 ########################################################################
@@ -5236,6 +5256,7 @@ test_list = [ None,
               diff_incomplete_props,
               diff_symlinks,
               diff_peg_resolve,
+              diff_unversioned_files_git,
               ]
 
 if __name__ == '__main__':

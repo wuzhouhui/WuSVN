@@ -83,7 +83,10 @@ typedef enum svn_cl__accept_t
   svn_cl__accept_edit,
 
   /* Launch user's resolver and resolve conflict with edited file. */
-  svn_cl__accept_launch
+  svn_cl__accept_launch,
+
+  /* Use recommended resolution if available, else leave the conflict alone. */
+  svn_cl__accept_recommended
 
 } svn_cl__accept_t;
 
@@ -97,6 +100,7 @@ typedef enum svn_cl__accept_t
 #define SVN_CL__ACCEPT_THEIRS_FULL "theirs-full"
 #define SVN_CL__ACCEPT_EDIT "edit"
 #define SVN_CL__ACCEPT_LAUNCH "launch"
+#define SVN_CL__ACCEPT_RECOMMENDED "recommended"
 
 /* Return the svn_cl__accept_t value corresponding to WORD, using exact
  * case-sensitive string comparison. Return svn_cl__accept_invalid if WORD
@@ -174,6 +178,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t help;            /* print usage message */
   const char *auth_username;     /* auth username */
   const char *auth_password;     /* auth password */
+  svn_boolean_t auth_password_from_stdin; /* read password from stdin */
   const char *extensions;        /* subprocess extension args */
   apr_array_header_t *targets;   /* target list from file */
   svn_boolean_t xml;             /* output in xml, e.g., "svn log --xml" */
@@ -257,6 +262,8 @@ typedef struct svn_cl__opt_state_t
   const char *show_item;           /* print only the given item */
   svn_boolean_t adds_as_modification; /* update 'add vs add' no tree conflict */
   svn_boolean_t bypass_hooks;      /* bypass client side hooks */
+  svn_boolean_t vacuum_pristines; /* remove unreferenced pristines */
+  svn_boolean_t list;
 } svn_cl__opt_state_t;
 
 /* Conflict stats for operations such as update and merge. */
@@ -305,6 +312,9 @@ svn_opt_subcommand_t
   svn_cl__revert,
   svn_cl__resolve,
   svn_cl__resolved,
+  svn_cl__shelve,
+  svn_cl__unshelve,
+  svn_cl__shelves,
   svn_cl__status,
   svn_cl__switch,
   svn_cl__unlock,

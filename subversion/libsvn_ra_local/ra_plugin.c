@@ -1387,7 +1387,7 @@ svn_ra_local__get_dir(svn_ra_session_t *session,
             {
               /* size  */
               if (fs_entry->kind == svn_node_dir)
-                entry->size = 0;
+                entry->size = SVN_INVALID_FILESIZE;
               else
                 SVN_ERR(svn_fs_file_length(&(entry->size), root,
                                            fullpath, iterpool));
@@ -1837,7 +1837,7 @@ static svn_error_t *
 svn_ra_local__list(svn_ra_session_t *session,
                    const char *path,
                    svn_revnum_t revision,
-                   apr_array_header_t *patterns,
+                   const apr_array_header_t *patterns,
                    svn_depth_t depth,
                    apr_uint32_t dirent_fields,
                    svn_ra_dirent_receiver_t receiver,

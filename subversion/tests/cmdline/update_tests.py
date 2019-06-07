@@ -6792,7 +6792,9 @@ def missing_tmp_update(sbox):
   svntest.actions.run_and_verify_svn(None, '.*Unable to create.*',
                                      'up', wc_dir, '--set-depth', 'infinity')
 
-  svntest.actions.run_and_verify_svn(None, [], 'cleanup', wc_dir)
+  # This re-creates .svn/tmp as a side-effect.
+  svntest.actions.run_and_verify_svn(None, [], 'cleanup',
+                                     '--vacuum-pristines', wc_dir)
 
   svntest.actions.run_and_verify_update(wc_dir, None, None, None, [], False,
                                         wc_dir, '--set-depth', 'infinity')
@@ -6837,6 +6839,21 @@ def update_delete_switched(sbox):
   })
   svntest.actions.run_and_verify_update(wc_dir, None, None, expected_status,
                                         [], False, sbox.ospath('A'), '-r', 0)
+
+@XFail()
+def update_add_missing_local_add(sbox):
+  "update adds missing local addition"
+  
+  sbox.build(read_only=True)
+  
+  # Note that updating 'A' to r0 doesn't reproduce this issue...
+  sbox.simple_update('', revision='0')
+  sbox.simple_mkdir('A')
+  sbox.simple_add_text('mumumu', 'A/mu')
+  os.unlink(sbox.ospath('A/mu'))
+  os.rmdir(sbox.ospath('A'))
+  
+  sbox.simple_update()
 
 #######################################################################
 # Run the tests
@@ -6928,6 +6945,7 @@ test_list = [ None,
               update_add_conflicted_deep,
               missing_tmp_update,
               update_delete_switched,
+              update_add_missing_local_add,
              ]
 
 if __name__ == '__main__':
