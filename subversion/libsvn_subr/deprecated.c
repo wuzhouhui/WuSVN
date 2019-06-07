@@ -1288,7 +1288,7 @@ svn_rangelist_merge(svn_rangelist_t **rangelist,
                                pool, pool));
 
   return svn_error_trace(
-            svn_rangelist__combine_adjacent_ranges(*rangelist, pool));
+            svn_rangelist__canonicalize(*rangelist, pool));
 }
 
 svn_error_t *
@@ -1591,4 +1591,13 @@ svn_stream_t *
 svn_base64_encode(svn_stream_t *output, apr_pool_t *pool)
 {
   return svn_base64_encode2(output, TRUE, pool);
+}
+
+/*** From string.c ***/
+char *
+svn_cstring_join(const apr_array_header_t *strings,
+                 const char *separator,
+                 apr_pool_t *pool)
+{
+  return svn_cstring_join2(strings, separator, TRUE, pool);
 }

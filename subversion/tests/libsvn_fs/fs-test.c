@@ -7256,6 +7256,191 @@ test_cache_clear_during_stream(const svn_test_opts_t *opts,
   return SVN_NO_ERROR;
 }
 
+static svn_error_t *
+test_rep_sharing_strict_content_check(const svn_test_opts_t *opts,
+                                      apr_pool_t *pool)
+{
+  svn_fs_t *fs;
+  svn_fs_txn_t *txn;
+  svn_fs_root_t *txn_root;
+  svn_revnum_t new_rev;
+  const char *fs_path, *fs_path2;
+  apr_pool_t *subpool = svn_pool_create(pool);
+  svn_error_t *err;
+
+  /* Bail (with success) on known-untestable scenarios */
+  if (strcmp(opts->fs_type, SVN_FS_TYPE_BDB) == 0)
+    return svn_error_create(SVN_ERR_TEST_SKIPPED, NULL,
+                            "BDB repositories don't support rep-sharing");
+
+  /* Create 2 repos with same structure & size but different contents */
+  fs_path = "test-rep-sharing-strict-content-check1";
+  fs_path2 = "test-rep-sharing-strict-content-check2";
+
+  SVN_ERR(svn_test__create_fs(&fs, fs_path, opts, subpool));
+
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, 0, 0, subpool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, subpool));
+  SVN_ERR(svn_fs_make_file(txn_root, "/foo", subpool));
+  SVN_ERR(svn_test__set_file_contents(txn_root, "foo", "quite bad", subpool));
+  SVN_ERR(test_commit_txn(&new_rev, txn, NULL, subpool));
+  SVN_TEST_INT_ASSERT(new_rev, 1);
+
+  SVN_ERR(svn_test__create_fs(&fs, fs_path2, opts, subpool));
+
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, 0, 0, subpool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, subpool));
+  SVN_ERR(svn_fs_make_file(txn_root, "foo", subpool));
+  SVN_ERR(svn_test__set_file_contents(txn_root, "foo", "very good", subpool));
+  SVN_ERR(test_commit_txn(&new_rev, txn, NULL, subpool));
+  SVN_TEST_INT_ASSERT(new_rev, 1);
+
+  /* Close both repositories. */
+  svn_pool_clear(subpool);
+
+  /* Doctor the first repo such that it uses the wrong rep-cache. */
+  SVN_ERR(svn_io_copy_file(svn_relpath_join(fs_path2, "rep-cache.db", pool),
+                           svn_relpath_join(fs_path, "rep-cache.db", pool),
+                           FALSE, pool));
+
+  /* Changing the file contents such that rep-sharing would kick in if
+     the file contents was not properly compared. */
+  SVN_ERR(svn_fs_open2(&fs, fs_path, NULL, subpool, subpool));
+
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, 1, 0, subpool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, subpool));
+  err = svn_test__set_file_contents(txn_root, "foo", "very good", subpool);
+  SVN_TEST_ASSERT_ERROR(err, SVN_ERR_FS_AMBIGUOUS_CHECKSUM_REP);
+
+  svn_pool_destroy(subpool);
+
+  return SVN_NO_ERROR;
+}
+
+static svn_error_t *
+closest_copy_test_svn_4677(const svn_test_opts_t *opts,
+                           apr_pool_t *pool)
+{
+  svn_fs_t *fs;
+  svn_fs_txn_t *txn;
+  svn_fs_root_t *txn_root, *rev_root, *croot;
+  svn_revnum_t after_rev;
+  const char *cpath;
+  apr_pool_t *spool = svn_pool_create(pool);
+
+  /* Prepare a filesystem. */
+  SVN_ERR(svn_test__create_fs(&fs, "test-repo-svn-4677",
+                              opts, pool));
+
+  /* In first txn, create file A/foo. */
+  SVN_ERR(svn_fs_begin_txn(&txn, fs, 0, spool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, spool));
+  SVN_ERR(svn_fs_make_dir(txn_root, "A", spool));
+  SVN_ERR(svn_fs_make_file(txn_root, "A/foo", spool));
+  SVN_ERR(test_commit_txn(&after_rev, txn, NULL, spool));
+  svn_pool_clear(spool);
+  SVN_ERR(svn_fs_revision_root(&rev_root, fs, after_rev, spool));
+
+  /* Move A to B, and commit. */
+  SVN_ERR(svn_fs_begin_txn(&txn, fs, after_rev, spool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, spool));
+  SVN_ERR(svn_fs_copy(rev_root, "A", txn_root, "B", spool));
+  SVN_ERR(svn_fs_delete(txn_root, "A", spool));
+  SVN_ERR(test_commit_txn(&after_rev, txn, NULL, spool));
+  svn_pool_clear(spool);
+  SVN_ERR(svn_fs_revision_root(&rev_root, fs, after_rev, spool));
+
+  /* Replace file B/foo with directory B/foo, add B/foo/bar, and commit. */
+  SVN_ERR(svn_fs_begin_txn(&txn, fs, after_rev, spool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, spool));
+  SVN_ERR(svn_fs_delete(txn_root, "B/foo", spool));
+  SVN_ERR(svn_fs_make_dir(txn_root, "B/foo", spool));
+  SVN_ERR(svn_fs_make_file(txn_root, "B/foo/bar", spool));
+  SVN_ERR(test_commit_txn(&after_rev, txn, NULL, spool));
+  svn_pool_clear(spool);
+  SVN_ERR(svn_fs_revision_root(&rev_root, fs, after_rev, spool));
+
+  /* B/foo/bar has been copied.
+     Issue 4677 was caused by returning an error in this situation. */
+  SVN_ERR(svn_fs_closest_copy(&croot, &cpath, rev_root, "B/foo/bar", spool));
+  SVN_TEST_ASSERT(cpath == NULL);
+  SVN_TEST_ASSERT(croot == NULL);
+
+  return SVN_NO_ERROR;
+}
+
+static svn_error_t *
+test_closest_copy_file_replaced_with_dir(const svn_test_opts_t *opts,
+                                         apr_pool_t *pool)
+{
+  svn_fs_t *fs;
+  svn_fs_txn_t *txn;
+  svn_fs_root_t *txn_root;
+  svn_fs_root_t *rev_root;
+  svn_revnum_t youngest_rev;
+  svn_fs_root_t *copy_root;
+  const char *copy_path;
+
+  /* Prepare a filesystem. */
+  SVN_ERR(svn_test__create_fs(&fs, "test-closest-copy-file-replaced-with-dir",
+                              opts, pool));
+
+  youngest_rev = 0;
+
+  /* Modeled after the case described in the thread:
+       "[PATCH] A test for "Can't get entries" error"
+       https://lists.apache.org/thread.html/693a95b0da834387e78a7f08df2392b634397d32f37428c81c02f8c5@%3Cdev.subversion.apache.org%3E
+  */
+  /* r1: Add a directory with a file. */
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
+  SVN_ERR(svn_fs_make_dir(txn_root, "/A", pool));
+  SVN_ERR(svn_fs_make_file(txn_root, "/A/mu", pool));
+  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
+  SVN_TEST_INT_ASSERT(youngest_rev, 1);
+
+  /* r2: Copy the directory. */
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
+  SVN_ERR(svn_fs_revision_root(&rev_root, fs, 1, pool));
+  SVN_ERR(svn_fs_copy(rev_root, "/A", txn_root, "/B", pool));
+  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
+  SVN_TEST_INT_ASSERT(youngest_rev, 2);
+
+  /* r3: Delete the file. */
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
+  SVN_ERR(svn_fs_delete(txn_root, "/B/mu", pool));
+  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
+  SVN_TEST_INT_ASSERT(youngest_rev, 3);
+
+  /* r4: Replace the file with a new directory containing a file. */
+  SVN_ERR(svn_fs_begin_txn2(&txn, fs, youngest_rev, 0, pool));
+  SVN_ERR(svn_fs_txn_root(&txn_root, txn, pool));
+  SVN_ERR(svn_fs_make_dir(txn_root, "/B/mu", pool));
+  SVN_ERR(svn_fs_make_file(txn_root, "/B/mu/iota", pool));
+  SVN_ERR(test_commit_txn(&youngest_rev, txn, NULL, pool));
+  SVN_TEST_INT_ASSERT(youngest_rev, 4);
+
+  /* Test a couple of svn_fs_closest_copy() calls; the second call used
+     to fail with an unexpected SVN_ERR_FS_NOT_DIRECTORY error. */
+
+  SVN_ERR(svn_fs_revision_root(&rev_root, fs, 2, pool));
+  SVN_ERR(svn_fs_closest_copy(&copy_root, &copy_path, rev_root, "/B/mu", pool));
+
+  SVN_TEST_ASSERT(copy_root != NULL);
+  SVN_TEST_INT_ASSERT(svn_fs_revision_root_revision(copy_root), 2);
+  SVN_TEST_STRING_ASSERT(copy_path, "/B");
+
+  SVN_ERR(svn_fs_revision_root(&rev_root, fs, 4, pool));
+  SVN_ERR(svn_fs_closest_copy(&copy_root, &copy_path, rev_root, "/B/mu/iota", pool));
+
+  SVN_TEST_ASSERT(copy_root == NULL);
+  SVN_TEST_ASSERT(copy_path == NULL);
+
+  return SVN_NO_ERROR;
+}
+
 /* ------------------------------------------------------------------------ */
 
 /* The test table.  */
@@ -7396,6 +7581,12 @@ static struct svn_test_descriptor_t test_funcs[] =
                        "test commit with locked rep-cache"),
     SVN_TEST_OPTS_PASS(test_cache_clear_during_stream,
                        "test clearing the cache while streaming a rep"),
+    SVN_TEST_OPTS_PASS(test_rep_sharing_strict_content_check,
+                       "test rep-sharing on content rather than SHA1"),
+    SVN_TEST_OPTS_PASS(closest_copy_test_svn_4677,
+                       "test issue SVN-4677 regression"),
+    SVN_TEST_OPTS_PASS(test_closest_copy_file_replaced_with_dir,
+                       "svn_fs_closest_copy after replacing file with dir"),
     SVN_TEST_NULL
   };
 

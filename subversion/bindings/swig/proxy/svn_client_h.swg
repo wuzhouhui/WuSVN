@@ -96,6 +96,7 @@
 %opaque_proxy(svn_client_conflict_t);
 %opaque_proxy(svn_client_conflict_option_t);
 %proxy(svn_client_copy_source_t);
+%proxy(svn_client_shelved_patch_info_t);
 %proxy(svn_info_t);
 %proxy(svn_client_info2_t);
 #endif

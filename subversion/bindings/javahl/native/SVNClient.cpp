@@ -167,8 +167,9 @@ const char *SVNClient::getLastPath()
  * List directory entries of a URL.
  */
 void SVNClient::list(const char *url, Revision &revision,
-                     Revision &pegRevision, svn_depth_t depth,
-                     int direntFields, bool fetchLocks,
+                     Revision &pegRevision, StringArray &patterns,
+                     svn_depth_t depth, int direntFields,
+                     bool fetchLocks, bool includeExternals,
                      ListCallback *callback)
 {
     SVN::Pool subPool(pool);
@@ -181,13 +182,14 @@ void SVNClient::list(const char *url, Revision &revision,
     Path urlPath(url, subPool);
     SVN_JNI_ERR(urlPath.error_occurred(), );
 
-    SVN_JNI_ERR(svn_client_list3(urlPath.c_str(),
+    SVN_JNI_ERR(svn_client_list4(urlPath.c_str(),
                                  pegRevision.revision(),
                                  revision.revision(),
+                                 patterns.array(subPool),
                                  depth,
                                  direntFields,
                                  fetchLocks,
-                                 FALSE, // include_externals
+                                 includeExternals,
                                  ListCallback::callback,
                                  callback,
                                  ctx, subPool.getPool()), );
@@ -1053,7 +1055,8 @@ void SVNClient::diff(const char *target1, Revision &revision1,
                                    options.useGitDiffFormat(),
                                    SVN_APR_LOCALE_CHARSET,
                                    outputStream.getStream(subPool),
-                                   NULL /* error file */,
+                                   // Discard stderr; TODO: Update JavaHL API
+                                   svn_stream_empty(subPool.getPool()),
                                    changelists.array(subPool),
                                    ctx,
                                    subPool.getPool()),
@@ -1082,7 +1085,8 @@ void SVNClient::diff(const char *target1, Revision &revision1,
                                options.useGitDiffFormat(),
                                SVN_APR_LOCALE_CHARSET,
                                outputStream.getStream(subPool),
-                               NULL /* error stream */,
+                               // Discard stderr; TODO: Update JavaHL API
+                               svn_stream_empty(subPool.getPool()),
                                changelists.array(subPool),
                                ctx,
                                subPool.getPool()),

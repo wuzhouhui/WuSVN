@@ -1681,7 +1681,7 @@ get_file(svn_ra_svn_conn_t *conn,
 /* Translate all the words in DIRENT_FIELDS_LIST into the flags in
  * DIRENT_FIELDS_P.  If DIRENT_FIELDS_LIST is NULL, set all flags. */
 static svn_error_t *
-parse_dirent_fields(apr_uint64_t *dirent_fields_p,
+parse_dirent_fields(apr_uint32_t *dirent_fields_p,
                     svn_ra_svn__list_t *dirent_fields_list)
 {
   static const svn_string_t str_kind
@@ -1697,7 +1697,7 @@ parse_dirent_fields(apr_uint64_t *dirent_fields_p,
   static const svn_string_t str_last_author
     = SVN__STATIC_STRING(SVN_RA_SVN_DIRENT_LAST_AUTHOR);
 
-  apr_uint64_t dirent_fields;
+  apr_uint32_t dirent_fields;
 
   if (! dirent_fields_list)
     {
@@ -1752,7 +1752,7 @@ get_dir(svn_ra_svn_conn_t *conn,
   apr_pool_t *subpool;
   svn_boolean_t want_props, want_contents;
   apr_uint64_t wants_inherited_props;
-  apr_uint64_t dirent_fields;
+  apr_uint32_t dirent_fields;
   svn_ra_svn__list_t *dirent_fields_list = NULL;
   int i;
   authz_baton_t ab;
@@ -2821,15 +2821,9 @@ static svn_error_t *file_rev_handler(void *baton, const char *path,
       svn_stream_set_write(stream, svndiff_handler);
       svn_stream_set_close(stream, svndiff_close_handler);
 
-      /* If the connection does not support SVNDIFF1 or if we don't want to use
-       * compression, use the non-compressing "version 0" implementation */
-      if (   svn_ra_svn_compression_level(frb->conn) > 0
-          && svn_ra_svn_has_capability(frb->conn, SVN_RA_SVN_CAP_SVNDIFF1))
-        svn_txdelta_to_svndiff3(d_handler, d_baton, stream, 1,
-                                svn_ra_svn_compression_level(frb->conn), pool);
-      else
-        svn_txdelta_to_svndiff3(d_handler, d_baton, stream, 0,
-                                svn_ra_svn_compression_level(frb->conn), pool);
+      svn_txdelta_to_svndiff3(d_handler, d_baton, stream,
+                              svn_ra_svn__svndiff_version(frb->conn),
+                              svn_ra_svn_compression_level(frb->conn), pool);
     }
   else
     SVN_ERR(svn_ra_svn__write_cstring(frb->conn, pool, ""));
@@ -3591,7 +3585,7 @@ typedef struct list_receiver_baton_t
   svn_ra_svn_conn_t *conn;
 
   /* Send the field selected by these flags. */
-  apr_uint64_t dirent_fields;
+  apr_uint32_t dirent_fields;
 } list_receiver_baton_t;
 
 /* Implements svn_repos_dirent_receiver_t, sending DIRENT and PATH to the
@@ -3804,6 +3798,7 @@ find_repos(const char *url,
 {
   const char *path, *full_path, *fs_path, *hooks_env;
   svn_stringbuf_t *url_buf;
+  svn_boolean_t sasl_requested;
 
   /* Skip past the scheme and authority part. */
   path = skip_scheme_part(url);
@@ -3877,14 +3872,16 @@ find_repos(const char *url,
   SVN_ERR(load_authz_config(repository, repository->repos_root, cfg,
                             result_pool));
 
-#ifdef SVN_HAVE_SASL
+  /* Should we use Cyrus SASL? */
+  SVN_ERR(svn_config_get_bool(cfg, &sasl_requested,
+                              SVN_CONFIG_SECTION_SASL,
+                              SVN_CONFIG_OPTION_USE_SASL, FALSE));
+  if (sasl_requested)
     {
+#ifdef SVN_HAVE_SASL
       const char *val;
 
-      /* Should we use Cyrus SASL? */
-      SVN_ERR(svn_config_get_bool(cfg, &repository->use_sasl,
-                                  SVN_CONFIG_SECTION_SASL,
-                                  SVN_CONFIG_OPTION_USE_SASL, FALSE));
+      repository->use_sasl = sasl_requested;
 
       svn_config_get(cfg, &val, SVN_CONFIG_SECTION_SASL,
                     SVN_CONFIG_OPTION_MIN_SSF, "0");
@@ -3893,8 +3890,18 @@ find_repos(const char *url,
       svn_config_get(cfg, &val, SVN_CONFIG_SECTION_SASL,
                     SVN_CONFIG_OPTION_MAX_SSF, "256");
       SVN_ERR(svn_cstring_atoui(&repository->max_ssf, val));
+#else /* !SVN_HAVE_SASL */
+      return svn_error_createf(SVN_ERR_BAD_CONFIG_VALUE, NULL,
+                               _("SASL requested but not compiled in; "
+                                 "set '%s' to 'false' or recompile "
+                                 "svnserve with SASL support"),
+                               SVN_CONFIG_OPTION_USE_SASL);
+#endif /* SVN_HAVE_SASL */
     }
-#endif
+  else
+    {
+      repository->use_sasl = FALSE;
+    }
 
   /* Use the repository UUID as the default realm. */
   SVN_ERR(svn_fs_get_uuid(repository->fs, &repository->realm, scratch_pool));
@@ -4122,10 +4129,11 @@ construct_server_baton(server_baton_t **baton,
    * send an empty mechlist. */
   if (params->compression_level > 0)
     SVN_ERR(svn_ra_svn__write_cmd_response(conn, scratch_pool,
-                                           "nn()(wwwwwwwwwwww)",
+                                           "nn()(wwwwwwwwwwwww)",
                                            (apr_uint64_t) 2, (apr_uint64_t) 2,
                                            SVN_RA_SVN_CAP_EDIT_PIPELINE,
                                            SVN_RA_SVN_CAP_SVNDIFF1,
+                                           SVN_RA_SVN_CAP_SVNDIFF2_ACCEPTED,
                                            SVN_RA_SVN_CAP_ABSENT_ENTRIES,
                                            SVN_RA_SVN_CAP_COMMIT_REVPROPS,
                                            SVN_RA_SVN_CAP_DEPTH,

@@ -78,6 +78,7 @@ typedef struct svnconflict_cmd_baton_t
    use the short option letter as identifier.  */
 typedef enum svnconflict_longopt_t {
   opt_auth_password = SVN_OPT_FIRST_LONGOPT_ID,
+  opt_auth_password_from_stdin,
   opt_auth_username,
   opt_config_dir,
   opt_config_options,
@@ -86,7 +87,7 @@ typedef enum svnconflict_longopt_t {
 
 /* Option codes and descriptions.
  * The entire list must be terminated with an entry of nulls. */
-const apr_getopt_option_t svnconflict_options[] =
+static const apr_getopt_option_t svnconflict_options[] =
 {
   {"help",          'h', 0, N_("show help on a subcommand")},
   {NULL,            '?', 0, N_("show help on a subcommand")},
@@ -96,6 +97,9 @@ const apr_getopt_option_t svnconflict_options[] =
                     N_("specify a password ARG (caution: on many operating\n"
                        "                             "
                        "systems, other users will be able to see this)")},
+  {"password-from-stdin",
+                    opt_auth_password_from_stdin, 0,
+                    N_("read password from stdin")},
   {"config-dir",    opt_config_dir, 1,
                     N_("read user configuration files from directory ARG")},
   {"config-option", opt_config_options, 1,
@@ -140,10 +144,11 @@ static svn_error_t * svnconflict_resolve_tree(apr_getopt_t *, void *,
  */
 
 /* Options that apply to all commands. */
-const int svnconflict_global_options[] =
-{ opt_auth_username, opt_auth_password, opt_config_dir, opt_config_options, 0 };
+static const int svnconflict_global_options[] =
+{ opt_auth_username, opt_auth_password, opt_auth_password_from_stdin,
+  opt_config_dir, opt_config_options, 0 };
 
-const svn_opt_subcommand_desc2_t svnconflict_cmd_table[] =
+static const svn_opt_subcommand_desc2_t svnconflict_cmd_table[] =
 {
   /* This command is also invoked if we see option "--help", "-h" or "-?". */
   { "help", svnconflict_help, {"?", "h"}, N_
@@ -639,6 +644,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
   svn_auth_baton_t *ab;
   svn_config_t *cfg_config;
   apr_hash_t *cfg_hash;
+  svn_boolean_t read_pass_from_stdin = FALSE;
 
   received_opts = apr_array_make(pool, SVN_OPT_MAX_OPTIONS, sizeof(int));
 
@@ -704,6 +710,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         SVN_ERR(svn_utf_cstring_to_utf8(&opt_state.auth_password,
                                         opt_arg, pool));
         break;
+      case opt_auth_password_from_stdin:
+        read_pass_from_stdin = TRUE;
+        break;
       case opt_config_dir:
         SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
         opt_state.config_dir = svn_dirent_internal_style(utf8_opt_arg, pool);
@@ -764,18 +773,18 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         }
       else
         {
-          const char *first_arg = os->argv[os->ind++];
+          const char *first_arg;
+
+          SVN_ERR(svn_utf_cstring_to_utf8(&first_arg, os->argv[os->ind++],
+                                          pool));
           subcommand = svn_opt_get_canonical_subcommand2(svnconflict_cmd_table,
                                                          first_arg);
           if (subcommand == NULL)
             {
-              const char *first_arg_utf8;
-              SVN_ERR(svn_utf_cstring_to_utf8(&first_arg_utf8,
-                                              first_arg, pool));
               svn_error_clear
                 (svn_cmdline_fprintf(stderr, pool,
                                      _("Unknown subcommand: '%s'\n"),
-                                     first_arg_utf8));
+                                     first_arg));
               svn_error_clear(svnconflict_help(NULL, NULL, pool));
               *exit_code = EXIT_FAILURE;
               return SVN_NO_ERROR;
@@ -844,6 +853,13 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
     }
 
   cfg_config = svn_hash_gets(cfg_hash, SVN_CONFIG_CATEGORY_CONFIG);
+
+  /* Get password from stdin if necessary */
+  if (read_pass_from_stdin)
+    {
+      SVN_ERR(svn_cmdline__stdin_readline(&opt_state.auth_password, pool, pool));
+    }
+
 
   /* Create a client context object. */
   command_baton.opt_state = &opt_state;

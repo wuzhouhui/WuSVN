@@ -1975,7 +1975,7 @@ typedef svn_error_t *(*svn_client_import_filter_func_t)(
  * on @a url if @a url is already under versioned control, or the nearest parents
  * of @a path which are already under version control if not.
  *
- * If @a ignore_unknown_node_types is @c FALSE, ignore files of which the
+ * If @a ignore_unknown_node_types is @c TRUE, ignore files of which the
  * node type is unknown, such as device files and pipes.
  *
  * If @a filter_callback is non-NULL, call it for each node that isn't ignored
@@ -4376,7 +4376,7 @@ typedef struct svn_client_conflict_t svn_client_conflict_t;
 typedef struct svn_client_conflict_option_t svn_client_conflict_option_t;
 
 /**
- * A public enumuneration of conflict option IDs.
+ * A public enumeration of conflict option IDs.
  *
  * @since New in 1.10, unless noted otherwise.
  */
@@ -6251,8 +6251,7 @@ svn_client_revprop_list(apr_hash_t **props,
  * #svn_opt_revision_unspecified, then it defaults to #svn_opt_revision_head
  * for URLs or #svn_opt_revision_working for WC targets.
  *
- * @a revision is the revision that should be exported, which is only used
- * when exporting from a repository.
+ * @a revision is the revision that should be exported.
  *
  * @a peg_revision and @a revision must not be @c NULL.
  *
@@ -6464,7 +6463,7 @@ typedef svn_error_t *(*svn_client_list_func_t)(void *baton,
  * its children.  If @a path_or_url is non-existent, return
  * #SVN_ERR_FS_NOT_FOUND.
  *
- * If the @a pattern array of <tt>const char *</tt> is not @c NULL, only
+ * If the @a patterns array of <tt>const char *</tt> is not @c NULL, only
  * report paths whose last segment matches one of the specified glob
  * patterns.  This does not affect the size of the tree nor the number of
  * externals being covered.
@@ -6497,7 +6496,7 @@ svn_error_t *
 svn_client_list4(const char *path_or_url,
                  const svn_opt_revision_t *peg_revision,
                  const svn_opt_revision_t *revision,
-                 apr_array_header_t *patterns,
+                 const apr_array_header_t *patterns,
                  svn_depth_t depth,
                  apr_uint32_t dirent_fields,
                  svn_boolean_t fetch_locks,
@@ -6507,7 +6506,7 @@ svn_client_list4(const char *path_or_url,
                  svn_client_ctx_t *ctx,
                  apr_pool_t *scratch_pool);
 
-/** Similar to svn_client_list4(), but with @a patterm set to @c NULL.
+/** Similar to svn_client_list4(), but with @a patterns set to @c NULL.
  *
  * @since New in 1.8.
  *
@@ -6716,6 +6715,153 @@ svn_client_cat(svn_stream_t *out,
 
 
 
+/** Shelving commands
+ *
+ * @defgroup svn_client_shelve_funcs Client Shelving Functions
+ * @{
+ */
+
+/** Shelve a change.
+ *
+ * Shelve as @a name the local modifications found by @a paths, @a depth,
+ * @a changelists. Revert the shelved change from the WC unless @a keep_local
+ * is true.
+ *
+ * If @a dry_run is true, don't actually do it.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_shelve(const char *name,
+                  const apr_array_header_t *paths,
+                  svn_depth_t depth,
+                  const apr_array_header_t *changelists,
+                  svn_boolean_t keep_local,
+                  svn_boolean_t dry_run,
+                  svn_client_ctx_t *ctx,
+                  apr_pool_t *pool);
+
+/** Unshelve the shelved change @a name.
+ *
+ * @a local_abspath is any path in the WC and is used to find the WC root.
+ * Rename the shelved patch to add a '.bak' extension unless @a keep is true.
+ *
+ * If @a dry_run is true, don't actually do it.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_unshelve(const char *name,
+                    const char *local_abspath,
+                    svn_boolean_t keep,
+                    svn_boolean_t dry_run,
+                    svn_client_ctx_t *ctx,
+                    apr_pool_t *pool);
+
+/** Delete the shelved patch @a name.
+ *
+ * @a local_abspath is any path in the WC and is used to find the WC root.
+ *
+ * If @a dry_run is true, don't actually do it.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_shelves_delete(const char *name,
+                          const char *local_abspath,
+                          svn_boolean_t dry_run,
+                          svn_client_ctx_t *ctx,
+                          apr_pool_t *pool);
+
+/** Information about a shelved patch.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+typedef struct svn_client_shelved_patch_info_t
+{
+  const char *message;  /* first line of log message */
+  const char *patch_path;  /* abspath of the patch file */
+  svn_io_dirent2_t *dirent;  /* info about the patch file */
+  apr_time_t mtime;  /* a copy of dirent->mtime */
+} svn_client_shelved_patch_info_t;
+
+/** Set @a *shelved_patch_infos to a hash, keyed by patch name, of pointers to
+ * @c svn_client_shelved_patch_info_t structures.
+ *
+ * @a local_abspath is any path in the WC and is used to find the WC root.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_shelves_list(apr_hash_t **shelved_patch_infos,
+                        const char *local_abspath,
+                        svn_client_ctx_t *ctx,
+                        apr_pool_t *result_pool,
+                        apr_pool_t *scratch_pool);
+
+/** Set @a *any_shelved to indicate if there are any shelved changes in this WC.
+ *
+ * This shall provide the answer fast, regardless of how many changes
+ * are stored, unlike svn_client_shelves_list().
+ *
+ * ### Initial implementation isn't O(1) fast -- it just calls
+ *     svn_client_shelves_list().
+ *
+ * @a local_abspath is any path in the WC and is used to find the WC root.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_shelves_any(svn_boolean_t *any_shelved,
+                       const char *local_abspath,
+                       svn_client_ctx_t *ctx,
+                       apr_pool_t *scratch_pool);
+
+/** Set @a *affected_paths to a hash with one entry for each path affected
+ * by the shelf @a name. The hash key is the old path and value is
+ * the new path, both relative to the WC root. The key and value are the
+ * same except when a path is moved or copied.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_shelf_get_paths(apr_hash_t **affected_paths,
+                           const char *name,
+                           const char *local_abspath,
+                           svn_client_ctx_t *ctx,
+                           apr_pool_t *result_pool,
+                           apr_pool_t *scratch_pool);
+
+/** Set @a *has_changes to indicate whether the shelf @a name
+ * contains any modifications, in other words if svn_client_shelf_get_paths()
+ * would return a non-empty set of paths.
+ *
+ * @since New in 1.10.
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client_shelf_has_changes(svn_boolean_t *has_changes,
+                             const char *name,
+                             const char *local_abspath,
+                             svn_client_ctx_t *ctx,
+                             apr_pool_t *scratch_pool);
+
+/** @} */
+
 /** Changelist commands
  *
  * @defgroup svn_client_changelist_funcs Client Changelist Functions

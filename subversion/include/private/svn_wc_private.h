@@ -348,6 +348,20 @@ svn_wc__get_wcroot(const char **wcroot_abspath,
                    apr_pool_t *result_pool,
                    apr_pool_t *scratch_pool);
 
+/** Set @a *dir to the abspath of the directory in which shelved patches
+ * are stored, which is inside the WC's administrative directory, and ensure
+ * the directory exists.
+ *
+ * @a local_abspath is any path in the WC, and is used to find the WC root.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_wc__get_shelves_dir(char **dir,
+                        svn_wc_context_t *wc_ctx,
+                        const char *local_abspath,
+                        apr_pool_t *result_pool,
+                        apr_pool_t *scratch_pool);
+
 /**
  * The following are temporary APIs to aid in the transition from wc-1 to
  * wc-ng.  Use them for new development now, but they may be disappearing
@@ -1925,7 +1939,7 @@ svn_wc__conflict_tree_update_local_add(svn_wc_context_t *wc_ctx,
                                        apr_pool_t *scratch_pool);
 
 /* Find nodes in the working copy which corresponds to the new location
- * MOVED_TO_REPOS_RELPATH@REV of the tree conflict victim at VICTIM_ABSPATH.
+ * MOVED_TO_REPOS_RELPATH of the tree conflict victim at VICTIM_ABSPATH.
  * The nodes must be of the same node kind as VICTIM_NODE_KIND.
  * If no such node can be found, set *POSSIBLE_TARGETS to an empty array.
  *
@@ -1935,10 +1949,10 @@ svn_wc__conflict_tree_update_local_add(svn_wc_context_t *wc_ctx,
  * to the implementation of this function.
  * Note that this function may not necessarily return a node which was
  * actually moved. The only hard guarantee is that the node corresponds to
- * the repository node MOVED_TO_REPOS_RELPATH@REV specified by the caller.
- * In many cases, this will be a moved node if the caller's parameters are
- * correct. Users should be able to perform a sanity check on the results
- * returned from this function.
+ * the repository relpath MOVED_TO_REPOS_RELPATH specified by the caller.
+ * Users should perform a sanity check on the results returned from this
+ * function, e.g. establish whether the MOVED_TO_REPOS_RELPATH at its
+ * current checked-out revision shares ancestry with the conflict victim.
  */
 svn_error_t *
 svn_wc__guess_incoming_move_target_nodes(apr_array_header_t **possible_targets,
@@ -1946,7 +1960,6 @@ svn_wc__guess_incoming_move_target_nodes(apr_array_header_t **possible_targets,
                                          const char *victim_abspath,
                                          svn_node_kind_t victim_node_kind,
                                          const char *moved_to_repos_relpath,
-                                         svn_revnum_t rev,
                                          apr_pool_t *result_pool,
                                          apr_pool_t *scratch_pool);
 
@@ -2061,6 +2074,17 @@ svn_wc__read_conflict_descriptions2_t(const apr_array_header_t **conflicts,
                                       const char *local_abspath,
                                       apr_pool_t *result_pool,
                                       apr_pool_t *scratch_pool);
+
+/* Internal version of svn_wc_translated_stream(), accepting a working
+   copy context. */
+svn_error_t *
+svn_wc__translated_stream(svn_stream_t **stream,
+                          svn_wc_context_t *wc_ctx,
+                          const char *local_abspath,
+                          const char *versioned_abspath,
+                          apr_uint32_t flags,
+                          apr_pool_t *result_pool,
+                          apr_pool_t *scratch_pool);
 
 #ifdef __cplusplus
 }

@@ -109,6 +109,7 @@ write_propdel_to_stringbuf(svn_stringbuf_t **strbuf,
  * Return TRUE if any prefix is a prefix of PATH (matching whole path
  * components); FALSE otherwise.
  * PATH starts with a '/', as do the (const char *) paths in PREFIXES. */
+/* This function is a duplicate of svnadmin.c:ary_prefix_match(). */
 static svn_boolean_t
 ary_prefix_match(const apr_array_header_t *pfxlist, const char *path)
 {
@@ -529,7 +530,8 @@ new_node_record(void **node_baton,
             {
               return svn_error_createf
                 (SVN_ERR_INCOMPLETE_DATA, 0,
-                 _("Invalid copy source path '%s'"), copyfrom_path);
+                 _("Invalid copy source path '%s' for '%s'"),
+                 copyfrom_path, node_path);
             }
         }
 
@@ -610,7 +612,8 @@ new_node_record(void **node_baton,
               if (! (cf_renum_val && SVN_IS_VALID_REVNUM(cf_renum_val->rev)))
                 return svn_error_createf
                   (SVN_ERR_NODE_UNEXPECTED_KIND, NULL,
-                   _("No valid copyfrom revision in filtered stream"));
+                   _("No valid copyfrom revision in filtered stream for '%s'"),
+                   node_path);
               svn_repos__dumpfile_header_pushf(
                 nb->headers, SVN_REPOS_DUMPFILE_NODE_COPYFROM_REV,
                 "%ld", cf_renum_val->rev);
@@ -1371,7 +1374,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
           opt_state.skip_missing_merge_sources = TRUE;
           break;
         case svndumpfilter__targets:
-          opt_state.targets_file = opt_arg;
+          SVN_ERR(svn_utf_cstring_to_utf8(&opt_state.targets_file,
+                                          opt_arg, pool));
           break;
         default:
           {
@@ -1428,18 +1432,17 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         }
       else
         {
-          const char *first_arg = os->argv[os->ind++];
+          const char *first_arg;
+
+          SVN_ERR(svn_utf_cstring_to_utf8(&first_arg, os->argv[os->ind++],
+                                          pool));
           subcommand = svn_opt_get_canonical_subcommand2(cmd_table, first_arg);
           if (subcommand == NULL)
             {
-              const char* first_arg_utf8;
-              SVN_ERR(svn_utf_cstring_to_utf8(&first_arg_utf8, first_arg,
-                                              pool));
-
               svn_error_clear(
                 svn_cmdline_fprintf(stderr, pool,
                                     _("Unknown subcommand: '%s'\n"),
-                                    first_arg_utf8));
+                                    first_arg));
               SVN_ERR(subcommand_help(NULL, NULL, pool));
               *exit_code = EXIT_FAILURE;
               return SVN_NO_ERROR;
@@ -1472,18 +1475,13 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
       if (opt_state.targets_file)
         {
           svn_stringbuf_t *buffer, *buffer_utf8;
-          const char *utf8_targets_file;
           apr_array_header_t *targets = apr_array_make(pool, 0,
                                                        sizeof(const char *));
 
           /* We need to convert to UTF-8 now, even before we divide
              the targets into an array, because otherwise we wouldn't
              know what delimiter to use for svn_cstring_split().  */
-
-          SVN_ERR(svn_utf_cstring_to_utf8(&utf8_targets_file,
-                                          opt_state.targets_file, pool));
-
-          SVN_ERR(svn_stringbuf_from_file2(&buffer, utf8_targets_file,
+          SVN_ERR(svn_stringbuf_from_file2(&buffer, opt_state.targets_file,
                                            pool));
           SVN_ERR(svn_utf_stringbuf_to_utf8(&buffer_utf8, buffer, pool));
 
