@@ -1,0 +1,126 @@
+From 963a1386c9fca477d63156f1185e54be2cea5d05 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 27 Aug 2017 09:10:57 +0800
+Subject: [PATCH 42/95] More accurate diff output when "svn ci -v"
+
+In previous, "svn ci -v" may contain diff outputs that won't be committed.
+---
+ subversion/include/private/svn_cmdline_private.h |  1 +
+ subversion/libsvn_subr/cmdline.c                 | 26 ++++++++++++++++++++----
+ subversion/svn/propedit-cmd.c                    |  3 ++-
+ subversion/svn/util.c                            |  1 +
+ subversion/svnmucc/svnmucc.c                     |  2 +-
+ 5 files changed, 27 insertions(+), 6 deletions(-)
+
+diff --git a/subversion/include/private/svn_cmdline_private.h b/subversion/include/private/svn_cmdline_private.h
+index 9d727ee..11708d9 100644
+--- a/subversion/include/private/svn_cmdline_private.h
++++ b/subversion/include/private/svn_cmdline_private.h
+@@ -202,6 +202,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents,
+                                     svn_boolean_t as_text,
+                                     const char *encoding,
+                                     svn_boolean_t verbose,
++                                    const apr_array_header_t *commit_items,
+                                     apr_pool_t *pool);
+ 
+ 
+diff --git a/subversion/libsvn_subr/cmdline.c b/subversion/libsvn_subr/cmdline.c
+index e87d9d6..1092943 100644
+--- a/subversion/libsvn_subr/cmdline.c
++++ b/subversion/libsvn_subr/cmdline.c
+@@ -44,6 +44,7 @@
+ #include <apr_pools.h>
+ #include <apr_signal.h>
+ 
++#include "svn_client.h"
+ #include "svn_cmdline.h"
+ #include "svn_ctype.h"
+ #include "svn_dso.h"
+@@ -1362,6 +1363,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+                                     svn_boolean_t as_text,
+                                     const char *encoding,
+                                     svn_boolean_t verbose,
++                                    const apr_array_header_t *commit_items,
+                                     apr_pool_t *pool)
+ {
+   const char *editor;
+@@ -1468,10 +1470,26 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+     goto cleanup;
+ 
+   if (verbose) {
+-    char *buf = apr_pcalloc(pool, (strlen("svn di >> ") + strlen(tmpfile_name)
+-          + 2) * sizeof(*buf));
+-    sprintf(buf, "svn di >> %s", tmpfile_name);
+-    system(buf);
++    int i, len = 0;
++    char *buf;
++    for (i = 0; i < commit_items->nelts; i++)
++      {
++        int t = strlen((APR_ARRAY_IDX(commit_items, i,
++                svn_client_commit_item3_t *))->path);
++        if (t > len)
++          len = t;
++      }
++    buf = apr_pcalloc(pool, (strlen("svn di --properties-only  >> ") +
++          strlen(tmpfile_name) + len + 2) * sizeof(*buf));
++    for (i = 0; i < commit_items->nelts; i++)
++      {
++        svn_client_commit_item3_t *item
++            = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
++        sprintf(buf, "svn di %s %s >> %s",
++            item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
++            "--properties-only" : "", item->path, tmpfile_name);
++        system(buf);
++      }
+   }
+ 
+   /* Get information about the temporary file before the user has
+diff --git a/subversion/svn/propedit-cmd.c b/subversion/svn/propedit-cmd.c
+index 0dede1d..1c7c2b9 100644
+--- a/subversion/svn/propedit-cmd.c
++++ b/subversion/svn/propedit-cmd.c
+@@ -146,7 +146,7 @@ svn_cl__propedit(apr_getopt_t *os,
+                propval, "svn-prop",
+                ctx->config,
+                svn_prop_needs_translation(pname),
+-               opt_state->encoding, opt_state->verbose, pool));
++               opt_state->encoding, opt_state->verbose, NULL, pool));
+ 
+       /* ...and re-set the property's value accordingly. */
+       if (propval)
+@@ -285,6 +285,7 @@ svn_cl__propedit(apr_getopt_t *os,
+                                                       (pname),
+                                                       opt_state->encoding,
+                                                       opt_state->verbose,
++                                                      NULL,
+                                                       subpool));
+ 
+           target_local = svn_path_is_url(target) ? target
+diff --git a/subversion/svn/util.c b/subversion/svn/util.c
+index 2efc507..3c2e2dd 100644
+--- a/subversion/svn/util.c
++++ b/subversion/svn/util.c
+@@ -445,6 +445,7 @@ svn_cl__get_log_message(const char **log_msg,
+                                                     lmb->config, TRUE,
+                                                     lmb->message_encoding,
+                                                     lmb->verbose,
++                                                    commit_items,
+                                                     pool);
+         }
+       else /* non_interactive flag says we can't pop up an editor, so error */
+diff --git a/subversion/svnmucc/svnmucc.c b/subversion/svnmucc/svnmucc.c
+index 6d4055d..873cab5 100644
+--- a/subversion/svnmucc/svnmucc.c
++++ b/subversion/svnmucc/svnmucc.c
+@@ -448,7 +448,7 @@ log_message_func(const char **log_msg,
+ 
+       SVN_ERR(svn_cmdline__edit_string_externally(
+                       &msg, NULL, NULL, "", msg, "svnmucc-commit",
+-                      lmb->ctx->config, TRUE, NULL, FALSE, pool));
++                      lmb->ctx->config, TRUE, NULL, FALSE, NULL, pool));
+ 
+       if (msg && msg->data)
+         *log_msg = msg->data;
+-- 
+1.8.3.1
+

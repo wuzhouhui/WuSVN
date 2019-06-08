@@ -1,0 +1,147 @@
+From 9583898b20c0927fee8c30499bbff25b37ea58be Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 22 Sep 2018 09:57:21 +0800
+Subject: [PATCH 82/95] svn/clean: add option --dry-run
+
+---
+ subversion/svn/cl.h               |  1 +
+ subversion/svn/clean-cmd.c        |  3 +++
+ subversion/svn/status.c           | 16 ++++++++++++----
+ subversion/svn/svn.c              |  6 ++++--
+ tools/client-side/bash_completion |  2 +-
+ 5 files changed, 21 insertions(+), 7 deletions(-)
+
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 4207cc4..af53d3c 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -497,6 +497,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      svn_boolean_t show_last_committed,
+                      svn_boolean_t skip_unrecognized,
+                      svn_boolean_t repos_locks,
++                     svn_boolean_t dry_run,
+                      unsigned int *text_conflicts,
+                      unsigned int *prop_conflicts,
+                      unsigned int *tree_conflicts,
+diff --git a/subversion/svn/clean-cmd.c b/subversion/svn/clean-cmd.c
+index bc8716f..348c404 100644
+--- a/subversion/svn/clean-cmd.c
++++ b/subversion/svn/clean-cmd.c
+@@ -56,6 +56,7 @@ struct status_baton
+   svn_boolean_t show_last_committed;
+   svn_boolean_t quiet;
+   svn_boolean_t repos_locks;
++  svn_boolean_t dry_run;
+ 
+   apr_hash_t *cached_changelists;
+   apr_pool_t *cl_pool;          /* where cached changelists are allocated */
+@@ -158,6 +159,7 @@ do_remove_unversioned(void *baton,
+                               sb->show_last_committed,
+                               sb->quiet,
+                               sb->repos_locks,
++                              sb->dry_run,
+                               &sb->text_conflicts,
+                               &sb->prop_conflicts,
+                               &sb->tree_conflicts,
+@@ -315,6 +317,7 @@ svn_cl__clean(apr_getopt_t *os,
+   sb.show_last_committed = opt_state->verbose;
+   sb.quiet = opt_state->quiet;
+   sb.repos_locks = opt_state->update;
++  sb.dry_run = opt_state->dry_run;
+   sb.xml_mode = opt_state->xml;
+   sb.cached_changelists = master_cl_hash;
+   sb.cl_pool = scratch_pool;
+diff --git a/subversion/svn/status.c b/subversion/svn/status.c
+index a1daa28..76513d6 100644
+--- a/subversion/svn/status.c
++++ b/subversion/svn/status.c
+@@ -634,6 +634,7 @@ remove_unversioned(const char *target_abspath,
+              svn_boolean_t detailed,
+              svn_boolean_t show_last_committed,
+              svn_boolean_t repos_locks,
++             svn_boolean_t dry_run,
+              const svn_client_status_t *status,
+              unsigned int *text_conflicts,
+              unsigned int *prop_conflicts,
+@@ -657,7 +658,10 @@ remove_unversioned(const char *target_abspath,
+ 
+   if (finfo.filetype == APR_REG || finfo.filetype == APR_LNK)
+     {
+-      apr_err = apr_file_remove(path, pool);
++      if (!dry_run)
++        {
++          apr_err = apr_file_remove(path, pool);
++        }
+       if (!apr_err)
+         {
+           if (quiet)
+@@ -670,7 +674,10 @@ remove_unversioned(const char *target_abspath,
+     }
+   else if (finfo.filetype == APR_DIR)
+     {
+-      SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
++      if (!dry_run)
++        {
++          SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
++        }
+       if (quiet)
+         return SVN_NO_ERROR;
+       SVN_ERR(svn_cmdline_printf(pool, "Remove %s\n", path));
+@@ -692,6 +699,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      svn_boolean_t show_last_committed,
+                      svn_boolean_t quiet,
+                      svn_boolean_t repos_locks,
++                     svn_boolean_t dry_run,
+                      unsigned int *text_conflicts,
+                      unsigned int *prop_conflicts,
+                      unsigned int *tree_conflicts,
+@@ -699,7 +707,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      apr_pool_t *pool)
+ {
+   return remove_unversioned(target_abspath, target_path, path, quiet,
+-                      detailed, show_last_committed, repos_locks, status,
+-                      text_conflicts, prop_conflicts, tree_conflicts,
++                      detailed, show_last_committed, repos_locks, dry_run,
++                      status, text_conflicts, prop_conflicts, tree_conflicts,
+                       ctx, pool);
+ }
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index ba817f9..78bb567 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -638,7 +638,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+ 
+   { "clean", svn_cl__clean, {0}, N_
+     ("Remove unversioned files and directories.\n"
+-     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force } },
++     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force, opt_dry_run } },
+ 
+   { "cleanup", svn_cl__cleanup, {0}, N_
+     ("Either recover from an interrupted operation that left the working copy locked,\n"
+@@ -2912,7 +2912,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+     }
+ 
+   /* Think twice before removing unversioned files. */
+-  if (opt_state.force == FALSE && subcommand->cmd_func == svn_cl__clean)
++  if (opt_state.force == FALSE
++      && opt_state.dry_run == FALSE
++      && subcommand->cmd_func == svn_cl__clean)
+   {
+     svn_error_clear(
+         svn_cmdline_fprintf(stderr, pool,
+diff --git a/tools/client-side/bash_completion b/tools/client-side/bash_completion
+index 62af537..231d5c9 100644
+--- a/tools/client-side/bash_completion
++++ b/tools/client-side/bash_completion
+@@ -882,7 +882,7 @@ _svn()
+                          --force"
+ 		;;
+ 	clean)
+-		cmdOpts="$qOpts $pOpts --no-ignore --force"
++		cmdOpts="$qOpts $pOpts --no-ignore --force --dry-run"
+ 		;;
+ 	cleanup)
+ 		cmdOpts="$pOpts --include-externals -q --quiet\
+-- 
+1.8.3.1
+

@@ -1,0 +1,47 @@
+From 10e8c847ecb47da364120f9ae0bca57bb5f14483 Mon Sep 17 00:00:00 2001
+From: Serious Man <wuzhouhui250@gmail.com>
+Date: Sun, 15 Jan 2017 16:36:42 +0800
+Subject: [PATCH 23/95] Reset color after hunk delimiter printed
+
+---
+ subversion/include/private/svn_color.h |  1 +
+ subversion/libsvn_diff/util.c          | 11 ++++++++++-
+ 2 files changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/include/private/svn_color.h b/subversion/include/private/svn_color.h
+index d896106..b555288 100644
+--- a/subversion/include/private/svn_color.h
++++ b/subversion/include/private/svn_color.h
+@@ -8,6 +8,7 @@
+ #define SVN_COLOR_YELLOW       "\033[33m"
+ #define SVN_COLOR_MAGENTA      "\033[35m"
+ #define SVN_COLOR_CYAN         "\033[36m"
++#define SVN_COLOR_RESET        "\033[m"
+ 
+ extern svn_boolean_t dont_use_color;
+ 
+diff --git a/subversion/libsvn_diff/util.c b/subversion/libsvn_diff/util.c
+index e592bb2..49eafe4 100644
+--- a/subversion/libsvn_diff/util.c
++++ b/subversion/libsvn_diff/util.c
+@@ -408,7 +408,16 @@ svn_diff__unified_write_hunk_header(svn_stream_t *output_stream,
+ 
+   if (hunk_extra_context == NULL)
+       hunk_extra_context = "";
+-  SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
++  if (!dont_use_color)
++    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
++                                      scratch_pool,
++                                      " %s%s%s%s" APR_EOL_STR,
++                                      hunk_delimiter,
++                                      SVN_COLOR_RESET,
++                                      hunk_extra_context[0] ? " " : "",
++                                      hunk_extra_context));
++  else
++    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+                                       scratch_pool,
+                                       " %s%s%s" APR_EOL_STR,
+                                       hunk_delimiter,
+-- 
+1.8.3.1
+

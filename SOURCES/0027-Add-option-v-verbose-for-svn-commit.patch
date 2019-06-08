@@ -1,0 +1,132 @@
+From 351e510e1773cda81aee40c2b8e9cb0c07c9dd43 Mon Sep 17 00:00:00 2001
+From: Serious Man <wuzhouhui250@gmail.com>
+Date: Sat, 25 Feb 2017 12:41:50 +0800
+Subject: [PATCH 27/95] Add option -v[--verbose] for svn commit.
+
+With option -v, the svn commit will print diff at the bottom of log message.
+---
+ subversion/include/private/svn_cmdline_private.h | 1 +
+ subversion/libsvn_subr/cmdline.c                 | 8 ++++++++
+ subversion/svn/propedit-cmd.c                    | 3 ++-
+ subversion/svn/svn.c                             | 2 +-
+ subversion/svn/util.c                            | 4 ++++
+ subversion/svnmucc/svnmucc.c                     | 2 +-
+ 6 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/subversion/include/private/svn_cmdline_private.h b/subversion/include/private/svn_cmdline_private.h
+index ac5fb7b..9d727ee 100644
+--- a/subversion/include/private/svn_cmdline_private.h
++++ b/subversion/include/private/svn_cmdline_private.h
+@@ -201,6 +201,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents,
+                                     apr_hash_t *config,
+                                     svn_boolean_t as_text,
+                                     const char *encoding,
++                                    svn_boolean_t verbose,
+                                     apr_pool_t *pool);
+ 
+ 
+diff --git a/subversion/libsvn_subr/cmdline.c b/subversion/libsvn_subr/cmdline.c
+index b5fdd60..e87d9d6 100644
+--- a/subversion/libsvn_subr/cmdline.c
++++ b/subversion/libsvn_subr/cmdline.c
+@@ -1361,6 +1361,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+                                     apr_hash_t *config,
+                                     svn_boolean_t as_text,
+                                     const char *encoding,
++                                    svn_boolean_t verbose,
+                                     apr_pool_t *pool)
+ {
+   const char *editor;
+@@ -1466,6 +1467,13 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+   if (err)
+     goto cleanup;
+ 
++  if (verbose) {
++    char *buf = apr_pcalloc(pool, (strlen("svn di >> ") + strlen(tmpfile_name)
++          + 2) * sizeof(*buf));
++    sprintf(buf, "svn di >> %s", tmpfile_name);
++    system(buf);
++  }
++
+   /* Get information about the temporary file before the user has
+      been allowed to edit its contents. */
+   err = svn_io_stat(&finfo_before, tmpfile_name, APR_FINFO_MTIME, pool);
+diff --git a/subversion/svn/propedit-cmd.c b/subversion/svn/propedit-cmd.c
+index 59ef24b..0dede1d 100644
+--- a/subversion/svn/propedit-cmd.c
++++ b/subversion/svn/propedit-cmd.c
+@@ -146,7 +146,7 @@ svn_cl__propedit(apr_getopt_t *os,
+                propval, "svn-prop",
+                ctx->config,
+                svn_prop_needs_translation(pname),
+-               opt_state->encoding, pool));
++               opt_state->encoding, opt_state->verbose, pool));
+ 
+       /* ...and re-set the property's value accordingly. */
+       if (propval)
+@@ -284,6 +284,7 @@ svn_cl__propedit(apr_getopt_t *os,
+                                                       svn_prop_needs_translation
+                                                       (pname),
+                                                       opt_state->encoding,
++                                                      opt_state->verbose,
+                                                       subpool));
+ 
+           target_local = svn_path_is_url(target) ? target
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 7e4f3d4..0cea1e6 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -673,7 +673,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+        "  externals reached by recursion. Do not commit externals with a\n"
+        "  fixed revision.\n"),
+     {'q', 'N', opt_depth, opt_targets, opt_no_unlock, SVN_CL__LOG_MSG_OPTIONS,
+-     opt_changelist, opt_keep_changelists, opt_include_externals} },
++     opt_changelist, opt_keep_changelists, 'v', opt_include_externals} },
+ 
+   { "copy", svn_cl__copy, {"cp"}, N_
+     ("Copy files and directories in a working copy or repository.\n"
+diff --git a/subversion/svn/util.c b/subversion/svn/util.c
+index a27d9dc..2efc507 100644
+--- a/subversion/svn/util.c
++++ b/subversion/svn/util.c
+@@ -195,6 +195,7 @@ struct log_msg_baton
+   apr_hash_t *config; /* client configuration hash */
+   svn_boolean_t keep_locks; /* Keep repository locks? */
+   apr_pool_t *pool; /* a pool. */
++  svn_boolean_t verbose; /* show diff of this commit */
+ };
+ 
+ 
+@@ -207,6 +208,8 @@ svn_cl__make_log_msg_baton(void **baton,
+ {
+   struct log_msg_baton *lmb = apr_pcalloc(pool, sizeof(*lmb));
+ 
++  lmb->verbose = opt_state->verbose;
++
+   if (opt_state->filedata)
+     {
+       if (strlen(opt_state->filedata->data) < opt_state->filedata->len)
+@@ -441,6 +444,7 @@ svn_cl__get_log_message(const char **log_msg,
+                                                     msg_string, "svn-commit",
+                                                     lmb->config, TRUE,
+                                                     lmb->message_encoding,
++                                                    lmb->verbose,
+                                                     pool);
+         }
+       else /* non_interactive flag says we can't pop up an editor, so error */
+diff --git a/subversion/svnmucc/svnmucc.c b/subversion/svnmucc/svnmucc.c
+index d9f893e..6d4055d 100644
+--- a/subversion/svnmucc/svnmucc.c
++++ b/subversion/svnmucc/svnmucc.c
+@@ -448,7 +448,7 @@ log_message_func(const char **log_msg,
+ 
+       SVN_ERR(svn_cmdline__edit_string_externally(
+                       &msg, NULL, NULL, "", msg, "svnmucc-commit",
+-                      lmb->ctx->config, TRUE, NULL, pool));
++                      lmb->ctx->config, TRUE, NULL, FALSE, pool));
+ 
+       if (msg && msg->data)
+         *log_msg = msg->data;
+-- 
+1.8.3.1
+

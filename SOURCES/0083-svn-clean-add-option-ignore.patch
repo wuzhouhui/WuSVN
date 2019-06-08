@@ -1,0 +1,181 @@
+From be6b5622df38657140fa5f2db09aab38c098785e Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Mon, 24 Sep 2018 19:59:47 +0800
+Subject: [PATCH 83/95] svn/clean: add option --ignore
+
+---
+ subversion/svn/cl.h               |  2 ++
+ subversion/svn/clean-cmd.c        |  3 +++
+ subversion/svn/status.c           | 11 +++++++++--
+ subversion/svn/svn.c              | 24 +++++++++++++++++++++++-
+ tools/client-side/bash_completion |  2 +-
+ 5 files changed, 38 insertions(+), 4 deletions(-)
+
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index af53d3c..1e167b3 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -252,6 +252,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
+   svn_boolean_t show_inherited_props;  /* get inherited properties */
+   apr_array_header_t* search_patterns; /* pattern arguments for --search */
++  apr_array_header_t* ignore_patterns; /* pattern arguments for --ignore */
+   svn_boolean_t mergeinfo_log;     /* show log message in mergeinfo command */
+   svn_boolean_t remove_unversioned;/* remove unversioned items */
+   svn_boolean_t remove_ignored;    /* remove ignored items */
+@@ -498,6 +499,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      svn_boolean_t skip_unrecognized,
+                      svn_boolean_t repos_locks,
+                      svn_boolean_t dry_run,
++                     const apr_array_header_t *ignore_patterns,
+                      unsigned int *text_conflicts,
+                      unsigned int *prop_conflicts,
+                      unsigned int *tree_conflicts,
+diff --git a/subversion/svn/clean-cmd.c b/subversion/svn/clean-cmd.c
+index 348c404..6923993 100644
+--- a/subversion/svn/clean-cmd.c
++++ b/subversion/svn/clean-cmd.c
+@@ -57,6 +57,7 @@ struct status_baton
+   svn_boolean_t quiet;
+   svn_boolean_t repos_locks;
+   svn_boolean_t dry_run;
++  apr_array_header_t* ignore_patterns;
+ 
+   apr_hash_t *cached_changelists;
+   apr_pool_t *cl_pool;          /* where cached changelists are allocated */
+@@ -160,6 +161,7 @@ do_remove_unversioned(void *baton,
+                               sb->quiet,
+                               sb->repos_locks,
+                               sb->dry_run,
++                              sb->ignore_patterns,
+                               &sb->text_conflicts,
+                               &sb->prop_conflicts,
+                               &sb->tree_conflicts,
+@@ -318,6 +320,7 @@ svn_cl__clean(apr_getopt_t *os,
+   sb.quiet = opt_state->quiet;
+   sb.repos_locks = opt_state->update;
+   sb.dry_run = opt_state->dry_run;
++  sb.ignore_patterns = opt_state->ignore_patterns;
+   sb.xml_mode = opt_state->xml;
+   sb.cached_changelists = master_cl_hash;
+   sb.cl_pool = scratch_pool;
+diff --git a/subversion/svn/status.c b/subversion/svn/status.c
+index 76513d6..dd00797 100644
+--- a/subversion/svn/status.c
++++ b/subversion/svn/status.c
+@@ -635,6 +635,7 @@ remove_unversioned(const char *target_abspath,
+              svn_boolean_t show_last_committed,
+              svn_boolean_t repos_locks,
+              svn_boolean_t dry_run,
++             const apr_array_header_t *ignore_patterns,
+              const svn_client_status_t *status,
+              unsigned int *text_conflicts,
+              unsigned int *prop_conflicts,
+@@ -648,6 +649,11 @@ remove_unversioned(const char *target_abspath,
+ 
+   apr_status_t  apr_err;
+   apr_finfo_t   finfo;
++  const char *base_name = svn_dirent_basename(path, NULL);
++
++  if (ignore_patterns
++        && svn_wc_match_ignore_list(base_name, ignore_patterns, pool))
++    return SVN_NO_ERROR;
+ 
+   apr_err = apr_stat(&finfo, path, APR_FINFO_TYPE | APR_FINFO_LINK, pool);
+   if (apr_err)
+@@ -700,6 +706,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      svn_boolean_t quiet,
+                      svn_boolean_t repos_locks,
+                      svn_boolean_t dry_run,
++                     const apr_array_header_t *ignore_patterns,
+                      unsigned int *text_conflicts,
+                      unsigned int *prop_conflicts,
+                      unsigned int *tree_conflicts,
+@@ -708,6 +715,6 @@ svn_cl__remove_unversioned(const char *target_abspath,
+ {
+   return remove_unversioned(target_abspath, target_path, path, quiet,
+                       detailed, show_last_committed, repos_locks, dry_run,
+-                      status, text_conflicts, prop_conflicts, tree_conflicts,
+-                      ctx, pool);
++                      ignore_patterns, status, text_conflicts, prop_conflicts,
++                      tree_conflicts, ctx, pool);
+ }
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 78bb567..71128ad 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -107,6 +107,7 @@ typedef enum svn_cl__longopt_t {
+   opt_no_auth_cache,
+   opt_no_autoprops,
+   opt_no_ignore,
++  opt_ignore,
+   opt_no_unlock,
+   opt_non_interactive,
+   opt_force_interactive,
+@@ -250,6 +251,10 @@ const apr_getopt_option_t svn_cl__options[] =
+                     N_("disregard default and svn:ignore and .svnignore\n"
+                        "                             "
+                        "and svn:global-ignores property ignores")},
++  {"ignore",        opt_ignore, 1,
++                    N_("ignore files that match pattern, take precedence\n"
++                       "                             "
++                       "of --no-ignore")},
+   {"no-auth-cache", opt_no_auth_cache, 0,
+                     N_("do not cache authentication tokens")},
+   {"trust-server-cert", opt_trust_server_cert, 0,
+@@ -638,7 +643,9 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+ 
+   { "clean", svn_cl__clean, {0}, N_
+     ("Remove unversioned files and directories.\n"
+-     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore, opt_force, opt_dry_run } },
++     "usage: clean [PATH...]\n"),
++    { 'q', opt_no_ignore, opt_ignore, opt_force, opt_dry_run }
++  },
+ 
+   { "cleanup", svn_cl__cleanup, {0}, N_
+     ("Either recover from an interrupted operation that left the working copy locked,\n"
+@@ -2085,6 +2092,17 @@ add_search_pattern_to_latest_group(svn_cl__opt_state_t *opt_state,
+   APR_ARRAY_PUSH(group, const char *) = pattern;
+ }
+ 
++static void
++add_ignore_pattern(svn_cl__opt_state_t *opt_state,
++                   const char *pattern,
++                   apr_pool_t *result_pool)
++{
++  if (opt_state->ignore_patterns == NULL)
++    opt_state->ignore_patterns = apr_array_make(result_pool, 1,
++                                                sizeof(const char *));
++  APR_ARRAY_PUSH(opt_state->ignore_patterns, const char *) = pattern;
++}
++
+ 
+ /*** Main. ***/
+ 
+@@ -2436,6 +2454,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+       case opt_no_ignore:
+         opt_state.no_ignore = TRUE;
+         break;
++      case opt_ignore:
++        SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
++        add_ignore_pattern(&opt_state, utf8_opt_arg, pool);
++        break;
+       case opt_no_auth_cache:
+         opt_state.no_auth_cache = TRUE;
+         break;
+diff --git a/tools/client-side/bash_completion b/tools/client-side/bash_completion
+index 231d5c9..bc23ca3 100644
+--- a/tools/client-side/bash_completion
++++ b/tools/client-side/bash_completion
+@@ -882,7 +882,7 @@ _svn()
+                          --force"
+ 		;;
+ 	clean)
+-		cmdOpts="$qOpts $pOpts --no-ignore --force --dry-run"
++		cmdOpts="$qOpts $pOpts --no-ignore --ignore --force --dry-run"
+ 		;;
+ 	cleanup)
+ 		cmdOpts="$pOpts --include-externals -q --quiet\
+-- 
+1.8.3.1
+

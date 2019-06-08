@@ -1,0 +1,136 @@
+From 8e6d835879ad96718b4e9bd21102ff0a139bd917 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Thu, 12 Oct 2017 22:46:33 +0800
+Subject: [PATCH 53/95] Remove unused functions: plot_round1 and plot_round2
+
+---
+ subversion/libsvn_diff/diff.c | 113 ------------------------------------------
+ 1 file changed, 113 deletions(-)
+
+diff --git a/subversion/libsvn_diff/diff.c b/subversion/libsvn_diff/diff.c
+index 93e7f3b..755f988 100644
+--- a/subversion/libsvn_diff/diff.c
++++ b/subversion/libsvn_diff/diff.c
+@@ -695,119 +695,6 @@ plot_num(long num_value, int c, int color, long *extra)
+     return result;
+ }
+ 
+-static long
+-plot_round1(const long num[MARKS])
+-{
+-    long result = 0;
+-    long scaled[MARKS];
+-    long remain[MARKS];
+-    long want = 0;
+-    long have = 0;
+-    long half = (plot_scale / 2);
+-    int i, j;
+-
+-    for_each_mark(i) {
+-	long product = (plot_width * num[i]);
+-	scaled[i] = (product / plot_scale);
+-	remain[i] = (product % plot_scale);
+-	want += product;
+-	have += product - remain[i];
+-    }
+-    while (want > have) {
+-	j = -1;
+-	for_each_mark(i) {
+-	    if (remain[i] != 0
+-		&& (remain[i] > (j >= 0 ? remain[j] : half))) {
+-		j = i;
+-	    }
+-	}
+-	if (j >= 0) {
+-	    have += remain[j];
+-	    remain[j] = 0;
+-	    scaled[j] += 1;
+-	} else {
+-	    break;
+-	}
+-    }
+-    for_each_mark(i) {
+-	plot_bar(scaled[i], marks[i], colors[i]);
+-	result += scaled[i];
+-    }
+-    return result;
+-}
+-
+-/*
+- * Print a scaled bar of characters, where c[0] is for insertions, c[1]
+- * for deletions and c[2] for modifications. The num array contains the
+- * count for each type of change, in the same order.
+- */
+-static long
+-plot_round2(const long num[MARKS])
+-{
+-    long result = 0;
+-    long scaled[MARKS];
+-    long remain[MARKS];
+-    long total = 0;
+-    int i;
+-
+-    for (i = 0; i < MARKS; i++)
+-	total += num[i];
+-
+-    if (total == 0)
+-	return result;
+-
+-    total = (total * plot_width + (plot_scale / 2)) / plot_scale;
+-    /* display at least one character */
+-    if (total == 0)
+-	total++;
+-
+-    for_each_mark(i) {
+-	scaled[i] = num[i] * plot_width / plot_scale;
+-	remain[i] = num[i] * plot_width - scaled[i] * plot_scale;
+-	total -= scaled[i];
+-    }
+-
+-    /* assign the missing chars using the largest remainder algo */
+-    while (total) {
+-	int largest, largest_count;	/* largest is a bit field */
+-	long max_remain;
+-
+-	/* search for the largest remainder */
+-	largest = largest_count = 0;
+-	max_remain = 0;
+-	for_each_mark(i) {
+-	    if (remain[i] > max_remain) {
+-		largest = 1 << i;
+-		largest_count = 1;
+-		max_remain = remain[i];
+-	    } else if (remain[i] == max_remain) {	/* ex aequo */
+-		largest |= 1 << i;
+-		largest_count++;
+-	    }
+-	}
+-
+-	/* if there are more greatest remainders than characters
+-	   missing, don't assign them at all */
+-	if (total < largest_count)
+-	    break;
+-
+-	/* allocate the extra characters */
+-	for_each_mark(i) {
+-	    if (largest & (1 << i)) {
+-		scaled[i]++;
+-		total--;
+-		remain[i] -= plot_width;
+-	    }
+-	}
+-    }
+-
+-    for_each_mark(i) {
+-	result += plot_bar(scaled[i], marks[i], colors[i]);
+-    }
+-
+-    return result;
+-}
+-
+ static void
+ plot_numbers(const DATA * p)
+ {
+-- 
+1.8.3.1
+

@@ -1,0 +1,39 @@
+From 658f8418900608a5f29d594bbda192f0a2020858 Mon Sep 17 00:00:00 2001
+From: Serious Man <wuzhouhui250@gmail.com>
+Date: Sat, 31 Dec 2016 17:08:19 +0800
+Subject: [PATCH 21/95] Update output of svn help in testing script
+
+---
+ subversion/tests/cmdline/getopt_tests_data/svn--help_stdout | 2 +-
+ subversion/tests/cmdline/getopt_tests_data/svn_help_stdout  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout b/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout
+index 05f0aa8..c5016c6 100644
+--- a/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout
++++ b/subversion/tests/cmdline/getopt_tests_data/svn--help_stdout
+@@ -41,7 +41,7 @@ Available subcommands:
+    relocate
+    resolve
+    resolved
+-   revert
++   revert (rv)
+    status (stat, st)
+    switch (sw)
+    unlock
+diff --git a/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout b/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout
+index 05f0aa8..c5016c6 100644
+--- a/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout
++++ b/subversion/tests/cmdline/getopt_tests_data/svn_help_stdout
+@@ -41,7 +41,7 @@ Available subcommands:
+    relocate
+    resolve
+    resolved
+-   revert
++   revert (rv)
+    status (stat, st)
+    switch (sw)
+    unlock
+-- 
+1.8.3.1
+

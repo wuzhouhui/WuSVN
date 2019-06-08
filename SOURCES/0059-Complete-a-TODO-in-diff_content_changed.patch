@@ -1,0 +1,29 @@
+From 2607dcf6ccf57a747c2a51b11fe88d9b6bf5752d Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 15 Oct 2017 13:08:29 +0800
+Subject: [PATCH 59/95] Complete a TODO in diff_content_changed
+
+---
+ subversion/libsvn_client/diff.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index eeb4991..a7964b7 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -977,6 +977,12 @@ diff_content_changed(svn_boolean_t *wrote_header,
+       /* Exit early. */
+       return SVN_NO_ERROR;
+     }
++  else if (! dwi->force_binary && (mt1_binary || mt2_binary) && dwi->diffstat)
++    {
++      /* Suppress binary files' warning */
++      SVN_ERR(svn_diff_stat(dwi->dfstat_ctx, NULL, diff_relpath));
++      return SVN_NO_ERROR;
++    }
+ 
+ 
+   if (dwi->diff_cmd)
+-- 
+1.8.3.1
+

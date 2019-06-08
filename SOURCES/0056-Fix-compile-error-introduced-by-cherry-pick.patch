@@ -1,0 +1,35 @@
+From b4b2a856fe125f5abb7af2050a1d902770ee114a Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Fri, 26 Oct 2018 22:52:02 +0800
+Subject: [PATCH 56/95] Fix compile error introduced by cherry-pick
+
+---
+ subversion/libsvn_client/diff.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 46eb3c3..eeb4991 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -2752,7 +2752,9 @@ svn_client_diff6_diffstat(const apr_array_header_t *options,
+   SVN_ERR(do_diff(NULL, NULL, &dwi.ddi,
+                                  path_or_url1, path_or_url2,
+                                  revision1, revision2, &peg_revision,
+-                                 depth, ignore_ancestry, changelists,
++                                 TRUE, /* no_peg_revision */
++                                 depth, ignore_ancestry,
++                                 changelists,
+                                  TRUE /* text_deltas */,
+                                  diff_processor, ctx, pool, pool));
+   SVN_ERR(svn_diff_output_dfstat(outstream, dwi.dfstat_ctx));
+@@ -2924,6 +2926,7 @@ svn_client_diff_peg6_diffstat(const apr_array_header_t *options,
+   SVN_ERR(do_diff(NULL, NULL, &dwi.ddi,
+                                  path_or_url, path_or_url,
+                                  start_revision, end_revision, peg_revision,
++                                 TRUE, /* no_peg_revision */
+                                  depth, ignore_ancestry, changelists,
+                                  TRUE /* text_deltas */,
+                                  diff_processor, ctx, pool, pool));
+-- 
+1.8.3.1
+

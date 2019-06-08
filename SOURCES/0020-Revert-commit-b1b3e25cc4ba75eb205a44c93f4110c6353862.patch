@@ -1,0 +1,27 @@
+From 6e5b380e6a4ee7d38a774fca7c7d09bc6616370a Mon Sep 17 00:00:00 2001
+From: Serious Man <wuzhouhui250@gmail.com>
+Date: Sat, 31 Dec 2016 14:24:07 +0800
+Subject: [PATCH 20/95] Revert commit b1b3e25cc4ba75eb205a44c93f4110c635386218
+
+---
+ subversion/include/svn_config.h | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/include/svn_config.h b/subversion/include/svn_config.h
+index 1e060d9..d194af0 100644
+--- a/subversion/include/svn_config.h
++++ b/subversion/include/svn_config.h
+@@ -217,7 +217,9 @@ typedef struct svn_config_t svn_config_t;
+   "*.rej *~ #*# .#* .*.swp .DS_Store [Tt]humbs.db"
+ #endif
+ 
+-#define SVN_CONFIG_DEFAULT_GLOBAL_IGNORES ""
++#define SVN_CONFIG_DEFAULT_GLOBAL_IGNORES \
++  SVN_CONFIG__DEFAULT_GLOBAL_IGNORES_LINE_1 " " \
++  SVN_CONFIG__DEFAULT_GLOBAL_IGNORES_LINE_2
+ 
+ #define SVN_CONFIG_TRUE  "TRUE"
+ #define SVN_CONFIG_FALSE "FALSE"
+-- 
+1.8.3.1
+

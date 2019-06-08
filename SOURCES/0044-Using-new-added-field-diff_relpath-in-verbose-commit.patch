@@ -1,0 +1,74 @@
+From 730181c88e96dad098f4e7b0fa13c5359d3e803c Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 2 Sep 2017 10:16:31 +0800
+Subject: [PATCH 44/95] Using new added field diff_relpath in verbose commit
+
+session_relpath is relative to CWD when executing svn ci, but CWD
+may changed to parent directory when getting log message. So we
+add a new field diff_relpath in struct svn_client_commit_item3_t
+to record the relative path that relative to CWD when getting log
+message.
+---
+ subversion/include/svn_client.h  | 8 ++++++++
+ subversion/libsvn_subr/cmdline.c | 4 ++--
+ subversion/svn/util.c            | 3 +++
+ 3 files changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/include/svn_client.h b/subversion/include/svn_client.h
+index 32b5b10..b7e7a8b 100644
+--- a/subversion/include/svn_client.h
++++ b/subversion/include/svn_client.h
+@@ -534,6 +534,14 @@ typedef struct svn_client_commit_item3_t
+    */
+   const char *moved_from_abspath;
+ 
++  /**
++   * When processing commit, this contains the relative path that relative to
++   * CWD when getting log message from external editor. #NULL until generating
++   * log message template and verbose enabled.
++   * @since New in 1.8.
++   */
++  const char *diff_relpath;
++
+ } svn_client_commit_item3_t;
+ 
+ /** The commit candidate structure.
+diff --git a/subversion/libsvn_subr/cmdline.c b/subversion/libsvn_subr/cmdline.c
+index 0452927..dd7091c 100644
+--- a/subversion/libsvn_subr/cmdline.c
++++ b/subversion/libsvn_subr/cmdline.c
+@@ -1475,7 +1475,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+     for (i = 0; i < commit_items->nelts; i++)
+       {
+         int t = strlen((APR_ARRAY_IDX(commit_items, i,
+-                svn_client_commit_item3_t *))->session_relpath);
++                svn_client_commit_item3_t *))->diff_relpath);
+         if (t > len)
+           len = t;
+       }
+@@ -1487,7 +1487,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+             = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
+         sprintf(buf, "svn di %s %s >> %s",
+             item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
+-            "--properties-only" : "", item->session_relpath, tmpfile_name);
++            "--properties-only" : "", item->diff_relpath, tmpfile_name);
+         system(buf);
+       }
+   }
+diff --git a/subversion/svn/util.c b/subversion/svn/util.c
+index 3c2e2dd..a34991f 100644
+--- a/subversion/svn/util.c
++++ b/subversion/svn/util.c
+@@ -403,6 +403,9 @@ svn_cl__get_log_message(const char **log_msg,
+           if (! path || !*path)
+             path = ".";
+ 
++	  if (lmb->verbose)
++            item->diff_relpath = path;
++
+           if ((item->state_flags & SVN_CLIENT_COMMIT_ITEM_DELETE)
+               && (item->state_flags & SVN_CLIENT_COMMIT_ITEM_ADD))
+             text_mod = 'R';
+-- 
+1.8.3.1
+

@@ -1,0 +1,42 @@
+From bffb10707036574234ff07f6563ef1d7c17ceec6 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 2 Apr 2017 15:07:04 +0800
+Subject: [PATCH 37/95] README: add main patches that I made
+
+---
+ README | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/README b/README
+index 4b7559f..e7d8a4b 100644
+--- a/README
++++ b/README
+@@ -6,6 +6,7 @@ $LastChangedDate: 2016-05-31 14:07:51 +0000 (Tue, 31 May 2016) $
+ 
+ Contents:
+ 
++     O. MAIN PATCHES
+      I. A FEW POINTERS
+     II. DOCUMENTATION
+    III. PARTICIPATING IN THE SUBVERSION COMMUNITY
+@@ -14,6 +15,17 @@ Contents:
+ 
+ 
+ 
++O.    MAIN PATCHES
++
++      1. Output paging automatically
++      2. Ignore files if they match the patterns in .svnignore
++      3. Syntax highlight
++      4. New subcommand clean for removing unversioned files
++      5. Add option -v for subcommand commit, for print unified diff in log
++         message template
++
++
++
+ I.    A FEW POINTERS
+ 
+       For an overview of the Subversion project, visit
+-- 
+1.8.3.1
+

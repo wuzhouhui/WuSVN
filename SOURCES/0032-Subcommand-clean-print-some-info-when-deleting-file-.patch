@@ -1,0 +1,157 @@
+From f5f51596b61cbdbb2b1281dcabc5aff7276e02f5 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 2 Apr 2017 10:07:30 +0800
+Subject: [PATCH 32/95] Subcommand clean: print some info when deleting file or
+ dir
+
+Option -q [--quiet] disable it.
+---
+ subversion/svn/clean-cmd.c |  8 +++----
+ subversion/svn/status.c    | 52 ++++++++++++----------------------------------
+ subversion/svn/svn.c       |  2 +-
+ 3 files changed, 18 insertions(+), 44 deletions(-)
+
+diff --git a/subversion/svn/clean-cmd.c b/subversion/svn/clean-cmd.c
+index 17d401b..71c5c61 100644
+--- a/subversion/svn/clean-cmd.c
++++ b/subversion/svn/clean-cmd.c
+@@ -48,13 +48,13 @@
+ struct status_baton
+ {
+   /* These fields all correspond to the ones in the
+-     svn_cl__print_status() interface. */
++     svn_cl__remove_unversioned() interface. */
+   const char *target_abspath;
+   const char *target_path;
+   svn_boolean_t suppress_externals_placeholders;
+   svn_boolean_t detailed;
+   svn_boolean_t show_last_committed;
+-  svn_boolean_t skip_unrecognized;
++  svn_boolean_t quiet;
+   svn_boolean_t repos_locks;
+ 
+   apr_hash_t *cached_changelists;
+@@ -156,7 +156,7 @@ do_remove_unversioned(void *baton,
+                               sb->suppress_externals_placeholders,
+                               sb->detailed,
+                               sb->show_last_committed,
+-                              sb->skip_unrecognized,
++                              sb->quiet,
+                               sb->repos_locks,
+                               &sb->text_conflicts,
+                               &sb->prop_conflicts,
+@@ -313,7 +313,7 @@ svn_cl__clean(apr_getopt_t *os,
+                                         && (! opt_state->verbose));
+   sb.detailed = (opt_state->verbose || opt_state->update);
+   sb.show_last_committed = opt_state->verbose;
+-  sb.skip_unrecognized = opt_state->quiet;
++  sb.quiet = opt_state->quiet;
+   sb.repos_locks = opt_state->update;
+   sb.xml_mode = opt_state->xml;
+   sb.cached_changelists = master_cl_hash;
+diff --git a/subversion/svn/status.c b/subversion/svn/status.c
+index f05c1c6..dade492 100644
+--- a/subversion/svn/status.c
++++ b/subversion/svn/status.c
+@@ -630,6 +630,7 @@ static svn_error_t *
+ remove_unversioned(const char *target_abspath,
+              const char *target_path,
+              const char *path,
++             svn_boolean_t quiet,
+              svn_boolean_t detailed,
+              svn_boolean_t show_last_committed,
+              svn_boolean_t repos_locks,
+@@ -657,14 +658,22 @@ remove_unversioned(const char *target_abspath,
+     {
+       apr_err = apr_file_remove(path, pool);
+       if (!apr_err)
+-        return SVN_NO_ERROR;
++        {
++          if (quiet)
++            return SVN_NO_ERROR;
++          SVN_ERR(svn_cmdline_printf(pool, "Unlink %s\n", path));
++          return svn_cmdline_fflush(stdout);
++        }
+       return svn_error_wrap_apr(apr_err, _("Can't remove file '%s'"),
+           svn_dirent_local_style(path, pool));
+     }
+   else if (finfo.filetype == APR_DIR)
+     {
+       SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
+-      return SVN_NO_ERROR;
++      if (quiet)
++        return SVN_NO_ERROR;
++      SVN_ERR(svn_cmdline_printf(pool, "Remove %s\n", path));
++      return svn_cmdline_fflush(stdout);
+     }
+ 
+   fprintf(stderr, "Unknown file type: %s %d", path, finfo.filetype);
+@@ -680,7 +689,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      svn_boolean_t suppress_externals_placeholders,
+                      svn_boolean_t detailed,
+                      svn_boolean_t show_last_committed,
+-                     svn_boolean_t skip_unrecognized,
++                     svn_boolean_t quiet,
+                      svn_boolean_t repos_locks,
+                      unsigned int *text_conflicts,
+                      unsigned int *prop_conflicts,
+@@ -688,42 +697,7 @@ svn_cl__remove_unversioned(const char *target_abspath,
+                      svn_client_ctx_t *ctx,
+                      apr_pool_t *pool)
+ {
+-  if (! status
+-      || (skip_unrecognized
+-          && !(status->versioned
+-               || status->conflicted
+-               || status->node_status == svn_wc_status_external))
+-      || (status->node_status == svn_wc_status_none
+-          && status->repos_node_status == svn_wc_status_none))
+-    return SVN_NO_ERROR;
+-
+-  /* If we're trying not to print boring "X  /path/to/external"
+-     lines..." */
+-  if (suppress_externals_placeholders)
+-    {
+-      /* ... skip regular externals unmodified in the repository. */
+-      if ((status->node_status == svn_wc_status_external)
+-          && (status->repos_node_status == svn_wc_status_none)
+-          && (! status->conflicted))
+-        return SVN_NO_ERROR;
+-
+-      /* ... skip file externals that aren't modified locally or
+-         remotely, changelisted, or locked (in either sense of the
+-         word). */
+-      if ((status->file_external)
+-          && (status->repos_node_status == svn_wc_status_none)
+-          && ((status->node_status == svn_wc_status_normal)
+-              || (status->node_status == svn_wc_status_none))
+-          && ((status->prop_status == svn_wc_status_normal)
+-              || (status->prop_status == svn_wc_status_none))
+-          && (! status->changelist)
+-          && (! status->lock)
+-          && (! status->wc_is_locked)
+-          && (! status->conflicted))
+-        return SVN_NO_ERROR;
+-    }
+-
+-  return remove_unversioned(target_abspath, target_path, path,
++  return remove_unversioned(target_abspath, target_path, path, quiet,
+                       detailed, show_last_committed, repos_locks, status,
+                       text_conflicts, prop_conflicts, tree_conflicts,
+                       ctx, pool);
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 19b4e50..4bb2ed3 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -629,7 +629,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+     {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals} },
+ 
+   { "clean", svn_cl__clean, {0}, N_
+-    ("Remove untracked files and directories.\n"), { 0 } },
++    ("Remove untracked files and directories.\n"), { 'q' } },
+ 
+   { "cleanup", svn_cl__cleanup, {0}, N_
+     ("Either recover from an interrupted operation that left the working copy locked,\n"
+-- 
+1.8.3.1
+

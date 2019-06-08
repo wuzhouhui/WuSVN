@@ -1,0 +1,166 @@
+From f0fc3fef86547ee39c0c8c636e10b53a6fe255eb Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Thu, 28 Sep 2017 19:26:35 +0800
+Subject: [PATCH 45/95] Subcommand diff: add option --stat to display
+ statistics of diff
+
+---
+ subversion/svn/cl.h       |  1 +
+ subversion/svn/diff-cmd.c | 61 +++++++++++++++++++++++++++++++++++++++++++++++
+ subversion/svn/svn.c      |  7 +++++-
+ 3 files changed, 68 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 6a9f4f3..64fff6b 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -199,6 +199,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t properties_only;     /* Show properties only */
+   svn_boolean_t patch_compatible;    /* Output compatible with GNU patch */
+   svn_boolean_t no_color;            /* Disable syntax highlight */
++  svn_boolean_t diffstat;            /* Display statistics of diff */
+     } diff;
+   svn_boolean_t ignore_ancestry; /* ignore ancestry for merge-y operations */
+   svn_boolean_t ignore_externals;/* ignore externals definitions */
+diff --git a/subversion/svn/diff-cmd.c b/subversion/svn/diff-cmd.c
+index 9e389ec..2b7903d 100644
+--- a/subversion/svn/diff-cmd.c
++++ b/subversion/svn/diff-cmd.c
+@@ -41,6 +41,7 @@
+ #include "cl.h"
+ 
+ #include "svn_private_config.h"
++#include "private/svn_color.h"
+ 
+ 
+ /*** Code. ***/
+@@ -206,6 +207,8 @@ svn_cl__diff(apr_getopt_t *os,
+   struct summarize_baton_t summarize_baton;
+   const svn_client_diff_summarize_func_t summarize_func =
+     (opt_state->xml ? summarize_xml : summarize_regular);
++  svn_stream_t *diffstatin;
++  apr_proc_t diffstatproc;
+ 
+   if (opt_state->extensions)
+     options = svn_cstring_split(opt_state->extensions, " \t\n\r", TRUE, pool);
+@@ -416,6 +419,35 @@ svn_cl__diff(apr_getopt_t *os,
+ 
+   iterpool = svn_pool_create(pool);
+ 
++  if (opt_state->diff.diffstat)
++    {
++      apr_procattr_t *attr;
++      apr_status_t apr_err;
++      const char *progname = "diffstat";
++      const char *args1[] = { progname, "-E", "-C", NULL, };
++      const char *args2[] = { progname, NULL, };
++
++      apr_err = apr_procattr_create(&attr, pool);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't create process '%s' attributes"), progname);
++      apr_err = apr_procattr_cmdtype_set(attr, APR_PROGRAM_PATH);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't set process '%s' cmdtype"), progname);
++      apr_err = apr_procattr_io_set(attr, APR_FULL_BLOCK, APR_NO_PIPE,
++          APR_NO_PIPE);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't set process '%s' io"), progname);
++      apr_err = apr_proc_create(&diffstatproc, progname,
++          (dont_use_color ? args2 : args1), NULL, attr, pool);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't start process '%s'"), progname);
++      diffstatin = svn_stream_from_aprfile2(diffstatproc.in, FALSE, pool);
++    }
++
+   for (i = 0; i < targets->nelts; ++i)
+     {
+       const char *path = APR_ARRAY_IDX(targets, i, const char *);
+@@ -462,6 +494,28 @@ svn_cl__diff(apr_getopt_t *os,
+                                 summarize_func, &summarize_baton,
+                                 ctx, iterpool));
+             }
++          else if (opt_state->diff.diffstat)
++            SVN_ERR(svn_client_diff6(
++                     options,
++                     target1,
++                     &(opt_state->start_revision),
++                     target2,
++                     &(opt_state->end_revision),
++                     NULL,
++                     opt_state->depth,
++                     ! opt_state->diff.notice_ancestry,
++                     opt_state->diff.no_diff_added,
++                     opt_state->diff.no_diff_deleted,
++                     show_copies_as_adds,
++                     ignore_content_type,
++                     ignore_properties,
++                     opt_state->diff.properties_only,
++                     opt_state->diff.use_git_diff_format,
++                     svn_cmdline_output_encoding(pool),
++                     diffstatin,
++                     errstream,
++                     opt_state->changelists,
++                     ctx, iterpool));
+           else
+             SVN_ERR(svn_client_diff6(
+                      options,
+@@ -548,6 +602,13 @@ svn_cl__diff(apr_getopt_t *os,
+     }
+ 
+   svn_pool_destroy(iterpool);
++  if (opt_state->diff.diffstat)
++    {
++      int c;
++      apr_exit_why_e e;
++      svn_stream_close(diffstatin);
++      apr_proc_wait(&diffstatproc, &c, &e, APR_WAIT);
++    }
+ 
+   return SVN_NO_ERROR;
+ }
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index c08cc66..5cb8188 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -89,6 +89,7 @@ typedef enum svn_cl__longopt_t {
+   opt_properties_only,
+   opt_patch_compatible,
+   opt_no_color,
++  opt_diffstat,
+   /* end of diff options */
+   opt_dry_run,
+   opt_editor_cmd,
+@@ -399,6 +400,7 @@ const apr_getopt_option_t svn_cl__options[] =
+                        "--show-copies-as-adds --ignore-properties"
+                        )},
+   {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
++  {"stat", opt_diffstat, 0, N_("display statistics of diff")},
+   /* end of diff options */
+   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
+                        N_("Allow operation on mixed-revision working copy.\n"
+@@ -758,7 +760,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+      opt_ignore_properties, opt_properties_only,
+      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
+      opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible,
+-     opt_no_color,} },
++     opt_no_color, opt_diffstat,} },
+   { "export", svn_cl__export, {0}, N_
+     ("Create an unversioned copy of a tree.\n"
+      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
+@@ -2632,6 +2634,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+       case opt_no_color:
+ 	opt_state.diff.no_color = TRUE;
+ 	break;
++      case opt_diffstat:
++        opt_state.diff.diffstat = TRUE;
++        break;
+       case opt_use_git_diff_format:
+         opt_state.diff.use_git_diff_format = TRUE;
+         break;
+-- 
+1.8.3.1
+

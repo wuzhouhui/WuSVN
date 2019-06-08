@@ -1,0 +1,28 @@
+From 66a88bbd350e6ee95bd517fb1d0f151af0b4624f Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 1 Apr 2017 13:55:11 +0800
+Subject: [PATCH 29/95] Update description of option --no-ignore
+
+---
+ subversion/svn/svn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 0cea1e6..2220129 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -245,9 +245,9 @@ const apr_getopt_option_t svn_cl__options[] =
+   {"stop-on-copy",  opt_stop_on_copy, 0,
+                     N_("do not cross copies while traversing history")},
+   {"no-ignore",     opt_no_ignore, 0,
+-                    N_("disregard default and svn:ignore and\n"
++                    N_("disregard default and svn:ignore and .svnignore\n"
+                        "                             "
+-                       "svn:global-ignores property ignores")},
++                       "and svn:global-ignores property ignores")},
+   {"no-auth-cache", opt_no_auth_cache, 0,
+                     N_("do not cache authentication tokens")},
+   {"trust-server-cert", opt_trust_server_cert, 0,
+-- 
+1.8.3.1
+

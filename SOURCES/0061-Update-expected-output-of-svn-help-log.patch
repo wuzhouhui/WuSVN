@@ -1,0 +1,24 @@
+From 89c28afba1ab1aaa0c0162a3a68cfddc52f49309 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Fri, 20 Oct 2017 22:24:56 +0800
+Subject: [PATCH 61/95] Update expected output of svn help log
+
+---
+ subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout b/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout
+index f843530..f863a5b 100644
+--- a/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout
++++ b/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout
+@@ -131,6 +131,7 @@ Valid options:
+                              to prevent shell expansion)
+   --search-and ARG         : combine ARG with the previous search pattern
+   --no-color               : disable syntax highlight
++  --stat                   : display statistics of diff
+ 
+ Global options:
+   --username ARG           : specify a username ARG
+-- 
+1.8.3.1
+

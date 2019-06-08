@@ -1,0 +1,31 @@
+From d380f4ff9c8bdfc050d581aac31bc56395a6b254 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Tue, 9 Jan 2018 22:22:58 +0800
+Subject: [PATCH 77/95] Do not set properties_only if item deleted is a dir
+
+If we set properties_only for deleted directory and there is files
+in it, then there is not diff output of these files in log message,
+this not what we want!
+---
+ subversion/libsvn_client/diff.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index aa71129..0aadca6 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -3118,7 +3118,10 @@ verbose_output(const apr_array_header_t *commit_items,
+                TRUE,                          /* show_copies_as_adds */
+                FALSE,                         /* ignore_content_type */
+                FALSE,                         /* ignore_properties */
+-               item->kind == svn_node_dir,    /* properties_only */
++               /* properties_only */
++               !(item->kind != svn_node_dir
++                 || (item->kind == svn_node_dir
++                     && (item->state_flags & SVN_CLIENT_COMMIT_ITEM_DELETE))),
+                FALSE,                         /* use_git_diff_format */
+                svn_cmdline_output_encoding(pool),
+                fstream,
+-- 
+1.8.3.1
+

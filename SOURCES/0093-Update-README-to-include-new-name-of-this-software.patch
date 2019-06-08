@@ -1,0 +1,22 @@
+From a8fccc8f245b2c1e8867ae535fa914ad88245fe8 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 3 Mar 2019 09:45:54 +0800
+Subject: [PATCH 93/95] Update README to include new name of this software
+
+---
+ README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README b/README
+index bfea9ce..a320332 100644
+--- a/README
++++ b/README
+@@ -1,4 +1,4 @@
+-Subversion with my patches, based on 1.10.x
++WuSVN, the customized Subversion with my patches, based on 1.10.x
+ 
+ Main patches:
+       1. Output paging automatically
+-- 
+1.8.3.1
+

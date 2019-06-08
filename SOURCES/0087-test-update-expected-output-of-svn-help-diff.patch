@@ -1,0 +1,26 @@
+From ef4a0c24419940b942fed07dc74b4b56600a57be Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui@kingsoft.com>
+Date: Thu, 21 Feb 2019 14:42:23 +0800
+Subject: [PATCH 87/95] test: update expected output of svn help diff
+
+-p no longer enabled in default, we disabled it in previous commit
+---
+ subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout b/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout
+index 6069b01..dde91f2 100644
+--- a/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout
++++ b/subversion/tests/cmdline/getopt_tests_data/svn_help_log_switch_stdout
+@@ -117,7 +117,7 @@ Valid options:
+   --diff-cmd ARG           : use ARG as diff command
+   --internal-diff          : override diff-cmd specified in config file
+   -x [--extensions] ARG    : Specify differencing options for external diff or
+-                             internal diff or blame. Default: '-up'. Options are
++                             internal diff or blame. Default: '-u'. Options are
+                              separated by spaces. Internal diff and blame take:
+                                -u, --unified: Show 3 lines of unified context
+                                -b, --ignore-space-change: Ignore changes in
+-- 
+1.8.3.1
+

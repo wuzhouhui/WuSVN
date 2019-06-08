@@ -1,0 +1,30 @@
+From 7f4b6e0e7676f18b6eb8d1dc30936515ae93b939 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Thu, 6 Apr 2017 21:44:45 +0800
+Subject: [PATCH 40/95] Update the order of expected output
+
+The result is right, but test scripting thought it is wrong because
+the order is not it's expected.
+---
+ subversion/tests/cmdline/import_tests.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/tests/cmdline/import_tests.py b/subversion/tests/cmdline/import_tests.py
+index 1f33186..0600b58 100755
+--- a/subversion/tests/cmdline/import_tests.py
++++ b/subversion/tests/cmdline/import_tests.py
+@@ -560,10 +560,10 @@ def import_inherited_ignores(sbox):
+      'A    ' + os.path.join(F_path, dir5_path)  + '\n',
+      'A    ' + os.path.join(F_path, file5_path) + '\n',
+      'A    ' + os.path.join(F_path, dir6_path)  + '\n',
+-     'A    ' + os.path.join(F_path, file6_path) + '\n',
+      'A    ' + os.path.join(F_path, dir7_path)  + '\n',
+      'A    ' + os.path.join(F_path, file7_path) + '\n',
+      'A    ' + os.path.join(F_path, dir8_path)  + '\n',
++     'A    ' + os.path.join(F_path, file6_path) + '\n',
+      'Updated to revision 5.\n'])
+   svntest.actions.run_and_verify_svn(expected_output, [], 'up', wc_dir)
+ 
+-- 
+1.8.3.1
+

@@ -1,0 +1,24 @@
+From 3359f608a7b26241a3117ccf85a778db3b039772 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 22 Nov 2017 21:21:24 +0800
+Subject: [PATCH 66/95] Scale max width for diffstat, for better look
+
+---
+ subversion/libsvn_diff/diff.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/subversion/libsvn_diff/diff.c b/subversion/libsvn_diff/diff.c
+index be7f619..5dafda2 100644
+--- a/subversion/libsvn_diff/diff.c
++++ b/subversion/libsvn_diff/diff.c
+@@ -972,6 +972,7 @@ svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx)
+         }
+       max_width = winsz.ws_col;
+     }
++  max_width--;
+ 
+   merge_names = 1;	/* true if we merge similar filenames */
+   merge_opt = 0;	/* true if we merge ins/del as modified */
+-- 
+1.8.3.1
+

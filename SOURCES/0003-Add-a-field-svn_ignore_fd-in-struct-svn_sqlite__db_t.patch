@@ -1,0 +1,29 @@
+From fc5511408b8bccf331117eb62f55b18082a7604d Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 23 Oct 2016 08:25:03 +0800
+Subject: [PATCH 03/95] Add a field "svn_ignore_fd" in struct svn_sqlite__db_t
+
+---
+ subversion/libsvn_subr/sqlite.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/subversion/libsvn_subr/sqlite.c b/subversion/libsvn_subr/sqlite.c
+index 43c49e3..9193209 100644
+--- a/subversion/libsvn_subr/sqlite.c
++++ b/subversion/libsvn_subr/sqlite.c
+@@ -142,6 +142,12 @@ struct svn_sqlite__db_t
+   svn_sqlite__stmt_t **prepared_stmts;
+   apr_pool_t *state_pool;
+ 
++  /*
++   * File descriptor of SVN_IGNORE_FILE. The role of SVN_IGNORE_FILE is
++   * analogous to sqlite db, so I put it in this struct.
++   */
++  int   svn_ignore_fd;
++
+ #ifdef SVN_UNICODE_NORMALIZATION_FIXES
+   /* Buffers for SQLite extensoins. */
+   svn_membuf_t sqlext_buf1;
+-- 
+1.8.3.1
+

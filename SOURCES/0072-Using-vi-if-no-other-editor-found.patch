@@ -1,0 +1,24 @@
+From de593ab3dcf41f9dbefe5befbc956dabd3d45701 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 6 Jan 2018 19:26:07 +0800
+Subject: [PATCH 72/95] Using vi if no other editor found
+
+---
+ subversion/libsvn_client/diff.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 471e937..1d796b0 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -3010,6 +3010,7 @@ svn_client_diff_summarize_peg2(const char *path_or_url,
+                                  diff_processor, ctx, pool, pool));
+ }
+ 
++#define SVN_CLIENT_EDITOR "vi"
+ /* Helper for the next two functions.  Set *EDITOR to some path to an
+    editor binary.  Sources to search include: the EDITOR_CMD argument
+    (if not NULL), $SVN_EDITOR, the runtime CONFIG variable (if CONFIG
+-- 
+1.8.3.1
+

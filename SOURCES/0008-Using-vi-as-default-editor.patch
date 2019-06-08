@@ -1,0 +1,25 @@
+From 42c83908b98f8567d45f867415279a6a50422b58 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 5 Nov 2016 20:22:44 +0800
+Subject: [PATCH 08/95] Using vi as default editor
+
+---
+ subversion/libsvn_subr/cmdline.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/subversion/libsvn_subr/cmdline.c b/subversion/libsvn_subr/cmdline.c
+index 2255952..b5fdd60 100644
+--- a/subversion/libsvn_subr/cmdline.c
++++ b/subversion/libsvn_subr/cmdline.c
+@@ -71,6 +71,8 @@
+ 
+ #include "win32_crashrpt.h"
+ 
++#define SVN_CLIENT_EDITOR "vi"
++
+ #if defined(WIN32) && defined(_MSC_VER) && (_MSC_VER < 1400)
+ /* Before Visual Studio 2005, the C runtime didn't handle encodings for the
+    for the stdio output handling. */
+-- 
+1.8.3.1
+

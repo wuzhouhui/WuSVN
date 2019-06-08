@@ -1,0 +1,26 @@
+From d4af46cf5244d5445ee7361e4b1e4b91383ac8e3 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 2 Apr 2017 13:37:28 +0800
+Subject: [PATCH 36/95] Subcommand clean: stat the link if that file is a
+ symbolic link
+
+---
+ subversion/svn/status.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/svn/status.c b/subversion/svn/status.c
+index fbaf4eb..a1daa28 100644
+--- a/subversion/svn/status.c
++++ b/subversion/svn/status.c
+@@ -648,7 +648,7 @@ remove_unversioned(const char *target_abspath,
+   apr_status_t  apr_err;
+   apr_finfo_t   finfo;
+ 
+-  apr_err = apr_stat(&finfo, path, APR_FINFO_TYPE, pool);
++  apr_err = apr_stat(&finfo, path, APR_FINFO_TYPE | APR_FINFO_LINK, pool);
+   if (apr_err)
+     {
+       return svn_error_wrap_apr(apr_err, _("Can't stat file '%s'"),
+-- 
+1.8.3.1
+

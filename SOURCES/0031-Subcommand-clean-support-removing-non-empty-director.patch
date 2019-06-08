@@ -1,0 +1,44 @@
+From 1e442c319aa2f3c6ba8cfb0335b4bff3e52f6bf2 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 2 Apr 2017 09:12:03 +0800
+Subject: [PATCH 31/95] Subcommand clean support removing non-empty directory
+
+---
+ subversion/svn/status.c | 7 ++-----
+ subversion/svn/svn.c    | 2 +-
+ 2 files changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/subversion/svn/status.c b/subversion/svn/status.c
+index 9242c6a..f05c1c6 100644
+--- a/subversion/svn/status.c
++++ b/subversion/svn/status.c
+@@ -663,11 +663,8 @@ remove_unversioned(const char *target_abspath,
+     }
+   else if (finfo.filetype == APR_DIR)
+     {
+-      apr_err = apr_dir_remove(path, pool);
+-      if (!apr_err)
+-        return SVN_NO_ERROR;
+-      return svn_error_wrap_apr(apr_err, _("Can't remove dir '%s'"),
+-          svn_dirent_local_style(path, pool));
++      SVN_ERR(svn_io_remove_dir2(path, TRUE, NULL, NULL, pool));
++      return SVN_NO_ERROR;
+     }
+ 
+   fprintf(stderr, "Unknown file type: %s %d", path, finfo.filetype);
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 91b9a34..19b4e50 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -629,7 +629,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+     {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals} },
+ 
+   { "clean", svn_cl__clean, {0}, N_
+-    ("Remove untracked files and empty directories.\n"), { 0 } },
++    ("Remove untracked files and directories.\n"), { 0 } },
+ 
+   { "cleanup", svn_cl__cleanup, {0}, N_
+     ("Either recover from an interrupted operation that left the working copy locked,\n"
+-- 
+1.8.3.1
+

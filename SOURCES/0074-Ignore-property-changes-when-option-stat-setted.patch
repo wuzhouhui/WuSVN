@@ -1,0 +1,41 @@
+From f856c6891d6d3fc899959747bac3ffc373bd34aa Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 7 Jan 2018 18:56:24 +0800
+Subject: [PATCH 74/95] Ignore property changes when option --stat setted
+
+Currently, I don't know how to deal with statistics of property changes.
+---
+ subversion/svn/svn.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index b04aea3..d029d96 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -400,7 +400,10 @@ const apr_getopt_option_t svn_cl__options[] =
+                        "--show-copies-as-adds --ignore-properties"
+                        )},
+   {"no-color", opt_no_color, 0, N_("disable syntax highlight")},
+-  {"stat", opt_diffstat, 0, N_("display statistics of diff")},
++  {"stat", opt_diffstat, 0,
++                       N_("display statistics of diff, ignore property\n"
++                          "                             "
++                          "changes automatically")},
+   /* end of diff options */
+   {"allow-mixed-revisions", opt_allow_mixed_revisions, 0,
+                        N_("Allow operation on mixed-revision working copy.\n"
+@@ -2642,7 +2645,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+ 	opt_state.diff.no_color = TRUE;
+ 	break;
+       case opt_diffstat:
+-        opt_state.diffstat = opt_state.diff.diffstat = TRUE;
++        opt_state.diffstat
++            = opt_state.diff.ignore_properties
++            = opt_state.diff.diffstat
++            = TRUE;
+         break;
+       case opt_use_git_diff_format:
+         opt_state.diff.use_git_diff_format = TRUE;
+-- 
+1.8.3.1
+

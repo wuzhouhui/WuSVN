@@ -1,0 +1,103 @@
+From 1746efd40a299ec9f7269603aa4c4c4d71648ccf Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 29 Jan 2017 12:44:48 +0800
+Subject: [PATCH 26/95] Add email address of hacker
+
+---
+ subversion/include/svn_version.h | 12 ++++++++++++
+ subversion/libsvn_subr/opt.c     | 22 ++++++++++++++++------
+ subversion/libsvn_subr/version.c |  8 ++++++++
+ 3 files changed, 36 insertions(+), 6 deletions(-)
+
+diff --git a/subversion/include/svn_version.h b/subversion/include/svn_version.h
+index 4baabfc..7ad8c60 100644
+--- a/subversion/include/svn_version.h
++++ b/subversion/include/svn_version.h
+@@ -357,6 +357,18 @@ svn_version_ext_build_host(const svn_version_extended_t *ext_info);
+ /**
+  * Accessor for svn_version_extended_t.
+  *
++ * @return The name of person who modifies subversion's source code.
++ *
++ * @note Maybe empty.
++ *
++ * @since New in 1.9.
++ */
++const char *
++svn_version_ext_build_hacker(const svn_version_extended_t *ext_info);
++
++/**
++ * Accessor for svn_version_extended_t.
++ *
+  * @return The localized copyright notice.
+  *
+  * @since New in 1.8.
+diff --git a/subversion/libsvn_subr/opt.c b/subversion/libsvn_subr/opt.c
+index fd8c73a..bc7a589 100644
+--- a/subversion/libsvn_subr/opt.c
++++ b/subversion/libsvn_subr/opt.c
+@@ -1118,12 +1118,22 @@ svn_opt__print_version_info(const char *pgm_name,
+   if (quiet)
+     return svn_cmdline_printf(pool, "%s\n", SVN_VER_NUMBER);
+ 
+-  SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
+-                                     "   compiled %s, %s on %s\n\n"),
+-                             pgm_name, SVN_VERSION,
+-                             svn_version_ext_build_date(info),
+-                             svn_version_ext_build_time(info),
+-                             svn_version_ext_build_host(info)));
++  if (svn_version_ext_build_hacker(info))
++    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
++                                       "   compiled %s, %s on %s\n"
++                                       "   modified by %s\n\n"),
++                               pgm_name, SVN_VERSION,
++                               svn_version_ext_build_date(info),
++                               svn_version_ext_build_time(info),
++                               svn_version_ext_build_host(info),
++                               svn_version_ext_build_hacker(info)));
++  else
++    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
++                                       "   compiled %s, %s on %s\n\n"),
++                               pgm_name, SVN_VERSION,
++                               svn_version_ext_build_date(info),
++                               svn_version_ext_build_time(info),
++                               svn_version_ext_build_host(info)));
+   SVN_ERR(svn_cmdline_printf(pool, "%s\n", svn_version_ext_copyright(info)));
+ 
+   if (footer)
+diff --git a/subversion/libsvn_subr/version.c b/subversion/libsvn_subr/version.c
+index 1aabb40..85a01dc 100644
+--- a/subversion/libsvn_subr/version.c
++++ b/subversion/libsvn_subr/version.c
+@@ -122,6 +122,7 @@ struct svn_version_extended_t
+   const char *copyright;        /* Copyright notice (localized) */
+   const char *runtime_host;     /* Runtime canonical host name */
+   const char *runtime_osname;   /* Running OS release name */
++  const char *hacker;           /* Name of hacker, if any */
+ 
+   /* Array of svn_version_ext_linked_lib_t describing dependent
+      libraries. */
+@@ -142,6 +143,7 @@ svn_version_extended(svn_boolean_t verbose,
+   info->build_date = __DATE__;
+   info->build_time = __TIME__;
+   info->build_host = SVN_BUILD_HOST;
++  info->hacker = "wuzhouhui250@gmail.com";
+   info->copyright = apr_pstrdup
+     (pool, _("Copyright (C) 2018 The Apache Software Foundation.\n"
+              "This software consists of contributions made by many people;\n"
+@@ -180,6 +182,12 @@ svn_version_ext_build_host(const svn_version_extended_t *ext_info)
+ }
+ 
+ const char *
++svn_version_ext_build_hacker(const svn_version_extended_t *ext_info)
++{
++  return ext_info->hacker;
++}
++
++const char *
+ svn_version_ext_copyright(const svn_version_extended_t *ext_info)
+ {
+   return ext_info->copyright;
+-- 
+1.8.3.1
+

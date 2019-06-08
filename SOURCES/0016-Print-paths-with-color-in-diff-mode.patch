@@ -1,0 +1,200 @@
+From 451bf4fae8efc58634f050ce189704fa0426d92b Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 28 Dec 2016 20:33:28 +0800
+Subject: [PATCH 16/95] Print paths with color in diff mode
+
+---
+ subversion/include/private/svn_color.h |  1 +
+ subversion/libsvn_client/diff.c        | 90 ++++++++++++++++++++++++++--------
+ subversion/libsvn_diff/util.c          | 21 +++++---
+ 3 files changed, 86 insertions(+), 26 deletions(-)
+
+diff --git a/subversion/include/private/svn_color.h b/subversion/include/private/svn_color.h
+index 1433994..7aa93d5 100644
+--- a/subversion/include/private/svn_color.h
++++ b/subversion/include/private/svn_color.h
+@@ -4,5 +4,6 @@
+ #define SVN_USE_COLOR_MAGIC   0x8a3f
+ #define SVN_COLOR_RED          "\033[31m"
+ #define SVN_COLOR_GREEN        "\033[32m"
++#define SVN_COLOR_BLUE         "\033[34m"
+ 
+ #endif /* SVN_COLOR_H */
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index e96ae94..caeb65e 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -53,6 +53,7 @@
+ #include "private/svn_subr_private.h"
+ #include "private/svn_io_private.h"
+ #include "private/svn_ra_private.h"
++#include "private/svn_color.h"
+ 
+ #include "svn_private_config.h"
+ 
+@@ -555,10 +556,16 @@ display_prop_diffs(const apr_array_header_t *propchanges,
+       /* ### Should we show the paths in platform specific format,
+        * ### diff_content_changed() does not! */
+ 
+-      SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
+-                                          "Index: %s" APR_EOL_STR
+-                                          SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+-                                          index_path));
++      if (stdout_is_tty)
++        SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
++			      SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
++			      SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++			      SVN_COLOR_BLUE, index_path));
++      else
++        SVN_ERR(svn_stream_printf_from_utf8(outstream, encoding, scratch_pool,
++			      "Index: %s" APR_EOL_STR
++			      SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++			      index_path));
+ 
+       if (use_git_diff_format)
+         SVN_ERR(print_git_diff_header(outstream, &label1, &label2,
+@@ -871,11 +878,18 @@ diff_content_changed(svn_boolean_t *wrote_header,
+   if (! dwi->force_binary && (mt1_binary || mt2_binary))
+     {
+       /* Print out the diff header. */
+-      SVN_ERR(svn_stream_printf_from_utf8(outstream,
+-               dwi->header_encoding, scratch_pool,
+-               "Index: %s" APR_EOL_STR
+-               SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+-               index_path));
++      if (stdout_is_tty)
++        SVN_ERR(svn_stream_printf_from_utf8(outstream,
++		 dwi->header_encoding, scratch_pool,
++		 SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
++		 SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++		 SVN_COLOR_BLUE, index_path));
++      else
++        SVN_ERR(svn_stream_printf_from_utf8(outstream,
++		 dwi->header_encoding, scratch_pool,
++		 "Index: %s" APR_EOL_STR
++		 SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++		 index_path));
+ 
+       *wrote_header = TRUE;
+ 
+@@ -1049,11 +1063,18 @@ diff_content_changed(svn_boolean_t *wrote_header,
+           || svn_diff_contains_diffs(diff))
+         {
+           /* Print out the diff header. */
+-          SVN_ERR(svn_stream_printf_from_utf8(outstream,
+-                   dwi->header_encoding, scratch_pool,
+-                   "Index: %s" APR_EOL_STR
+-                   SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+-                   index_path));
++	  if (stdout_is_tty)
++            SVN_ERR(svn_stream_printf_from_utf8(outstream,
++		     dwi->header_encoding, scratch_pool,
++		     SVN_COLOR_BLUE "Index: %s%s" APR_EOL_STR
++		     SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++		     SVN_COLOR_BLUE, index_path));
++          else
++            SVN_ERR(svn_stream_printf_from_utf8(outstream,
++		     dwi->header_encoding, scratch_pool,
++		     "Index: %s" APR_EOL_STR
++		     SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++		     index_path));
+ 
+           if (dwi->use_git_diff_format)
+             {
+@@ -1213,7 +1234,29 @@ diff_file_added(const char *relpath,
+ 
+   SVN_ERR(svn_prop_diffs(&prop_changes, right_props, left_props, scratch_pool));
+ 
+-  if (copyfrom_source && right_file)
++  if (dwi->no_diff_added)
++    {
++      const char *index_path = relpath;
++
++      if (dwi->ddi.anchor)
++        index_path = svn_dirent_join(dwi->ddi.anchor, relpath,
++                                     scratch_pool);
++
++      if (stdout_is_tty)
++        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
++                  dwi->header_encoding, scratch_pool,
++                  SVN_COLOR_BLUE "Index: %s%s (added)" APR_EOL_STR
++                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++                  SVN_COLOR_BLUE, index_path));
++      else
++        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
++                  dwi->header_encoding, scratch_pool,
++                  "Index: %s (added)" APR_EOL_STR
++                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++                  index_path));
++      wrote_header = TRUE;
++    }
++  else if (copyfrom_source && right_file)
+     SVN_ERR(diff_content_changed(&wrote_header, relpath,
+                                  left_file, right_file,
+                                  copyfrom_source->revision,
+@@ -1271,11 +1314,18 @@ diff_file_deleted(const char *relpath,
+         index_path = svn_dirent_join(dwi->ddi.anchor, relpath,
+                                      scratch_pool);
+ 
+-      SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
+-                dwi->header_encoding, scratch_pool,
+-                "Index: %s (deleted)" APR_EOL_STR
+-                SVN_DIFF__EQUAL_STRING APR_EOL_STR,
+-                index_path));
++      if (stdout_is_tty)
++        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
++                  dwi->header_encoding, scratch_pool,
++                  SVN_COLOR_BLUE "Index: %s%s (deleted)" APR_EOL_STR
++                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++                  SVN_COLOR_BLUE, index_path));
++      else
++        SVN_ERR(svn_stream_printf_from_utf8(dwi->outstream,
++                  dwi->header_encoding, scratch_pool,
++                  "Index: %s (deleted)" APR_EOL_STR
++                  SVN_DIFF__EQUAL_STRING APR_EOL_STR,
++                  index_path));
+     }
+   else
+     {
+diff --git a/subversion/libsvn_diff/util.c b/subversion/libsvn_diff/util.c
+index 2ac3695..b83319a 100644
+--- a/subversion/libsvn_diff/util.c
++++ b/subversion/libsvn_diff/util.c
+@@ -39,6 +39,7 @@
+ 
+ #include "private/svn_diff_private.h"
+ #include "private/svn_sorts_private.h"
++#include "private/svn_color.h"
+ #include "diff.h"
+ 
+ #include "svn_private_config.h"
+@@ -417,12 +418,20 @@ svn_diff__unidiff_write_header(svn_stream_t *output_stream,
+                                const char *new_header,
+                                apr_pool_t *scratch_pool)
+ {
+-  SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+-                                      scratch_pool,
+-                                      "--- %s" APR_EOL_STR
+-                                      "+++ %s" APR_EOL_STR,
+-                                      old_header,
+-                                      new_header));
++  if (stdout_is_tty)
++    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
++                                        scratch_pool,
++                                        SVN_COLOR_BLUE "--- %s" APR_EOL_STR
++                                        SVN_COLOR_BLUE "+++ %s" APR_EOL_STR,
++                                        old_header,
++                                        new_header));
++  else
++    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
++                                        scratch_pool,
++                                        "--- %s" APR_EOL_STR
++                                        "+++ %s" APR_EOL_STR,
++                                        old_header,
++                                        new_header));
+   return SVN_NO_ERROR;
+ }
+ 
+-- 
+1.8.3.1
+

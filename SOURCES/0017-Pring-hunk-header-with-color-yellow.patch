@@ -1,0 +1,49 @@
+From 472f0dc1af5c52224f488df07633a65b26525f63 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 28 Dec 2016 21:33:52 +0800
+Subject: [PATCH 17/95] Pring hunk header with color yellow
+
+---
+ subversion/include/private/svn_color.h |  1 +
+ subversion/libsvn_diff/util.c          | 14 ++++++++++----
+ 2 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/subversion/include/private/svn_color.h b/subversion/include/private/svn_color.h
+index 7aa93d5..cc7e56d 100644
+--- a/subversion/include/private/svn_color.h
++++ b/subversion/include/private/svn_color.h
+@@ -5,5 +5,6 @@
+ #define SVN_COLOR_RED          "\033[31m"
+ #define SVN_COLOR_GREEN        "\033[32m"
+ #define SVN_COLOR_BLUE         "\033[34m"
++#define SVN_COLOR_YELLOW       "\033[33m"
+ 
+ #endif /* SVN_COLOR_H */
+diff --git a/subversion/libsvn_diff/util.c b/subversion/libsvn_diff/util.c
+index b83319a..da6565a 100644
+--- a/subversion/libsvn_diff/util.c
++++ b/subversion/libsvn_diff/util.c
+@@ -377,10 +377,16 @@ svn_diff__unified_write_hunk_header(svn_stream_t *output_stream,
+                                     const char *hunk_extra_context,
+                                     apr_pool_t *scratch_pool)
+ {
+-  SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
+-                                      scratch_pool,
+-                                      "%s -%" APR_OFF_T_FMT,
+-                                      hunk_delimiter, old_start));
++  if (stdout_is_tty)
++    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
++					scratch_pool,
++					SVN_COLOR_YELLOW "%s -%" APR_OFF_T_FMT,
++					hunk_delimiter, old_start));
++  else
++    SVN_ERR(svn_stream_printf_from_utf8(output_stream, header_encoding,
++					scratch_pool,
++					"%s -%" APR_OFF_T_FMT,
++					hunk_delimiter, old_start));
+   /* If the hunk length is 1, suppress the number of lines in the hunk
+    * (it is 1 implicitly) */
+   if (old_length != 1)
+-- 
+1.8.3.1
+

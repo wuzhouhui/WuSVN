@@ -1,0 +1,25 @@
+From 275211ef1a7afc1c2b1d02d284efe21c3016ff13 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 8 Oct 2017 17:29:29 +0800
+Subject: [PATCH 51/95] Add option -p0 to diffstat program
+
+---
+ subversion/svn/diff-cmd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/svn/diff-cmd.c b/subversion/svn/diff-cmd.c
+index 2b7903d..b40810f 100644
+--- a/subversion/svn/diff-cmd.c
++++ b/subversion/svn/diff-cmd.c
+@@ -424,7 +424,7 @@ svn_cl__diff(apr_getopt_t *os,
+       apr_procattr_t *attr;
+       apr_status_t apr_err;
+       const char *progname = "diffstat";
+-      const char *args1[] = { progname, "-E", "-C", NULL, };
++      const char *args1[] = { progname, "-E", "-C", "-p0", NULL, };
+       const char *args2[] = { progname, NULL, };
+ 
+       apr_err = apr_procattr_create(&attr, pool);
+-- 
+1.8.3.1
+

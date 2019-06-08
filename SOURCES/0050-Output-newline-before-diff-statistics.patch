@@ -1,0 +1,24 @@
+From 2a4857e1441409c1744cce9509634559e25d8bd0 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 8 Oct 2017 17:24:42 +0800
+Subject: [PATCH 50/95] Output newline before diff statistics
+
+---
+ subversion/svn/log-cmd.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/subversion/svn/log-cmd.c b/subversion/svn/log-cmd.c
+index cf4d971..655ef55 100644
+--- a/subversion/svn/log-cmd.c
++++ b/subversion/svn/log-cmd.c
+@@ -158,6 +158,7 @@ display_diffstat(const svn_log_entry_t *log_entry,
+   end_revision.kind = svn_opt_revision_number;
+   end_revision.value.number = log_entry->revision;
+ 
++  SVN_ERR(svn_stream_puts(outstream, "\n"));
+   SVN_ERR(svn_client_diff_peg6_diffstat(diff_options,
+                                target_path_or_url,
+                                target_peg_revision,
+-- 
+1.8.3.1
+

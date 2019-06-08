@@ -1,0 +1,25 @@
+From 737d61c08b209a40ae451b1d278594127500fdf4 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 6 Jan 2018 18:21:29 +0800
+Subject: [PATCH 71/95] New year
+
+---
+ subversion/libsvn_subr/version.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/libsvn_subr/version.c b/subversion/libsvn_subr/version.c
+index 20bd11c..8ba53cb 100644
+--- a/subversion/libsvn_subr/version.c
++++ b/subversion/libsvn_subr/version.c
+@@ -146,7 +146,7 @@ svn_version_extended(svn_boolean_t verbose,
+   info->hacker = "wuzhouhui250@gmail.com";
+   info->copyright = apr_pstrdup
+     (pool, _("Copyright (C) 2018 The Apache Software Foundation.\n"
+-             "Copyright (C) 2016, 2017 Zhouhui Wu <wuzhouhui250@gmail.com>.\n"
++             "Copyright (C) 2016-2018 Zhouhui Wu <wuzhouhui250@gmail.com>.\n"
+              "This software consists of contributions made by many people;\n"
+              "see the NOTICE file for more information.\n"
+              "Subversion is open source software, see "
+-- 
+1.8.3.1
+

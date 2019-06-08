@@ -1,0 +1,22 @@
+From fc06ece6a66989ae9c2de14e2f9b04117f2229d9 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 28 Oct 2018 09:33:51 +0800
+Subject: [PATCH 85/95] Update README
+
+---
+ README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/README b/README
+index a71cf85..1465fd8 100644
+--- a/README
++++ b/README
+@@ -1,4 +1,4 @@
+-Subversion with my patches.
++Subversion with my patches, based on 1.10.x
+ 
+ Main patches:
+       1. Output paging automatically
+-- 
+1.8.3.1
+

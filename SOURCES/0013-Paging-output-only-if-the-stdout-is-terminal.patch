@@ -1,0 +1,32 @@
+From 86f69fc7dcd4104cfebbde79412dc3e1d364b566 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 24 Dec 2016 17:44:39 +0800
+Subject: [PATCH 13/95] Paging output only if the stdout is terminal
+
+---
+ subversion/svn/svn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 3f21c3c..f7e5978 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -3245,13 +3245,13 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool,
+     ctx->conflict_baton2 = NULL;
+   }
+ 
+-  if (subcommand->cmd_func == svn_cl__blame ||
++  if (isatty(STDOUT_FILENO) && (subcommand->cmd_func == svn_cl__blame ||
+ 		  subcommand->cmd_func == svn_cl__cat ||
+ 		  subcommand->cmd_func == svn_cl__diff ||
+ 		  subcommand->cmd_func == svn_cl__log ||
+ 		  subcommand->cmd_func == svn_cl__status ||
+ 		  subcommand->cmd_func == svn_cl__list ||
+-		  subcommand->cmd_func == svn_cl__help) {
++		  subcommand->cmd_func == svn_cl__help)) {
+     int fd[2];
+ 
+     if (pipe(fd) < 0) {
+-- 
+1.8.3.1
+

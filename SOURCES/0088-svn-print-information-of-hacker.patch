@@ -1,0 +1,63 @@
+From cfdd46d67f327efdf233e247d887d4b56c26a3eb Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 23 Dec 2018 12:09:24 +0800
+Subject: [PATCH 88/95] svn: print information of hacker
+
+Previously, svn --version print information of hacker in Copyright.
+---
+ subversion/libsvn_subr/opt.c     | 22 ++++++++++++++++------
+ subversion/libsvn_subr/version.c |  3 +--
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+
+diff --git a/subversion/libsvn_subr/opt.c b/subversion/libsvn_subr/opt.c
+index fd8c73a..bc7a589 100644
+--- a/subversion/libsvn_subr/opt.c
++++ b/subversion/libsvn_subr/opt.c
+@@ -1118,12 +1118,22 @@ svn_opt__print_version_info(const char *pgm_name,
+   if (quiet)
+     return svn_cmdline_printf(pool, "%s\n", SVN_VER_NUMBER);
+ 
+-  SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
+-                                     "   compiled %s, %s on %s\n\n"),
+-                             pgm_name, SVN_VERSION,
+-                             svn_version_ext_build_date(info),
+-                             svn_version_ext_build_time(info),
+-                             svn_version_ext_build_host(info)));
++  if (svn_version_ext_build_hacker(info))
++    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
++                                       "   compiled %s, %s on %s\n"
++                                       "   modified by %s\n\n"),
++                               pgm_name, SVN_VERSION,
++                               svn_version_ext_build_date(info),
++                               svn_version_ext_build_time(info),
++                               svn_version_ext_build_host(info),
++                               svn_version_ext_build_hacker(info)));
++  else
++    SVN_ERR(svn_cmdline_printf(pool, _("%s, version %s\n"
++                                       "   compiled %s, %s on %s\n\n"),
++                               pgm_name, SVN_VERSION,
++                               svn_version_ext_build_date(info),
++                               svn_version_ext_build_time(info),
++                               svn_version_ext_build_host(info)));
+   SVN_ERR(svn_cmdline_printf(pool, "%s\n", svn_version_ext_copyright(info)));
+ 
+   if (footer)
+diff --git a/subversion/libsvn_subr/version.c b/subversion/libsvn_subr/version.c
+index 8ba53cb..58084c8 100644
+--- a/subversion/libsvn_subr/version.c
++++ b/subversion/libsvn_subr/version.c
+@@ -143,10 +143,9 @@ svn_version_extended(svn_boolean_t verbose,
+   info->build_date = __DATE__;
+   info->build_time = __TIME__;
+   info->build_host = SVN_BUILD_HOST;
+-  info->hacker = "wuzhouhui250@gmail.com";
++  info->hacker = "Zhouhui Wu <wuzhouhui250@gmail.com>";
+   info->copyright = apr_pstrdup
+     (pool, _("Copyright (C) 2018 The Apache Software Foundation.\n"
+-             "Copyright (C) 2016-2018 Zhouhui Wu <wuzhouhui250@gmail.com>.\n"
+              "This software consists of contributions made by many people;\n"
+              "see the NOTICE file for more information.\n"
+              "Subversion is open source software, see "
+-- 
+1.8.3.1
+

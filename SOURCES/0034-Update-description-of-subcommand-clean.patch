@@ -1,0 +1,26 @@
+From 8f51c98547e50ae36366516255f401396038c707 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 2 Apr 2017 12:51:06 +0800
+Subject: [PATCH 34/95] Update description of subcommand clean
+
+---
+ subversion/svn/svn.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 485fd2e..c4d3df3 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -629,7 +629,8 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+     {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals} },
+ 
+   { "clean", svn_cl__clean, {0}, N_
+-    ("Remove untracked files and directories.\n"), { 'q', opt_no_ignore } },
++    ("Remove unversioned files and directories.\n"
++     "usage: clean [PATH...]\n"), { 'q', opt_no_ignore } },
+ 
+   { "cleanup", svn_cl__cleanup, {0}, N_
+     ("Either recover from an interrupted operation that left the working copy locked,\n"
+-- 
+1.8.3.1
+

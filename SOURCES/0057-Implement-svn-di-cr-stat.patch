@@ -1,0 +1,45 @@
+From 36d717e16adc4ec1ca032735193a99f4110a1863 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 14 Oct 2017 18:22:20 +0800
+Subject: [PATCH 57/95] Implement svn di -[cr] --stat
+
+---
+ subversion/svn/diff-cmd.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/subversion/svn/diff-cmd.c b/subversion/svn/diff-cmd.c
+index 6cafc42..7f5d1e3 100644
+--- a/subversion/svn/diff-cmd.c
++++ b/subversion/svn/diff-cmd.c
+@@ -536,6 +536,28 @@ svn_cl__diff(apr_getopt_t *os,
+                                 summarize_func, &summarize_baton,
+                                 ctx, iterpool));
+             }
++          else if (opt_state->diff.diffstat)
++            SVN_ERR(svn_client_diff_peg6_diffstat(
++                     options,
++                     truepath,
++                     &peg_revision,
++                     &opt_state->start_revision,
++                     &opt_state->end_revision,
++                     NULL,
++                     opt_state->depth,
++                     ! opt_state->diff.notice_ancestry,
++                     opt_state->diff.no_diff_added,
++                     opt_state->diff.no_diff_deleted,
++                     show_copies_as_adds,
++                     ignore_content_type,
++                     ignore_properties,
++                     opt_state->diff.properties_only,
++                     opt_state->diff.use_git_diff_format,
++                     svn_cmdline_output_encoding(pool),
++                     outstream,
++                     errstream,
++                     opt_state->changelists,
++                     ctx, iterpool));
+           else
+             SVN_ERR(svn_client_diff_peg6(
+                      options,
+-- 
+1.8.3.1
+

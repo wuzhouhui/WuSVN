@@ -1,0 +1,40 @@
+From f5c29ce053990af822794716532a0645d70c783b Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 2 Apr 2017 12:44:54 +0800
+Subject: [PATCH 33/95] Subcommand clean: add option --no-ignore
+
+---
+ subversion/svn/status.c | 3 ++-
+ subversion/svn/svn.c    | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/svn/status.c b/subversion/svn/status.c
+index dade492..fbaf4eb 100644
+--- a/subversion/svn/status.c
++++ b/subversion/svn/status.c
+@@ -641,7 +641,8 @@ remove_unversioned(const char *target_abspath,
+              svn_client_ctx_t *ctx,
+              apr_pool_t *pool)
+ {
+-  if (combined_status(status) != svn_wc_status_unversioned)
++  if (combined_status(status) != svn_wc_status_unversioned
++                  && combined_status(status) != svn_wc_status_ignored)
+     return SVN_NO_ERROR;
+ 
+   apr_status_t  apr_err;
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 4bb2ed3..485fd2e 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -629,7 +629,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+     {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals} },
+ 
+   { "clean", svn_cl__clean, {0}, N_
+-    ("Remove untracked files and directories.\n"), { 'q' } },
++    ("Remove untracked files and directories.\n"), { 'q', opt_no_ignore } },
+ 
+   { "cleanup", svn_cl__cleanup, {0}, N_
+     ("Either recover from an interrupted operation that left the working copy locked,\n"
+-- 
+1.8.3.1
+

@@ -1,0 +1,135 @@
+From 1ea5e4e43ca057b81b68a02cd85afefc0c35c79a Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 5 Nov 2016 17:06:43 +0800
+Subject: [PATCH 06/95] Support .svnignore
+
+---
+ subversion/include/private/svn_sqlite.h |  5 +++++
+ subversion/libsvn_subr/sqlite.c         | 23 +++++++++++++++++++++++
+ subversion/libsvn_wc/status.c           |  7 +++++++
+ subversion/libsvn_wc/wc_db.c            | 10 ++++++++++
+ subversion/libsvn_wc/wc_db.h            |  2 ++
+ subversion/libsvn_wc/wc_db_private.h    |  1 +
+ 6 files changed, 48 insertions(+)
+
+diff --git a/subversion/include/private/svn_sqlite.h b/subversion/include/private/svn_sqlite.h
+index 877c5fc..24c403b 100644
+--- a/subversion/include/private/svn_sqlite.h
++++ b/subversion/include/private/svn_sqlite.h
+@@ -162,6 +162,11 @@ svn_error_t *
+ svn_sqlite__get_statement(svn_sqlite__stmt_t **stmt, svn_sqlite__db_t *db,
+                           int stmt_idx);
+ 
++svn_error_t *
++read_svn_ignore(svn_sqlite__db_t *sdb,
++		char **res,
++		apr_pool_t *result_pool,
++		apr_pool_t *scratch_pool);
+ 
+ /* ---------------------------------------------------------------------
+ 
+diff --git a/subversion/libsvn_subr/sqlite.c b/subversion/libsvn_subr/sqlite.c
+index e636842..fa7eee2 100644
+--- a/subversion/libsvn_subr/sqlite.c
++++ b/subversion/libsvn_subr/sqlite.c
+@@ -1620,3 +1620,26 @@ svn_sqlite__result_error(svn_sqlite__context_t *sctx, const char *msg, int num)
+ {
+   sqlite3_result_error(sctx->context, msg, num);
+ }
++
++svn_error_t *
++read_svn_ignore(svn_sqlite__db_t *sdb,
++		char **res,
++		apr_pool_t *result_pool,
++		apr_pool_t *scratch_pool)
++{
++  if (!sdb->svn_ignore_file)
++    return SVN_NO_ERROR;
++
++  apr_file_t *file = sdb->svn_ignore_file;
++  apr_off_t offset = 0;
++  char buf[4096] = { 0 };
++  apr_size_t size = sizeof(buf) - 1;
++
++  *res = NULL;
++  apr_file_seek(file, APR_SET, &offset);
++  if (apr_file_read(file, buf, &size) == APR_SUCCESS) {
++    *res = apr_pstrdup(result_pool, buf);
++    return SVN_NO_ERROR;
++  } else
++    return (svn_error_t *)-1;
++}
+diff --git a/subversion/libsvn_wc/status.c b/subversion/libsvn_wc/status.c
+index b8cbc0e..395536d 100644
+--- a/subversion/libsvn_wc/status.c
++++ b/subversion/libsvn_wc/status.c
+@@ -914,6 +914,13 @@ collect_ignore_patterns(apr_array_header_t **patterns,
+                                  result_pool);
+     }
+ 
++    {
++      const char *str = get_private(db);
++      if (str)
++        svn_cstring_split_append(*patterns, str, "\n\r", FALSE,
++                                 result_pool);
++    }
++
+   for (i = 0; i < inherited_props->nelts; i++)
+     {
+       svn_prop_inherited_item_t *elt = APR_ARRAY_IDX(
+diff --git a/subversion/libsvn_wc/wc_db.c b/subversion/libsvn_wc/wc_db.c
+index bc87b2f..8edfd79 100644
+--- a/subversion/libsvn_wc/wc_db.c
++++ b/subversion/libsvn_wc/wc_db.c
+@@ -10851,6 +10851,11 @@ db_read_inherited_props(apr_array_header_t **inherited_props,
+   return SVN_NO_ERROR;
+ }
+ 
++void *get_private(svn_wc__db_t *db)
++{
++  return db->private;
++}
++
+ svn_error_t *
+ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
+                                 apr_hash_t **actual_props,
+@@ -10874,6 +10879,11 @@ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
+                                               wcroot, local_relpath, propname,
+                                               result_pool, scratch_pool),
+                       wcroot);
++  if (strcmp(propname, SVN_PROP_INHERITABLE_IGNORES))
++    return SVN_NO_ERROR;
++  else
++    read_svn_ignore(wcroot->sdb, (char **)&db->private, result_pool,
++		    scratch_pool);
+ 
+   return SVN_NO_ERROR;
+ }
+diff --git a/subversion/libsvn_wc/wc_db.h b/subversion/libsvn_wc/wc_db.h
+index 0bf6432..324ae4d 100644
+--- a/subversion/libsvn_wc/wc_db.h
++++ b/subversion/libsvn_wc/wc_db.h
+@@ -2242,6 +2242,8 @@ svn_wc__db_read_inherited_props(apr_array_header_t **iprops,
+                                 apr_pool_t *result_pool,
+                                 apr_pool_t *scratch_pool);
+ 
++void *get_private(svn_wc__db_t *);
++
+ /* Read a BASE node's inherited property information.
+ 
+    Set *IPROPS to to a depth-first ordered array of
+diff --git a/subversion/libsvn_wc/wc_db_private.h b/subversion/libsvn_wc/wc_db_private.h
+index a9d7b04..2e6cab8 100644
+--- a/subversion/libsvn_wc/wc_db_private.h
++++ b/subversion/libsvn_wc/wc_db_private.h
+@@ -66,6 +66,7 @@ struct svn_wc__db_t {
+ 
+   /* As we grow the state of this DB, allocate that state here. */
+   apr_pool_t *state_pool;
++  void	*private;
+ };
+ 
+ 
+-- 
+1.8.3.1
+

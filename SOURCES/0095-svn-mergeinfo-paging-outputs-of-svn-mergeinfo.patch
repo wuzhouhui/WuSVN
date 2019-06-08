@@ -1,0 +1,25 @@
+From 0ff1aac31b7842a6b5cb6edc325f34ff612d5a7c Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 7 Apr 2019 10:04:48 +0800
+Subject: [PATCH 95/95] svn/mergeinfo: paging outputs of svn mergeinfo
+
+(cherry picked from commit f122d5b8f6310a36b72dac0a38a4b6473b2f54ef)
+---
+ subversion/svn/svn.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 9bbcc56..16fafcf 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -3361,6 +3361,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+ 		  subcommand->cmd_func == svn_cl__status ||
+ 		  subcommand->cmd_func == svn_cl__list ||
+ 		  subcommand->cmd_func == svn_cl__auth ||
++		  subcommand->cmd_func == svn_cl__mergeinfo ||
+ 		  subcommand->cmd_func == svn_cl__help) &&
+       subcommand != &pseudo_cmd) {
+     int fd[2];
+-- 
+1.8.3.1
+

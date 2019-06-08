@@ -1,0 +1,25 @@
+From 03bc52015e1dd475cb285e8571534bf4ad6f9b81 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Fri, 21 Oct 2016 20:05:21 +0800
+Subject: [PATCH 01/95] Add alias "rv" for subcommand revert
+
+---
+ subversion/svn/svn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 48b894f..952512d 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -1678,7 +1678,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+      "  deprecated in favor of running 'svn resolve --accept working'.\n"),
+     {opt_targets, 'R', opt_depth, 'q'} },
+ 
+-  { "revert", svn_cl__revert, {0}, N_
++  { "revert", svn_cl__revert, {"rv"}, N_
+     ("Restore pristine working copy state (undo local changes).\n"
+      "usage: revert PATH...\n"
+      "\n"
+-- 
+1.8.3.1
+

@@ -1,0 +1,69 @@
+From 1a4b008940b44d901474879463307f27603d2645 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 27 Aug 2017 10:18:25 +0800
+Subject: [PATCH 43/95] Using relative path to reduce memory usage
+
+---
+ subversion/libsvn_client/commit.c | 16 ++++++++--------
+ subversion/libsvn_subr/cmdline.c  |  4 ++--
+ 2 files changed, 10 insertions(+), 10 deletions(-)
+
+diff --git a/subversion/libsvn_client/commit.c b/subversion/libsvn_client/commit.c
+index 4a945c8..f63a2e3 100644
+--- a/subversion/libsvn_client/commit.c
++++ b/subversion/libsvn_client/commit.c
+@@ -798,6 +798,14 @@ svn_client_commit6(const apr_array_header_t *targets,
+         }
+     }
+ 
++  /* Sort and condense our COMMIT_ITEMS. */
++  cmt_err = svn_error_trace(svn_client__condense_commit_items(&base_url,
++                                                              commit_items,
++                                                              pool));
++
++  if (cmt_err)
++    goto cleanup;
++
+   /* Go get a log message.  If an error occurs, or no log message is
+      specified, abort the operation. */
+   if (SVN_CLIENT__HAS_LOG_MSG_FUNC(ctx))
+@@ -813,14 +821,6 @@ svn_client_commit6(const apr_array_header_t *targets,
+   else
+     log_msg = "";
+ 
+-  /* Sort and condense our COMMIT_ITEMS. */
+-  cmt_err = svn_error_trace(svn_client__condense_commit_items(&base_url,
+-                                                              commit_items,
+-                                                              pool));
+-
+-  if (cmt_err)
+-    goto cleanup;
+-
+   /* Collect our lock tokens with paths relative to base_url. */
+   cmt_err = svn_error_trace(collect_lock_tokens(&lock_tokens, lock_tokens,
+                                                 base_url, pool));
+diff --git a/subversion/libsvn_subr/cmdline.c b/subversion/libsvn_subr/cmdline.c
+index 1092943..0452927 100644
+--- a/subversion/libsvn_subr/cmdline.c
++++ b/subversion/libsvn_subr/cmdline.c
+@@ -1475,7 +1475,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+     for (i = 0; i < commit_items->nelts; i++)
+       {
+         int t = strlen((APR_ARRAY_IDX(commit_items, i,
+-                svn_client_commit_item3_t *))->path);
++                svn_client_commit_item3_t *))->session_relpath);
+         if (t > len)
+           len = t;
+       }
+@@ -1487,7 +1487,7 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+             = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
+         sprintf(buf, "svn di %s %s >> %s",
+             item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
+-            "--properties-only" : "", item->path, tmpfile_name);
++            "--properties-only" : "", item->session_relpath, tmpfile_name);
+         system(buf);
+       }
+   }
+-- 
+1.8.3.1
+

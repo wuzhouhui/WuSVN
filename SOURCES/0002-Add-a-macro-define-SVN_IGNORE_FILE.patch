@@ -1,0 +1,27 @@
+From 7df09e5da97af2c5b3a37966f9b075255addad49 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 22 Oct 2016 13:11:32 +0800
+Subject: [PATCH 02/95] Add a macro define: SVN_IGNORE_FILE
+
+Files or directories that matches the patters stored in SVN_IGNORE_FILE
+will be ignored, just like .gitignore in Git.
+---
+ subversion/libsvn_wc/wc_db_wcroot.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/subversion/libsvn_wc/wc_db_wcroot.c b/subversion/libsvn_wc/wc_db_wcroot.c
+index 1cfca3d..8637732 100644
+--- a/subversion/libsvn_wc/wc_db_wcroot.c
++++ b/subversion/libsvn_wc/wc_db_wcroot.c
+@@ -38,6 +38,8 @@
+ 
+ #include "svn_private_config.h"
+ 
++#define SVN_IGNORE_FILE ".svnignore"
++
+ /* ### Same values as wc_db.c */
+ #define SDB_FILE  "wc.db"
+ #define UNKNOWN_WC_ID ((apr_int64_t) -1)
+-- 
+1.8.3.1
+

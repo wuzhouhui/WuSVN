@@ -1,0 +1,699 @@
+From e9f6e9478e2415b2b444c403523eee8253b8626e Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 6 Jan 2018 10:50:30 +0800
+Subject: [PATCH 68/95] New implementation of option -v for subcommand ci
+
+Previous we use "svn di >> logfile" to produce unified diff format
+in log message, this is simple but inefficient. New implementation
+is more fast.
+---
+ subversion/include/private/svn_cmdline_private.h |  17 +-
+ subversion/libsvn_client/diff.c                  | 387 +++++++++++++++++++++++
+ subversion/libsvn_subr/cmdline.c                 |  24 --
+ subversion/svn/cl.h                              |   8 +
+ subversion/svn/commit-cmd.c                      |  11 +-
+ subversion/svn/propedit-cmd.c                    |   3 +-
+ subversion/svn/util.c                            |  87 ++++-
+ subversion/svnmucc/svnmucc.c                     |   2 +-
+ 8 files changed, 499 insertions(+), 40 deletions(-)
+
+diff --git a/subversion/include/private/svn_cmdline_private.h b/subversion/include/private/svn_cmdline_private.h
+index 11708d9..3a436b5 100644
+--- a/subversion/include/private/svn_cmdline_private.h
++++ b/subversion/include/private/svn_cmdline_private.h
+@@ -33,6 +33,7 @@
+ #include "svn_string.h"
+ #include "svn_error.h"
+ #include "svn_io.h"
++#include "svn_client.h"
+ 
+ #ifdef __cplusplus
+ extern "C" {
+@@ -201,11 +202,25 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents,
+                                     apr_hash_t *config,
+                                     svn_boolean_t as_text,
+                                     const char *encoding,
+-                                    svn_boolean_t verbose,
+                                     const apr_array_header_t *commit_items,
+                                     apr_pool_t *pool);
+ 
+ 
++svn_error_t *
++svn_cmdline__edit_string_externally_v(svn_string_t **edited_contents,
++                                    const char **tmpfile_left,
++                                    const char *editor_cmd,
++                                    const char *base_dir,
++                                    const svn_string_t *contents,
++                                    const char *prefix,
++                                    apr_hash_t *config,
++                                    svn_boolean_t as_text,
++                                    const char *encoding,
++                                    const apr_array_header_t *commit_items,
++                                    svn_client_ctx_t *ctx,
++                                    apr_pool_t *pool);
++
++
+ /** Wrapper for apr_getopt_init(), which see.
+  *
+  * @since New in 1.4.
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 1b3a2a1..8d0e2aa 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -46,6 +46,8 @@
+ #include "svn_config.h"
+ #include "svn_props.h"
+ #include "svn_subst.h"
++#include "svn_ctype.h"
++#include "svn_cmdline.h"
+ #include "client.h"
+ 
+ #include "private/svn_wc_private.h"
+@@ -54,6 +56,8 @@
+ #include "private/svn_io_private.h"
+ #include "private/svn_ra_private.h"
+ #include "private/svn_color.h"
++#include "private/svn_cmdline_private.h"
++#include "private/svn_string_private.h"
+ 
+ #include "svn_private_config.h"
+ 
+@@ -3006,3 +3010,386 @@ svn_client_diff_summarize_peg2(const char *path_or_url,
+                                  diff_processor, ctx, pool, pool));
+ }
+ 
++/* Helper for the next two functions.  Set *EDITOR to some path to an
++   editor binary.  Sources to search include: the EDITOR_CMD argument
++   (if not NULL), $SVN_EDITOR, the runtime CONFIG variable (if CONFIG
++   is not NULL), $VISUAL, $EDITOR.  Return
++   SVN_ERR_CL_NO_EXTERNAL_EDITOR if no binary can be found. */
++static svn_error_t *
++find_editor_binary(const char **editor,
++                   const char *editor_cmd,
++                   apr_hash_t *config)
++{
++  const char *e;
++  struct svn_config_t *cfg;
++
++  /* Use the editor specified on the command line via --editor-cmd, if any. */
++  e = editor_cmd;
++
++  /* Otherwise look for the Subversion-specific environment variable. */
++  if (! e)
++    e = getenv("SVN_EDITOR");
++
++  /* If not found then fall back on the config file. */
++  if (! e)
++    {
++      cfg = config ? svn_hash_gets(config, SVN_CONFIG_CATEGORY_CONFIG) : NULL;
++      svn_config_get(cfg, &e, SVN_CONFIG_SECTION_HELPERS,
++                     SVN_CONFIG_OPTION_EDITOR_CMD, NULL);
++    }
++
++  /* If not found yet then try general purpose environment variables. */
++  if (! e)
++    e = getenv("VISUAL");
++  if (! e)
++    e = getenv("EDITOR");
++
++#ifdef SVN_CLIENT_EDITOR
++  /* If still not found then fall back on the hard-coded default. */
++  if (! e)
++    e = SVN_CLIENT_EDITOR;
++#endif
++
++  /* Error if there is no editor specified */
++  if (e)
++    {
++      const char *c;
++
++      for (c = e; *c; c++)
++        if (!svn_ctype_isspace(*c))
++          break;
++
++      if (! *c)
++        return svn_error_create
++          (SVN_ERR_CL_NO_EXTERNAL_EDITOR, NULL,
++           _("The EDITOR, SVN_EDITOR or VISUAL environment variable or "
++             "'editor-cmd' run-time configuration option is empty or "
++             "consists solely of whitespace. Expected a shell command."));
++    }
++  else
++    return svn_error_create
++      (SVN_ERR_CL_NO_EXTERNAL_EDITOR, NULL,
++       _("None of the environment variables SVN_EDITOR, VISUAL or EDITOR are "
++         "set, and no 'editor-cmd' run-time configuration option was found"));
++
++  *editor = e;
++  return SVN_NO_ERROR;
++}
++
++static svn_error_t *
++verbose_output(const apr_array_header_t *commit_items,
++               svn_stream_t *fstream,
++               svn_stream_t *errstream,
++               svn_client_ctx_t *ctx,
++               const apr_array_header_t *options,
++               apr_pool_t *pool)
++{
++  int i;
++  svn_opt_revision_t start_rev =
++    {
++      .kind = svn_opt_revision_base
++    };
++  svn_opt_revision_t end_rev =
++    {
++      .kind = svn_opt_revision_working,
++    };
++  apr_pool_t *iterpool = svn_pool_create(pool);
++
++  for (i = 0; i < commit_items->nelts; i++)
++    {
++      svn_client_commit_item3_t *item =
++            APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
++      const char *target;
++
++      svn_pool_clear(iterpool);
++      target = svn_dirent_join("", item->diff_relpath, iterpool);
++      SVN_ERR(svn_client_diff6(
++               options,
++               target,
++               &start_rev,
++               target,
++               &end_rev,
++               NULL,
++               svn_depth_unknown,
++               FALSE,
++               FALSE,
++               FALSE,
++               TRUE,
++               FALSE,
++               FALSE,
++               !!(item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS),
++               FALSE,
++               svn_cmdline_output_encoding(pool),
++               fstream,
++               errstream,
++               NULL,
++               ctx, iterpool));
++    }
++    svn_pool_destroy(iterpool);
++    return SVN_NO_ERROR;
++}
++
++svn_error_t *
++svn_cmdline__edit_string_externally_v(svn_string_t **edited_contents /* UTF-8! */,
++                                      const char **tmpfile_left /* UTF-8! */,
++                                      const char *editor_cmd,
++                                      const char *base_dir /* UTF-8! */,
++                                      const svn_string_t *contents /* UTF-8! */,
++                                      const char *filename,
++                                      apr_hash_t *config,
++                                      svn_boolean_t as_text,
++                                      const char *encoding,
++                                      const apr_array_header_t *commit_items,
++                                      svn_client_ctx_t *ctx,
++                                      apr_pool_t *pool)
++{
++  const char *editor;
++  const char *cmd;
++  apr_file_t *tmp_file;
++  const char *tmpfile_name;
++  const char *tmpfile_native;
++  const char *tmpfile_apr, *base_dir_apr;
++  svn_string_t *translated_contents;
++  apr_status_t apr_err, apr_err2;
++  apr_size_t written;
++  apr_finfo_t finfo_before, finfo_after;
++  svn_error_t *err = SVN_NO_ERROR, *err2;
++  char *old_cwd;
++  int sys_err;
++  svn_boolean_t remove_file = TRUE;
++  svn_stream_t *fstream = NULL, *errstream;
++
++  SVN_ERR(find_editor_binary(&editor, editor_cmd, config));
++
++  /* Convert file contents from UTF-8/LF if desired. */
++  if (as_text)
++    {
++      const char *translated;
++      SVN_ERR(svn_subst_translate_cstring2(contents->data, &translated,
++                                           APR_EOL_STR, FALSE,
++                                           NULL, FALSE, pool));
++      translated_contents = svn_string_create_empty(pool);
++      if (encoding)
++        SVN_ERR(svn_utf_cstring_from_utf8_ex2(&translated_contents->data,
++                                              translated, encoding, pool));
++      else
++        SVN_ERR(svn_utf_cstring_from_utf8(&translated_contents->data,
++                                          translated, pool));
++      translated_contents->len = strlen(translated_contents->data);
++    }
++  else
++    translated_contents = svn_string_dup(contents, pool);
++
++  /* Move to BASE_DIR to avoid getting characters that need quoting
++     into tmpfile_name */
++  apr_err = apr_filepath_get(&old_cwd, APR_FILEPATH_NATIVE, pool);
++  if (apr_err)
++    return svn_error_wrap_apr(apr_err, _("Can't get working directory"));
++
++  /* APR doesn't like "" directories */
++  if (base_dir[0] == '\0')
++    base_dir_apr = ".";
++  else
++    SVN_ERR(svn_path_cstring_from_utf8(&base_dir_apr, base_dir, pool));
++  apr_err = apr_filepath_set(base_dir_apr, pool);
++  if (apr_err)
++    {
++      return svn_error_wrap_apr
++        (apr_err, _("Can't change working directory to '%s'"), base_dir);
++    }
++
++  /*** From here on, any problems that occur require us to cd back!! ***/
++
++  /* Ask the working copy for a temporary file named FILENAME-something. */
++  err = svn_io_open_uniquely_named(&tmp_file, &tmpfile_name,
++                                   "" /* dirpath */,
++                                   filename,
++                                   ".tmp",
++                                   svn_io_file_del_none, pool, pool);
++
++  if (err && (APR_STATUS_IS_EACCES(err->apr_err) || err->apr_err == EROFS))
++    {
++      const char *temp_dir_apr;
++
++      svn_error_clear(err);
++
++      SVN_ERR(svn_io_temp_dir(&base_dir, pool));
++
++      SVN_ERR(svn_path_cstring_from_utf8(&temp_dir_apr, base_dir, pool));
++      apr_err = apr_filepath_set(temp_dir_apr, pool);
++      if (apr_err)
++        {
++          return svn_error_wrap_apr
++            (apr_err, _("Can't change working directory to '%s'"), base_dir);
++        }
++
++      err = svn_io_open_uniquely_named(&tmp_file, &tmpfile_name,
++                                       "" /* dirpath */,
++                                       filename,
++                                       ".tmp",
++                                       svn_io_file_del_none, pool, pool);
++    }
++
++  if (err)
++    goto cleanup2;
++
++  /*** From here on, any problems that occur require us to cleanup
++       the file we just created!! ***/
++
++  /* Dump initial CONTENTS to TMP_FILE. */
++  apr_err = apr_file_write_full(tmp_file, translated_contents->data,
++                                translated_contents->len, &written);
++
++  fstream = svn_stream_from_aprfile2(tmp_file, FALSE, pool);
++
++  /* Make sure the whole CONTENTS were written, else return an error. */
++  if (apr_err)
++    {
++      err = svn_error_wrap_apr(apr_err, _("Can't write to '%s'"),
++                               tmpfile_name);
++      goto cleanup;
++    }
++
++  err = svn_stream_for_stderr(&errstream, pool);
++  if (err)
++    goto cleanup;
++
++  err = verbose_output(commit_items,
++                       fstream,
++                       errstream,
++                       ctx,
++                       NULL,
++                       pool);
++  if (err)
++    goto cleanup;
++  else
++    {
++      svn_stream_close(fstream);
++      fstream = NULL;
++      svn_stream_close(errstream);
++    }
++
++  err = svn_path_cstring_from_utf8(&tmpfile_apr, tmpfile_name, pool);
++  if (err)
++    goto cleanup;
++
++  /* Get information about the temporary file before the user has
++     been allowed to edit its contents. */
++  apr_err = apr_stat(&finfo_before, tmpfile_apr,
++                     APR_FINFO_MTIME, pool);
++  if (apr_err)
++    {
++      err = svn_error_wrap_apr(apr_err, _("Can't stat '%s'"), tmpfile_name);
++      goto cleanup;
++    }
++
++  /* Backdate the file a little bit in case the editor is very fast
++     and doesn't change the size.  (Use two seconds, since some
++     filesystems have coarse granularity.)  It's OK if this call
++     fails, so we don't check its return value.*/
++  apr_file_mtime_set(tmpfile_apr, finfo_before.mtime - 2000, pool);
++
++  /* Stat it again to get the mtime we actually set. */
++  apr_err = apr_stat(&finfo_before, tmpfile_apr,
++                     APR_FINFO_MTIME | APR_FINFO_SIZE, pool);
++  if (apr_err)
++    {
++      err = svn_error_wrap_apr(apr_err, _("Can't stat '%s'"), tmpfile_name);
++      goto cleanup;
++    }
++
++  /* Prepare the editor command line.  */
++  err = svn_utf_cstring_from_utf8(&tmpfile_native, tmpfile_name, pool);
++  if (err)
++    goto cleanup;
++  cmd = apr_psprintf(pool, "%s %s", editor, tmpfile_native);
++
++  /* If the caller wants us to leave the file around, return the path
++     of the file we'll use, and make a note not to destroy it.  */
++  if (tmpfile_left)
++    {
++      *tmpfile_left = svn_dirent_join(base_dir, tmpfile_name, pool);
++      remove_file = FALSE;
++    }
++
++  /* Now, run the editor command line.  */
++  sys_err = system(cmd);
++  if (sys_err != 0)
++    {
++      /* Extracting any meaning from sys_err is platform specific, so just
++         use the raw value. */
++      err =  svn_error_createf(SVN_ERR_EXTERNAL_PROGRAM, NULL,
++                               _("system('%s') returned %d"), cmd, sys_err);
++      goto cleanup;
++    }
++
++  /* Get information about the temporary file after the assumed editing. */
++  apr_err = apr_stat(&finfo_after, tmpfile_apr,
++                     APR_FINFO_MTIME | APR_FINFO_SIZE, pool);
++  if (apr_err)
++    {
++      err = svn_error_wrap_apr(apr_err, _("Can't stat '%s'"), tmpfile_name);
++      goto cleanup;
++    }
++
++  /* If the file looks changed... */
++  if ((finfo_before.mtime != finfo_after.mtime) ||
++      (finfo_before.size != finfo_after.size))
++    {
++      svn_stringbuf_t *edited_contents_s;
++      err = svn_stringbuf_from_file2(&edited_contents_s, tmpfile_name, pool);
++      if (err)
++        goto cleanup;
++
++      *edited_contents = svn_stringbuf__morph_into_string(edited_contents_s);
++
++      /* Translate back to UTF8/LF if desired. */
++      if (as_text)
++        {
++          err = svn_subst_translate_string2(edited_contents, NULL, NULL,
++                                            *edited_contents, encoding, FALSE,
++                                            pool, pool);
++          if (err)
++            {
++              err = svn_error_quick_wrap
++                (err,
++                 _("Error normalizing edited contents to internal format"));
++              goto cleanup;
++            }
++        }
++    }
++  else
++    {
++      /* No edits seem to have been made */
++      *edited_contents = NULL;
++    }
++
++ cleanup:
++  if (fstream)
++    svn_stream_close(fstream);
++
++  if (remove_file)
++    {
++      /* Remove the file from disk.  */
++      err2 = svn_io_remove_file2(tmpfile_name, FALSE, pool);
++
++      /* Only report remove error if there was no previous error. */
++      if (! err && err2)
++        err = err2;
++      else
++        svn_error_clear(err2);
++    }
++
++ cleanup2:
++  /* If we against all probability can't cd back, all further relative
++     file references would be screwed up, so we have to abort. */
++  apr_err = apr_filepath_set(old_cwd, pool);
++  if (apr_err)
++    {
++      svn_handle_error2(svn_error_wrap_apr
++                        (apr_err, _("Can't restore working directory")),
++                        stderr, TRUE /* fatal */, "svn: ");
++    }
++
++  return svn_error_trace(err);
++}
+diff --git a/subversion/libsvn_subr/cmdline.c b/subversion/libsvn_subr/cmdline.c
+index dd7091c..8da7399 100644
+--- a/subversion/libsvn_subr/cmdline.c
++++ b/subversion/libsvn_subr/cmdline.c
+@@ -1362,7 +1362,6 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+                                     apr_hash_t *config,
+                                     svn_boolean_t as_text,
+                                     const char *encoding,
+-                                    svn_boolean_t verbose,
+                                     const apr_array_header_t *commit_items,
+                                     apr_pool_t *pool)
+ {
+@@ -1469,29 +1468,6 @@ svn_cmdline__edit_string_externally(svn_string_t **edited_contents /* UTF-8! */,
+   if (err)
+     goto cleanup;
+ 
+-  if (verbose) {
+-    int i, len = 0;
+-    char *buf;
+-    for (i = 0; i < commit_items->nelts; i++)
+-      {
+-        int t = strlen((APR_ARRAY_IDX(commit_items, i,
+-                svn_client_commit_item3_t *))->diff_relpath);
+-        if (t > len)
+-          len = t;
+-      }
+-    buf = apr_pcalloc(pool, (strlen("svn di --properties-only  >> ") +
+-          strlen(tmpfile_name) + len + 2) * sizeof(*buf));
+-    for (i = 0; i < commit_items->nelts; i++)
+-      {
+-        svn_client_commit_item3_t *item
+-            = APR_ARRAY_IDX(commit_items, i, svn_client_commit_item3_t *);
+-        sprintf(buf, "svn di %s %s >> %s",
+-            item->state_flags & SVN_CLIENT_COMMIT_ITEM_PROP_MODS ?
+-            "--properties-only" : "", item->diff_relpath, tmpfile_name);
+-        system(buf);
+-      }
+-  }
+-
+   /* Get information about the temporary file before the user has
+      been allowed to edit its contents. */
+   err = svn_io_stat(&finfo_before, tmpfile_name, APR_FINFO_MTIME, pool);
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index f00f69a..bbd4c74 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -666,6 +666,14 @@ svn_cl__make_log_msg_baton(void **baton,
+                            apr_hash_t *config,
+                            apr_pool_t *pool);
+ 
++svn_error_t *
++svn_cl__make_log_msg_baton_v(void **baton,
++                           svn_cl__opt_state_t *opt_state,
++                           const char *base_dir,
++                           apr_hash_t *config,
++                           svn_client_ctx_t *ctx,
++                           apr_pool_t *pool);
++
+ /* A function of type svn_client_get_commit_log3_t. */
+ svn_error_t *
+ svn_cl__get_log_message(const char **log_msg,
+diff --git a/subversion/svn/commit-cmd.c b/subversion/svn/commit-cmd.c
+index 45eef3b..9701697 100644
+--- a/subversion/svn/commit-cmd.c
++++ b/subversion/svn/commit-cmd.c
+@@ -149,9 +149,14 @@ svn_cl__commit(apr_getopt_t *os,
+      to store the temp file, instead of the current working directory.  The
+      client might not have write access to their working directory, but they
+      better have write access to the directory they're committing.  */
+-  SVN_ERR(svn_cl__make_log_msg_baton(&(ctx->log_msg_baton3),
+-                                     opt_state, base_dir,
+-                                     ctx->config, pool));
++  if (!opt_state->verbose)
++    SVN_ERR(svn_cl__make_log_msg_baton(&(ctx->log_msg_baton3),
++                                       opt_state, base_dir,
++                                       ctx->config, pool));
++  else
++    SVN_ERR(svn_cl__make_log_msg_baton_v(&(ctx->log_msg_baton3),
++                                         opt_state, base_dir,
++                                         ctx->config, ctx, pool));
+ 
+   /* Copies are done server-side, and cheaply, which means they're
+      effectively always done with infinite depth.  This is a potential
+diff --git a/subversion/svn/propedit-cmd.c b/subversion/svn/propedit-cmd.c
+index 1c7c2b9..9bfa94f 100644
+--- a/subversion/svn/propedit-cmd.c
++++ b/subversion/svn/propedit-cmd.c
+@@ -146,7 +146,7 @@ svn_cl__propedit(apr_getopt_t *os,
+                propval, "svn-prop",
+                ctx->config,
+                svn_prop_needs_translation(pname),
+-               opt_state->encoding, opt_state->verbose, NULL, pool));
++               opt_state->encoding, NULL, pool));
+ 
+       /* ...and re-set the property's value accordingly. */
+       if (propval)
+@@ -284,7 +284,6 @@ svn_cl__propedit(apr_getopt_t *os,
+                                                       svn_prop_needs_translation
+                                                       (pname),
+                                                       opt_state->encoding,
+-                                                      opt_state->verbose,
+                                                       NULL,
+                                                       subpool));
+ 
+diff --git a/subversion/svn/util.c b/subversion/svn/util.c
+index 0348032..93df64f 100644
+--- a/subversion/svn/util.c
++++ b/subversion/svn/util.c
+@@ -196,6 +196,7 @@ struct log_msg_baton
+   svn_boolean_t keep_locks; /* Keep repository locks? */
+   apr_pool_t *pool; /* a pool. */
+   svn_boolean_t verbose; /* show diff of this commit */
++  svn_client_ctx_t *ctx; /* context of client */
+ };
+ 
+ 
+@@ -256,6 +257,64 @@ svn_cl__make_log_msg_baton(void **baton,
+ 
+ 
+ svn_error_t *
++svn_cl__make_log_msg_baton_v(void **baton,
++                           svn_cl__opt_state_t *opt_state,
++                           const char *base_dir /* UTF-8! */,
++                           apr_hash_t *config,
++                           svn_client_ctx_t *ctx,
++                           apr_pool_t *pool)
++{
++  struct log_msg_baton *lmb = apr_pcalloc(pool, sizeof(*lmb));
++
++  lmb->verbose = opt_state->verbose;
++  lmb->ctx = ctx;
++
++  if (opt_state->filedata)
++    {
++      if (strlen(opt_state->filedata->data) < opt_state->filedata->len)
++        {
++          /* The data contains a zero byte, and therefore can't be
++             represented as a C string.  Punt now; it's probably not
++             a deliberate encoding, and even if it is, we still
++             can't handle it. */
++          return svn_error_create(SVN_ERR_CL_BAD_LOG_MESSAGE, NULL,
++                                  _("Log message contains a zero byte"));
++        }
++      lmb->message = opt_state->filedata->data;
++    }
++  else
++    {
++      lmb->message = opt_state->message;
++    }
++
++  lmb->editor_cmd = opt_state->editor_cmd;
++  if (opt_state->encoding)
++    {
++      lmb->message_encoding = opt_state->encoding;
++    }
++  else if (config)
++    {
++      svn_config_t *cfg = svn_hash_gets(config, SVN_CONFIG_CATEGORY_CONFIG);
++      svn_config_get(cfg, &(lmb->message_encoding),
++                     SVN_CONFIG_SECTION_MISCELLANY,
++                     SVN_CONFIG_OPTION_LOG_ENCODING,
++                     NULL);
++    }
++  else
++    lmb->message_encoding = NULL;
++
++  lmb->base_dir = base_dir;
++  lmb->tmpfile_left = NULL;
++  lmb->config = config;
++  lmb->keep_locks = opt_state->no_unlock;
++  lmb->non_interactive = opt_state->non_interactive;
++  lmb->pool = pool;
++  *baton = lmb;
++  return SVN_NO_ERROR;
++}
++
++
++svn_error_t *
+ svn_cl__cleanup_log_msg(void *log_msg_baton,
+                         svn_error_t *commit_err,
+                         apr_pool_t *pool)
+@@ -441,15 +500,25 @@ svn_cl__get_log_message(const char **log_msg,
+       /* Use the external edit to get a log message. */
+       if (! lmb->non_interactive)
+         {
+-          err = svn_cmdline__edit_string_externally(&msg_string, &lmb->tmpfile_left,
+-                                                    lmb->editor_cmd,
+-                                                    lmb->base_dir ? lmb->base_dir : "",
+-                                                    msg_string, "svn-commit",
+-                                                    lmb->config, TRUE,
+-                                                    lmb->message_encoding,
+-                                                    lmb->verbose,
+-                                                    commit_items,
+-                                                    pool);
++          if (!lmb->verbose)
++            err = svn_cmdline__edit_string_externally(&msg_string, &lmb->tmpfile_left,
++                                                      lmb->editor_cmd,
++                                                      lmb->base_dir ? lmb->base_dir : "",
++                                                      msg_string, "svn-commit",
++                                                      lmb->config, TRUE,
++                                                      lmb->message_encoding,
++                                                      commit_items,
++                                                      pool);
++          else
++            err = svn_cmdline__edit_string_externally_v(&msg_string, &lmb->tmpfile_left,
++                                                        lmb->editor_cmd,
++                                                        lmb->base_dir ? lmb->base_dir : "",
++                                                        msg_string, "svn-commit",
++                                                        lmb->config, TRUE,
++                                                        lmb->message_encoding,
++                                                        commit_items,
++                                                        lmb->ctx,
++                                                        pool);
+         }
+       else /* non_interactive flag says we can't pop up an editor, so error */
+         {
+diff --git a/subversion/svnmucc/svnmucc.c b/subversion/svnmucc/svnmucc.c
+index 873cab5..16b03fe 100644
+--- a/subversion/svnmucc/svnmucc.c
++++ b/subversion/svnmucc/svnmucc.c
+@@ -448,7 +448,7 @@ log_message_func(const char **log_msg,
+ 
+       SVN_ERR(svn_cmdline__edit_string_externally(
+                       &msg, NULL, NULL, "", msg, "svnmucc-commit",
+-                      lmb->ctx->config, TRUE, NULL, FALSE, NULL, pool));
++                      lmb->ctx->config, TRUE, NULL, NULL, pool));
+ 
+       if (msg && msg->data)
+         *log_msg = msg->data;
+-- 
+1.8.3.1
+

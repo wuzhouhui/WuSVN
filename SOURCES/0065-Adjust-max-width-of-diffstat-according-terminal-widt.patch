@@ -1,0 +1,94 @@
+From 549e7fe4dced98eb9a614cbe9c6c748c32d4c890 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 19 Nov 2017 22:30:13 +0800
+Subject: [PATCH 65/95] Adjust max width of diffstat according terminal width
+
+---
+ subversion/include/private/svn_color.h |  1 +
+ subversion/libsvn_diff/diff.c          | 13 +++++++++++++
+ subversion/libsvn_diff/diff.h          |  3 +++
+ subversion/libsvn_diff/util.c          |  1 +
+ subversion/svn/svn.c                   |  5 +++++
+ 5 files changed, 23 insertions(+)
+
+diff --git a/subversion/include/private/svn_color.h b/subversion/include/private/svn_color.h
+index b555288..ed8bbff 100644
+--- a/subversion/include/private/svn_color.h
++++ b/subversion/include/private/svn_color.h
+@@ -11,5 +11,6 @@
+ #define SVN_COLOR_RESET        "\033[m"
+ 
+ extern svn_boolean_t dont_use_color;
++extern int tty_fileno;
+ 
+ #endif /* SVN_COLOR_H */
+diff --git a/subversion/libsvn_diff/diff.c b/subversion/libsvn_diff/diff.c
+index a555d3d..be7f619 100644
+--- a/subversion/libsvn_diff/diff.c
++++ b/subversion/libsvn_diff/diff.c
+@@ -959,7 +959,20 @@ svn_diff_create_dfctx(svn_dfstat_ctx_t **ctx)
+   count_files = 0;		/* true if we count added/deleted files */
+   format_opt = FMT_NORMAL;
+   max_name_wide = 0;	/* maximum amount reserved for filenames */
++
+   max_width = 80;		/* the specified width-limit */
++  if (tty_fileno >= 0)
++    {
++      struct winsize winsz;
++
++      if (ioctl(tty_fileno, TIOCGWINSZ, (char *)&winsz) < 0)
++        {
++          fprintf(stderr, "get win size failed: %s\n", strerror(errno));
++          exit(EXIT_FAILURE);
++        }
++      max_width = winsz.ws_col;
++    }
++
+   merge_names = 1;	/* true if we merge similar filenames */
+   merge_opt = 0;	/* true if we merge ins/del as modified */
+   min_name_wide = 0;	/* minimum amount reserved for filenames */
+diff --git a/subversion/libsvn_diff/diff.h b/subversion/libsvn_diff/diff.h
+index c5baad6..fbbd250 100644
+--- a/subversion/libsvn_diff/diff.h
++++ b/subversion/libsvn_diff/diff.h
+@@ -27,6 +27,9 @@
+ #include <apr.h>
+ #include <apr_pools.h>
+ #include <apr_general.h>
++#include <unistd.h>
++#include <termios.h>
++#include <sys/ioctl.h>
+ 
+ #include "svn_diff.h"
+ #include "svn_types.h"
+diff --git a/subversion/libsvn_diff/util.c b/subversion/libsvn_diff/util.c
+index 49eafe4..9f2a16f 100644
+--- a/subversion/libsvn_diff/util.c
++++ b/subversion/libsvn_diff/util.c
+@@ -45,6 +45,7 @@
+ #include "svn_private_config.h"
+ 
+ svn_boolean_t dont_use_color = TRUE;
++int tty_fileno = -1;
+ 
+ svn_boolean_t
+ svn_diff_contains_conflicts(svn_diff_t *diff)
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 9e37467..b04aea3 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -3347,6 +3347,11 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+     }
+ 
+     /* parent */
++    if ((tty_fileno = dup(STDOUT_FILENO)) < 0)
++      {
++        fprintf(stderr, "dup for stdout failed: %s\n", strerror(errno));
++        exit(EXIT_FAILURE);
++      }
+     close(fd[0]);
+     if (fd[1] != STDOUT_FILENO) {
+       if (dup2(fd[1], STDOUT_FILENO) != STDOUT_FILENO) {
+-- 
+1.8.3.1
+

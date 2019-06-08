@@ -1,0 +1,28 @@
+From 9bcfb7ce0c1dd6c3d83cd25dd6b074838e38ed41 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 23 Oct 2016 20:38:53 +0800
+Subject: [PATCH 05/95] Close .svnignore in apr cleanup function
+
+---
+ subversion/libsvn_subr/sqlite.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/libsvn_subr/sqlite.c b/subversion/libsvn_subr/sqlite.c
+index fed2a6a..e636842 100644
+--- a/subversion/libsvn_subr/sqlite.c
++++ b/subversion/libsvn_subr/sqlite.c
+@@ -977,7 +977,10 @@ close_apr(void *data)
+     return SQLITE_ERROR_CODE(result); /* ### lossy */
+ 
+   db->db3 = NULL;
+-
++  if (db->svn_ignore_file) {
++    apr_file_close(db->svn_ignore_file);
++    db->svn_ignore_file = NULL;
++  }
+   return APR_SUCCESS;
+ }
+ 
+-- 
+1.8.3.1
+

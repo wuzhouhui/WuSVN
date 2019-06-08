@@ -1,0 +1,129 @@
+From 55c2fb02dbb97280441ff32a9f31ab071b809c14 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Thu, 28 Sep 2017 22:08:36 +0800
+Subject: [PATCH 46/95] Subcommand log: add option --stat to show statistics of
+ diff
+
+---
+ subversion/svn/cl-log.h  |  3 +++
+ subversion/svn/cl.h      |  1 +
+ subversion/svn/log-cmd.c | 47 +++++++++++++++++++++++++++++++++++++++++++++++
+ subversion/svn/svn.c     |  4 ++--
+ 4 files changed, 53 insertions(+), 2 deletions(-)
+
+diff --git a/subversion/svn/cl-log.h b/subversion/svn/cl-log.h
+index e2d5646..1b7e610 100644
+--- a/subversion/svn/cl-log.h
++++ b/subversion/svn/cl-log.h
+@@ -65,6 +65,9 @@ typedef struct svn_cl__log_receiver_baton
+   /* Diff arguments received from command line. */
+   const char *diff_extensions;
+ 
++  /* Whether to show statistics of diff */
++  svn_boolean_t diffstat;
++
+   /* Stack which keeps track of merge revision nesting, using svn_revnum_t's */
+   apr_array_header_t *merge_stack;
+ 
+diff --git a/subversion/svn/cl.h b/subversion/svn/cl.h
+index 64fff6b..f00f69a 100644
+--- a/subversion/svn/cl.h
++++ b/subversion/svn/cl.h
+@@ -245,6 +245,7 @@ typedef struct svn_cl__opt_state_t
+   svn_boolean_t ignore_whitespace; /* don't account for whitespace when
+                                       patching */
+   svn_boolean_t show_diff;         /* produce diff output (maps to --diff) */
++  svn_boolean_t diffstat;          /* display statistics of diff */
+   svn_boolean_t allow_mixed_rev;   /* Allow operation on mixed-revision WC */
+   svn_boolean_t include_externals; /* Recurses (in)to file & dir externals */
+   svn_boolean_t show_inherited_props;  /* get inherited properties */
+diff --git a/subversion/svn/log-cmd.c b/subversion/svn/log-cmd.c
+index dce1465..792d3db 100644
+--- a/subversion/svn/log-cmd.c
++++ b/subversion/svn/log-cmd.c
+@@ -479,6 +479,52 @@ svn_cl__log_entry_receiver(void *baton,
+       SVN_ERR(svn_stream_close(errstream));
+     }
+ 
++  /* Display statistics of diff */
++  if (lb->diffstat)
++    {
++      int c;
++      apr_exit_why_e e;
++      svn_stream_t *diffstatin, *errstream;
++      apr_proc_t diffstatproc;
++      apr_procattr_t *attr;
++      apr_status_t apr_err;
++      const char *progname = "diffstat";
++      const char *args1[] = { progname, "-E", "-C", NULL, };
++      const char *args2[] = { progname, NULL, };
++
++      apr_err = apr_procattr_create(&attr, pool);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't create process '%s' attributes"), progname);
++      apr_err = apr_procattr_cmdtype_set(attr, APR_PROGRAM_PATH);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't set process '%s' cmdtype"), progname);
++      apr_err = apr_procattr_io_set(attr, APR_FULL_BLOCK, APR_NO_PIPE,
++          APR_NO_PIPE);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't set process '%s' io"), progname);
++      apr_err = apr_proc_create(&diffstatproc, progname,
++          (dont_use_color ? args2 : args1), NULL, attr, pool);
++      if (apr_err)
++        return svn_error_wrap_apr(apr_err,
++            _("Can't start process '%s'"), progname);
++      diffstatin = svn_stream_from_aprfile2(diffstatproc.in, FALSE, pool);
++
++      SVN_ERR(svn_stream_for_stderr(&errstream, pool));
++
++      SVN_ERR(display_diff(log_entry,
++                           lb->target_path_or_url, &lb->target_peg_revision,
++                           lb->depth, lb->diff_extensions,
++                           diffstatin, errstream,
++                           lb->ctx, pool));
++
++      SVN_ERR(svn_stream_close(diffstatin));
++      SVN_ERR(svn_stream_close(errstream));
++      apr_proc_wait(&diffstatproc, &c, &e, APR_WAIT);
++    }
++
+   if (log_entry->has_children)
+     {
+       if (! lb->merge_stack)
+@@ -819,6 +865,7 @@ svn_cl__log(apr_getopt_t *os,
+   lb.depth = opt_state->depth == svn_depth_unknown ? svn_depth_infinity
+                                                    : opt_state->depth;
+   lb.diff_extensions = opt_state->extensions;
++  lb.diffstat = opt_state->diffstat;
+   lb.merge_stack = NULL;
+   lb.search_patterns = opt_state->search_patterns;
+   svn_membuf__create(&lb.buffer, 0, pool);
+diff --git a/subversion/svn/svn.c b/subversion/svn/svn.c
+index 5cb8188..2f416c3 100644
+--- a/subversion/svn/svn.c
++++ b/subversion/svn/svn.c
+@@ -978,7 +978,7 @@ const svn_opt_subcommand_desc2_t svn_cl__cmd_table[] =
+     {'r', 'c', 'q', 'v', 'g', opt_targets, opt_stop_on_copy, opt_incremental,
+      opt_xml, 'l', opt_with_all_revprops, opt_with_no_revprops,
+      opt_with_revprop, opt_depth, opt_diff, opt_diff_cmd,
+-     opt_internal_diff, 'x', opt_search, opt_search_and, opt_no_color },
++     opt_internal_diff, 'x', opt_search, opt_search_and, opt_no_color, opt_diffstat },
+     {{opt_with_revprop, N_("retrieve revision property ARG")},
+      {'c', N_("the change made in revision ARG")},
+      {'v', N_("also print all affected paths")},
+@@ -2635,7 +2635,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
+ 	opt_state.diff.no_color = TRUE;
+ 	break;
+       case opt_diffstat:
+-        opt_state.diff.diffstat = TRUE;
++        opt_state.diffstat = opt_state.diff.diffstat = TRUE;
+         break;
+       case opt_use_git_diff_format:
+         opt_state.diff.use_git_diff_format = TRUE;
+-- 
+1.8.3.1
+
