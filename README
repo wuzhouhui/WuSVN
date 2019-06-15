@@ -10,3 +10,4 @@ Main patches:
       6. Add option --stat for subcommand diff and log
       7. Support client side pre-commit hook, hook scripts locate in
          .svn/hooks
+      8. Decrease max width of shelve outputs.
