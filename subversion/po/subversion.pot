@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: dev@subversion.apache.org\n"
-"POT-Creation-Date: 2019-01-07 10:21+0000\n"
+"POT-Creation-Date: 2019-07-19 10:42+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5594,11 +5594,11 @@ msgstr ""
 msgid "Error while replaying commit"
 msgstr ""
 
-#: ../libsvn_ra_svn/client.c:2847
+#: ../libsvn_ra_svn/client.c:2848
 msgid "'get-deleted-rev' not implemented"
 msgstr ""
 
-#: ../libsvn_ra_svn/client.c:2958
+#: ../libsvn_ra_svn/client.c:2971
 #, c-format
 msgid "Unsupported RA loader version (%d) for ra_svn"
 msgstr ""
@@ -6789,46 +6789,46 @@ msgstr ""
 msgid "Local URL '%s' contains unsupported hostname"
 msgstr ""
 
-#: ../libsvn_subr/error.c:553
+#: ../libsvn_subr/error.c:555
 msgid "Can't recode error string from APR"
 msgstr ""
 
-#: ../libsvn_subr/error.c:646
+#: ../libsvn_subr/error.c:648
 #, c-format
 msgid "%swarning: W%06d: %s\n"
 msgstr ""
 
-#: ../libsvn_subr/error.c:752
+#: ../libsvn_subr/error.c:754
 #, c-format
 msgid "In file '%s' line %d: assertion failed (%s)"
 msgstr ""
 
-#: ../libsvn_subr/error.c:756
+#: ../libsvn_subr/error.c:758
 #, c-format
 msgid "In file '%s' line %d: internal malfunction"
 msgstr ""
 
-#: ../libsvn_subr/error.c:818
+#: ../libsvn_subr/error.c:820
 msgid "stream error"
 msgstr ""
 
-#: ../libsvn_subr/error.c:823
+#: ../libsvn_subr/error.c:825
 msgid "out of memory"
 msgstr ""
 
-#: ../libsvn_subr/error.c:828
+#: ../libsvn_subr/error.c:830
 msgid "buffer error"
 msgstr ""
 
-#: ../libsvn_subr/error.c:833
+#: ../libsvn_subr/error.c:835
 msgid "version error"
 msgstr ""
 
-#: ../libsvn_subr/error.c:838
+#: ../libsvn_subr/error.c:840
 msgid "corrupt data"
 msgstr ""
 
-#: ../libsvn_subr/error.c:843
+#: ../libsvn_subr/error.c:845
 msgid "unknown error"
 msgstr ""
 
