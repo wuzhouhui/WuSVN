@@ -1,0 +1,74 @@
+From 6aee27dc64119b883b55702e577229ce609b5e2c Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sat, 15 Jun 2019 19:30:42 +0800
+Subject: [PATCH 1/2] svn/shelve: decrease max width of outputs
+
+Decrease max width of outputs to terminal width minus 1, or 79
+(default width of terminal). For better look.
+
+(cherry picked from commit ae010ebb7dde8b9376fc4f6837bcefdbc2596b13)
+---
+ README                      |  1 +
+ subversion/svn/shelve-cmd.c | 22 +++++++++++++++-------
+ 2 files changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/README b/README
+index a320332..ed444a4 100644
+--- a/README
++++ b/README
+@@ -10,3 +10,4 @@ Main patches:
+       6. Add option --stat for subcommand diff and log
+       7. Support client side pre-commit hook, hook scripts locate in
+          .svn/hooks
++      8. Decrease max width of shelve outputs.
+diff --git a/subversion/svn/shelve-cmd.c b/subversion/svn/shelve-cmd.c
+index df88a65..6c715ae 100644
+--- a/subversion/svn/shelve-cmd.c
++++ b/subversion/svn/shelve-cmd.c
+@@ -36,6 +36,8 @@
+ #include "svn_private_config.h"
+ #include "private/svn_sorts_private.h"
+ 
++#include <sys/ioctl.h>
++#include <unistd.h>
+ 
+ /* First argument should be the name of a shelved change. */
+ static svn_error_t *
+@@ -140,7 +142,7 @@ shelves_list(const char *local_abspath,
+                                          scratch_pool, scratch_pool));
+ 
+       SVN_ERR(svn_cmdline_printf(scratch_pool,
+-                                 _("%-30s %6d mins old %10ld bytes %4d paths changed\n"),
++                                 _("%-27s %6d mins old %10ld bytes %4d paths changed\n"),
+                                  name, age, (long)info->dirent->filesize,
+                                  apr_hash_count(paths)));
+       SVN_ERR(svn_cmdline_printf(scratch_pool,
+@@ -150,13 +152,19 @@ shelves_list(const char *local_abspath,
+       if (diffstat)
+         {
+ #ifndef WIN32
+-          const char *args[4];
++          struct winsize winsz;
++          char optw[8] = "-w79";
++          const char *args[] = {
++            "diffstat",
++            "-p0",
++            optw,
++            info->patch_path,
++            NULL,
++          };
+           svn_error_t *err;
+-
+-          args[0] = "diffstat";
+-          args[1] = "-p0";
+-          args[2] = info->patch_path;
+-          args[3] = NULL;
++          if (isatty(STDOUT_FILENO) &&
++              !ioctl(STDOUT_FILENO, TIOCGWINSZ, (char *)&winsz))
++            snprintf(optw, sizeof(optw), "-w%d", winsz.ws_col - 1);
+           err = run_cmd("diffstat", args, scratch_pool);
+           if (err)
+             svn_error_clear(err);
+-- 
+1.8.3.1
+

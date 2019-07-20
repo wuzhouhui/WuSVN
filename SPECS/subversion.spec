@@ -15,7 +15,7 @@
 
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
-Version: 1.10.4
+Version: 1.10.6
 Release: 1%{?dist}
 License: Apache 2.0
 Group: Utilities/System
@@ -123,6 +123,8 @@ Patch92: 0092-svn-ci-add-option-bypass-hooks-to-skip-all-client-si.patch
 Patch93: 0093-Update-README-to-include-new-name-of-this-software.patch
 Patch94: 0094-svn-ci-resolve-symlinks-when-check-pre-commit-hook.patch
 Patch95: 0095-svn-mergeinfo-paging-outputs-of-svn-mergeinfo.patch
+Patch96: 0001-svn-shelve-decrease-max-width-of-outputs.patch
+Patch97: 0002-Upstream-1.10.6.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -336,6 +338,8 @@ WANdisco extensions to subversion
 %patch93 -p1
 %patch94 -p1
 %patch95 -p1
+%patch96 -p1
+%patch97 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -528,6 +532,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Jul 20 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-1
+- svn/shelve: decrease max width of outputs
+- Upstream 1.10.6
+
 * Sat Jun  8 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.4-1
 - svn/mergeinfo: paging outputs of svn mergeinfo
 - svn/ci: resolve symlinks when check pre-commit hook
