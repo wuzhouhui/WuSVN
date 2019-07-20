@@ -8,8 +8,8 @@
 %define swig_version 2.0.10
 %define apache_dir /usr
 %define pyver 2.7
-%define svn_version 1.9.10
-%define svn_release 3%{?dist}
+%define svn_version 1.9.12
+%define svn_release 1%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -60,6 +60,7 @@ Patch32: 0006-Release-1.9.10.1.patch
 Patch33: 0001-svn-auth-output-paging-automatically.patch
 Patch34: 0001-svn-mergeinfo-paging-outputs-of-svn-mergeinfo.patch
 Patch35: 0002-Revert-Release-1.9.10.1.patch
+Patch36: 0001-Upstream-1.9.12.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -205,6 +206,7 @@ Tools for Subversion.
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+%patch36 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -402,6 +404,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sat Jul 20 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.12-1
+- Upstrem 1.9.12
+
 * Sun May 12 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.10-3
 - svn/auth: output paging automatically
 - svn/mergeinfo: paging outputs of svn mergeinfo
