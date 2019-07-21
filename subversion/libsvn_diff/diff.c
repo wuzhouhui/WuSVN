@@ -1036,6 +1036,50 @@ svn_diff_stat(svn_dfstat_ctx_t *head,
 }
 
 svn_error_t *
+svn_diff_stat2(svn_dfstat_ctx_t *head,
+               svn_patch_file_t *patch_file,
+               apr_pool_t *scratch_pool)
+{
+  svn_patch_t *patch = NULL;
+  int i;
+  svn_dfstat_ctx_t *t;
+
+  SVN_ERR(svn_diff_parse_next_patch(&patch,
+                                    patch_file,
+                                    FALSE,
+                                    FALSE,
+                                    scratch_pool,
+                                    scratch_pool));
+  while (patch != NULL)
+    {
+      t = apr_pcalloc(dfctx_pool, sizeof(*t));
+      t->file_path = apr_pstrdup(dfctx_pool, patch->new_filename);
+      t->cmt = svn_dfstat_normal;
+      t->next = head->next;
+      head->next = (void *)t;
+
+      for (i = 0; i < patch->hunks->nelts; i++)
+        {
+          const svn_diff_hunk_t *hunk = APR_ARRAY_IDX(patch->hunks,
+                                                      i,
+                                                      svn_diff_hunk_t *);
+          t->inserted_num += hunk->inserted_length;
+          t->deleted_num += hunk->deleted_length;
+        }
+      SVN_ERR(svn_diff_parse_next_patch(&patch,
+                                        patch_file,
+                                        FALSE,
+                                        FALSE,
+                                        scratch_pool,
+                                        scratch_pool));
+    }
+
+  head->inserted_num += t->inserted_num;
+  head->deleted_num += t->deleted_num;
+  return SVN_NO_ERROR;
+}
+
+svn_error_t *
 svn_diff_output_dfstat(svn_stream_t *outstream,
     svn_dfstat_ctx_t *head)
 {

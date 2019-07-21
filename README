@@ -11,3 +11,4 @@ Main patches:
       7. Support client side pre-commit hook, hook scripts locate in
          .svn/hooks
       8. Decrease max width of shelve outputs.
+      9. svn/shelve: do not exec external tools when diffstat.

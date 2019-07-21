@@ -35,6 +35,7 @@
 
 #include "svn_private_config.h"
 #include "private/svn_sorts_private.h"
+#include "private/svn_diff_private.h"
 
 #include <sys/ioctl.h>
 #include <unistd.h>
@@ -125,7 +126,12 @@ shelves_list(const char *local_abspath,
 {
   apr_array_header_t *list;
   int i;
+  svn_stream_t *outstream;
 
+  if (diffstat)
+    {
+      SVN_ERR(svn_stream_for_stdout(&outstream, scratch_pool));
+    }
   SVN_ERR(list_sorted_by_date(&list,
                               local_abspath, ctx, scratch_pool));
 
@@ -152,25 +158,17 @@ shelves_list(const char *local_abspath,
       if (diffstat)
         {
 #ifndef WIN32
-          struct winsize winsz;
-          char optw[8] = "-w79";
-          const char *args[] = {
-            "diffstat",
-            "-p0",
-            optw,
-            info->patch_path,
-            NULL,
-          };
-          svn_error_t *err;
-          if (isatty(STDOUT_FILENO) &&
-              !ioctl(STDOUT_FILENO, TIOCGWINSZ, (char *)&winsz))
-            snprintf(optw, sizeof(optw), "-w%d", winsz.ws_col - 1);
-          err = run_cmd("diffstat", args, scratch_pool);
-          if (err)
-            svn_error_clear(err);
-          else
-            SVN_ERR(svn_cmdline_printf(scratch_pool,
-                                       "\n"));
+          svn_patch_file_t *patch_file = NULL;
+          svn_dfstat_ctx_t *dfctx;
+
+          SVN_ERR(svn_diff_open_patch_file(&patch_file,
+                                           info->patch_path,
+                                           scratch_pool));
+          SVN_ERR(svn_diff_create_dfctx(&dfctx));
+          SVN_ERR(svn_diff_stat2(dfctx, patch_file, scratch_pool));
+          SVN_ERR(svn_diff_output_dfstat(outstream, dfctx));
+          svn_diff_destroy_dfctx(dfctx);
+          svn_diff_close_patch_file(patch_file, scratch_pool);
 #endif
         }
     }
