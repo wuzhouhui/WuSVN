@@ -60,6 +60,51 @@ extern "C" {
 #define SVN_DIFF__NO_NEWLINE_AT_END_OF_PROPERTY \
           "\\ No newline at end of property"
 
+/* This struct describes a range within a file, as well as the
+ * current cursor position within the range. All numbers are in bytes. */
+struct svn_diff__hunk_range {
+  apr_off_t start;
+  apr_off_t end;
+  apr_off_t current;
+};
+
+struct svn_diff_hunk_t {
+  /* The patch this hunk belongs to. */
+  const svn_patch_t *patch;
+
+  /* APR file handle to the patch file this hunk came from. */
+  apr_file_t *apr_file;
+
+  /* Ranges used to keep track of this hunk's texts positions within
+   * the patch file. */
+  struct svn_diff__hunk_range diff_text_range;
+  struct svn_diff__hunk_range original_text_range;
+  struct svn_diff__hunk_range modified_text_range;
+
+  /* Hunk ranges as they appeared in the patch file.
+   * All numbers are lines, not bytes. */
+  svn_linenum_t original_start;
+  svn_linenum_t original_length;
+  svn_linenum_t modified_start;
+  svn_linenum_t modified_length;
+
+  /* Number of lines of leading and trailing hunk context. */
+  svn_linenum_t leading_context;
+  svn_linenum_t trailing_context;
+
+  /* Did we see a 'file does not end with eol' marker in this hunk? */
+  svn_boolean_t original_no_final_eol;
+  svn_boolean_t modified_no_final_eol;
+
+  /* Fuzz penalty, triggered by bad patch targets */
+  svn_linenum_t original_fuzz;
+  svn_linenum_t modified_fuzz;
+
+  /* # lines inserted and deleted, respectively. For diffstat */
+  svn_linenum_t inserted_length;
+  svn_linenum_t deleted_length;
+};
+
 /* Write a unidiff "---" and "+++" header to OUTPUT_STREAM.
  *
  * Write "---" followed by a space and OLD_HEADER and a newline,
@@ -207,6 +252,11 @@ svn_diff_stat(svn_dfstat_ctx_t *ctx,
     const svn_diff_t *diff,
     const char *file_path,
     enum svn_dfstat_cmt cmt);
+
+svn_error_t *
+svn_diff_stat2(svn_dfstat_ctx_t *ctx,
+               svn_patch_file_t *patch_file,
+               apr_pool_t *scratch_pool);
 
 svn_error_t *
 svn_diff_output_dfstat(svn_stream_t *out,
