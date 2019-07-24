@@ -151,9 +151,10 @@ shelves_list(const char *local_abspath,
                                  _("%-27s %6d mins old %10ld bytes %4d paths changed\n"),
                                  name, age, (long)info->dirent->filesize,
                                  apr_hash_count(paths)));
-      SVN_ERR(svn_cmdline_printf(scratch_pool,
-                                 _(" %.50s\n"),
-                                 info->message));
+      if (info->message[0] != '\0')
+        SVN_ERR(svn_cmdline_printf(scratch_pool,
+                                   _(" %.50s\n"),
+                                   info->message));
 
       if (diffstat)
         {
