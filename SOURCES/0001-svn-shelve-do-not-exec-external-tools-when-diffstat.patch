@@ -1,0 +1,282 @@
+From b34e4c9ca1b53daed435fa18997ad04c5bf3b901 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 21 Jul 2019 09:31:19 +0800
+Subject: [PATCH 1/2] svn/shelve: do not exec external tools when diffstat
+
+Displaying diffstat via external tools is too slow, using newly added
+built-in functions if more fast.
+
+(cherry picked from commit 77c80602f00c28b5ea4b9cff4641fcea99b0f30a)
+---
+ README                                        |  1 +
+ subversion/include/private/svn_diff_private.h | 50 +++++++++++++++++++++++++++
+ subversion/libsvn_diff/diff.c                 | 44 +++++++++++++++++++++++
+ subversion/libsvn_diff/parse-diff.c           | 43 ++---------------------
+ subversion/svn/shelve-cmd.c                   | 36 +++++++++----------
+ 5 files changed, 114 insertions(+), 60 deletions(-)
+
+diff --git a/README b/README
+index ed444a4..72dc8a5 100644
+--- a/README
++++ b/README
+@@ -11,3 +11,4 @@ Main patches:
+       7. Support client side pre-commit hook, hook scripts locate in
+          .svn/hooks
+       8. Decrease max width of shelve outputs.
++      9. svn/shelve: do not exec external tools when diffstat.
+diff --git a/subversion/include/private/svn_diff_private.h b/subversion/include/private/svn_diff_private.h
+index d62a541..4eac9ca 100644
+--- a/subversion/include/private/svn_diff_private.h
++++ b/subversion/include/private/svn_diff_private.h
+@@ -60,6 +60,51 @@ extern "C" {
+ #define SVN_DIFF__NO_NEWLINE_AT_END_OF_PROPERTY \
+           "\\ No newline at end of property"
+ 
++/* This struct describes a range within a file, as well as the
++ * current cursor position within the range. All numbers are in bytes. */
++struct svn_diff__hunk_range {
++  apr_off_t start;
++  apr_off_t end;
++  apr_off_t current;
++};
++
++struct svn_diff_hunk_t {
++  /* The patch this hunk belongs to. */
++  const svn_patch_t *patch;
++
++  /* APR file handle to the patch file this hunk came from. */
++  apr_file_t *apr_file;
++
++  /* Ranges used to keep track of this hunk's texts positions within
++   * the patch file. */
++  struct svn_diff__hunk_range diff_text_range;
++  struct svn_diff__hunk_range original_text_range;
++  struct svn_diff__hunk_range modified_text_range;
++
++  /* Hunk ranges as they appeared in the patch file.
++   * All numbers are lines, not bytes. */
++  svn_linenum_t original_start;
++  svn_linenum_t original_length;
++  svn_linenum_t modified_start;
++  svn_linenum_t modified_length;
++
++  /* Number of lines of leading and trailing hunk context. */
++  svn_linenum_t leading_context;
++  svn_linenum_t trailing_context;
++
++  /* Did we see a 'file does not end with eol' marker in this hunk? */
++  svn_boolean_t original_no_final_eol;
++  svn_boolean_t modified_no_final_eol;
++
++  /* Fuzz penalty, triggered by bad patch targets */
++  svn_linenum_t original_fuzz;
++  svn_linenum_t modified_fuzz;
++
++  /* # lines inserted and deleted, respectively. For diffstat */
++  svn_linenum_t inserted_length;
++  svn_linenum_t deleted_length;
++};
++
+ /* Write a unidiff "---" and "+++" header to OUTPUT_STREAM.
+  *
+  * Write "---" followed by a space and OLD_HEADER and a newline,
+@@ -209,6 +254,11 @@ svn_diff_stat(svn_dfstat_ctx_t *ctx,
+     enum svn_dfstat_cmt cmt);
+ 
+ svn_error_t *
++svn_diff_stat2(svn_dfstat_ctx_t *ctx,
++               svn_patch_file_t *patch_file,
++               apr_pool_t *scratch_pool);
++
++svn_error_t *
+ svn_diff_output_dfstat(svn_stream_t *out,
+     svn_dfstat_ctx_t *head);
+ 
+diff --git a/subversion/libsvn_diff/diff.c b/subversion/libsvn_diff/diff.c
+index 5dafda2..69bbd62 100644
+--- a/subversion/libsvn_diff/diff.c
++++ b/subversion/libsvn_diff/diff.c
+@@ -1036,6 +1036,50 @@ svn_diff_stat(svn_dfstat_ctx_t *head,
+ }
+ 
+ svn_error_t *
++svn_diff_stat2(svn_dfstat_ctx_t *head,
++               svn_patch_file_t *patch_file,
++               apr_pool_t *scratch_pool)
++{
++  svn_patch_t *patch = NULL;
++  int i;
++  svn_dfstat_ctx_t *t;
++
++  SVN_ERR(svn_diff_parse_next_patch(&patch,
++                                    patch_file,
++                                    FALSE,
++                                    FALSE,
++                                    scratch_pool,
++                                    scratch_pool));
++  while (patch != NULL)
++    {
++      t = apr_pcalloc(dfctx_pool, sizeof(*t));
++      t->file_path = apr_pstrdup(dfctx_pool, patch->new_filename);
++      t->cmt = svn_dfstat_normal;
++      t->next = head->next;
++      head->next = (void *)t;
++
++      for (i = 0; i < patch->hunks->nelts; i++)
++        {
++          const svn_diff_hunk_t *hunk = APR_ARRAY_IDX(patch->hunks,
++                                                      i,
++                                                      svn_diff_hunk_t *);
++          t->inserted_num += hunk->inserted_length;
++          t->deleted_num += hunk->deleted_length;
++        }
++      SVN_ERR(svn_diff_parse_next_patch(&patch,
++                                        patch_file,
++                                        FALSE,
++                                        FALSE,
++                                        scratch_pool,
++                                        scratch_pool));
++    }
++
++  head->inserted_num += t->inserted_num;
++  head->deleted_num += t->deleted_num;
++  return SVN_NO_ERROR;
++}
++
++svn_error_t *
+ svn_diff_output_dfstat(svn_stream_t *outstream,
+     svn_dfstat_ctx_t *head)
+ {
+diff --git a/subversion/libsvn_diff/parse-diff.c b/subversion/libsvn_diff/parse-diff.c
+index f215969..a2f3bdb 100644
+--- a/subversion/libsvn_diff/parse-diff.c
++++ b/subversion/libsvn_diff/parse-diff.c
+@@ -54,47 +54,6 @@
+ /* Like strlen() but for string literals. */
+ #define STRLEN_LITERAL(str) (sizeof(str) - 1)
+ 
+-/* This struct describes a range within a file, as well as the
+- * current cursor position within the range. All numbers are in bytes. */
+-struct svn_diff__hunk_range {
+-  apr_off_t start;
+-  apr_off_t end;
+-  apr_off_t current;
+-};
+-
+-struct svn_diff_hunk_t {
+-  /* The patch this hunk belongs to. */
+-  const svn_patch_t *patch;
+-
+-  /* APR file handle to the patch file this hunk came from. */
+-  apr_file_t *apr_file;
+-
+-  /* Ranges used to keep track of this hunk's texts positions within
+-   * the patch file. */
+-  struct svn_diff__hunk_range diff_text_range;
+-  struct svn_diff__hunk_range original_text_range;
+-  struct svn_diff__hunk_range modified_text_range;
+-
+-  /* Hunk ranges as they appeared in the patch file.
+-   * All numbers are lines, not bytes. */
+-  svn_linenum_t original_start;
+-  svn_linenum_t original_length;
+-  svn_linenum_t modified_start;
+-  svn_linenum_t modified_length;
+-
+-  /* Number of lines of leading and trailing hunk context. */
+-  svn_linenum_t leading_context;
+-  svn_linenum_t trailing_context;
+-
+-  /* Did we see a 'file does not end with eol' marker in this hunk? */
+-  svn_boolean_t original_no_final_eol;
+-  svn_boolean_t modified_no_final_eol;
+-
+-  /* Fuzz penalty, triggered by bad patch targets */
+-  svn_linenum_t original_fuzz;
+-  svn_linenum_t modified_fuzz;
+-};
+-
+ struct svn_diff_binary_patch_t {
+   /* The patch this hunk belongs to. */
+   const svn_patch_t *patch;
+@@ -1243,6 +1202,7 @@ parse_next_hunk(svn_diff_hunk_t **hunk,
+                   (*hunk)->original_fuzz++;
+                 }
+               last_line_type = original_line;
++              (*hunk)->deleted_length++;
+             }
+           else if (c == add
+                    && (modified_lines > 0 || line->data[1] != add))
+@@ -1264,6 +1224,7 @@ parse_next_hunk(svn_diff_hunk_t **hunk,
+                   (*hunk)->modified_fuzz++;
+                 }
+               last_line_type = modified_line;
++              (*hunk)->inserted_length++;
+             }
+           else
+             {
+diff --git a/subversion/svn/shelve-cmd.c b/subversion/svn/shelve-cmd.c
+index 6c715ae..c744ee2 100644
+--- a/subversion/svn/shelve-cmd.c
++++ b/subversion/svn/shelve-cmd.c
+@@ -35,6 +35,7 @@
+ 
+ #include "svn_private_config.h"
+ #include "private/svn_sorts_private.h"
++#include "private/svn_diff_private.h"
+ 
+ #include <sys/ioctl.h>
+ #include <unistd.h>
+@@ -125,7 +126,12 @@ shelves_list(const char *local_abspath,
+ {
+   apr_array_header_t *list;
+   int i;
++  svn_stream_t *outstream;
+ 
++  if (diffstat)
++    {
++      SVN_ERR(svn_stream_for_stdout(&outstream, scratch_pool));
++    }
+   SVN_ERR(list_sorted_by_date(&list,
+                               local_abspath, ctx, scratch_pool));
+ 
+@@ -152,25 +158,17 @@ shelves_list(const char *local_abspath,
+       if (diffstat)
+         {
+ #ifndef WIN32
+-          struct winsize winsz;
+-          char optw[8] = "-w79";
+-          const char *args[] = {
+-            "diffstat",
+-            "-p0",
+-            optw,
+-            info->patch_path,
+-            NULL,
+-          };
+-          svn_error_t *err;
+-          if (isatty(STDOUT_FILENO) &&
+-              !ioctl(STDOUT_FILENO, TIOCGWINSZ, (char *)&winsz))
+-            snprintf(optw, sizeof(optw), "-w%d", winsz.ws_col - 1);
+-          err = run_cmd("diffstat", args, scratch_pool);
+-          if (err)
+-            svn_error_clear(err);
+-          else
+-            SVN_ERR(svn_cmdline_printf(scratch_pool,
+-                                       "\n"));
++          svn_patch_file_t *patch_file = NULL;
++          svn_dfstat_ctx_t *dfctx;
++
++          SVN_ERR(svn_diff_open_patch_file(&patch_file,
++                                           info->patch_path,
++                                           scratch_pool));
++          SVN_ERR(svn_diff_create_dfctx(&dfctx));
++          SVN_ERR(svn_diff_stat2(dfctx, patch_file, scratch_pool));
++          SVN_ERR(svn_diff_output_dfstat(outstream, dfctx));
++          svn_diff_destroy_dfctx(dfctx);
++          svn_diff_close_patch_file(patch_file, scratch_pool);
+ #endif
+         }
+     }
+-- 
+1.8.3.1
+

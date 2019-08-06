@@ -3,6 +3,7 @@
 %bcond_without tools
 %bcond_without devel
 %bcond_with timestamp
+%bcond_without check
 
 %define apache_version 2.2.3
 %define apr_version 1.2.7
@@ -16,7 +17,7 @@
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
 Version: 1.10.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
@@ -125,6 +126,8 @@ Patch94: 0094-svn-ci-resolve-symlinks-when-check-pre-commit-hook.patch
 Patch95: 0095-svn-mergeinfo-paging-outputs-of-svn-mergeinfo.patch
 Patch96: 0001-svn-shelve-decrease-max-width-of-outputs.patch
 Patch97: 0002-Upstream-1.10.6.patch
+Patch98: 0001-svn-shelve-do-not-exec-external-tools-when-diffstat.patch
+Patch99: 0002-svn-shelve-do-not-print-newline-if-log-message-is-em.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -340,6 +343,8 @@ WANdisco extensions to subversion
 %patch95 -p1
 %patch96 -p1
 %patch97 -p1
+%patch98 -p1
+%patch99 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -387,6 +392,11 @@ make swig-py swig-pl DESTDIR=$RPM_BUILD_ROOT
 %if !%{without tools}
 # Build tools
 make tools
+%endif
+
+%if !%{without check}
+%check
+make check
 %endif
 
 %install
@@ -532,6 +542,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Tue Aug  6 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-2
+- svn/shelve: do not exec external tools when diffstat
+- svn/shelve: do not print newline if log message is empty
+
 * Sat Jul 20 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-1
 - svn/shelve: decrease max width of outputs
 - Upstream 1.10.6

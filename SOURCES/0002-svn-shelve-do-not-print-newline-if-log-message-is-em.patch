@@ -1,0 +1,33 @@
+From 69dad51f4304313be579180ef23ffd40e4b49589 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Wed, 24 Jul 2019 09:05:56 +0800
+Subject: [PATCH 2/2] svn/shelve: do not print newline if log message is empty
+
+This makes outputs more compact.
+
+(cherry picked from commit 6b3f73cdae1b9455ce37f6b897b25a4795f74698)
+---
+ subversion/svn/shelve-cmd.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/subversion/svn/shelve-cmd.c b/subversion/svn/shelve-cmd.c
+index c744ee2..87c59a4 100644
+--- a/subversion/svn/shelve-cmd.c
++++ b/subversion/svn/shelve-cmd.c
+@@ -151,9 +151,10 @@ shelves_list(const char *local_abspath,
+                                  _("%-27s %6d mins old %10ld bytes %4d paths changed\n"),
+                                  name, age, (long)info->dirent->filesize,
+                                  apr_hash_count(paths)));
+-      SVN_ERR(svn_cmdline_printf(scratch_pool,
+-                                 _(" %.50s\n"),
+-                                 info->message));
++      if (info->message[0] != '\0')
++        SVN_ERR(svn_cmdline_printf(scratch_pool,
++                                   _(" %.50s\n"),
++                                   info->message));
+ 
+       if (diffstat)
+         {
+-- 
+1.8.3.1
+
