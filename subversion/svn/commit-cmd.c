@@ -143,6 +143,59 @@ pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
   return SVN_NO_ERROR;
 }
 
+static svn_error_t *
+post_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
+{
+  const char *wcroot_abspath, *abspath;
+  svn_node_kind_t kind;
+  svn_boolean_t executable = FALSE;
+  int sys_err;
+
+  SVN_ERR(svn_dirent_get_absolute(&abspath, target, pool));
+
+  SVN_ERR(svn_client_get_wc_root(&wcroot_abspath,
+                                 abspath,
+                                 ctx,
+                                 pool,
+                                 pool));
+
+  abspath = svn_dirent_join_many(pool,
+                                 wcroot_abspath,
+                                 svn_wc_get_adm_dir(pool),
+                                 "hooks/post-commit",
+                                 SVN_VA_NULL);
+
+  /* Now, the abspath points to post-commit hook script. If script
+   * exist and executable, we will run it.
+   */
+
+  SVN_ERR(svn_io_check_resolved_path(abspath, &kind, pool));
+  if (kind == svn_node_none)
+    {
+      return;
+    }
+  if (kind != svn_node_file)
+    {
+      return svn_error_create(0, NULL, _("post-commit hook is not a file"));
+    }
+
+  SVN_ERR(svn_io_is_file_executable(&executable, abspath, pool));
+  if (!executable)
+    {
+      return svn_error_create(0, NULL,
+                              _("post-commit hook is not executable"));
+    }
+
+  /* execute pre-commit */
+  sys_err = system(abspath);
+  if (sys_err != 0)
+    {
+      return svn_error_create(SVN_ERR_EXTERNAL_PROGRAM, NULL,
+                              _("post-commit hook exits with failure"));
+    }
+
+  return SVN_NO_ERROR;
+}
 
 
 /* This implements the `svn_opt_subcommand_t' interface. */
@@ -247,6 +300,19 @@ svn_cl__commit(apr_getopt_t *os,
                            ctx,
                            pool);
   SVN_ERR(svn_cl__cleanup_log_msg(ctx->log_msg_baton3, err, pool));
+
+  /* Execute post-commit if possible */
+  if (!err && opt_state->bypass_hooks == FALSE)
+    {
+      err = post_commit(ctx, APR_ARRAY_IDX(targets, 0, const char *), pool);
+      if (err)
+        {
+          char buf[70];
+          svn_cmdline_printf(pool, _("%s\n"),
+                             svn_err_best_message(err, buf, sizeof(buf)));
+          svn_error_clear(err);
+        }
+    }
 
   return SVN_NO_ERROR;
 }
