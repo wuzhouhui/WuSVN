@@ -11,3 +11,4 @@ Main patches:
       7. Backport 'svn shelve' (experimental) commands from 1.10.x
       8. Support client side pre-commit hook, hook scripts locate in
          .svn/hooks
+      9. Support client side hook post-commit.
