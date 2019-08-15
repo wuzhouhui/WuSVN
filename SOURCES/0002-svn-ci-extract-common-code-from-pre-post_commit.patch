@@ -1,0 +1,142 @@
+From 4cd276c507d79ced79b2eb9603925582f83acdb4 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Mon, 12 Aug 2019 13:04:25 +0800
+Subject: [PATCH 2/2] svn/ci: extract common code from pre/post_commit
+
+(cherry picked from commit f38d715babb7428e45c91daea50bb05d076339e0)
+---
+ subversion/svn/commit-cmd.c | 79 ++++++++++---------------------------
+ 1 file changed, 21 insertions(+), 58 deletions(-)
+
+diff --git a/subversion/svn/commit-cmd.c b/subversion/svn/commit-cmd.c
+index 0464acc..653d6e9 100644
+--- a/subversion/svn/commit-cmd.c
++++ b/subversion/svn/commit-cmd.c
+@@ -90,12 +90,16 @@ copy_warning_notify_func(void *baton,
+ }
+ 
+ static svn_error_t *
+-pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
++_commit_hooks(svn_client_ctx_t *ctx,
++              const char *hook_path,
++              const char *target,
++              apr_pool_t *pool)
+ {
+   const char *wcroot_abspath, *abspath;
+   svn_node_kind_t kind;
+   svn_boolean_t executable = FALSE;
+   int sys_err;
++  char buf[64];
+ 
+   SVN_ERR(svn_dirent_get_absolute(&abspath, target, pool));
+ 
+@@ -108,10 +112,10 @@ pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
+   abspath = svn_dirent_join_many(pool,
+                                  wcroot_abspath,
+                                  svn_wc_get_adm_dir(pool),
+-                                 "hooks/pre-commit",
++                                 hook_path,
+                                  SVN_VA_NULL);
+ 
+-  /* Now, the abspath points to pre-commit hook script. If script
++  /* Now, the abspath points to hook script. If script
+    * exist and executable, we will run it.
+    */
+ 
+@@ -122,79 +126,38 @@ pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
+     }
+   if (kind != svn_node_file)
+     {
+-      return svn_error_create(0, NULL, _("pre-commit hook is not a file"));
++      snprintf(buf, sizeof(buf), "%s hook is not a file", hook_path);
++      return svn_error_create(0, NULL, buf);
+     }
+ 
+   SVN_ERR(svn_io_is_file_executable(&executable, abspath, pool));
+   if (!executable)
+     {
+-      return svn_error_create(0, NULL,
+-                              _("pre-commit hook is not executable"));
++      snprintf(buf, sizeof(buf), "%s hook is not executable", hook_path);
++      return svn_error_create(0, NULL, buf);
+     }
+ 
+-  /* execute pre-commit */
++  /* execute hook */
+   sys_err = system(abspath);
+   if (sys_err != 0)
+     {
+-      return svn_error_create(SVN_ERR_EXTERNAL_PROGRAM, NULL,
+-                              _("pre-commit hook exits with failure"));
++      snprintf(buf, sizeof(buf), "%s hook exits with failure", hook_path);
++      return svn_error_create(SVN_ERR_EXTERNAL_PROGRAM, NULL, buf);
+     }
+ 
+   return SVN_NO_ERROR;
+ }
+ 
+ static svn_error_t *
+-post_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
++pre_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
+ {
+-  const char *wcroot_abspath, *abspath;
+-  svn_node_kind_t kind;
+-  svn_boolean_t executable = FALSE;
+-  int sys_err;
+-
+-  SVN_ERR(svn_dirent_get_absolute(&abspath, target, pool));
+-
+-  SVN_ERR(svn_client_get_wc_root(&wcroot_abspath,
+-                                 abspath,
+-                                 ctx,
+-                                 pool,
+-                                 pool));
+-
+-  abspath = svn_dirent_join_many(pool,
+-                                 wcroot_abspath,
+-                                 svn_wc_get_adm_dir(pool),
+-                                 "hooks/post-commit",
+-                                 SVN_VA_NULL);
+-
+-  /* Now, the abspath points to post-commit hook script. If script
+-   * exist and executable, we will run it.
+-   */
+-
+-  SVN_ERR(svn_io_check_resolved_path(abspath, &kind, pool));
+-  if (kind == svn_node_none)
+-    {
+-      return;
+-    }
+-  if (kind != svn_node_file)
+-    {
+-      return svn_error_create(0, NULL, _("post-commit hook is not a file"));
+-    }
+-
+-  SVN_ERR(svn_io_is_file_executable(&executable, abspath, pool));
+-  if (!executable)
+-    {
+-      return svn_error_create(0, NULL,
+-                              _("post-commit hook is not executable"));
+-    }
+-
+-  /* execute pre-commit */
+-  sys_err = system(abspath);
+-  if (sys_err != 0)
+-    {
+-      return svn_error_create(SVN_ERR_EXTERNAL_PROGRAM, NULL,
+-                              _("post-commit hook exits with failure"));
+-    }
++  return _commit_hooks(ctx, "hooks/pre-commit", target, pool);
++}
+ 
+-  return SVN_NO_ERROR;
++static svn_error_t *
++post_commit(svn_client_ctx_t *ctx, const char *target, apr_pool_t *pool)
++{
++  return _commit_hooks(ctx, "hooks/post-commit", target, pool);
+ }
+ 
+ 
+-- 
+2.22.0
+

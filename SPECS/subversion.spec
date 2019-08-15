@@ -17,7 +17,7 @@
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
 Version: 1.10.6
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
@@ -128,6 +128,8 @@ Patch96: 0001-svn-shelve-decrease-max-width-of-outputs.patch
 Patch97: 0002-Upstream-1.10.6.patch
 Patch98: 0001-svn-shelve-do-not-exec-external-tools-when-diffstat.patch
 Patch99: 0002-svn-shelve-do-not-print-newline-if-log-message-is-em.patch
+Patch100: 0001-svn-ci-support-hook-post-commit-in-client-side.patch
+Patch101: 0002-svn-ci-extract-common-code-from-pre-post_commit.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -345,6 +347,8 @@ WANdisco extensions to subversion
 %patch97 -p1
 %patch98 -p1
 %patch99 -p1
+%patch100 -p1
+%patch101 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -542,6 +546,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Aug 15 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-3
+- svn/ci: support hook post-commit in client side
+- svn/ci: extract common code from pre/post_commit
+
 * Tue Aug  6 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-2
 - svn/shelve: do not exec external tools when diffstat
 - svn/shelve: do not print newline if log message is empty
