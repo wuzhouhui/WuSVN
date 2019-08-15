@@ -9,7 +9,7 @@
 %define apache_dir /usr
 %define pyver 2.7
 %define svn_version 1.9.12
-%define svn_release 2%{?dist}
+%define svn_release 3%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -62,6 +62,8 @@ Patch34: 0001-svn-mergeinfo-paging-outputs-of-svn-mergeinfo.patch
 Patch35: 0002-Revert-Release-1.9.10.1.patch
 Patch36: 0001-Upstream-1.9.12.patch
 Patch37: 0001-svn-shelve-do-not-print-newline-if-log-message-is-em.patch
+Patch38: 0001-svn-ci-support-hook-post-commit-in-client-side.patch
+Patch39: 0002-svn-ci-extract-common-code-from-pre-post_commit.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -209,6 +211,8 @@ Tools for Subversion.
 %patch35 -p1
 %patch36 -p1
 %patch37 -p1
+%patch38 -p1
+%patch39 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -406,6 +410,10 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Aug 15 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.12-3
+- svn/ci: support hook post-commit in client side
+- svn/ci: extract common code from pre/post_commit
+
 * Wed Aug  7 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.12-2
 - svn/shelve: do not print newline if log message is empty
 
