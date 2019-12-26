@@ -9,7 +9,7 @@
 %define apache_dir /usr
 %define pyver 2.7
 %define svn_version 1.9.12
-%define svn_release 3%{?dist}
+%define svn_release 4%{?dist}
 
 %define perl_siteprefix %(eval "`%{__perl} -V:installarchlib`"; echo $installarchlib)
 
@@ -64,6 +64,7 @@ Patch36: 0001-Upstream-1.9.12.patch
 Patch37: 0001-svn-shelve-do-not-print-newline-if-log-message-is-em.patch
 Patch38: 0001-svn-ci-support-hook-post-commit-in-client-side.patch
 Patch39: 0002-svn-ci-extract-common-code-from-pre-post_commit.patch
+Patch40: 0001-svn-log-remove-unnecessary-exclusion-between-option-.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -213,6 +214,7 @@ Tools for Subversion.
 %patch37 -p1
 %patch38 -p1
 %patch39 -p1
+%patch40 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -410,6 +412,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Thu Dec 26 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.12-4
+- svn/log: remove unnecessary exclusion between option quiet and diff
+
 * Thu Aug 15 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.9.12-3
 - svn/ci: support hook post-commit in client side
 - svn/ci: extract common code from pre/post_commit

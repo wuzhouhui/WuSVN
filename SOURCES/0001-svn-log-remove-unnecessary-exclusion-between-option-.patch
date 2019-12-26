@@ -1,0 +1,29 @@
+From 37691a5c68258b8e0df4b6740ab4e63677f933b0 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 22 Dec 2019 22:08:10 +0800
+Subject: [PATCH] svn/log: remove unnecessary exclusion between option quiet
+ and diff
+
+(cherry picked from commit 08a36897a5e11cbb1779b56d81b9425fce9f4423)
+---
+ subversion/svn/log-cmd.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/subversion/svn/log-cmd.c b/subversion/svn/log-cmd.c
+index 83e2ad600240..a02ecb85056d 100644
+--- a/subversion/svn/log-cmd.c
++++ b/subversion/svn/log-cmd.c
+@@ -790,10 +790,6 @@ svn_cl__log(apr_getopt_t *os,
+                                   "XML mode"));
+     }
+ 
+-  if (opt_state->quiet && opt_state->show_diff)
+-    return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, NULL,
+-                            _("'quiet' and 'diff' options are "
+-                              "mutually exclusive"));
+   if (opt_state->diff.diff_cmd && (! opt_state->show_diff))
+     return svn_error_create(SVN_ERR_CL_ARG_PARSING_ERROR, NULL,
+                             _("'diff-cmd' option requires 'diff' "
+-- 
+2.22.0
+
