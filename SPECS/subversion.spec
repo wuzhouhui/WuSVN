@@ -17,7 +17,7 @@
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
 Version: 1.10.6
-Release: 4%{?dist}
+Release: 5%{?dist}
 License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
@@ -380,7 +380,6 @@ export PYTHON
 	--with-lz4=internal \
 	--with-utf8proc=internal \
 	--enable-apache-whitelist=2.4.6 \
-  	--enable-runtime-module-search \
   	--with-serf
 %build
 make clean
@@ -548,6 +547,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Apr  5 2020 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-5
+- Disable runtime module search
+
 * Mon Dec 23 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-4
 - svn/log: remove unnecessary exclusion between option quiet and diff
 
