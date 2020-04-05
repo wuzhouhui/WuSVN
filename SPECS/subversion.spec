@@ -16,7 +16,7 @@
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
 Version: 1.13.0
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
@@ -170,7 +170,6 @@ export PYTHON
 	--with-lz4=internal \
 	--with-utf8proc=internal \
 	--enable-apache-whitelist=2.4.6 \
-	--enable-runtime-module-search \
 	--with-serf
 %build
 make clean
@@ -338,5 +337,8 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Apr  5 2020 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.13.0-2
+- Disable runtime module search
+
 * Tue Nov 12 2019 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.13.0-1
 - Subversion 1.13.0, nothing touched
