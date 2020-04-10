@@ -1936,28 +1936,30 @@ int SWIG_Ruby_arity( VALUE proc, int minimal )
 #define SWIGTYPE_p_svn_opt_revision_value_t swig_types[130]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[131]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t_desc_overrides swig_types[132]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[133]
-#define SWIGTYPE_p_svn_patch_file_t swig_types[134]
-#define SWIGTYPE_p_svn_patch_t swig_types[135]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[136]
-#define SWIGTYPE_p_svn_prop_kind swig_types[137]
-#define SWIGTYPE_p_svn_prop_patch_t swig_types[138]
-#define SWIGTYPE_p_svn_prop_t swig_types[139]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[140]
-#define SWIGTYPE_p_svn_stream_t swig_types[141]
-#define SWIGTYPE_p_svn_string_t swig_types[142]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[143]
-#define SWIGTYPE_p_svn_tristate_t swig_types[144]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[145]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[146]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[147]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[148]
-#define SWIGTYPE_p_svn_version_t swig_types[149]
-#define SWIGTYPE_p_unsigned_char swig_types[150]
-#define SWIGTYPE_p_unsigned_long swig_types[151]
-#define SWIGTYPE_p_void swig_types[152]
-static swig_type_info *swig_types[154];
-static swig_module_info swig_module = {swig_types, 153, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[133]
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides swig_types[134]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[135]
+#define SWIGTYPE_p_svn_patch_file_t swig_types[136]
+#define SWIGTYPE_p_svn_patch_t swig_types[137]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[138]
+#define SWIGTYPE_p_svn_prop_kind swig_types[139]
+#define SWIGTYPE_p_svn_prop_patch_t swig_types[140]
+#define SWIGTYPE_p_svn_prop_t swig_types[141]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[142]
+#define SWIGTYPE_p_svn_stream_t swig_types[143]
+#define SWIGTYPE_p_svn_string_t swig_types[144]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[145]
+#define SWIGTYPE_p_svn_tristate_t swig_types[146]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[147]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[148]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[149]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[150]
+#define SWIGTYPE_p_svn_version_t swig_types[151]
+#define SWIGTYPE_p_unsigned_char swig_types[152]
+#define SWIGTYPE_p_unsigned_long swig_types[153]
+#define SWIGTYPE_p_void swig_types[154]
+static swig_type_info *swig_types[156];
+static swig_module_info swig_module = {swig_types, 155, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2123,7 +2125,7 @@ SWIG_ruby_failed(void)
 } 
 
 
-/*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2LONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -2321,6 +2323,10 @@ static const svn_version_t * svn_version_invoke_func(
 
 typedef struct {
   int optch; const char *desc; 
+} svn_opt_subcommand_desc3_t_desc_overrides;
+
+typedef struct {
+  int optch; const char *desc; 
 } svn_opt_subcommand_desc2_t_desc_overrides;
 
 
@@ -2334,7 +2340,7 @@ typedef struct {
 #include "svn_auth.h"
 
 
-/*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2ULONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -10474,6 +10480,539 @@ fail:
 }
 
 
+static swig_class SwigClassSvn_opt_subcommand_desc3_t;
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_name_set(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","name", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *","name", 2, argv[0] ));
+  }
+  arg2 = (char *)(buf2);
+  {
+    apr_size_t len = strlen(arg2) + 1;
+    char *copied;
+    if (arg1->name) free((char *)arg1->name);
+    copied = malloc(len);
+    memcpy(copied, arg2, len);
+    arg1->name = copied;
+  }
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return Qnil;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_name_get(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","name", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  result = (char *) ((arg1)->name);
+  {
+    if (result) {
+      vresult = rb_str_new2(result);
+    } else {
+      vresult = Qnil;
+    }
+  }
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_cmd_func_set(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  svn_opt_subcommand_t *arg2 = (svn_opt_subcommand_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","cmd_func", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  {
+    int res = SWIG_ConvertFunctionPtr(argv[0], (void**)(&arg2), SWIGTYPE_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), Ruby_Format_TypeError( "", "svn_opt_subcommand_t *","cmd_func", 2, argv[0] )); 
+    }
+  }
+  if (arg1) (arg1)->cmd_func = arg2;
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_cmd_func_get(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  svn_opt_subcommand_t *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","cmd_func", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  result = (svn_opt_subcommand_t *) ((arg1)->cmd_func);
+  vresult = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t);
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_aliases_set(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  char **arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","aliases", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *[3]","aliases", 2, argv[0] )); 
+  } 
+  arg2 = (char **)(argp2);
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)3; ++ii) *(char const * *)&arg1->aliases[ii] = *((char const * *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""aliases""' of type '""char const *[3]""'");
+    }
+  }
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_aliases_get(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char **result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","aliases", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  result = (char **)(char **) ((arg1)->aliases);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_p_char, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_help_set(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  char **arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","help", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_p_char, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *[100]","help", 2, argv[0] )); 
+  } 
+  arg2 = (char **)(argp2);
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)100; ++ii) *(char const * *)&arg1->help[ii] = *((char const * *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""help""' of type '""char const *[100]""'");
+    }
+  }
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_help_get(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char **result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","help", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  result = (char **)(char **) ((arg1)->help);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_p_char, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_valid_options_set(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  int *arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","valid_options", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_int, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "int [50]","valid_options", 2, argv[0] )); 
+  } 
+  arg2 = (int *)(argp2);
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)50; ++ii) *(int *)&arg1->valid_options[ii] = *((int *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""valid_options""' of type '""int [50]""'");
+    }
+  }
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_valid_options_get(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","valid_options", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  result = (int *)(int *) ((arg1)->valid_options);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_int, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_get(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  svn_opt_subcommand_desc3_t_desc_overrides *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "struct svn_opt_subcommand_desc3_t *","desc_overrides", 1, self )); 
+  }
+  arg1 = (struct svn_opt_subcommand_desc3_t *)(argp1);
+  result = (svn_opt_subcommand_desc3_t_desc_overrides *)(svn_opt_subcommand_desc3_t_desc_overrides *) ((arg1)->desc_overrides);
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+_wrap_svn_opt_subcommand_desc3_t_allocate(VALUE self)
+#else
+_wrap_svn_opt_subcommand_desc3_t_allocate(int argc, VALUE *argv, VALUE self)
+#endif
+{
+  VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_svn_opt_subcommand_desc3_t);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+  rb_obj_call_init(vresult, argc, argv);
+#endif
+  return vresult;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_svn_opt_subcommand_desc3_t(int argc, VALUE *argv, VALUE self) {
+  struct svn_opt_subcommand_desc3_t *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    result = (struct svn_opt_subcommand_desc3_t *)calloc(1, sizeof(struct svn_opt_subcommand_desc3_t));
+    DATA_PTR(self) = result;
+    
+    
+    
+  }
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_svn_opt_subcommand_desc3_t(void *self) {
+    struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *)self;
+    free((char *) arg1);
+}
+
+static swig_class SwigClassSvn_opt_subcommand_desc3_t_desc_overrides;
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_set(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  int arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t_desc_overrides *","optch", 1, self )); 
+  }
+  arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)(argp1);
+  ecode2 = SWIG_AsVal_int(argv[0], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","optch", 2, argv[0] ));
+  } 
+  arg2 = (int)(val2);
+  if (arg1) (arg1)->optch = arg2;
+  return Qnil;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_get(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int result;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t_desc_overrides *","optch", 1, self )); 
+  }
+  arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)(argp1);
+  result = (int) ((arg1)->optch);
+  vresult = SWIG_From_int((int)(result));
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_set(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  
+  if ((argc < 1) || (argc > 1)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 1)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t_desc_overrides *","desc", 1, self )); 
+  }
+  arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[0], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *","desc", 2, argv[0] ));
+  }
+  arg2 = (char *)(buf2);
+  {
+    apr_size_t len = strlen(arg2) + 1;
+    char *copied;
+    if (arg1->desc) free((char *)arg1->desc);
+    copied = malloc(len);
+    memcpy(copied, arg2, len);
+    arg1->desc = copied;
+  }
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return Qnil;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_get(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  char *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(self, &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t_desc_overrides *","desc", 1, self )); 
+  }
+  arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)(argp1);
+  result = (char *) ((arg1)->desc);
+  {
+    if (result) {
+      vresult = rb_str_new2(result);
+    } else {
+      vresult = Qnil;
+    }
+  }
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+#ifdef HAVE_RB_DEFINE_ALLOC_FUNC
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_allocate(VALUE self)
+#else
+_wrap_svn_opt_subcommand_desc3_t_desc_overrides_allocate(int argc, VALUE *argv, VALUE self)
+#endif
+{
+  VALUE vresult = SWIG_NewClassInstance(self, SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides);
+#ifndef HAVE_RB_DEFINE_ALLOC_FUNC
+  rb_obj_call_init(vresult, argc, argv);
+#endif
+  return vresult;
+}
+
+
+SWIGINTERN VALUE
+_wrap_new_svn_opt_subcommand_desc3_t_desc_overrides(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t_desc_overrides *result = 0 ;
+  
+  if ((argc < 0) || (argc > 0)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 0)",argc); SWIG_fail;
+  }
+  {
+    result = (svn_opt_subcommand_desc3_t_desc_overrides *)calloc(1, sizeof(svn_opt_subcommand_desc3_t_desc_overrides));
+    DATA_PTR(self) = result;
+    
+    
+    
+  }
+  return self;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN void
+free_svn_opt_subcommand_desc3_t_desc_overrides(void *self) {
+    svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)self;
+    free((char *) arg1);
+}
+
 static swig_class SwigClassSvn_opt_subcommand_desc2_t;
 
 SWIGINTERN VALUE
@@ -11370,6 +11909,46 @@ free_svn_opt_subcommand_desc_t(void *self) {
 }
 
 SWIGINTERN VALUE
+_wrap_svn_opt_get_canonical_subcommand3(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t *arg1 = (svn_opt_subcommand_desc3_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  svn_opt_subcommand_desc3_t *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t const *","svn_opt_get_canonical_subcommand3", 1, argv[0] )); 
+  }
+  arg1 = (svn_opt_subcommand_desc3_t *)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *","svn_opt_get_canonical_subcommand3", 2, argv[1] ));
+  }
+  arg2 = (char *)(buf2);
+  {
+    result = (svn_opt_subcommand_desc3_t *)svn_opt_get_canonical_subcommand3((struct svn_opt_subcommand_desc3_t const *)arg1,(char const *)arg2);
+    
+    
+    
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return vresult;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
 _wrap_svn_opt_get_canonical_subcommand2(int argc, VALUE *argv, VALUE self) {
   svn_opt_subcommand_desc2_t *arg1 = (svn_opt_subcommand_desc2_t *) 0 ;
   char *arg2 = (char *) 0 ;
@@ -11445,6 +12024,76 @@ _wrap_svn_opt_get_canonical_subcommand(int argc, VALUE *argv, VALUE self) {
   return vresult;
 fail:
   if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_get_option_from_code3(int argc, VALUE *argv, VALUE self) {
+  int arg1 ;
+  apr_getopt_option_t *arg2 = (apr_getopt_option_t *) 0 ;
+  svn_opt_subcommand_desc3_t *arg3 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  VALUE _global_svn_swig_rb_pool ;
+  apr_pool_t *_global_pool ;
+  int val1 ;
+  int ecode1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  apr_getopt_option_t *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  {
+    svn_swig_rb_get_pool(argc, argv, self, &_global_svn_swig_rb_pool, &arg4);
+    _global_pool = arg4;
+    svn_swig_rb_push_pool(_global_svn_swig_rb_pool);
+  }
+  if ((argc < 3) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  ecode1 = SWIG_AsVal_int(argv[0], &val1);
+  if (!SWIG_IsOK(ecode1)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode1), Ruby_Format_TypeError( "", "int","svn_opt_get_option_from_code3", 1, argv[0] ));
+  } 
+  arg1 = (int)(val1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_apr_getopt_option_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "apr_getopt_option_t const *","svn_opt_get_option_from_code3", 2, argv[1] )); 
+  }
+  arg2 = (apr_getopt_option_t *)(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t const *","svn_opt_get_option_from_code3", 3, argv[2] )); 
+  }
+  arg3 = (svn_opt_subcommand_desc3_t *)(argp3);
+  if (argc > 3) {
+    
+  }
+  {
+    result = (apr_getopt_option_t *)svn_opt_get_option_from_code3(arg1,(apr_getopt_option_t const *)arg2,(struct svn_opt_subcommand_desc3_t const *)arg3,arg4);
+    
+    
+    
+  }
+  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_apr_getopt_option_t, 0 |  0 );
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
+  return vresult;
+fail:
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
   return Qnil;
 }
 
@@ -11550,6 +12199,53 @@ _wrap_svn_opt_get_option_from_code(int argc, VALUE *argv, VALUE self) {
     
   }
   vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_apr_getopt_option_t, 0 |  0 );
+  return vresult;
+fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_takes_option4(int argc, VALUE *argv, VALUE self) {
+  svn_opt_subcommand_desc3_t *arg1 = (svn_opt_subcommand_desc3_t *) 0 ;
+  int arg2 ;
+  int *arg3 = (int *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  int temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  svn_boolean_t result;
+  VALUE vresult = Qnil;
+  
+  arg3 = &temp3;
+  if ((argc < 2) || (argc > 2)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 2)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t const *","svn_opt_subcommand_takes_option4", 1, argv[0] )); 
+  }
+  arg1 = (svn_opt_subcommand_desc3_t *)(argp1);
+  ecode2 = SWIG_AsVal_int(argv[1], &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), Ruby_Format_TypeError( "", "int","svn_opt_subcommand_takes_option4", 2, argv[1] ));
+  } 
+  arg2 = (int)(val2);
+  {
+    result = (svn_boolean_t)svn_opt_subcommand_takes_option4((struct svn_opt_subcommand_desc3_t const *)arg1,arg2,(int const *)arg3);
+    
+    
+    
+  }
+  vresult = result ? Qtrue : Qfalse;
+  if (SWIG_IsTmpObj(res3)) {
+    vresult = SWIG_Ruby_AppendOutput(vresult, SWIG_From_int((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    vresult = SWIG_Ruby_AppendOutput(vresult, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_int, new_flags));
+  }
   return vresult;
 fail:
   return Qnil;
@@ -11673,6 +12369,97 @@ _wrap_svn_opt_subcommand_takes_option(int argc, VALUE *argv, VALUE self) {
   vresult = result ? Qtrue : Qfalse;
   return vresult;
 fail:
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_print_generic_help3(int argc, VALUE *argv, VALUE self) {
+  char *arg1 = (char *) 0 ;
+  svn_opt_subcommand_desc3_t *arg2 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_getopt_option_t *arg3 = (apr_getopt_option_t *) 0 ;
+  char *arg4 = (char *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  FILE *arg6 = (FILE *) 0 ;
+  VALUE _global_svn_swig_rb_pool ;
+  apr_pool_t *_global_pool ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int res4 ;
+  char *buf4 = 0 ;
+  int alloc4 = 0 ;
+  void *argp6 = 0 ;
+  int res6 = 0 ;
+  
+  {
+    svn_swig_rb_get_pool(argc, argv, self, &_global_svn_swig_rb_pool, &arg5);
+    _global_pool = arg5;
+    svn_swig_rb_push_pool(_global_svn_swig_rb_pool);
+  }
+  if ((argc < 4) || (argc > 6)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 4)",argc); SWIG_fail;
+  }
+  res1 = SWIG_AsCharPtrAndSize(argv[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "char const *","svn_opt_print_generic_help3", 1, argv[0] ));
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t const *","svn_opt_print_generic_help3", 2, argv[1] )); 
+  }
+  arg2 = (svn_opt_subcommand_desc3_t *)(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3,SWIGTYPE_p_apr_getopt_option_t, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), Ruby_Format_TypeError( "", "apr_getopt_option_t const *","svn_opt_print_generic_help3", 3, argv[2] )); 
+  }
+  arg3 = (apr_getopt_option_t *)(argp3);
+  res4 = SWIG_AsCharPtrAndSize(argv[3], &buf4, NULL, &alloc4);
+  if (!SWIG_IsOK(res4)) {
+    SWIG_exception_fail(SWIG_ArgError(res4), Ruby_Format_TypeError( "", "char const *","svn_opt_print_generic_help3", 4, argv[3] ));
+  }
+  arg4 = (char *)(buf4);
+  if (argc > 4) {
+    
+  }
+  if (argc > 5) {
+    res6 = SWIG_ConvertPtr(argv[5], &argp6,SWIGTYPE_p_FILE, 0 |  0 );
+    if (!SWIG_IsOK(res6)) {
+      SWIG_exception_fail(SWIG_ArgError(res6), Ruby_Format_TypeError( "", "FILE *","svn_opt_print_generic_help3", 6, argv[5] )); 
+    }
+    arg6 = (FILE *)(argp6);
+  }
+  {
+    svn_opt_print_generic_help3((char const *)arg1,(struct svn_opt_subcommand_desc3_t const *)arg2,(apr_getopt_option_t const *)arg3,(char const *)arg4,arg5,arg6);
+    
+    
+    
+  }
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc4 == SWIG_NEWOBJ) free((char*)buf4);
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
+  return Qnil;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  if (alloc4 == SWIG_NEWOBJ) free((char*)buf4);
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
   return Qnil;
 }
 
@@ -11821,6 +12608,87 @@ _wrap_svn_opt_format_option(int argc, VALUE *argv, VALUE self) {
   }
   return vresult;
 fail:
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_subcommand_help4(int argc, VALUE *argv, VALUE self) {
+  char *arg1 = (char *) 0 ;
+  svn_opt_subcommand_desc3_t *arg2 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_getopt_option_t *arg3 = (apr_getopt_option_t *) 0 ;
+  int *arg4 = (int *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  VALUE _global_svn_swig_rb_pool ;
+  apr_pool_t *_global_pool ;
+  int res1 ;
+  char *buf1 = 0 ;
+  int alloc1 = 0 ;
+  void *argp2 = 0 ;
+  int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  int temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  VALUE vresult = Qnil;
+  
+  {
+    svn_swig_rb_get_pool(argc, argv, self, &_global_svn_swig_rb_pool, &arg5);
+    _global_pool = arg5;
+    svn_swig_rb_push_pool(_global_svn_swig_rb_pool);
+  }
+  arg4 = &temp4;
+  if ((argc < 3) || (argc > 4)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 3)",argc); SWIG_fail;
+  }
+  res1 = SWIG_AsCharPtrAndSize(argv[0], &buf1, NULL, &alloc1);
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "char const *","svn_opt_subcommand_help4", 1, argv[0] ));
+  }
+  arg1 = (char *)(buf1);
+  res2 = SWIG_ConvertPtr(argv[1], &argp2,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t const *","svn_opt_subcommand_help4", 2, argv[1] )); 
+  }
+  arg2 = (svn_opt_subcommand_desc3_t *)(argp2);
+  res3 = SWIG_ConvertPtr(argv[2], &argp3,SWIGTYPE_p_apr_getopt_option_t, 0 |  0 );
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), Ruby_Format_TypeError( "", "apr_getopt_option_t const *","svn_opt_subcommand_help4", 3, argv[2] )); 
+  }
+  arg3 = (apr_getopt_option_t *)(argp3);
+  if (argc > 3) {
+    
+  }
+  {
+    svn_opt_subcommand_help4((char const *)arg1,(struct svn_opt_subcommand_desc3_t const *)arg2,(apr_getopt_option_t const *)arg3,(int const *)arg4,arg5);
+    
+    
+    
+  }
+  if (SWIG_IsTmpObj(res4)) {
+    vresult = SWIG_Ruby_AppendOutput(vresult, SWIG_From_int((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    vresult = SWIG_Ruby_AppendOutput(vresult, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_int, new_flags));
+  }
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
+  return vresult;
+fail:
+  if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
   {
     VALUE target;
     target = _global_vresult_address == &vresult ? self : vresult;
@@ -12887,6 +13755,143 @@ _wrap_svn_opt_parse_path(int argc, VALUE *argv, VALUE self) {
   return vresult;
 fail:
   if (alloc3 == SWIG_NEWOBJ) free((char*)buf3);
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
+  return Qnil;
+}
+
+
+SWIGINTERN VALUE
+_wrap_svn_opt_print_help5(int argc, VALUE *argv, VALUE self) {
+  apr_getopt_t *arg1 = (apr_getopt_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  svn_boolean_t arg3 ;
+  svn_boolean_t arg4 ;
+  svn_boolean_t arg5 ;
+  char *arg6 = (char *) 0 ;
+  char *arg7 = (char *) 0 ;
+  svn_opt_subcommand_desc3_t *arg8 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_getopt_option_t *arg9 = (apr_getopt_option_t *) 0 ;
+  int *arg10 = (int *) 0 ;
+  char *arg11 = (char *) 0 ;
+  apr_pool_t *arg12 = (apr_pool_t *) 0 ;
+  VALUE _global_svn_swig_rb_pool ;
+  apr_pool_t *_global_pool ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 ;
+  char *buf2 = 0 ;
+  int alloc2 = 0 ;
+  int res6 ;
+  char *buf6 = 0 ;
+  int alloc6 = 0 ;
+  int res7 ;
+  char *buf7 = 0 ;
+  int alloc7 = 0 ;
+  void *argp8 = 0 ;
+  int res8 = 0 ;
+  void *argp9 = 0 ;
+  int res9 = 0 ;
+  int temp10 ;
+  int res10 = SWIG_TMPOBJ ;
+  int res11 ;
+  char *buf11 = 0 ;
+  int alloc11 = 0 ;
+  svn_error_t *result = 0 ;
+  VALUE vresult = Qnil;
+  
+  {
+    svn_swig_rb_get_pool(argc, argv, self, &_global_svn_swig_rb_pool, &arg12);
+    _global_pool = arg12;
+    svn_swig_rb_push_pool(_global_svn_swig_rb_pool);
+  }
+  arg10 = &temp10;
+  if ((argc < 10) || (argc > 11)) {
+    rb_raise(rb_eArgError, "wrong # of arguments(%d for 10)",argc); SWIG_fail;
+  }
+  res1 = SWIG_ConvertPtr(argv[0], &argp1,SWIGTYPE_p_apr_getopt_t, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "apr_getopt_t *","svn_opt_print_help5", 1, argv[0] )); 
+  }
+  arg1 = (apr_getopt_t *)(argp1);
+  res2 = SWIG_AsCharPtrAndSize(argv[1], &buf2, NULL, &alloc2);
+  if (!SWIG_IsOK(res2)) {
+    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "char const *","svn_opt_print_help5", 2, argv[1] ));
+  }
+  arg2 = (char *)(buf2);
+  arg3 = RTEST(argv[2]);
+  arg4 = RTEST(argv[3]);
+  arg5 = RTEST(argv[4]);
+  res6 = SWIG_AsCharPtrAndSize(argv[5], &buf6, NULL, &alloc6);
+  if (!SWIG_IsOK(res6)) {
+    SWIG_exception_fail(SWIG_ArgError(res6), Ruby_Format_TypeError( "", "char const *","svn_opt_print_help5", 6, argv[5] ));
+  }
+  arg6 = (char *)(buf6);
+  res7 = SWIG_AsCharPtrAndSize(argv[6], &buf7, NULL, &alloc7);
+  if (!SWIG_IsOK(res7)) {
+    SWIG_exception_fail(SWIG_ArgError(res7), Ruby_Format_TypeError( "", "char const *","svn_opt_print_help5", 7, argv[6] ));
+  }
+  arg7 = (char *)(buf7);
+  res8 = SWIG_ConvertPtr(argv[7], &argp8,SWIGTYPE_p_svn_opt_subcommand_desc3_t, 0 |  0 );
+  if (!SWIG_IsOK(res8)) {
+    SWIG_exception_fail(SWIG_ArgError(res8), Ruby_Format_TypeError( "", "svn_opt_subcommand_desc3_t const *","svn_opt_print_help5", 8, argv[7] )); 
+  }
+  arg8 = (svn_opt_subcommand_desc3_t *)(argp8);
+  res9 = SWIG_ConvertPtr(argv[8], &argp9,SWIGTYPE_p_apr_getopt_option_t, 0 |  0 );
+  if (!SWIG_IsOK(res9)) {
+    SWIG_exception_fail(SWIG_ArgError(res9), Ruby_Format_TypeError( "", "apr_getopt_option_t const *","svn_opt_print_help5", 9, argv[8] )); 
+  }
+  arg9 = (apr_getopt_option_t *)(argp9);
+  res11 = SWIG_AsCharPtrAndSize(argv[9], &buf11, NULL, &alloc11);
+  if (!SWIG_IsOK(res11)) {
+    SWIG_exception_fail(SWIG_ArgError(res11), Ruby_Format_TypeError( "", "char const *","svn_opt_print_help5", 11, argv[9] ));
+  }
+  arg11 = (char *)(buf11);
+  if (argc > 10) {
+    
+  }
+  {
+    result = (svn_error_t *)svn_opt_print_help5(arg1,(char const *)arg2,arg3,arg4,arg5,(char const *)arg6,(char const *)arg7,(struct svn_opt_subcommand_desc3_t const *)arg8,(apr_getopt_option_t const *)arg9,(int const *)arg10,(char const *)arg11,arg12);
+    
+    
+    
+  }
+  {
+    if (result) {
+      svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+      svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+      svn_swig_rb_handle_svn_error(result);
+    }
+    vresult = Qnil;
+  }
+  if (SWIG_IsTmpObj(res10)) {
+    vresult = SWIG_Ruby_AppendOutput(vresult, SWIG_From_int((*arg10)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res10) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    vresult = SWIG_Ruby_AppendOutput(vresult, SWIG_NewPointerObj((void*)(arg10), SWIGTYPE_p_int, new_flags));
+  }
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc6 == SWIG_NEWOBJ) free((char*)buf6);
+  if (alloc7 == SWIG_NEWOBJ) free((char*)buf7);
+  if (alloc11 == SWIG_NEWOBJ) free((char*)buf11);
+  {
+    VALUE target;
+    target = _global_vresult_address == &vresult ? self : vresult;
+    if (!svn_swig_rb_set_pool(target, _global_svn_swig_rb_pool))
+    svn_swig_rb_destroy_pool(_global_svn_swig_rb_pool);
+    svn_swig_rb_pop_pool(_global_svn_swig_rb_pool);
+  }
+  return vresult;
+fail:
+  if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
+  if (alloc6 == SWIG_NEWOBJ) free((char*)buf6);
+  if (alloc7 == SWIG_NEWOBJ) free((char*)buf7);
+  if (alloc11 == SWIG_NEWOBJ) free((char*)buf11);
   {
     VALUE target;
     target = _global_vresult_address == &vresult ? self : vresult;
@@ -44090,6 +45095,8 @@ static swig_type_info _swigt__p_svn_opt_revision_t = {"_p_svn_opt_revision_t", "
 static swig_type_info _swigt__p_svn_opt_revision_value_t = {"_p_svn_opt_revision_value_t", "union svn_opt_revision_value_t *|svn_opt_revision_value_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t = {"_p_svn_opt_subcommand_desc2_t", "struct svn_opt_subcommand_desc2_t *|svn_opt_subcommand_desc2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t_desc_overrides = {"_p_svn_opt_subcommand_desc2_t_desc_overrides", "svn_opt_subcommand_desc2_t_desc_overrides *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t = {"_p_svn_opt_subcommand_desc3_t", "struct svn_opt_subcommand_desc3_t *|svn_opt_subcommand_desc3_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t_desc_overrides = {"_p_svn_opt_subcommand_desc3_t_desc_overrides", "svn_opt_subcommand_desc3_t_desc_overrides *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc_t = {"_p_svn_opt_subcommand_desc_t", "struct svn_opt_subcommand_desc_t *|svn_opt_subcommand_desc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_patch_file_t = {"_p_svn_patch_file_t", "struct svn_patch_file_t *|svn_patch_file_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_patch_t = {"_p_svn_patch_t", "struct svn_patch_t *|svn_patch_t *", 0, 0, (void*)0, 0};
@@ -44245,6 +45252,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_opt_revision_value_t,
   &_swigt__p_svn_opt_subcommand_desc2_t,
   &_swigt__p_svn_opt_subcommand_desc2_t_desc_overrides,
+  &_swigt__p_svn_opt_subcommand_desc3_t,
+  &_swigt__p_svn_opt_subcommand_desc3_t_desc_overrides,
   &_swigt__p_svn_opt_subcommand_desc_t,
   &_swigt__p_svn_patch_file_t,
   &_swigt__p_svn_patch_t,
@@ -44400,6 +45409,8 @@ static swig_cast_info _swigc__p_svn_opt_revision_t[] = {  {&_swigt__p_svn_opt_re
 static swig_cast_info _swigc__p_svn_opt_revision_value_t[] = {  {&_swigt__p_svn_opt_revision_value_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t_desc_overrides[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t_desc_overrides, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t_desc_overrides[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t_desc_overrides, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc_t[] = {  {&_swigt__p_svn_opt_subcommand_desc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_patch_file_t[] = {  {&_swigt__p_svn_patch_file_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_patch_t[] = {  {&_swigt__p_svn_patch_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -44555,6 +45566,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_opt_revision_value_t,
   _swigc__p_svn_opt_subcommand_desc2_t,
   _swigc__p_svn_opt_subcommand_desc2_t_desc_overrides,
+  _swigc__p_svn_opt_subcommand_desc3_t,
+  _swigc__p_svn_opt_subcommand_desc3_t_desc_overrides,
   _swigc__p_svn_opt_subcommand_desc_t,
   _swigc__p_svn_patch_file_t,
   _swigc__p_svn_patch_t,
@@ -45426,16 +46439,16 @@ SWIGEXPORT void Init_core(void) {
   rb_define_module_function(mCore, "svn_pool_create", _wrap_svn_pool_create, -1);
   rb_define_module_function(mCore, "svn_pool_create_allocator", _wrap_svn_pool_create_allocator, -1);
   rb_define_const(mCore, "SVN_VER_MAJOR", SWIG_From_int((int)(1)));
-  rb_define_const(mCore, "SVN_VER_MINOR", SWIG_From_int((int)(10)));
-  rb_define_const(mCore, "SVN_VER_PATCH", SWIG_From_int((int)(4)));
-  rb_define_const(mCore, "SVN_VER_MICRO", SWIG_From_int((int)(4)));
+  rb_define_const(mCore, "SVN_VER_MINOR", SWIG_From_int((int)(11)));
+  rb_define_const(mCore, "SVN_VER_PATCH", SWIG_From_int((int)(0)));
+  rb_define_const(mCore, "SVN_VER_MICRO", SWIG_From_int((int)(0)));
   rb_define_const(mCore, "SVN_VER_LIBRARY", SWIG_From_int((int)(1)));
-  rb_define_const(mCore, "SVN_VER_TAG", SWIG_FromCharPtr(" (r1850624)"));
+  rb_define_const(mCore, "SVN_VER_TAG", SWIG_FromCharPtr(" (r1845130)"));
   rb_define_const(mCore, "SVN_VER_NUMTAG", SWIG_FromCharPtr(""));
-  rb_define_const(mCore, "SVN_VER_REVISION", SWIG_From_int((int)(1850624)));
-  rb_define_const(mCore, "SVN_VER_NUM", SWIG_FromCharPtr("1.10.4"));
-  rb_define_const(mCore, "SVN_VER_NUMBER", SWIG_FromCharPtr("1.10.4"));
-  rb_define_const(mCore, "SVN_VERSION", SWIG_FromCharPtr("1.10.4 (r1850624)"));
+  rb_define_const(mCore, "SVN_VER_REVISION", SWIG_From_int((int)(1845130)));
+  rb_define_const(mCore, "SVN_VER_NUM", SWIG_FromCharPtr("1.11.0"));
+  rb_define_const(mCore, "SVN_VER_NUMBER", SWIG_FromCharPtr("1.11.0"));
+  rb_define_const(mCore, "SVN_VERSION", SWIG_FromCharPtr("1.11.0 (r1845130)"));
   
   SwigClassSvn_version_t.klass = rb_define_class_under(mCore, "Svn_version_t", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_svn_version_t, (void *) &SwigClassSvn_version_t);
@@ -45585,7 +46598,39 @@ SWIGEXPORT void Init_core(void) {
   rb_define_const(mCore, "SVN_PROP_REVISION_PREFIX", SWIG_FromCharPtr("svn:revision-"));
   rb_define_const(mCore, "SVN_OPT_MAX_ALIASES", SWIG_From_int((int)(3)));
   rb_define_const(mCore, "SVN_OPT_MAX_OPTIONS", SWIG_From_int((int)(50)));
+  rb_define_const(mCore, "SVN_OPT_MAX_PARAGRAPHS", SWIG_From_int((int)(100)));
   rb_define_const(mCore, "SVN_OPT_FIRST_LONGOPT_ID", SWIG_From_int((int)(256)));
+  
+  SwigClassSvn_opt_subcommand_desc3_t.klass = rb_define_class_under(mCore, "Svn_opt_subcommand_desc3_t", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_svn_opt_subcommand_desc3_t, (void *) &SwigClassSvn_opt_subcommand_desc3_t);
+  rb_define_alloc_func(SwigClassSvn_opt_subcommand_desc3_t.klass, _wrap_svn_opt_subcommand_desc3_t_allocate);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "initialize", _wrap_new_svn_opt_subcommand_desc3_t, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "name=", _wrap_svn_opt_subcommand_desc3_t_name_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "name", _wrap_svn_opt_subcommand_desc3_t_name_get, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "cmd_func=", _wrap_svn_opt_subcommand_desc3_t_cmd_func_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "cmd_func", _wrap_svn_opt_subcommand_desc3_t_cmd_func_get, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "aliases=", _wrap_svn_opt_subcommand_desc3_t_aliases_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "aliases", _wrap_svn_opt_subcommand_desc3_t_aliases_get, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "help=", _wrap_svn_opt_subcommand_desc3_t_help_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "help", _wrap_svn_opt_subcommand_desc3_t_help_get, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "valid_options=", _wrap_svn_opt_subcommand_desc3_t_valid_options_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "valid_options", _wrap_svn_opt_subcommand_desc3_t_valid_options_get, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t.klass, "desc_overrides", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_get, -1);
+  SwigClassSvn_opt_subcommand_desc3_t.mark = 0;
+  SwigClassSvn_opt_subcommand_desc3_t.destroy = (void (*)(void *)) free_svn_opt_subcommand_desc3_t;
+  SwigClassSvn_opt_subcommand_desc3_t.trackObjects = 0;
+  
+  SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass = rb_define_class_under(mCore, "Svn_opt_subcommand_desc3_t_desc_overrides", rb_cObject);
+  SWIG_TypeClientData(SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, (void *) &SwigClassSvn_opt_subcommand_desc3_t_desc_overrides);
+  rb_define_alloc_func(SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass, _wrap_svn_opt_subcommand_desc3_t_desc_overrides_allocate);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass, "initialize", _wrap_new_svn_opt_subcommand_desc3_t_desc_overrides, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass, "optch=", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass, "optch", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_get, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass, "desc=", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_set, -1);
+  rb_define_method(SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.klass, "desc", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_get, -1);
+  SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.mark = 0;
+  SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.destroy = (void (*)(void *)) free_svn_opt_subcommand_desc3_t_desc_overrides;
+  SwigClassSvn_opt_subcommand_desc3_t_desc_overrides.trackObjects = 0;
   
   SwigClassSvn_opt_subcommand_desc2_t.klass = rb_define_class_under(mCore, "Svn_opt_subcommand_desc2_t", rb_cObject);
   SWIG_TypeClientData(SWIGTYPE_p_svn_opt_subcommand_desc2_t, (void *) &SwigClassSvn_opt_subcommand_desc2_t);
@@ -45635,15 +46680,20 @@ SWIGEXPORT void Init_core(void) {
   SwigClassSvn_opt_subcommand_desc_t.mark = 0;
   SwigClassSvn_opt_subcommand_desc_t.destroy = (void (*)(void *)) free_svn_opt_subcommand_desc_t;
   SwigClassSvn_opt_subcommand_desc_t.trackObjects = 0;
+  rb_define_module_function(mCore, "svn_opt_get_canonical_subcommand3", _wrap_svn_opt_get_canonical_subcommand3, -1);
   rb_define_module_function(mCore, "svn_opt_get_canonical_subcommand2", _wrap_svn_opt_get_canonical_subcommand2, -1);
   rb_define_module_function(mCore, "svn_opt_get_canonical_subcommand", _wrap_svn_opt_get_canonical_subcommand, -1);
+  rb_define_module_function(mCore, "svn_opt_get_option_from_code3", _wrap_svn_opt_get_option_from_code3, -1);
   rb_define_module_function(mCore, "svn_opt_get_option_from_code2", _wrap_svn_opt_get_option_from_code2, -1);
   rb_define_module_function(mCore, "svn_opt_get_option_from_code", _wrap_svn_opt_get_option_from_code, -1);
+  rb_define_module_function(mCore, "svn_opt_subcommand_takes_option4", _wrap_svn_opt_subcommand_takes_option4, -1);
   rb_define_module_function(mCore, "svn_opt_subcommand_takes_option3", _wrap_svn_opt_subcommand_takes_option3, -1);
   rb_define_module_function(mCore, "svn_opt_subcommand_takes_option2", _wrap_svn_opt_subcommand_takes_option2, -1);
   rb_define_module_function(mCore, "svn_opt_subcommand_takes_option", _wrap_svn_opt_subcommand_takes_option, -1);
+  rb_define_module_function(mCore, "svn_opt_print_generic_help3", _wrap_svn_opt_print_generic_help3, -1);
   rb_define_module_function(mCore, "svn_opt_print_generic_help2", _wrap_svn_opt_print_generic_help2, -1);
   rb_define_module_function(mCore, "svn_opt_format_option", _wrap_svn_opt_format_option, -1);
+  rb_define_module_function(mCore, "svn_opt_subcommand_help4", _wrap_svn_opt_subcommand_help4, -1);
   rb_define_module_function(mCore, "svn_opt_subcommand_help3", _wrap_svn_opt_subcommand_help3, -1);
   rb_define_module_function(mCore, "svn_opt_subcommand_help2", _wrap_svn_opt_subcommand_help2, -1);
   rb_define_module_function(mCore, "svn_opt_subcommand_help", _wrap_svn_opt_subcommand_help, -1);
@@ -45697,6 +46747,7 @@ SWIGEXPORT void Init_core(void) {
   rb_define_module_function(mCore, "svn_opt_parse_revprop", _wrap_svn_opt_parse_revprop, -1);
   rb_define_module_function(mCore, "svn_opt_push_implicit_dot_target", _wrap_svn_opt_push_implicit_dot_target, -1);
   rb_define_module_function(mCore, "svn_opt_parse_path", _wrap_svn_opt_parse_path, -1);
+  rb_define_module_function(mCore, "svn_opt_print_help5", _wrap_svn_opt_print_help5, -1);
   rb_define_module_function(mCore, "svn_opt_print_help4", _wrap_svn_opt_print_help4, -1);
   rb_define_module_function(mCore, "svn_opt_print_help3", _wrap_svn_opt_print_help3, -1);
   rb_define_module_function(mCore, "svn_opt_print_help2", _wrap_svn_opt_print_help2, -1);

@@ -56,7 +56,7 @@ import svntest
 from svntest import Failure
 from svntest import Skip
 
-SVN_VER_MINOR = 10
+SVN_VER_MINOR = 11
 
 ######################################################################
 #
@@ -223,6 +223,10 @@ SVN_PROP_INHERITABLE_IGNORES = "svn:global-ignores"
 # Each test will have its own!
 general_repo_dir = os.path.join(work_dir, "repositories")
 general_wc_dir = os.path.join(work_dir, "working_copies")
+
+# Directories used for DAV tests
+other_dav_root_dir = os.path.join(work_dir, "fsdavroot")
+non_dav_root_dir = os.path.join(work_dir, "nodavroot")
 
 # temp directory in which we will create our 'pristine' local
 # repository and other scratch data.  This should be removed when we
@@ -978,7 +982,8 @@ def file_write(path, contents, mode='w'):
   which is (w)rite by default."""
 
   if sys.version_info < (3, 0):
-    open(path, mode).write(contents)
+    with open(path, mode) as f:
+      f.write(contents)
   else:
     # Python 3:  Write data in the format required by MODE, i.e. byte arrays
     #            to 'b' files, utf-8 otherwise."""
@@ -990,9 +995,11 @@ def file_write(path, contents, mode='w'):
         contents = contents.decode("utf-8")
 
     if isinstance(contents, str):
-      codecs.open(path, mode, "utf-8").write(contents)
+      with codecs.open(path, mode, "utf-8") as f:
+        f.write(contents)
     else:
-      open(path, mode).write(contents)
+      with open(path, mode) as f:
+        f.write(contents)
 
 # For making local mods to files
 def file_append(path, new_text):
@@ -1008,7 +1015,8 @@ def file_append_binary(path, new_text):
 def file_substitute(path, contents, new_contents):
   """Replace the CONTENTS in the file at PATH using the NEW_CONTENTS"""
   fcontent = open(path, 'r').read().replace(contents, new_contents)
-  open(path, 'w').write(fcontent)
+  with open(path, 'w') as f:
+    f.write(fcontent)
 
 # For setting up authz, hooks and making other tweaks to created repos
 def _post_create_repos(path, minor_version = None):
@@ -1035,7 +1043,8 @@ def _post_create_repos(path, minor_version = None):
       users += (crosscheck_username + " = " + crosscheck_password + "\n")
     file_append(os.path.join(path, "conf", "passwd"), users)
 
-  if options.fs_type is None or options.fs_type == 'fsfs':
+  if options.fs_type is None or options.fs_type == 'fsfs' or \
+     options.fs_type == 'fsx':
     # fsfs.conf file
     if (minor_version is None or minor_version >= 6):
       confpath = get_fsfs_conf_file_path(path)
@@ -2344,6 +2353,8 @@ def execute_tests(test_list, serial_only = False, test_name = None,
 
   global pristine_url
   global pristine_greek_repos_url
+  global other_dav_root_url
+  global non_dav_root_url
   global svn_binary
   global svnadmin_binary
   global svnlook_binary
@@ -2422,6 +2433,10 @@ def execute_tests(test_list, serial_only = False, test_name = None,
                                 svntest.wc.svn_uri_quote(
                                   pristine_greek_repos_dir.replace(
                                       os.path.sep, '/'))
+
+  other_dav_root_url = options.test_area_url + '/fsdavroot'
+  non_dav_root_url = options.test_area_url + '/nodavroot'
+
 
   if options.use_jsvn:
     if options.svn_bin is None:

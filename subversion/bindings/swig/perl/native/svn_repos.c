@@ -1631,41 +1631,42 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_svn_opt_revision_t swig_types[119]
 #define SWIGTYPE_p_svn_opt_revision_value_t swig_types[120]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[121]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[122]
-#define SWIGTYPE_p_svn_patch_file_t swig_types[123]
-#define SWIGTYPE_p_svn_patch_t swig_types[124]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[125]
-#define SWIGTYPE_p_svn_prop_kind swig_types[126]
-#define SWIGTYPE_p_svn_prop_patch_t swig_types[127]
-#define SWIGTYPE_p_svn_repos_authz_access_t swig_types[128]
-#define SWIGTYPE_p_svn_repos_log_entry_t swig_types[129]
-#define SWIGTYPE_p_svn_repos_node_t swig_types[130]
-#define SWIGTYPE_p_svn_repos_notify_action_t swig_types[131]
-#define SWIGTYPE_p_svn_repos_notify_t swig_types[132]
-#define SWIGTYPE_p_svn_repos_notify_warning_t swig_types[133]
-#define SWIGTYPE_p_svn_repos_parse_fns2_t swig_types[134]
-#define SWIGTYPE_p_svn_repos_parse_fns3_t swig_types[135]
-#define SWIGTYPE_p_svn_repos_parse_fns_t swig_types[136]
-#define SWIGTYPE_p_svn_repos_revision_access_level_t swig_types[137]
-#define SWIGTYPE_p_svn_repos_t swig_types[138]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[139]
-#define SWIGTYPE_p_svn_stream_t swig_types[140]
-#define SWIGTYPE_p_svn_string_t swig_types[141]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[142]
-#define SWIGTYPE_p_svn_tristate_t swig_types[143]
-#define SWIGTYPE_p_svn_txdelta_op_t swig_types[144]
-#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[145]
-#define SWIGTYPE_p_svn_txdelta_window_t swig_types[146]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[147]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[148]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[149]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[150]
-#define SWIGTYPE_p_svn_version_t swig_types[151]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[152]
-#define SWIGTYPE_p_unsigned_long swig_types[153]
-#define SWIGTYPE_p_void swig_types[154]
-static swig_type_info *swig_types[156];
-static swig_module_info swig_module = {swig_types, 155, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[122]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[123]
+#define SWIGTYPE_p_svn_patch_file_t swig_types[124]
+#define SWIGTYPE_p_svn_patch_t swig_types[125]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[126]
+#define SWIGTYPE_p_svn_prop_kind swig_types[127]
+#define SWIGTYPE_p_svn_prop_patch_t swig_types[128]
+#define SWIGTYPE_p_svn_repos_authz_access_t swig_types[129]
+#define SWIGTYPE_p_svn_repos_log_entry_t swig_types[130]
+#define SWIGTYPE_p_svn_repos_node_t swig_types[131]
+#define SWIGTYPE_p_svn_repos_notify_action_t swig_types[132]
+#define SWIGTYPE_p_svn_repos_notify_t swig_types[133]
+#define SWIGTYPE_p_svn_repos_notify_warning_t swig_types[134]
+#define SWIGTYPE_p_svn_repos_parse_fns2_t swig_types[135]
+#define SWIGTYPE_p_svn_repos_parse_fns3_t swig_types[136]
+#define SWIGTYPE_p_svn_repos_parse_fns_t swig_types[137]
+#define SWIGTYPE_p_svn_repos_revision_access_level_t swig_types[138]
+#define SWIGTYPE_p_svn_repos_t swig_types[139]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[140]
+#define SWIGTYPE_p_svn_stream_t swig_types[141]
+#define SWIGTYPE_p_svn_string_t swig_types[142]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[143]
+#define SWIGTYPE_p_svn_tristate_t swig_types[144]
+#define SWIGTYPE_p_svn_txdelta_op_t swig_types[145]
+#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[146]
+#define SWIGTYPE_p_svn_txdelta_window_t swig_types[147]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[148]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[149]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[150]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[151]
+#define SWIGTYPE_p_svn_version_t swig_types[152]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[153]
+#define SWIGTYPE_p_unsigned_long swig_types[154]
+#define SWIGTYPE_p_void swig_types[155]
+static swig_type_info *swig_types[157];
+static swig_module_info swig_module = {swig_types, 156, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -4884,7 +4885,7 @@ XS(_wrap_svn_repos_freeze) {
       
     }
     {
-      result = (svn_error_t *)svn_repos_freeze(arg1,arg2,arg3,arg4);
+      result = (svn_error_t *)svn_repos_freeze((apr_array_header_t const *)arg1,arg2,arg3,arg4);
       
       
       
@@ -22523,6 +22524,7 @@ static swig_type_info _swigt__p_svn_opt_revision_range_t = {"_p_svn_opt_revision
 static swig_type_info _swigt__p_svn_opt_revision_t = {"_p_svn_opt_revision_t", "struct svn_opt_revision_t *|svn_opt_revision_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_revision_value_t = {"_p_svn_opt_revision_value_t", "union svn_opt_revision_value_t *|svn_opt_revision_value_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t = {"_p_svn_opt_subcommand_desc2_t", "struct svn_opt_subcommand_desc2_t *|svn_opt_subcommand_desc2_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t = {"_p_svn_opt_subcommand_desc3_t", "struct svn_opt_subcommand_desc3_t *|svn_opt_subcommand_desc3_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc_t = {"_p_svn_opt_subcommand_desc_t", "struct svn_opt_subcommand_desc_t *|svn_opt_subcommand_desc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_patch_file_t = {"_p_svn_patch_file_t", "struct svn_patch_file_t *|svn_patch_file_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_patch_t = {"_p_svn_patch_t", "struct svn_patch_t *|svn_patch_t *", 0, 0, (void*)0, 0};
@@ -22680,6 +22682,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_opt_revision_t,
   &_swigt__p_svn_opt_revision_value_t,
   &_swigt__p_svn_opt_subcommand_desc2_t,
+  &_swigt__p_svn_opt_subcommand_desc3_t,
   &_swigt__p_svn_opt_subcommand_desc_t,
   &_swigt__p_svn_patch_file_t,
   &_swigt__p_svn_patch_t,
@@ -22837,6 +22840,7 @@ static swig_cast_info _swigc__p_svn_opt_revision_range_t[] = {  {&_swigt__p_svn_
 static swig_cast_info _swigc__p_svn_opt_revision_t[] = {  {&_swigt__p_svn_opt_revision_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_revision_value_t[] = {  {&_swigt__p_svn_opt_revision_value_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc_t[] = {  {&_swigt__p_svn_opt_subcommand_desc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_patch_file_t[] = {  {&_swigt__p_svn_patch_file_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_patch_t[] = {  {&_swigt__p_svn_patch_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -22994,6 +22998,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_opt_revision_t,
   _swigc__p_svn_opt_revision_value_t,
   _swigc__p_svn_opt_subcommand_desc2_t,
+  _swigc__p_svn_opt_subcommand_desc3_t,
   _swigc__p_svn_opt_subcommand_desc_t,
   _swigc__p_svn_patch_file_t,
   _swigc__p_svn_patch_t,
@@ -23625,357 +23630,357 @@ XS(SWIG_init) {
     SvREADONLY_on(sv);
   }
   
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_node_action_change", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_node_action_change)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_node_action_add", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_node_action_add)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_node_action_delete", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_node_action_delete)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_node_action_replace", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_node_action_replace)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_authz_none", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_authz_none)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_authz_read", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_authz_read)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_authz_write", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_authz_write)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_authz_recursive", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_authz_recursive)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_dump_rev_end", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_dump_rev_end)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_verify_rev_end", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_verify_rev_end)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_dump_end", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_dump_end)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_verify_end", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_verify_end)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_pack_shard_start", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_pack_shard_start)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_pack_shard_end", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_pack_shard_end)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_pack_shard_start_revprop", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_pack_shard_start_revprop)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_pack_shard_end_revprop", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_pack_shard_end_revprop)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_txn_start", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_txn_start)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_txn_committed", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_txn_committed)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_node_start", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_node_start)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_node_done", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_node_done)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_copied_node", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_copied_node)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_normalized_mergeinfo", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_normalized_mergeinfo)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_mutex_acquired", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_mutex_acquired)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_recover_start", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_recover_start)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_upgrade_start", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_upgrade_start)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_skipped_rev", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_skipped_rev)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_verify_rev_structure", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_verify_rev_structure)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_pack_revprops", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_pack_revprops)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_cleanup_revprops", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_cleanup_revprops)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_format_bumped", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_format_bumped)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_hotcopy_rev_range", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_hotcopy_rev_range)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_pack_noop", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_pack_noop)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_load_revprop_set", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_load_revprop_set)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning_found_old_reference", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning_found_old_reference)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning_found_old_mergeinfo", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning_found_old_mergeinfo)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning_invalid_fspath", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning_invalid_fspath)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning_name_collision", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning_name_collision)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning_mergeinfo_collision", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning_mergeinfo_collision)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_notify_warning_invalid_mergeinfo", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_notify_warning_invalid_mergeinfo)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_CAPABILITY_MERGEINFO", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("mergeinfo"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_MAGIC_HEADER", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("SVN-fs-dump-format-version"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_FORMAT_VERSION", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(3)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_FORMAT_VERSION_DELTAS", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(3)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_UUID", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("UUID"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_CONTENT_LENGTH", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Content-length"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_REVISION_NUMBER", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Revision-number"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_NODE_PATH", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Node-path"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_NODE_KIND", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Node-kind"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_NODE_ACTION", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Node-action"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_NODE_COPYFROM_PATH", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Node-copyfrom-path"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_NODE_COPYFROM_REV", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Node-copyfrom-rev"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_COPY_SOURCE_MD5", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-copy-source-md5"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_COPY_SOURCE_SHA1", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-copy-source-sha1"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_COPY_SOURCE_CHECKSUM", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-copy-source-md5"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_CONTENT_MD5", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-content-md5"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_CONTENT_SHA1", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-content-sha1"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_CONTENT_CHECKSUM", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-content-md5"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_PROP_CONTENT_LENGTH", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Prop-content-length"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_CONTENT_LENGTH", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-content-length"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_PROP_DELTA", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Prop-delta"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_DELTA", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-delta"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_DELTA_BASE_MD5", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-delta-base-md5"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_DELTA_BASE_SHA1", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-delta-base-sha1"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "SVN_REPOS_DUMPFILE_TEXT_DELTA_BASE_CHECKSUM", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_FromCharPtr("Text-delta-base-md5"));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_load_uuid_default", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_load_uuid_default)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_load_uuid_ignore", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_load_uuid_ignore)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_load_uuid_force", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_load_uuid_force)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_revision_access_none", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_revision_access_none)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_revision_access_partial", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_revision_access_partial)));
     SvREADONLY_on(sv);
   } while(0) /*@SWIG@*/;
-  /*@SWIG:/opt/svnrm110/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
+  /*@SWIG:/opt/svnrm/prefix/share/swig/3.0.12/perl5/perltypemaps.swg,65,%set_constant@*/ do {
     SV *sv = get_sv((char*) SWIG_prefix "svn_repos_revision_access_full", TRUE | 0x2 | GV_ADDMULTI);
     sv_setsv(sv, SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(svn_repos_revision_access_full)));
     SvREADONLY_on(sv);

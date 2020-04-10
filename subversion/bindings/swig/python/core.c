@@ -3123,26 +3123,28 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_svn_opt_revision_value_t swig_types[137]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[138]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t_desc_overrides swig_types[139]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[140]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[141]
-#define SWIGTYPE_p_svn_prop_kind swig_types[142]
-#define SWIGTYPE_p_svn_prop_t swig_types[143]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[144]
-#define SWIGTYPE_p_svn_stream_t swig_types[145]
-#define SWIGTYPE_p_svn_string_t swig_types[146]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[147]
-#define SWIGTYPE_p_svn_tristate_t swig_types[148]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[149]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[150]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[151]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[152]
-#define SWIGTYPE_p_svn_version_t swig_types[153]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[154]
-#define SWIGTYPE_p_unsigned_char swig_types[155]
-#define SWIGTYPE_p_unsigned_long swig_types[156]
-#define SWIGTYPE_p_void swig_types[157]
-static swig_type_info *swig_types[159];
-static swig_module_info swig_module = {swig_types, 158, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[140]
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides swig_types[141]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[142]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[143]
+#define SWIGTYPE_p_svn_prop_kind swig_types[144]
+#define SWIGTYPE_p_svn_prop_t swig_types[145]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[146]
+#define SWIGTYPE_p_svn_stream_t swig_types[147]
+#define SWIGTYPE_p_svn_string_t swig_types[148]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[149]
+#define SWIGTYPE_p_svn_tristate_t swig_types[150]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[151]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[152]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[153]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[154]
+#define SWIGTYPE_p_svn_version_t swig_types[155]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[156]
+#define SWIGTYPE_p_unsigned_char swig_types[157]
+#define SWIGTYPE_p_unsigned_long swig_types[158]
+#define SWIGTYPE_p_void swig_types[159]
+static swig_type_info *swig_types[161];
+static swig_module_info swig_module = {swig_types, 160, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -3682,6 +3684,10 @@ static const svn_version_t * svn_version_invoke_func(
 
 
 #include "svn_opt.h"
+
+typedef struct {
+  int optch; const char *desc; 
+} svn_opt_subcommand_desc3_t_desc_overrides;
 
 typedef struct {
   int optch; const char *desc; 
@@ -10667,6 +10673,505 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_name_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"Os:svn_opt_subcommand_desc3_t_name_set",&obj0,&arg2)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    apr_size_t len = strlen(arg2) + 1;
+    char *copied;
+    if (arg1->name) free((char *)arg1->name);
+    copied = malloc(len);
+    memcpy(copied, arg2, len);
+    arg1->name = copied;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_name_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_name_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (char *) ((arg1)->name);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_cmd_func_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  svn_opt_subcommand_t *arg2 = (svn_opt_subcommand_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_opt_subcommand_desc3_t_cmd_func_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    int res = SWIG_ConvertFunctionPtr(obj1, (void**)(&arg2), SWIGTYPE_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t);
+    if (!SWIG_IsOK(res)) {
+      SWIG_exception_fail(SWIG_ArgError(res), "in method '" "svn_opt_subcommand_desc3_t_cmd_func_set" "', argument " "2"" of type '" "svn_opt_subcommand_t *""'"); 
+    }
+  }
+  if (arg1) (arg1)->cmd_func = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_cmd_func_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_opt_subcommand_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_cmd_func_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_opt_subcommand_t *) ((arg1)->cmd_func);
+  resultobj = SWIG_NewFunctionPtrObj((void *)(result), SWIGTYPE_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_aliases_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  char **arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_opt_subcommand_desc3_t_aliases_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (char **)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_p_char, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)3; ++ii) *(char const * *)&arg1->aliases[ii] = *((char const * *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""aliases""' of type '""char const *[3]""'");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_aliases_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  char **result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_aliases_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (char **)(char **) ((arg1)->aliases);
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_p_char,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_help_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  char **arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_opt_subcommand_desc3_t_help_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (char **)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_p_char, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)100; ++ii) *(char const * *)&arg1->help[ii] = *((char const * *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""help""' of type '""char const *[100]""'");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_help_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  char **result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_help_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (char **)(char **) ((arg1)->help);
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_p_char,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_valid_options_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  int *arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_opt_subcommand_desc3_t_valid_options_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (int *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_int, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    if (arg2) {
+      size_t ii = 0;
+      for (; ii < (size_t)50; ++ii) *(int *)&arg1->valid_options[ii] = *((int *)arg2 + ii);
+    } else {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in variable '""valid_options""' of type '""int [50]""'");
+    }
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_valid_options_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  int *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_valid_options_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (int *)(int *) ((arg1)->valid_options);
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_int,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_desc_overrides_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_opt_subcommand_desc3_t_desc_overrides *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_desc_overrides_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (svn_opt_subcommand_desc3_t_desc_overrides *)(svn_opt_subcommand_desc3_t_desc_overrides *) ((arg1)->desc_overrides);
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_svn_opt_subcommand_desc3_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_svn_opt_subcommand_desc3_t")) SWIG_fail;
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (struct svn_opt_subcommand_desc3_t *)calloc(1, sizeof(struct svn_opt_subcommand_desc3_t));
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_opt_subcommand_desc3_t,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_svn_opt_subcommand_desc3_t(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  struct svn_opt_subcommand_desc3_t *arg1 = (struct svn_opt_subcommand_desc3_t *) 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_svn_opt_subcommand_desc3_t",&obj0)) SWIG_fail;
+  {
+    arg1 = (struct svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    free((char *) arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *svn_opt_subcommand_desc3_t_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_svn_opt_subcommand_desc3_t, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  int arg2 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_opt_subcommand_desc3_t_desc_overrides_optch_set",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (int)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  if (arg1) (arg1)->optch = arg2;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  PyObject * obj0 = 0 ;
+  int result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_desc_overrides_optch_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (int) ((arg1)->optch);
+  resultobj = SWIG_From_long((long)(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  char *arg2 = (char *) 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"Os:svn_opt_subcommand_desc3_t_desc_overrides_desc_set",&obj0,&arg2)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    apr_size_t len = strlen(arg2) + 1;
+    char *copied;
+    if (arg1->desc) free((char *)arg1->desc);
+    copied = malloc(len);
+    memcpy(copied, arg2, len);
+    arg1->desc = copied;
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_get(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  PyObject * obj0 = 0 ;
+  char *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:svn_opt_subcommand_desc3_t_desc_overrides_desc_get",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  result = (char *) ((arg1)->desc);
+  resultobj = SWIG_FromCharPtr((const char *)result);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_new_svn_opt_subcommand_desc3_t_desc_overrides(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t_desc_overrides *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_svn_opt_subcommand_desc3_t_desc_overrides")) SWIG_fail;
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_opt_subcommand_desc3_t_desc_overrides *)calloc(1, sizeof(svn_opt_subcommand_desc3_t_desc_overrides));
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_svn_opt_subcommand_desc3_t_desc_overrides(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t_desc_overrides *arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *) 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_svn_opt_subcommand_desc3_t_desc_overrides",&obj0)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t_desc_overrides *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    free((char *) arg1);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *svn_opt_subcommand_desc3_t_desc_overrides_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char *)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_svn_opt_subcommand_desc3_t_desc_overrides, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_svn_opt_subcommand_desc2_t_name_set(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   struct svn_opt_subcommand_desc2_t *arg1 = (struct svn_opt_subcommand_desc2_t *) 0 ;
@@ -11474,6 +11979,36 @@ SWIGINTERN PyObject *svn_opt_subcommand_desc_t_swigregister(PyObject *SWIGUNUSED
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_svn_opt_get_canonical_subcommand3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t *arg1 = (svn_opt_subcommand_desc3_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  PyObject * obj0 = 0 ;
+  svn_opt_subcommand_desc3_t *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"Os:svn_opt_get_canonical_subcommand3",&obj0,&arg2)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_opt_subcommand_desc3_t *)svn_opt_get_canonical_subcommand3((struct svn_opt_subcommand_desc3_t const *)arg1,(char const *)arg2);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_svn_opt_subcommand_desc3_t,
+    _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_svn_opt_get_canonical_subcommand2(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   svn_opt_subcommand_desc2_t *arg1 = (svn_opt_subcommand_desc2_t *) 0 ;
@@ -11530,6 +12065,73 @@ SWIGINTERN PyObject *_wrap_svn_opt_get_canonical_subcommand(PyObject *SWIGUNUSED
     _global_py_pool, args);
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_get_option_from_code3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  int arg1 ;
+  apr_getopt_option_t *arg2 = (apr_getopt_option_t *) 0 ;
+  svn_opt_subcommand_desc3_t *arg3 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_pool_t *arg4 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  apr_getopt_option_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg4 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"OOO|O:svn_opt_get_option_from_code3",&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg1 = (int)SWIG_As_long (obj0);
+    if (SWIG_arg_fail(svn_argnum_obj0)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (apr_getopt_option_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_apr_getopt_option_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (apr_getopt_option_t *)svn_opt_get_option_from_code3(arg1,(apr_getopt_option_t const *)arg2,(struct svn_opt_subcommand_desc3_t const *)arg3,arg4);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_apr_getopt_option_t,
+    _global_py_pool, args);
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
   return NULL;
 }
 
@@ -11632,6 +12234,52 @@ SWIGINTERN PyObject *_wrap_svn_opt_get_option_from_code(PyObject *SWIGUNUSEDPARM
   }
   resultobj = svn_swig_py_new_pointer_obj((void*)(result), SWIGTYPE_p_apr_getopt_option_t,
     _global_py_pool, args);
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_takes_option4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  svn_opt_subcommand_desc3_t *arg1 = (svn_opt_subcommand_desc3_t *) 0 ;
+  int arg2 ;
+  int *arg3 = (int *) 0 ;
+  int temp3 ;
+  int res3 = SWIG_TMPOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  svn_boolean_t result;
+  
+  arg3 = &temp3;
+  if (!PyArg_ParseTuple(args,(char *)"OO:svn_opt_subcommand_takes_option4",&obj0,&obj1)) SWIG_fail;
+  {
+    arg1 = (svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg2 = (int)SWIG_As_long (obj1);
+    if (SWIG_arg_fail(svn_argnum_obj1)) {
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_boolean_t)svn_opt_subcommand_takes_option4((struct svn_opt_subcommand_desc3_t const *)arg1,arg2,(int const *)arg3);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_From_long((long)(result));
+  if (SWIG_IsTmpObj(res3)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg3)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res3) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg3), SWIGTYPE_p_int, new_flags));
+  }
   return resultobj;
 fail:
   return NULL;
@@ -11752,6 +12400,76 @@ SWIGINTERN PyObject *_wrap_svn_opt_subcommand_takes_option(PyObject *SWIGUNUSEDP
   resultobj = SWIG_From_long((long)(result));
   return resultobj;
 fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_print_generic_help3(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  svn_opt_subcommand_desc3_t *arg2 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_getopt_option_t *arg3 = (apr_getopt_option_t *) 0 ;
+  char *arg4 = (char *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  FILE *arg6 = (FILE *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj5 = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  if (!PyArg_ParseTuple(args,(char *)"sOOs|OO:svn_opt_print_generic_help3",&arg1,&obj1,&obj2,&arg4,&obj4,&obj5)) SWIG_fail;
+  {
+    arg2 = (svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (apr_getopt_option_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_apr_getopt_option_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj4) {
+    /* Verify that the user supplied a valid pool */
+    if (obj4 != Py_None && obj4 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj4);
+      SWIG_arg_fail(svn_argnum_obj4);
+      SWIG_fail;
+    }
+  }
+  if (obj5) {
+    {
+      arg6 = PyFile_AsFile(obj5);
+      if (arg6 == NULL) {
+        PyErr_SetString(PyExc_ValueError, "Must pass in a valid file object");
+        SWIG_fail;
+      }
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    svn_opt_print_generic_help3((char const *)arg1,(struct svn_opt_subcommand_desc3_t const *)arg2,(apr_getopt_option_t const *)arg3,(char const *)arg4,arg5,arg6);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_Py_Void();
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
   return NULL;
 }
 
@@ -11886,6 +12604,74 @@ SWIGINTERN PyObject *_wrap_svn_opt_format_option(PyObject *SWIGUNUSEDPARM(self),
       SWIG_fail;
     }
     resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_subcommand_help4(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  char *arg1 = (char *) 0 ;
+  svn_opt_subcommand_desc3_t *arg2 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_getopt_option_t *arg3 = (apr_getopt_option_t *) 0 ;
+  int *arg4 = (int *) 0 ;
+  apr_pool_t *arg5 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  int temp4 ;
+  int res4 = SWIG_TMPOBJ ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg5 = _global_pool;
+  arg4 = &temp4;
+  if (!PyArg_ParseTuple(args,(char *)"sOO|O:svn_opt_subcommand_help4",&arg1,&obj1,&obj2,&obj3)) SWIG_fail;
+  {
+    arg2 = (svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj1);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (apr_getopt_option_t *)svn_swig_py_must_get_ptr(obj2, SWIGTYPE_p_apr_getopt_option_t, svn_argnum_obj2);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj3) {
+    /* Verify that the user supplied a valid pool */
+    if (obj3 != Py_None && obj3 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj3);
+      SWIG_arg_fail(svn_argnum_obj3);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    svn_opt_subcommand_help4((char const *)arg1,(struct svn_opt_subcommand_desc3_t const *)arg2,(apr_getopt_option_t const *)arg3,(int const *)arg4,arg5);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsTmpObj(res4)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg4)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res4) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg4), SWIGTYPE_p_int, new_flags));
   }
   {
     Py_XDECREF(_global_py_pool);
@@ -13194,6 +13980,120 @@ SWIGINTERN PyObject *_wrap_svn_opt_parse_path(PyObject *SWIGUNUSEDPARM(self), Py
       SWIG_fail;
     }
     resultobj = SWIG_Python_AppendOutput(resultobj, s);
+  }
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return resultobj;
+fail:
+  {
+    Py_XDECREF(_global_py_pool);
+  }
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_svn_opt_print_help5(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  apr_getopt_t *arg1 = (apr_getopt_t *) 0 ;
+  char *arg2 = (char *) 0 ;
+  svn_boolean_t arg3 ;
+  svn_boolean_t arg4 ;
+  svn_boolean_t arg5 ;
+  char *arg6 = (char *) 0 ;
+  char *arg7 = (char *) 0 ;
+  svn_opt_subcommand_desc3_t *arg8 = (svn_opt_subcommand_desc3_t *) 0 ;
+  apr_getopt_option_t *arg9 = (apr_getopt_option_t *) 0 ;
+  int *arg10 = (int *) 0 ;
+  char *arg11 = (char *) 0 ;
+  apr_pool_t *arg12 = (apr_pool_t *) 0 ;
+  apr_pool_t *_global_pool = NULL ;
+  PyObject *_global_py_pool = NULL ;
+  int temp10 ;
+  int res10 = SWIG_TMPOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj2 = 0 ;
+  PyObject * obj3 = 0 ;
+  PyObject * obj4 = 0 ;
+  PyObject * obj7 = 0 ;
+  PyObject * obj8 = 0 ;
+  PyObject * obj10 = 0 ;
+  svn_error_t *result = 0 ;
+  
+  if (svn_swig_py_get_pool_arg(args, SWIGTYPE_p_apr_pool_t,
+      &_global_py_pool, &_global_pool))
+  SWIG_fail;
+  arg12 = _global_pool;
+  arg10 = &temp10;
+  if (!PyArg_ParseTuple(args,(char *)"OsOOOssOOs|O:svn_opt_print_help5",&obj0,&arg2,&obj2,&obj3,&obj4,&arg6,&arg7,&obj7,&obj8,&arg11,&obj10)) SWIG_fail;
+  {
+    arg1 = (apr_getopt_t *)svn_swig_py_must_get_ptr(obj0, SWIGTYPE_p_apr_getopt_t, svn_argnum_obj0);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg3 = (svn_boolean_t)SWIG_As_long (obj2);
+    if (SWIG_arg_fail(svn_argnum_obj2)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg4 = (svn_boolean_t)SWIG_As_long (obj3);
+    if (SWIG_arg_fail(svn_argnum_obj3)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg5 = (svn_boolean_t)SWIG_As_long (obj4);
+    if (SWIG_arg_fail(svn_argnum_obj4)) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg8 = (svn_opt_subcommand_desc3_t *)svn_swig_py_must_get_ptr(obj7, SWIGTYPE_p_svn_opt_subcommand_desc3_t, svn_argnum_obj7);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  {
+    arg9 = (apr_getopt_option_t *)svn_swig_py_must_get_ptr(obj8, SWIGTYPE_p_apr_getopt_option_t, svn_argnum_obj8);
+    if (PyErr_Occurred()) {
+      SWIG_fail;
+    }
+  }
+  if (obj10) {
+    /* Verify that the user supplied a valid pool */
+    if (obj10 != Py_None && obj10 != _global_py_pool) {
+      SWIG_Python_TypeError(SWIG_TypePrettyName(SWIGTYPE_p_apr_pool_t), obj10);
+      SWIG_arg_fail(svn_argnum_obj10);
+      SWIG_fail;
+    }
+  }
+  {
+    svn_swig_py_release_py_lock();
+    
+    result = (svn_error_t *)svn_opt_print_help5(arg1,(char const *)arg2,arg3,arg4,arg5,(char const *)arg6,(char const *)arg7,(struct svn_opt_subcommand_desc3_t const *)arg8,(apr_getopt_option_t const *)arg9,(int const *)arg10,(char const *)arg11,arg12);
+    
+    svn_swig_py_acquire_py_lock();
+    
+  }
+  {
+    if (result != NULL) {
+      if (result->apr_err != SVN_ERR_SWIG_PY_EXCEPTION_SET)
+      svn_swig_py_svn_exception(result);
+      else
+      svn_error_clear(result);
+      SWIG_fail;
+    }
+    Py_INCREF(Py_None);
+    resultobj = Py_None;
+  }
+  if (SWIG_IsTmpObj(res10)) {
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_From_int((*arg10)));
+  } else {
+    int new_flags = SWIG_IsNewObj(res10) ? (SWIG_POINTER_OWN |  0 ) :  0 ;
+    resultobj = SWIG_Python_AppendOutput(resultobj, SWIG_NewPointerObj((void*)(arg10), SWIGTYPE_p_int, new_flags));
   }
   {
     Py_XDECREF(_global_py_pool);
@@ -35362,6 +36262,27 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"svn_categorize_props", _wrap_svn_categorize_props, METH_VARARGS, (char *)"svn_categorize_props(apr_array_header_t proplist, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_prop_diffs", _wrap_svn_prop_diffs, METH_VARARGS, (char *)"svn_prop_diffs(apr_hash_t target_props, apr_hash_t source_props, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_prop_name_is_valid", _wrap_svn_prop_name_is_valid, METH_VARARGS, (char *)"svn_prop_name_is_valid(char const * prop_name) -> svn_boolean_t"},
+	 { (char *)"svn_opt_subcommand_desc3_t_name_set", _wrap_svn_opt_subcommand_desc3_t_name_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_name_set(svn_opt_subcommand_desc3_t self, char const * name)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_name_get", _wrap_svn_opt_subcommand_desc3_t_name_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_name_get(svn_opt_subcommand_desc3_t self) -> char const *"},
+	 { (char *)"svn_opt_subcommand_desc3_t_cmd_func_set", _wrap_svn_opt_subcommand_desc3_t_cmd_func_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_cmd_func_set(svn_opt_subcommand_desc3_t self, svn_opt_subcommand_t * cmd_func)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_cmd_func_get", _wrap_svn_opt_subcommand_desc3_t_cmd_func_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_cmd_func_get(svn_opt_subcommand_desc3_t self) -> svn_opt_subcommand_t *"},
+	 { (char *)"svn_opt_subcommand_desc3_t_aliases_set", _wrap_svn_opt_subcommand_desc3_t_aliases_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_aliases_set(svn_opt_subcommand_desc3_t self, char const *[3] aliases)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_aliases_get", _wrap_svn_opt_subcommand_desc3_t_aliases_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_aliases_get(svn_opt_subcommand_desc3_t self) -> char const *[3]"},
+	 { (char *)"svn_opt_subcommand_desc3_t_help_set", _wrap_svn_opt_subcommand_desc3_t_help_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_help_set(svn_opt_subcommand_desc3_t self, char const *[100] help)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_help_get", _wrap_svn_opt_subcommand_desc3_t_help_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_help_get(svn_opt_subcommand_desc3_t self) -> char const *[100]"},
+	 { (char *)"svn_opt_subcommand_desc3_t_valid_options_set", _wrap_svn_opt_subcommand_desc3_t_valid_options_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_valid_options_set(svn_opt_subcommand_desc3_t self, int [50] valid_options)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_valid_options_get", _wrap_svn_opt_subcommand_desc3_t_valid_options_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_valid_options_get(svn_opt_subcommand_desc3_t self) -> int [50]"},
+	 { (char *)"svn_opt_subcommand_desc3_t_desc_overrides_get", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_desc_overrides_get(svn_opt_subcommand_desc3_t self) -> svn_opt_subcommand_desc3_t_desc_overrides"},
+	 { (char *)"new_svn_opt_subcommand_desc3_t", _wrap_new_svn_opt_subcommand_desc3_t, METH_VARARGS, (char *)"new_svn_opt_subcommand_desc3_t() -> svn_opt_subcommand_desc3_t"},
+	 { (char *)"delete_svn_opt_subcommand_desc3_t", _wrap_delete_svn_opt_subcommand_desc3_t, METH_VARARGS, (char *)"delete_svn_opt_subcommand_desc3_t(svn_opt_subcommand_desc3_t self)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_swigregister", svn_opt_subcommand_desc3_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"svn_opt_subcommand_desc3_t_desc_overrides_optch_set", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_desc_overrides_optch_set(svn_opt_subcommand_desc3_t_desc_overrides self, int optch)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_desc_overrides_optch_get", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_optch_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_desc_overrides_optch_get(svn_opt_subcommand_desc3_t_desc_overrides self) -> int"},
+	 { (char *)"svn_opt_subcommand_desc3_t_desc_overrides_desc_set", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_desc_overrides_desc_set(svn_opt_subcommand_desc3_t_desc_overrides self, char const * desc)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_desc_overrides_desc_get", _wrap_svn_opt_subcommand_desc3_t_desc_overrides_desc_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc3_t_desc_overrides_desc_get(svn_opt_subcommand_desc3_t_desc_overrides self) -> char const *"},
+	 { (char *)"new_svn_opt_subcommand_desc3_t_desc_overrides", _wrap_new_svn_opt_subcommand_desc3_t_desc_overrides, METH_VARARGS, (char *)"new_svn_opt_subcommand_desc3_t_desc_overrides() -> svn_opt_subcommand_desc3_t_desc_overrides"},
+	 { (char *)"delete_svn_opt_subcommand_desc3_t_desc_overrides", _wrap_delete_svn_opt_subcommand_desc3_t_desc_overrides, METH_VARARGS, (char *)"delete_svn_opt_subcommand_desc3_t_desc_overrides(svn_opt_subcommand_desc3_t_desc_overrides self)"},
+	 { (char *)"svn_opt_subcommand_desc3_t_desc_overrides_swigregister", svn_opt_subcommand_desc3_t_desc_overrides_swigregister, METH_VARARGS, NULL},
 	 { (char *)"svn_opt_subcommand_desc2_t_name_set", _wrap_svn_opt_subcommand_desc2_t_name_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc2_t_name_set(svn_opt_subcommand_desc2_t self, char const * name)"},
 	 { (char *)"svn_opt_subcommand_desc2_t_name_get", _wrap_svn_opt_subcommand_desc2_t_name_get, METH_VARARGS, (char *)"svn_opt_subcommand_desc2_t_name_get(svn_opt_subcommand_desc2_t self) -> char const *"},
 	 { (char *)"svn_opt_subcommand_desc2_t_cmd_func_set", _wrap_svn_opt_subcommand_desc2_t_cmd_func_set, METH_VARARGS, (char *)"svn_opt_subcommand_desc2_t_cmd_func_set(svn_opt_subcommand_desc2_t self, svn_opt_subcommand_t * cmd_func)"},
@@ -35396,15 +36317,20 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"new_svn_opt_subcommand_desc_t", _wrap_new_svn_opt_subcommand_desc_t, METH_VARARGS, (char *)"new_svn_opt_subcommand_desc_t() -> svn_opt_subcommand_desc_t"},
 	 { (char *)"delete_svn_opt_subcommand_desc_t", _wrap_delete_svn_opt_subcommand_desc_t, METH_VARARGS, (char *)"delete_svn_opt_subcommand_desc_t(svn_opt_subcommand_desc_t self)"},
 	 { (char *)"svn_opt_subcommand_desc_t_swigregister", svn_opt_subcommand_desc_t_swigregister, METH_VARARGS, NULL},
+	 { (char *)"svn_opt_get_canonical_subcommand3", _wrap_svn_opt_get_canonical_subcommand3, METH_VARARGS, (char *)"svn_opt_get_canonical_subcommand3(svn_opt_subcommand_desc3_t table, char const * cmd_name) -> svn_opt_subcommand_desc3_t"},
 	 { (char *)"svn_opt_get_canonical_subcommand2", _wrap_svn_opt_get_canonical_subcommand2, METH_VARARGS, (char *)"svn_opt_get_canonical_subcommand2(svn_opt_subcommand_desc2_t table, char const * cmd_name) -> svn_opt_subcommand_desc2_t"},
 	 { (char *)"svn_opt_get_canonical_subcommand", _wrap_svn_opt_get_canonical_subcommand, METH_VARARGS, (char *)"svn_opt_get_canonical_subcommand(svn_opt_subcommand_desc_t table, char const * cmd_name) -> svn_opt_subcommand_desc_t"},
+	 { (char *)"svn_opt_get_option_from_code3", _wrap_svn_opt_get_option_from_code3, METH_VARARGS, (char *)"svn_opt_get_option_from_code3(int code, apr_getopt_option_t const * option_table, svn_opt_subcommand_desc3_t command, apr_pool_t pool) -> apr_getopt_option_t const *"},
 	 { (char *)"svn_opt_get_option_from_code2", _wrap_svn_opt_get_option_from_code2, METH_VARARGS, (char *)"svn_opt_get_option_from_code2(int code, apr_getopt_option_t const * option_table, svn_opt_subcommand_desc2_t command, apr_pool_t pool) -> apr_getopt_option_t const *"},
 	 { (char *)"svn_opt_get_option_from_code", _wrap_svn_opt_get_option_from_code, METH_VARARGS, (char *)"svn_opt_get_option_from_code(int code, apr_getopt_option_t const * option_table) -> apr_getopt_option_t const *"},
+	 { (char *)"svn_opt_subcommand_takes_option4", _wrap_svn_opt_subcommand_takes_option4, METH_VARARGS, (char *)"svn_opt_subcommand_takes_option4(svn_opt_subcommand_desc3_t command, int option_code) -> svn_boolean_t"},
 	 { (char *)"svn_opt_subcommand_takes_option3", _wrap_svn_opt_subcommand_takes_option3, METH_VARARGS, (char *)"svn_opt_subcommand_takes_option3(svn_opt_subcommand_desc2_t command, int option_code) -> svn_boolean_t"},
 	 { (char *)"svn_opt_subcommand_takes_option2", _wrap_svn_opt_subcommand_takes_option2, METH_VARARGS, (char *)"svn_opt_subcommand_takes_option2(svn_opt_subcommand_desc2_t command, int option_code) -> svn_boolean_t"},
 	 { (char *)"svn_opt_subcommand_takes_option", _wrap_svn_opt_subcommand_takes_option, METH_VARARGS, (char *)"svn_opt_subcommand_takes_option(svn_opt_subcommand_desc_t command, int option_code) -> svn_boolean_t"},
+	 { (char *)"svn_opt_print_generic_help3", _wrap_svn_opt_print_generic_help3, METH_VARARGS, (char *)"svn_opt_print_generic_help3(char const * header, svn_opt_subcommand_desc3_t cmd_table, apr_getopt_option_t const * opt_table, char const * footer, apr_pool_t pool, FILE * stream)"},
 	 { (char *)"svn_opt_print_generic_help2", _wrap_svn_opt_print_generic_help2, METH_VARARGS, (char *)"svn_opt_print_generic_help2(char const * header, svn_opt_subcommand_desc2_t cmd_table, apr_getopt_option_t const * opt_table, char const * footer, apr_pool_t pool, FILE * stream)"},
 	 { (char *)"svn_opt_format_option", _wrap_svn_opt_format_option, METH_VARARGS, (char *)"svn_opt_format_option(apr_getopt_option_t const * opt, svn_boolean_t doc, apr_pool_t pool)"},
+	 { (char *)"svn_opt_subcommand_help4", _wrap_svn_opt_subcommand_help4, METH_VARARGS, (char *)"svn_opt_subcommand_help4(char const * subcommand, svn_opt_subcommand_desc3_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"},
 	 { (char *)"svn_opt_subcommand_help3", _wrap_svn_opt_subcommand_help3, METH_VARARGS, (char *)"svn_opt_subcommand_help3(char const * subcommand, svn_opt_subcommand_desc2_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"},
 	 { (char *)"svn_opt_subcommand_help2", _wrap_svn_opt_subcommand_help2, METH_VARARGS, (char *)"svn_opt_subcommand_help2(char const * subcommand, svn_opt_subcommand_desc2_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"},
 	 { (char *)"svn_opt_subcommand_help", _wrap_svn_opt_subcommand_help, METH_VARARGS, (char *)"svn_opt_subcommand_help(char const * subcommand, svn_opt_subcommand_desc_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"},
@@ -35439,6 +36365,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"svn_opt_parse_num_args", _wrap_svn_opt_parse_num_args, METH_VARARGS, (char *)"svn_opt_parse_num_args(apr_getopt_t * os, int num_args, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_opt_parse_all_args", _wrap_svn_opt_parse_all_args, METH_VARARGS, (char *)"svn_opt_parse_all_args(apr_getopt_t * os, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_opt_parse_path", _wrap_svn_opt_parse_path, METH_VARARGS, (char *)"svn_opt_parse_path(svn_opt_revision_t rev, char const * path, apr_pool_t pool) -> svn_error_t"},
+	 { (char *)"svn_opt_print_help5", _wrap_svn_opt_print_help5, METH_VARARGS, (char *)"svn_opt_print_help5(apr_getopt_t * os, char const * pgm_name, svn_boolean_t print_version, svn_boolean_t quiet, svn_boolean_t verbose, char const * version_footer, char const * header, svn_opt_subcommand_desc3_t cmd_table, apr_getopt_option_t const * option_table, char const * footer, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_opt_print_help4", _wrap_svn_opt_print_help4, METH_VARARGS, (char *)"svn_opt_print_help4(apr_getopt_t * os, char const * pgm_name, svn_boolean_t print_version, svn_boolean_t quiet, svn_boolean_t verbose, char const * version_footer, char const * header, svn_opt_subcommand_desc2_t cmd_table, apr_getopt_option_t const * option_table, char const * footer, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_opt_print_help3", _wrap_svn_opt_print_help3, METH_VARARGS, (char *)"svn_opt_print_help3(apr_getopt_t * os, char const * pgm_name, svn_boolean_t print_version, svn_boolean_t quiet, char const * version_footer, char const * header, svn_opt_subcommand_desc2_t cmd_table, apr_getopt_option_t const * option_table, char const * footer, apr_pool_t pool) -> svn_error_t"},
 	 { (char *)"svn_opt_print_help2", _wrap_svn_opt_print_help2, METH_VARARGS, (char *)"svn_opt_print_help2(apr_getopt_t * os, char const * pgm_name, svn_boolean_t print_version, svn_boolean_t quiet, char const * version_footer, char const * header, svn_opt_subcommand_desc2_t cmd_table, apr_getopt_option_t const * option_table, char const * footer, apr_pool_t pool) -> svn_error_t"},
@@ -36028,6 +36955,8 @@ static swig_type_info _swigt__p_svn_opt_revision_t = {"_p_svn_opt_revision_t", "
 static swig_type_info _swigt__p_svn_opt_revision_value_t = {"_p_svn_opt_revision_value_t", "union svn_opt_revision_value_t *|svn_opt_revision_value_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t = {"_p_svn_opt_subcommand_desc2_t", "struct svn_opt_subcommand_desc2_t *|svn_opt_subcommand_desc2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t_desc_overrides = {"_p_svn_opt_subcommand_desc2_t_desc_overrides", "svn_opt_subcommand_desc2_t_desc_overrides *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t = {"_p_svn_opt_subcommand_desc3_t", "struct svn_opt_subcommand_desc3_t *|svn_opt_subcommand_desc3_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t_desc_overrides = {"_p_svn_opt_subcommand_desc3_t_desc_overrides", "svn_opt_subcommand_desc3_t_desc_overrides *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc_t = {"_p_svn_opt_subcommand_desc_t", "struct svn_opt_subcommand_desc_t *|svn_opt_subcommand_desc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_prop_inherited_item_t = {"_p_svn_prop_inherited_item_t", "struct svn_prop_inherited_item_t *|svn_prop_inherited_item_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_prop_kind = {"_p_svn_prop_kind", "svn_prop_kind_t *|enum svn_prop_kind *", 0, 0, (void*)0, 0};
@@ -36188,6 +37117,8 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_opt_revision_value_t,
   &_swigt__p_svn_opt_subcommand_desc2_t,
   &_swigt__p_svn_opt_subcommand_desc2_t_desc_overrides,
+  &_swigt__p_svn_opt_subcommand_desc3_t,
+  &_swigt__p_svn_opt_subcommand_desc3_t_desc_overrides,
   &_swigt__p_svn_opt_subcommand_desc_t,
   &_swigt__p_svn_prop_inherited_item_t,
   &_swigt__p_svn_prop_kind,
@@ -36348,6 +37279,8 @@ static swig_cast_info _swigc__p_svn_opt_revision_t[] = {  {&_swigt__p_svn_opt_re
 static swig_cast_info _swigc__p_svn_opt_revision_value_t[] = {  {&_swigt__p_svn_opt_revision_value_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t_desc_overrides[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t_desc_overrides, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t_desc_overrides[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t_desc_overrides, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc_t[] = {  {&_swigt__p_svn_opt_subcommand_desc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_prop_inherited_item_t[] = {  {&_swigt__p_svn_prop_inherited_item_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_prop_kind[] = {  {&_swigt__p_svn_prop_kind, 0, 0, 0},{0, 0, 0, 0}};
@@ -36508,6 +37441,8 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_opt_revision_value_t,
   _swigc__p_svn_opt_subcommand_desc2_t,
   _swigc__p_svn_opt_subcommand_desc2_t_desc_overrides,
+  _swigc__p_svn_opt_subcommand_desc3_t,
+  _swigc__p_svn_opt_subcommand_desc3_t_desc_overrides,
   _swigc__p_svn_opt_subcommand_desc_t,
   _swigc__p_svn_prop_inherited_item_t,
   _swigc__p_svn_prop_kind,
@@ -37607,16 +38542,16 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "SVN__STREAM_CHUNK_SIZE",SWIG_From_long((long)(16384)));
   SWIG_Python_SetConstant(d, "SVN_ALLOCATOR_RECOMMENDED_MAX_FREE",SWIG_From_long((long)((4096*1024))));
   SWIG_Python_SetConstant(d, "SVN_VER_MAJOR",SWIG_From_long((long)(1)));
-  SWIG_Python_SetConstant(d, "SVN_VER_MINOR",SWIG_From_long((long)(10)));
-  SWIG_Python_SetConstant(d, "SVN_VER_PATCH",SWIG_From_long((long)(4)));
-  SWIG_Python_SetConstant(d, "SVN_VER_MICRO",SWIG_From_long((long)(4)));
+  SWIG_Python_SetConstant(d, "SVN_VER_MINOR",SWIG_From_long((long)(11)));
+  SWIG_Python_SetConstant(d, "SVN_VER_PATCH",SWIG_From_long((long)(0)));
+  SWIG_Python_SetConstant(d, "SVN_VER_MICRO",SWIG_From_long((long)(0)));
   SWIG_Python_SetConstant(d, "SVN_VER_LIBRARY",SWIG_From_long((long)(1)));
-  SWIG_Python_SetConstant(d, "SVN_VER_TAG",SWIG_FromCharPtr(" (r1850624)"));
+  SWIG_Python_SetConstant(d, "SVN_VER_TAG",SWIG_FromCharPtr(" (r1845130)"));
   SWIG_Python_SetConstant(d, "SVN_VER_NUMTAG",SWIG_FromCharPtr(""));
-  SWIG_Python_SetConstant(d, "SVN_VER_REVISION",SWIG_From_long((long)(1850624)));
-  SWIG_Python_SetConstant(d, "SVN_VER_NUM",SWIG_FromCharPtr("1.10.4"));
-  SWIG_Python_SetConstant(d, "SVN_VER_NUMBER",SWIG_FromCharPtr("1.10.4"));
-  SWIG_Python_SetConstant(d, "SVN_VERSION",SWIG_FromCharPtr("1.10.4 (r1850624)"));
+  SWIG_Python_SetConstant(d, "SVN_VER_REVISION",SWIG_From_long((long)(1845130)));
+  SWIG_Python_SetConstant(d, "SVN_VER_NUM",SWIG_FromCharPtr("1.11.0"));
+  SWIG_Python_SetConstant(d, "SVN_VER_NUMBER",SWIG_FromCharPtr("1.11.0"));
+  SWIG_Python_SetConstant(d, "SVN_VERSION",SWIG_FromCharPtr("1.11.0 (r1845130)"));
   SWIG_Python_SetConstant(d, "svn_prop_entry_kind",SWIG_From_long((long)(svn_prop_entry_kind)));
   SWIG_Python_SetConstant(d, "svn_prop_wc_kind",SWIG_From_long((long)(svn_prop_wc_kind)));
   SWIG_Python_SetConstant(d, "svn_prop_regular_kind",SWIG_From_long((long)(svn_prop_regular_kind)));
@@ -37665,6 +38600,7 @@ SWIG_init(void) {
   SWIG_Python_SetConstant(d, "SVN_PROP_REVISION_PREFIX",SWIG_FromCharPtr("svn:revision-"));
   SWIG_Python_SetConstant(d, "SVN_OPT_MAX_ALIASES",SWIG_From_long((long)(3)));
   SWIG_Python_SetConstant(d, "SVN_OPT_MAX_OPTIONS",SWIG_From_long((long)(50)));
+  SWIG_Python_SetConstant(d, "SVN_OPT_MAX_PARAGRAPHS",SWIG_From_long((long)(100)));
   SWIG_Python_SetConstant(d, "SVN_OPT_FIRST_LONGOPT_ID",SWIG_From_long((long)(256)));
   SWIG_Python_SetConstant(d, "svn_opt_revision_unspecified",SWIG_From_long((long)(svn_opt_revision_unspecified)));
   SWIG_Python_SetConstant(d, "svn_opt_revision_number",SWIG_From_long((long)(svn_opt_revision_number)));

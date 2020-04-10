@@ -747,6 +747,10 @@ def svn_client_switch(*args):
     """svn_client_switch(char const * path, char const * url, svn_opt_revision_t revision, svn_boolean_t recurse, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_switch(*args)
 
+def svn_client__layout_list(*args):
+    """svn_client__layout_list(char const * local_abspath, svn_client__layout_func_t layout, void * layout_baton, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__layout_list(*args)
+
 def svn_client_add5(*args):
     """svn_client_add5(char const * path, svn_depth_t depth, svn_boolean_t force, svn_boolean_t no_ignore, svn_boolean_t no_autoprops, svn_boolean_t add_parents, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client_add5(*args)
@@ -1040,6 +1044,10 @@ def svn_client_blame(*args):
     """svn_client_blame(char const * path_or_url, svn_opt_revision_t start, svn_opt_revision_t end, svn_client_blame_receiver_t receiver, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_blame(*args)
 
+def svn_client_diff7(*args):
+    """svn_client_diff7(apr_array_header_t diff_options, char const * path_or_url1, svn_opt_revision_t revision1, char const * path_or_url2, svn_opt_revision_t revision2, char const * relative_to_dir, svn_depth_t depth, svn_boolean_t ignore_ancestry, svn_boolean_t no_diff_added, svn_boolean_t no_diff_deleted, svn_boolean_t show_copies_as_adds, svn_boolean_t ignore_content_type, svn_boolean_t ignore_properties, svn_boolean_t properties_only, svn_boolean_t use_git_diff_format, svn_boolean_t pretty_print_mergeinfo, char const * header_encoding, svn_stream_t * outstream, svn_stream_t * errstream, apr_array_header_t changelists, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
+    return _client.svn_client_diff7(*args)
+
 def svn_client_diff6(*args):
     """svn_client_diff6(apr_array_header_t diff_options, char const * path_or_url1, svn_opt_revision_t revision1, char const * path_or_url2, svn_opt_revision_t revision2, char const * relative_to_dir, svn_depth_t depth, svn_boolean_t ignore_ancestry, svn_boolean_t no_diff_added, svn_boolean_t no_diff_deleted, svn_boolean_t show_copies_as_adds, svn_boolean_t ignore_content_type, svn_boolean_t ignore_properties, svn_boolean_t properties_only, svn_boolean_t use_git_diff_format, char const * header_encoding, svn_stream_t * outstream, svn_stream_t * errstream, apr_array_header_t changelists, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_diff6(*args)
@@ -1063,6 +1071,10 @@ def svn_client_diff2(*args):
 def svn_client_diff(*args):
     """svn_client_diff(apr_array_header_t diff_options, char const * path1, svn_opt_revision_t revision1, char const * path2, svn_opt_revision_t revision2, svn_boolean_t recurse, svn_boolean_t ignore_ancestry, svn_boolean_t no_diff_deleted, apr_file_t outfile, apr_file_t errfile, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_diff(*args)
+
+def svn_client_diff_peg7(*args):
+    """svn_client_diff_peg7(apr_array_header_t diff_options, char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t start_revision, svn_opt_revision_t end_revision, char const * relative_to_dir, svn_depth_t depth, svn_boolean_t ignore_ancestry, svn_boolean_t no_diff_added, svn_boolean_t no_diff_deleted, svn_boolean_t show_copies_as_adds, svn_boolean_t ignore_content_type, svn_boolean_t ignore_properties, svn_boolean_t properties_only, svn_boolean_t use_git_diff_format, svn_boolean_t pretty_print_mergeinfo, char const * header_encoding, svn_stream_t * outstream, svn_stream_t * errstream, apr_array_header_t changelists, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
+    return _client.svn_client_diff_peg7(*args)
 
 def svn_client_diff_peg6(*args):
     """svn_client_diff_peg6(apr_array_header_t diff_options, char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t start_revision, svn_opt_revision_t end_revision, char const * relative_to_dir, svn_depth_t depth, svn_boolean_t ignore_ancestry, svn_boolean_t no_diff_added, svn_boolean_t no_diff_deleted, svn_boolean_t show_copies_as_adds, svn_boolean_t ignore_content_type, svn_boolean_t ignore_properties, svn_boolean_t properties_only, svn_boolean_t use_git_diff_format, char const * header_encoding, svn_stream_t * outstream, svn_stream_t * errstream, apr_array_header_t changelists, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
@@ -1200,6 +1212,10 @@ def svn_client_relocate(*args):
     """svn_client_relocate(char const * dir, char const * from_prefix, char const * to_prefix, svn_boolean_t recurse, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_relocate(*args)
 
+def svn_client_revert4(*args):
+    """svn_client_revert4(apr_array_header_t paths, svn_depth_t depth, apr_array_header_t changelists, svn_boolean_t clear_changelists, svn_boolean_t metadata_only, svn_boolean_t added_keep_local, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client_revert4(*args)
+
 def svn_client_revert3(*args):
     """svn_client_revert3(apr_array_header_t paths, svn_depth_t depth, apr_array_header_t changelists, svn_boolean_t clear_changelists, svn_boolean_t metadata_only, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_revert3(*args)
@@ -1234,22 +1250,41 @@ svn_client_conflict_option_incoming_delete_accept = _client.svn_client_conflict_
 svn_client_conflict_option_incoming_move_file_text_merge = _client.svn_client_conflict_option_incoming_move_file_text_merge
 svn_client_conflict_option_incoming_move_dir_merge = _client.svn_client_conflict_option_incoming_move_dir_merge
 svn_client_conflict_option_local_move_file_text_merge = _client.svn_client_conflict_option_local_move_file_text_merge
+svn_client_conflict_option_local_move_dir_merge = _client.svn_client_conflict_option_local_move_dir_merge
+svn_client_conflict_option_sibling_move_file_text_merge = _client.svn_client_conflict_option_sibling_move_file_text_merge
+svn_client_conflict_option_sibling_move_dir_merge = _client.svn_client_conflict_option_sibling_move_dir_merge
 
 def svn_client_conflict_option_set_merged_propval(option, merged_propval):
     """svn_client_conflict_option_set_merged_propval(svn_client_conflict_option_t * option, svn_string_t const * merged_propval)"""
     return _client.svn_client_conflict_option_set_merged_propval(option, merged_propval)
 
+def svn_client_conflict_option_get_moved_to_repos_relpath_candidates2(*args):
+    """svn_client_conflict_option_get_moved_to_repos_relpath_candidates2(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client_conflict_option_get_moved_to_repos_relpath_candidates2(*args)
+
 def svn_client_conflict_option_get_moved_to_repos_relpath_candidates(*args):
     """svn_client_conflict_option_get_moved_to_repos_relpath_candidates(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client_conflict_option_get_moved_to_repos_relpath_candidates(*args)
+
+def svn_client_conflict_option_set_moved_to_repos_relpath2(*args):
+    """svn_client_conflict_option_set_moved_to_repos_relpath2(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client_conflict_option_set_moved_to_repos_relpath2(*args)
 
 def svn_client_conflict_option_set_moved_to_repos_relpath(*args):
     """svn_client_conflict_option_set_moved_to_repos_relpath(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client_conflict_option_set_moved_to_repos_relpath(*args)
 
+def svn_client_conflict_option_get_moved_to_abspath_candidates2(*args):
+    """svn_client_conflict_option_get_moved_to_abspath_candidates2(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client_conflict_option_get_moved_to_abspath_candidates2(*args)
+
 def svn_client_conflict_option_get_moved_to_abspath_candidates(*args):
     """svn_client_conflict_option_get_moved_to_abspath_candidates(svn_client_conflict_option_t * option, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client_conflict_option_get_moved_to_abspath_candidates(*args)
+
+def svn_client_conflict_option_set_moved_to_abspath2(*args):
+    """svn_client_conflict_option_set_moved_to_abspath2(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client_conflict_option_set_moved_to_abspath2(*args)
 
 def svn_client_conflict_option_set_moved_to_abspath(*args):
     """svn_client_conflict_option_set_moved_to_abspath(svn_client_conflict_option_t * option, int preferred_move_target_idx, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
@@ -1659,34 +1694,28 @@ def svn_client_cat2(*args):
 def svn_client_cat(*args):
     """svn_client_cat(svn_stream_t * out, char const * path_or_url, svn_opt_revision_t revision, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_cat(*args)
-
-def svn_client_shelve(*args):
-    """svn_client_shelve(char const * name, apr_array_header_t paths, svn_depth_t depth, apr_array_header_t changelists, svn_boolean_t keep_local, svn_boolean_t dry_run, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
-    return _client.svn_client_shelve(*args)
-
-def svn_client_unshelve(*args):
-    """svn_client_unshelve(char const * name, char const * local_abspath, svn_boolean_t keep, svn_boolean_t dry_run, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
-    return _client.svn_client_unshelve(*args)
-
-def svn_client_shelves_delete(*args):
-    """svn_client_shelves_delete(char const * name, char const * local_abspath, svn_boolean_t dry_run, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
-    return _client.svn_client_shelves_delete(*args)
-class svn_client_shelved_patch_info_t:
-    """Proxy of C svn_client_shelved_patch_info_t struct."""
+class svn_client__shelf_t:
+    """Proxy of C svn_client__shelf_t struct."""
 
     __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_shelved_patch_info_t, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client__shelf_t, name, value)
     __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_shelved_patch_info_t, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client__shelf_t, name)
     __repr__ = _swig_repr
-    __swig_setmethods__["message"] = _client.svn_client_shelved_patch_info_t_message_set
-    __swig_getmethods__["message"] = _client.svn_client_shelved_patch_info_t_message_get
-    __swig_setmethods__["patch_path"] = _client.svn_client_shelved_patch_info_t_patch_path_set
-    __swig_getmethods__["patch_path"] = _client.svn_client_shelved_patch_info_t_patch_path_get
-    __swig_setmethods__["dirent"] = _client.svn_client_shelved_patch_info_t_dirent_set
-    __swig_getmethods__["dirent"] = _client.svn_client_shelved_patch_info_t_dirent_get
-    __swig_setmethods__["mtime"] = _client.svn_client_shelved_patch_info_t_mtime_set
-    __swig_getmethods__["mtime"] = _client.svn_client_shelved_patch_info_t_mtime_get
+    __swig_setmethods__["name"] = _client.svn_client__shelf_t_name_set
+    __swig_getmethods__["name"] = _client.svn_client__shelf_t_name_get
+    __swig_setmethods__["max_version"] = _client.svn_client__shelf_t_max_version_set
+    __swig_getmethods__["max_version"] = _client.svn_client__shelf_t_max_version_get
+    __swig_setmethods__["wc_root_abspath"] = _client.svn_client__shelf_t_wc_root_abspath_set
+    __swig_getmethods__["wc_root_abspath"] = _client.svn_client__shelf_t_wc_root_abspath_get
+    __swig_setmethods__["shelves_dir"] = _client.svn_client__shelf_t_shelves_dir_set
+    __swig_getmethods__["shelves_dir"] = _client.svn_client__shelf_t_shelves_dir_get
+    __swig_setmethods__["revprops"] = _client.svn_client__shelf_t_revprops_set
+    __swig_getmethods__["revprops"] = _client.svn_client__shelf_t_revprops_get
+    __swig_setmethods__["ctx"] = _client.svn_client__shelf_t_ctx_set
+    __swig_getmethods__["ctx"] = _client.svn_client__shelf_t_ctx_get
+    __swig_setmethods__["pool"] = _client.svn_client__shelf_t_pool_set
+    __swig_getmethods__["pool"] = _client.svn_client__shelf_t_pool_get
     def set_parent_pool(self, parent_pool=None):
       """Create a new proxy object for TYPE"""
       import libsvn.core, weakref
@@ -1731,33 +1760,237 @@ class svn_client_shelved_patch_info_t:
 
 
     def __init__(self):
-        """__init__(svn_client_shelved_patch_info_t self) -> svn_client_shelved_patch_info_t"""
-        this = _client.new_svn_client_shelved_patch_info_t()
+        """__init__(svn_client__shelf_t self) -> svn_client__shelf_t"""
+        this = _client.new_svn_client__shelf_t()
         try:
             self.this.append(this)
         except __builtin__.Exception:
             self.this = this
-    __swig_destroy__ = _client.delete_svn_client_shelved_patch_info_t
+    __swig_destroy__ = _client.delete_svn_client__shelf_t
     __del__ = lambda self: None
-svn_client_shelved_patch_info_t_swigregister = _client.svn_client_shelved_patch_info_t_swigregister
-svn_client_shelved_patch_info_t_swigregister(svn_client_shelved_patch_info_t)
+svn_client__shelf_t_swigregister = _client.svn_client__shelf_t_swigregister
+svn_client__shelf_t_swigregister(svn_client__shelf_t)
+
+class svn_client__shelf_version_t:
+    """Proxy of C svn_client__shelf_version_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client__shelf_version_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client__shelf_version_t, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["shelf"] = _client.svn_client__shelf_version_t_shelf_set
+    __swig_getmethods__["shelf"] = _client.svn_client__shelf_version_t_shelf_get
+    __swig_setmethods__["mtime"] = _client.svn_client__shelf_version_t_mtime_set
+    __swig_getmethods__["mtime"] = _client.svn_client__shelf_version_t_mtime_get
+    __swig_setmethods__["files_dir_abspath"] = _client.svn_client__shelf_version_t_files_dir_abspath_set
+    __swig_getmethods__["files_dir_abspath"] = _client.svn_client__shelf_version_t_files_dir_abspath_get
+    __swig_setmethods__["version_number"] = _client.svn_client__shelf_version_t_version_number_set
+    __swig_getmethods__["version_number"] = _client.svn_client__shelf_version_t_version_number_get
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
 
 
-def svn_client_shelves_list(*args):
-    """svn_client_shelves_list(char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
-    return _client.svn_client_shelves_list(*args)
+    def __init__(self):
+        """__init__(svn_client__shelf_version_t self) -> svn_client__shelf_version_t"""
+        this = _client.new_svn_client__shelf_version_t()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _client.delete_svn_client__shelf_version_t
+    __del__ = lambda self: None
+svn_client__shelf_version_t_swigregister = _client.svn_client__shelf_version_t_swigregister
+svn_client__shelf_version_t_swigregister(svn_client__shelf_version_t)
 
-def svn_client_shelves_any(*args):
-    """svn_client_shelves_any(char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
-    return _client.svn_client_shelves_any(*args)
 
-def svn_client_shelf_get_paths(*args):
-    """svn_client_shelf_get_paths(char const * name, char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
-    return _client.svn_client_shelf_get_paths(*args)
+def svn_client__shelf_open_or_create(*args):
+    """svn_client__shelf_open_or_create(char const * name, char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_open_or_create(*args)
 
-def svn_client_shelf_has_changes(*args):
-    """svn_client_shelf_has_changes(char const * name, char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
-    return _client.svn_client_shelf_has_changes(*args)
+def svn_client__shelf_open_existing(*args):
+    """svn_client__shelf_open_existing(char const * name, char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_open_existing(*args)
+
+def svn_client__shelf_close(*args):
+    """svn_client__shelf_close(svn_client__shelf_t shelf, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_close(*args)
+
+def svn_client__shelf_delete(*args):
+    """svn_client__shelf_delete(char const * name, char const * local_abspath, svn_boolean_t dry_run, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_delete(*args)
+
+def svn_client__shelf_save_new_version3(*args):
+    """svn_client__shelf_save_new_version3(svn_client__shelf_t shelf, apr_array_header_t paths, svn_depth_t depth, apr_array_header_t changelists, svn_client_status_func_t shelved_func, void * shelved_baton, svn_client_status_func_t not_shelved_func, void * not_shelved_baton, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_save_new_version3(*args)
+
+def svn_client__shelf_delete_newer_versions(*args):
+    """svn_client__shelf_delete_newer_versions(svn_client__shelf_t shelf, svn_client__shelf_version_t shelf_version, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_delete_newer_versions(*args)
+
+def svn_client__shelf_version_open(*args):
+    """svn_client__shelf_version_open(svn_client__shelf_t shelf, int version_number, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_version_open(*args)
+
+def svn_client__shelf_get_newest_version(*args):
+    """svn_client__shelf_get_newest_version(svn_client__shelf_t shelf, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_get_newest_version(*args)
+
+def svn_client__shelf_get_all_versions(*args):
+    """svn_client__shelf_get_all_versions(svn_client__shelf_t shelf, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_get_all_versions(*args)
+
+def svn_client__shelf_apply(*args):
+    """svn_client__shelf_apply(svn_client__shelf_version_t shelf_version, svn_boolean_t dry_run, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_apply(*args)
+
+def svn_client__shelf_test_apply_file(*args):
+    """svn_client__shelf_test_apply_file(svn_client__shelf_version_t shelf_version, char const * file_relpath, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_test_apply_file(*args)
+
+def svn_client__shelf_unapply(*args):
+    """svn_client__shelf_unapply(svn_client__shelf_version_t shelf_version, svn_boolean_t dry_run, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_unapply(*args)
+
+def svn_client__shelf_paths_changed(*args):
+    """svn_client__shelf_paths_changed(svn_client__shelf_version_t shelf_version, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_paths_changed(*args)
+
+def svn_client__shelf_revprop_set(*args):
+    """svn_client__shelf_revprop_set(svn_client__shelf_t shelf, char const * prop_name, svn_string_t const * prop_val, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_revprop_set(*args)
+
+def svn_client__shelf_revprop_set_all(*args):
+    """svn_client__shelf_revprop_set_all(svn_client__shelf_t shelf, apr_hash_t revprop_table, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_revprop_set_all(*args)
+
+def svn_client__shelf_revprop_get(*args):
+    """svn_client__shelf_revprop_get(svn_client__shelf_t shelf, char const * prop_name, apr_pool_t result_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_revprop_get(*args)
+
+def svn_client__shelf_revprop_list(*args):
+    """svn_client__shelf_revprop_list(svn_client__shelf_t shelf, apr_pool_t result_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_revprop_list(*args)
+
+def svn_client__shelf_set_log_message(*args):
+    """svn_client__shelf_set_log_message(svn_client__shelf_t shelf, char const * log_message, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_set_log_message(*args)
+
+def svn_client__shelf_get_log_message(*args):
+    """svn_client__shelf_get_log_message(svn_client__shelf_t shelf, apr_pool_t result_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_get_log_message(*args)
+class svn_client__shelf_info_t:
+    """Proxy of C svn_client__shelf_info_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client__shelf_info_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client__shelf_info_t, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["mtime"] = _client.svn_client__shelf_info_t_mtime_set
+    __swig_getmethods__["mtime"] = _client.svn_client__shelf_info_t_mtime_get
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+
+    def __init__(self):
+        """__init__(svn_client__shelf_info_t self) -> svn_client__shelf_info_t"""
+        this = _client.new_svn_client__shelf_info_t()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _client.delete_svn_client__shelf_info_t
+    __del__ = lambda self: None
+svn_client__shelf_info_t_swigregister = _client.svn_client__shelf_info_t_swigregister
+svn_client__shelf_info_t_swigregister(svn_client__shelf_info_t)
+
+
+def svn_client__shelf_list(*args):
+    """svn_client__shelf_list(char const * local_abspath, svn_client_ctx_t ctx, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_list(*args)
+
+def svn_client__shelf_version_status_walk(*args):
+    """svn_client__shelf_version_status_walk(svn_client__shelf_version_t shelf_version, char const * wc_relpath, svn_wc_status_func4_t walk_func, void * walk_baton, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_version_status_walk(*args)
 
 def svn_client_add_to_changelist(*args):
     """svn_client_add_to_changelist(apr_array_header_t paths, char const * changelist, svn_depth_t depth, apr_array_header_t changelists, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
@@ -2200,6 +2433,10 @@ def svn_client_invoke_blame_receiver(*args):
 def svn_client_invoke_diff_summarize_func(*args):
     """svn_client_invoke_diff_summarize_func(svn_client_diff_summarize_func_t _obj, svn_client_diff_summarize_t diff, void * baton, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_invoke_diff_summarize_func(*args)
+
+def svn_client_invoke__layout_func(*args):
+    """svn_client_invoke__layout_func(svn_client__layout_func_t _obj, void * layout_baton, char const * local_abspath, char const * repos_root_url, svn_boolean_t not_present, svn_boolean_t url_changed, char const * url, svn_boolean_t revision_changed, svn_revnum_t revision, svn_boolean_t depth_changed, svn_depth_t depth, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client_invoke__layout_func(*args)
 
 def svn_client_invoke_import_filter_func(*args):
     """svn_client_invoke_import_filter_func(svn_client_import_filter_func_t _obj, void * baton, char const * local_abspath, svn_io_dirent2_t dirent, apr_pool_t scratch_pool) -> svn_error_t"""
@@ -2771,6 +3008,66 @@ class svn_client_diff_summarize_func_t:
 
 svn_client_diff_summarize_func_t_swigregister = _client.svn_client_diff_summarize_func_t_swigregister
 svn_client_diff_summarize_func_t_swigregister(svn_client_diff_summarize_func_t)
+
+class svn_client__layout_func_t:
+    """Proxy of C svn_client__layout_func_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client__layout_func_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client__layout_func_t, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+
+    def __call__(self, *args):
+      return svn_client_invoke__layout_func(self, *args)
+
+svn_client__layout_func_t_swigregister = _client.svn_client__layout_func_t_swigregister
+svn_client__layout_func_t_swigregister(svn_client__layout_func_t)
 
 class svn_client_import_filter_func_t:
     """Proxy of C svn_client_import_filter_func_t struct."""

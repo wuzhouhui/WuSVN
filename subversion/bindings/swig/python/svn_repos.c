@@ -3106,38 +3106,39 @@ SWIG_Python_NonDynamicSetAttr(PyObject *obj, PyObject *name, PyObject *value) {
 #define SWIGTYPE_p_svn_opt_revision_t swig_types[120]
 #define SWIGTYPE_p_svn_opt_revision_value_t swig_types[121]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[122]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[123]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[124]
-#define SWIGTYPE_p_svn_prop_kind swig_types[125]
-#define SWIGTYPE_p_svn_repos_authz_access_t swig_types[126]
-#define SWIGTYPE_p_svn_repos_log_entry_t swig_types[127]
-#define SWIGTYPE_p_svn_repos_node_t swig_types[128]
-#define SWIGTYPE_p_svn_repos_notify_action_t swig_types[129]
-#define SWIGTYPE_p_svn_repos_notify_t swig_types[130]
-#define SWIGTYPE_p_svn_repos_notify_warning_t swig_types[131]
-#define SWIGTYPE_p_svn_repos_parse_fns2_t swig_types[132]
-#define SWIGTYPE_p_svn_repos_parse_fns3_t swig_types[133]
-#define SWIGTYPE_p_svn_repos_parse_fns_t swig_types[134]
-#define SWIGTYPE_p_svn_repos_revision_access_level_t swig_types[135]
-#define SWIGTYPE_p_svn_repos_t swig_types[136]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[137]
-#define SWIGTYPE_p_svn_stream_t swig_types[138]
-#define SWIGTYPE_p_svn_string_t swig_types[139]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[140]
-#define SWIGTYPE_p_svn_tristate_t swig_types[141]
-#define SWIGTYPE_p_svn_txdelta_op_t swig_types[142]
-#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[143]
-#define SWIGTYPE_p_svn_txdelta_window_t swig_types[144]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[145]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[146]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[147]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[148]
-#define SWIGTYPE_p_svn_version_t swig_types[149]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[150]
-#define SWIGTYPE_p_unsigned_long swig_types[151]
-#define SWIGTYPE_p_void swig_types[152]
-static swig_type_info *swig_types[154];
-static swig_module_info swig_module = {swig_types, 153, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[123]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[124]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[125]
+#define SWIGTYPE_p_svn_prop_kind swig_types[126]
+#define SWIGTYPE_p_svn_repos_authz_access_t swig_types[127]
+#define SWIGTYPE_p_svn_repos_log_entry_t swig_types[128]
+#define SWIGTYPE_p_svn_repos_node_t swig_types[129]
+#define SWIGTYPE_p_svn_repos_notify_action_t swig_types[130]
+#define SWIGTYPE_p_svn_repos_notify_t swig_types[131]
+#define SWIGTYPE_p_svn_repos_notify_warning_t swig_types[132]
+#define SWIGTYPE_p_svn_repos_parse_fns2_t swig_types[133]
+#define SWIGTYPE_p_svn_repos_parse_fns3_t swig_types[134]
+#define SWIGTYPE_p_svn_repos_parse_fns_t swig_types[135]
+#define SWIGTYPE_p_svn_repos_revision_access_level_t swig_types[136]
+#define SWIGTYPE_p_svn_repos_t swig_types[137]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[138]
+#define SWIGTYPE_p_svn_stream_t swig_types[139]
+#define SWIGTYPE_p_svn_string_t swig_types[140]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[141]
+#define SWIGTYPE_p_svn_tristate_t swig_types[142]
+#define SWIGTYPE_p_svn_txdelta_op_t swig_types[143]
+#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[144]
+#define SWIGTYPE_p_svn_txdelta_window_t swig_types[145]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[146]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[147]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[148]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[149]
+#define SWIGTYPE_p_svn_version_t swig_types[150]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[151]
+#define SWIGTYPE_p_unsigned_long swig_types[152]
+#define SWIGTYPE_p_void swig_types[153]
+static swig_type_info *swig_types[155];
+static swig_module_info swig_module = {swig_types, 154, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -6114,7 +6115,7 @@ SWIGINTERN PyObject *_wrap_svn_repos_freeze(PyObject *SWIGUNUSEDPARM(self), PyOb
   {
     svn_swig_py_release_py_lock();
     
-    result = (svn_error_t *)svn_repos_freeze(arg1,arg2,arg3,arg4);
+    result = (svn_error_t *)svn_repos_freeze((apr_array_header_t const *)arg1,arg2,arg3,arg4);
     
     svn_swig_py_acquire_py_lock();
     
@@ -21973,6 +21974,7 @@ static swig_type_info _swigt__p_svn_opt_revision_range_t = {"_p_svn_opt_revision
 static swig_type_info _swigt__p_svn_opt_revision_t = {"_p_svn_opt_revision_t", "struct svn_opt_revision_t *|svn_opt_revision_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_revision_value_t = {"_p_svn_opt_revision_value_t", "union svn_opt_revision_value_t *|svn_opt_revision_value_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t = {"_p_svn_opt_subcommand_desc2_t", "struct svn_opt_subcommand_desc2_t *|svn_opt_subcommand_desc2_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t = {"_p_svn_opt_subcommand_desc3_t", "struct svn_opt_subcommand_desc3_t *|svn_opt_subcommand_desc3_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc_t = {"_p_svn_opt_subcommand_desc_t", "struct svn_opt_subcommand_desc_t *|svn_opt_subcommand_desc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_prop_inherited_item_t = {"_p_svn_prop_inherited_item_t", "struct svn_prop_inherited_item_t *|svn_prop_inherited_item_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_prop_kind = {"_p_svn_prop_kind", "svn_prop_kind_t *|enum svn_prop_kind *", 0, 0, (void*)0, 0};
@@ -22128,6 +22130,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_opt_revision_t,
   &_swigt__p_svn_opt_revision_value_t,
   &_swigt__p_svn_opt_subcommand_desc2_t,
+  &_swigt__p_svn_opt_subcommand_desc3_t,
   &_swigt__p_svn_opt_subcommand_desc_t,
   &_swigt__p_svn_prop_inherited_item_t,
   &_swigt__p_svn_prop_kind,
@@ -22283,6 +22286,7 @@ static swig_cast_info _swigc__p_svn_opt_revision_range_t[] = {  {&_swigt__p_svn_
 static swig_cast_info _swigc__p_svn_opt_revision_t[] = {  {&_swigt__p_svn_opt_revision_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_revision_value_t[] = {  {&_swigt__p_svn_opt_revision_value_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc_t[] = {  {&_swigt__p_svn_opt_subcommand_desc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_prop_inherited_item_t[] = {  {&_swigt__p_svn_prop_inherited_item_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_prop_kind[] = {  {&_swigt__p_svn_prop_kind, 0, 0, 0},{0, 0, 0, 0}};
@@ -22438,6 +22442,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_opt_revision_t,
   _swigc__p_svn_opt_revision_value_t,
   _swigc__p_svn_opt_subcommand_desc2_t,
+  _swigc__p_svn_opt_subcommand_desc3_t,
   _swigc__p_svn_opt_subcommand_desc_t,
   _swigc__p_svn_prop_inherited_item_t,
   _swigc__p_svn_prop_kind,

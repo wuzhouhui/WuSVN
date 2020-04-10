@@ -20,6 +20,7 @@
   svn_client_blame_receiver2_t,
   svn_client_blame_receiver_t,
   svn_client_diff_summarize_func_t,
+  svn_client__layout_func_t,
   svn_client_import_filter_func_t,
   svn_client_status_func_t,
   svn_client_conflict_walk_func_t,
@@ -39,6 +40,7 @@
   svn_client_blame_receiver2_t *,
   svn_client_blame_receiver_t *,
   svn_client_diff_summarize_func_t *,
+  svn_client__layout_func_t *,
   svn_client_import_filter_func_t *,
   svn_client_status_func_t *,
   svn_client_conflict_walk_func_t *,
@@ -65,6 +67,7 @@
   void *conflict_baton,
   void *conflict_baton2,
   void *tunnel_baton,
+  void *layout_baton,
   void *commit_baton,
   void *filter_baton,
   void *backwards_compatibility_baton,
@@ -72,6 +75,9 @@
   void *receiver_baton,
   void *summarize_baton,
   void *conflict_walk_func_baton,
+  void *shelved_baton,
+  void *not_shelved_baton,
+  void *walk_baton,
   void *callback_baton,
   void *patch_baton
 };
@@ -96,7 +102,9 @@
 %opaque_proxy(svn_client_conflict_t);
 %opaque_proxy(svn_client_conflict_option_t);
 %proxy(svn_client_copy_source_t);
-%proxy(svn_client_shelved_patch_info_t);
+%proxy(svn_client__shelf_t);
+%proxy(svn_client__shelf_version_t);
+%proxy(svn_client__shelf_info_t);
 %proxy(svn_info_t);
 %proxy(svn_client_info2_t);
 #endif
@@ -147,6 +155,11 @@ static svn_error_t * svn_client_invoke_blame_receiver(
 static svn_error_t * svn_client_invoke_diff_summarize_func(
   svn_client_diff_summarize_func_t _obj, const svn_client_diff_summarize_t *diff, void *baton, apr_pool_t *pool) {
   return _obj(diff, baton, pool);
+}
+
+static svn_error_t * svn_client_invoke__layout_func(
+  svn_client__layout_func_t _obj, void *layout_baton, const char *local_abspath, const char *repos_root_url, svn_boolean_t not_present, svn_boolean_t url_changed, const char *url, svn_boolean_t revision_changed, svn_revnum_t revision, svn_boolean_t depth_changed, svn_depth_t depth, apr_pool_t *scratch_pool) {
+  return _obj(layout_baton, local_abspath, repos_root_url, not_present, url_changed, url, revision_changed, revision, depth_changed, depth, scratch_pool);
 }
 
 static svn_error_t * svn_client_invoke_import_filter_func(
@@ -201,6 +214,7 @@ static svn_error_t * svn_client_invoke_patch_func(
 %funcptr_proxy(svn_client_blame_receiver2_t, svn_client_invoke_blame_receiver2);
 %funcptr_proxy(svn_client_blame_receiver_t, svn_client_invoke_blame_receiver);
 %funcptr_proxy(svn_client_diff_summarize_func_t, svn_client_invoke_diff_summarize_func);
+%funcptr_proxy(svn_client__layout_func_t, svn_client_invoke__layout_func);
 %funcptr_proxy(svn_client_import_filter_func_t, svn_client_invoke_import_filter_func);
 %funcptr_proxy(svn_client_status_func_t, svn_client_invoke_status_func);
 %funcptr_proxy(svn_client_conflict_walk_func_t, svn_client_invoke_conflict_walk_func);

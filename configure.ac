@@ -23,7 +23,7 @@ AC_PREREQ(2.59)
 dnl Get the version of Subversion, using m4's esyscmd() command to do this
 dnl at m4-time, since AC_INIT() requires it then.
 AC_INIT([subversion],
-     [esyscmd($PYTHON build/getversion.py SVN subversion/include/svn_version.h)],
+     [esyscmd(python build/getversion.py SVN subversion/include/svn_version.h)],
      [http://subversion.apache.org/])
 
 AC_CONFIG_SRCDIR(subversion/include/svn_types.h)
@@ -1306,7 +1306,7 @@ fi
 AC_PATH_PROGS(PYTHON, "$PYTHON", none)
 
 # The minimum version for the JVM runtime for our Java bytecode.
-JAVA_OLDEST_WORKING_VER='1.6'
+JAVA_OLDEST_WORKING_VER='1.8'
 # SVN_CHECK_JDK sets $JAVA_CLASSPATH
 SVN_CHECK_JDK($JAVA_OLDEST_WORKING_VER)
 

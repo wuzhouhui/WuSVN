@@ -23,6 +23,7 @@
 
 /* Structure definitions */
 #ifdef SWIGPYTHON
+%proxy(svn_opt_subcommand_desc3_t);
 %proxy(svn_opt_subcommand_desc2_t);
 %proxy(svn_opt_subcommand_desc_t);
 %proxy(svn_opt_revision_value_t);

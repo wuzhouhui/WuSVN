@@ -22,10 +22,10 @@
 #
 # mailer.py: send email describing a commit
 #
-# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.10.x/tools/hook-scripts/mailer/mailer.py $
-# $LastChangedDate: 2017-01-07 19:35:49 +0000 (Sat, 07 Jan 2017) $
-# $LastChangedBy: julianfoad $
-# $LastChangedRevision: 1777846 $
+# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.11.x/tools/hook-scripts/mailer/mailer.py $
+# $LastChangedDate: 2018-02-18 19:06:38 +0000 (Sun, 18 Feb 2018) $
+# $LastChangedBy: danielsh $
+# $LastChangedRevision: 1824690 $
 #
 # USAGE: mailer.py commit      REPOS REVISION [CONFIG-FILE]
 #        mailer.py propchange  REPOS REVISION AUTHOR REVPROPNAME [CONFIG-FILE]
@@ -71,16 +71,10 @@ _MIN_SVN_VERSION = [1, 5, 0]
 
 # Import the Subversion Python bindings, making sure they meet our
 # minimum version requirements.
-try:
-  import svn.fs
-  import svn.delta
-  import svn.repos
-  import svn.core
-except ImportError:
-  sys.stderr.write(
-    "You need version %s or better of the Subversion Python bindings.\n" \
-    % ".".join([str(x) for x in _MIN_SVN_VERSION]))
-  sys.exit(1)
+import svn.fs
+import svn.delta
+import svn.repos
+import svn.core
 if _MIN_SVN_VERSION > [svn.core.SVN_VER_MAJOR,
                        svn.core.SVN_VER_MINOR,
                        svn.core.SVN_VER_PATCH]:

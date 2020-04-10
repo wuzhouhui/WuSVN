@@ -2335,7 +2335,107 @@ SVN_PROP_TXN_USER_AGENT = _core.SVN_PROP_TXN_USER_AGENT
 SVN_PROP_REVISION_PREFIX = _core.SVN_PROP_REVISION_PREFIX
 SVN_OPT_MAX_ALIASES = _core.SVN_OPT_MAX_ALIASES
 SVN_OPT_MAX_OPTIONS = _core.SVN_OPT_MAX_OPTIONS
+SVN_OPT_MAX_PARAGRAPHS = _core.SVN_OPT_MAX_PARAGRAPHS
 SVN_OPT_FIRST_LONGOPT_ID = _core.SVN_OPT_FIRST_LONGOPT_ID
+class svn_opt_subcommand_desc3_t:
+    """Proxy of C svn_opt_subcommand_desc3_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_opt_subcommand_desc3_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_opt_subcommand_desc3_t, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["name"] = _core.svn_opt_subcommand_desc3_t_name_set
+    __swig_getmethods__["name"] = _core.svn_opt_subcommand_desc3_t_name_get
+    __swig_setmethods__["cmd_func"] = _core.svn_opt_subcommand_desc3_t_cmd_func_set
+    __swig_getmethods__["cmd_func"] = _core.svn_opt_subcommand_desc3_t_cmd_func_get
+    __swig_setmethods__["aliases"] = _core.svn_opt_subcommand_desc3_t_aliases_set
+    __swig_getmethods__["aliases"] = _core.svn_opt_subcommand_desc3_t_aliases_get
+    __swig_setmethods__["help"] = _core.svn_opt_subcommand_desc3_t_help_set
+    __swig_getmethods__["help"] = _core.svn_opt_subcommand_desc3_t_help_get
+    __swig_setmethods__["valid_options"] = _core.svn_opt_subcommand_desc3_t_valid_options_set
+    __swig_getmethods__["valid_options"] = _core.svn_opt_subcommand_desc3_t_valid_options_get
+    __swig_getmethods__["desc_overrides"] = _core.svn_opt_subcommand_desc3_t_desc_overrides_get
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+
+    def __init__(self):
+        """__init__(svn_opt_subcommand_desc3_t self) -> svn_opt_subcommand_desc3_t"""
+        this = _core.new_svn_opt_subcommand_desc3_t()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _core.delete_svn_opt_subcommand_desc3_t
+    __del__ = lambda self: None
+svn_opt_subcommand_desc3_t_swigregister = _core.svn_opt_subcommand_desc3_t_swigregister
+svn_opt_subcommand_desc3_t_swigregister(svn_opt_subcommand_desc3_t)
+
+class svn_opt_subcommand_desc3_t_desc_overrides:
+    """Proxy of C svn_opt_subcommand_desc3_t_desc_overrides struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_opt_subcommand_desc3_t_desc_overrides, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_opt_subcommand_desc3_t_desc_overrides, name)
+    __repr__ = _swig_repr
+    __swig_setmethods__["optch"] = _core.svn_opt_subcommand_desc3_t_desc_overrides_optch_set
+    __swig_getmethods__["optch"] = _core.svn_opt_subcommand_desc3_t_desc_overrides_optch_get
+    __swig_setmethods__["desc"] = _core.svn_opt_subcommand_desc3_t_desc_overrides_desc_set
+    __swig_getmethods__["desc"] = _core.svn_opt_subcommand_desc3_t_desc_overrides_desc_get
+
+    def __init__(self):
+        """__init__(svn_opt_subcommand_desc3_t_desc_overrides self) -> svn_opt_subcommand_desc3_t_desc_overrides"""
+        this = _core.new_svn_opt_subcommand_desc3_t_desc_overrides()
+        try:
+            self.this.append(this)
+        except __builtin__.Exception:
+            self.this = this
+    __swig_destroy__ = _core.delete_svn_opt_subcommand_desc3_t_desc_overrides
+    __del__ = lambda self: None
+svn_opt_subcommand_desc3_t_desc_overrides_swigregister = _core.svn_opt_subcommand_desc3_t_desc_overrides_swigregister
+svn_opt_subcommand_desc3_t_desc_overrides_swigregister(svn_opt_subcommand_desc3_t_desc_overrides)
+
 class svn_opt_subcommand_desc2_t:
     """Proxy of C svn_opt_subcommand_desc2_t struct."""
 
@@ -2509,6 +2609,10 @@ svn_opt_subcommand_desc_t_swigregister = _core.svn_opt_subcommand_desc_t_swigreg
 svn_opt_subcommand_desc_t_swigregister(svn_opt_subcommand_desc_t)
 
 
+def svn_opt_get_canonical_subcommand3(table, cmd_name):
+    """svn_opt_get_canonical_subcommand3(svn_opt_subcommand_desc3_t table, char const * cmd_name) -> svn_opt_subcommand_desc3_t"""
+    return _core.svn_opt_get_canonical_subcommand3(table, cmd_name)
+
 def svn_opt_get_canonical_subcommand2(table, cmd_name):
     """svn_opt_get_canonical_subcommand2(svn_opt_subcommand_desc2_t table, char const * cmd_name) -> svn_opt_subcommand_desc2_t"""
     return _core.svn_opt_get_canonical_subcommand2(table, cmd_name)
@@ -2517,6 +2621,10 @@ def svn_opt_get_canonical_subcommand(table, cmd_name):
     """svn_opt_get_canonical_subcommand(svn_opt_subcommand_desc_t table, char const * cmd_name) -> svn_opt_subcommand_desc_t"""
     return _core.svn_opt_get_canonical_subcommand(table, cmd_name)
 
+def svn_opt_get_option_from_code3(*args):
+    """svn_opt_get_option_from_code3(int code, apr_getopt_option_t const * option_table, svn_opt_subcommand_desc3_t command, apr_pool_t pool) -> apr_getopt_option_t const *"""
+    return _core.svn_opt_get_option_from_code3(*args)
+
 def svn_opt_get_option_from_code2(*args):
     """svn_opt_get_option_from_code2(int code, apr_getopt_option_t const * option_table, svn_opt_subcommand_desc2_t command, apr_pool_t pool) -> apr_getopt_option_t const *"""
     return _core.svn_opt_get_option_from_code2(*args)
@@ -2524,6 +2632,10 @@ def svn_opt_get_option_from_code2(*args):
 def svn_opt_get_option_from_code(code, option_table):
     """svn_opt_get_option_from_code(int code, apr_getopt_option_t const * option_table) -> apr_getopt_option_t const *"""
     return _core.svn_opt_get_option_from_code(code, option_table)
+
+def svn_opt_subcommand_takes_option4(command, option_code):
+    """svn_opt_subcommand_takes_option4(svn_opt_subcommand_desc3_t command, int option_code) -> svn_boolean_t"""
+    return _core.svn_opt_subcommand_takes_option4(command, option_code)
 
 def svn_opt_subcommand_takes_option3(command, option_code):
     """svn_opt_subcommand_takes_option3(svn_opt_subcommand_desc2_t command, int option_code) -> svn_boolean_t"""
@@ -2537,6 +2649,10 @@ def svn_opt_subcommand_takes_option(command, option_code):
     """svn_opt_subcommand_takes_option(svn_opt_subcommand_desc_t command, int option_code) -> svn_boolean_t"""
     return _core.svn_opt_subcommand_takes_option(command, option_code)
 
+def svn_opt_print_generic_help3(*args):
+    """svn_opt_print_generic_help3(char const * header, svn_opt_subcommand_desc3_t cmd_table, apr_getopt_option_t const * opt_table, char const * footer, apr_pool_t pool, FILE * stream)"""
+    return _core.svn_opt_print_generic_help3(*args)
+
 def svn_opt_print_generic_help2(*args):
     """svn_opt_print_generic_help2(char const * header, svn_opt_subcommand_desc2_t cmd_table, apr_getopt_option_t const * opt_table, char const * footer, apr_pool_t pool, FILE * stream)"""
     return _core.svn_opt_print_generic_help2(*args)
@@ -2544,6 +2660,10 @@ def svn_opt_print_generic_help2(*args):
 def svn_opt_format_option(*args):
     """svn_opt_format_option(apr_getopt_option_t const * opt, svn_boolean_t doc, apr_pool_t pool)"""
     return _core.svn_opt_format_option(*args)
+
+def svn_opt_subcommand_help4(*args):
+    """svn_opt_subcommand_help4(char const * subcommand, svn_opt_subcommand_desc3_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"""
+    return _core.svn_opt_subcommand_help4(*args)
 
 def svn_opt_subcommand_help3(*args):
     """svn_opt_subcommand_help3(char const * subcommand, svn_opt_subcommand_desc2_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"""
@@ -2805,6 +2925,10 @@ def svn_opt_parse_all_args(*args):
 def svn_opt_parse_path(*args):
     """svn_opt_parse_path(svn_opt_revision_t rev, char const * path, apr_pool_t pool) -> svn_error_t"""
     return _core.svn_opt_parse_path(*args)
+
+def svn_opt_print_help5(*args):
+    """svn_opt_print_help5(apr_getopt_t * os, char const * pgm_name, svn_boolean_t print_version, svn_boolean_t quiet, svn_boolean_t verbose, char const * version_footer, char const * header, svn_opt_subcommand_desc3_t cmd_table, apr_getopt_option_t const * option_table, char const * footer, apr_pool_t pool) -> svn_error_t"""
+    return _core.svn_opt_print_help5(*args)
 
 def svn_opt_print_help4(*args):
     """svn_opt_print_help4(apr_getopt_t * os, char const * pgm_name, svn_boolean_t print_version, svn_boolean_t quiet, svn_boolean_t verbose, char const * version_footer, char const * header, svn_opt_subcommand_desc2_t cmd_table, apr_getopt_option_t const * option_table, char const * footer, apr_pool_t pool) -> svn_error_t"""

@@ -2436,7 +2436,7 @@ do_put_file(svn_branch__txn_t *txn,
     else
       SVN_ERR(svn_stream_for_stdin2(&src, FALSE, scratch_pool));
 
-    svn_stringbuf_from_stream(&text, src, 0, scratch_pool);
+    SVN_ERR(svn_stringbuf_from_stream(&text, src, 0, scratch_pool));
   }
   payload = svn_element__payload_create_file(props, text, scratch_pool);
 
@@ -4042,7 +4042,7 @@ display_version(apr_getopt_t *os, svn_boolean_t _quiet, apr_pool_t *pool)
   version_footer = svn_stringbuf_create(ra_desc_start, pool);
   SVN_ERR(svn_ra_print_modules(version_footer, pool));
 
-  SVN_ERR(svn_opt_print_help4(NULL, "svnmover", TRUE, _quiet, FALSE,
+  SVN_ERR(svn_opt_print_help5(NULL, "svnmover", TRUE, _quiet, FALSE,
                               version_footer->data,
                               NULL, NULL, NULL, NULL, NULL, pool));
 

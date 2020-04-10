@@ -2553,6 +2553,10 @@ def svn_wc_relocate(*args):
     """svn_wc_relocate(char const * path, svn_wc_adm_access_t * adm_access, char const * arg3, char const * to, svn_boolean_t recurse, svn_wc_relocation_validator_t validator, void * validator_baton, apr_pool_t pool) -> svn_error_t"""
     return _wc.svn_wc_relocate(*args)
 
+def svn_wc_revert6(*args):
+    """svn_wc_revert6(svn_wc_context_t * wc_ctx, char const * local_abspath, svn_depth_t depth, svn_boolean_t use_commit_times, apr_array_header_t changelist_filter, svn_boolean_t clear_changelists, svn_boolean_t metadata_only, svn_boolean_t added_keep_local, svn_cancel_func_t cancel_func, svn_wc_notify_func2_t notify_func, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _wc.svn_wc_revert6(*args)
+
 def svn_wc_revert5(*args):
     """svn_wc_revert5(svn_wc_context_t * wc_ctx, char const * local_abspath, svn_depth_t depth, svn_boolean_t use_commit_times, apr_array_header_t changelist_filter, svn_boolean_t clear_changelists, svn_boolean_t metadata_only, svn_cancel_func_t cancel_func, svn_wc_notify_func2_t notify_func, apr_pool_t scratch_pool) -> svn_error_t"""
     return _wc.svn_wc_revert5(*args)

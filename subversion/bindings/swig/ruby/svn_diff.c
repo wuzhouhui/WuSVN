@@ -1856,25 +1856,26 @@ int SWIG_Ruby_arity( VALUE proc, int minimal )
 #define SWIGTYPE_p_svn_opt_revision_t swig_types[50]
 #define SWIGTYPE_p_svn_opt_revision_value_t swig_types[51]
 #define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[52]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[53]
-#define SWIGTYPE_p_svn_patch_file_t swig_types[54]
-#define SWIGTYPE_p_svn_patch_t swig_types[55]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[56]
-#define SWIGTYPE_p_svn_prop_kind swig_types[57]
-#define SWIGTYPE_p_svn_prop_patch_t swig_types[58]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[59]
-#define SWIGTYPE_p_svn_stream_t swig_types[60]
-#define SWIGTYPE_p_svn_string_t swig_types[61]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[62]
-#define SWIGTYPE_p_svn_tristate_t swig_types[63]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[64]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[65]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[66]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[67]
-#define SWIGTYPE_p_svn_version_t swig_types[68]
-#define SWIGTYPE_p_unsigned_long swig_types[69]
-static swig_type_info *swig_types[71];
-static swig_module_info swig_module = {swig_types, 70, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[53]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[54]
+#define SWIGTYPE_p_svn_patch_file_t swig_types[55]
+#define SWIGTYPE_p_svn_patch_t swig_types[56]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[57]
+#define SWIGTYPE_p_svn_prop_kind swig_types[58]
+#define SWIGTYPE_p_svn_prop_patch_t swig_types[59]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[60]
+#define SWIGTYPE_p_svn_stream_t swig_types[61]
+#define SWIGTYPE_p_svn_string_t swig_types[62]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[63]
+#define SWIGTYPE_p_svn_tristate_t swig_types[64]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[65]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[66]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[67]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[68]
+#define SWIGTYPE_p_svn_version_t swig_types[69]
+#define SWIGTYPE_p_unsigned_long swig_types[70]
+static swig_type_info *swig_types[72];
+static swig_module_info swig_module = {swig_types, 71, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -1993,6 +1994,7 @@ static swig_type_info _swigt__p_svn_opt_revision_range_t = {"_p_svn_opt_revision
 static swig_type_info _swigt__p_svn_opt_revision_t = {"_p_svn_opt_revision_t", "struct svn_opt_revision_t *|svn_opt_revision_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_revision_value_t = {"_p_svn_opt_revision_value_t", "union svn_opt_revision_value_t *|svn_opt_revision_value_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc2_t = {"_p_svn_opt_subcommand_desc2_t", "struct svn_opt_subcommand_desc2_t *|svn_opt_subcommand_desc2_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_opt_subcommand_desc3_t = {"_p_svn_opt_subcommand_desc3_t", "struct svn_opt_subcommand_desc3_t *|svn_opt_subcommand_desc3_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_opt_subcommand_desc_t = {"_p_svn_opt_subcommand_desc_t", "struct svn_opt_subcommand_desc_t *|svn_opt_subcommand_desc_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_patch_file_t = {"_p_svn_patch_file_t", "struct svn_patch_file_t *|svn_patch_file_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_patch_t = {"_p_svn_patch_t", "struct svn_patch_t *|svn_patch_t *", 0, 0, (void*)0, 0};
@@ -2065,6 +2067,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_opt_revision_t,
   &_swigt__p_svn_opt_revision_value_t,
   &_swigt__p_svn_opt_subcommand_desc2_t,
+  &_swigt__p_svn_opt_subcommand_desc3_t,
   &_swigt__p_svn_opt_subcommand_desc_t,
   &_swigt__p_svn_patch_file_t,
   &_swigt__p_svn_patch_t,
@@ -2137,6 +2140,7 @@ static swig_cast_info _swigc__p_svn_opt_revision_range_t[] = {  {&_swigt__p_svn_
 static swig_cast_info _swigc__p_svn_opt_revision_t[] = {  {&_swigt__p_svn_opt_revision_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_revision_value_t[] = {  {&_swigt__p_svn_opt_revision_value_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc2_t[] = {  {&_swigt__p_svn_opt_subcommand_desc2_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_opt_subcommand_desc3_t[] = {  {&_swigt__p_svn_opt_subcommand_desc3_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_opt_subcommand_desc_t[] = {  {&_swigt__p_svn_opt_subcommand_desc_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_patch_file_t[] = {  {&_swigt__p_svn_patch_file_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_patch_t[] = {  {&_swigt__p_svn_patch_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -2209,6 +2213,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_opt_revision_t,
   _swigc__p_svn_opt_revision_value_t,
   _swigc__p_svn_opt_subcommand_desc2_t,
+  _swigc__p_svn_opt_subcommand_desc3_t,
   _swigc__p_svn_opt_subcommand_desc_t,
   _swigc__p_svn_patch_file_t,
   _swigc__p_svn_patch_t,
