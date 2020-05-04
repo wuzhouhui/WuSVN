@@ -1148,6 +1148,70 @@ def svn_fs_info(*args):
 def svn_fs_info_dup(*args):
     """svn_fs_info_dup(void const * info, apr_pool_t result_pool, apr_pool_t scratch_pool) -> void *"""
     return _fs.svn_fs_info_dup(*args)
+class svn_fs_ioctl_code_t:
+    """Proxy of C svn_fs_ioctl_code_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_fs_ioctl_code_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_fs_ioctl_code_t, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    __swig_setmethods__["fs_type"] = _fs.svn_fs_ioctl_code_t_fs_type_set
+    __swig_getmethods__["fs_type"] = _fs.svn_fs_ioctl_code_t_fs_type_get
+    __swig_setmethods__["code"] = _fs.svn_fs_ioctl_code_t_code_set
+    __swig_getmethods__["code"] = _fs.svn_fs_ioctl_code_t_code_get
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+svn_fs_ioctl_code_t_swigregister = _fs.svn_fs_ioctl_code_t_swigregister
+svn_fs_ioctl_code_t_swigregister(svn_fs_ioctl_code_t)
+
+
+def svn_fs_ioctl(*args):
+    """svn_fs_ioctl(svn_fs_t * fs, svn_fs_ioctl_code_t ctlcode, void * input, svn_cancel_func_t cancel_func, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _fs.svn_fs_ioctl(*args)
 class svn_fs_t:
     """Proxy of C svn_fs_t struct."""
 

@@ -78,6 +78,7 @@
 %proxy(svn_fs_fsfs_info_t);
 %proxy(svn_fs_fsx_info_t);
 %proxy(svn_fs_info_placeholder_t);
+%proxy(svn_fs_ioctl_code_t);
 #endif
 
 /* Callbacks */

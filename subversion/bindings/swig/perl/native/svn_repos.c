@@ -1606,69 +1606,70 @@ SWIG_Perl_SetModule(swig_module_info *module) {
 #define SWIGTYPE_p_svn_fs_history_t swig_types[94]
 #define SWIGTYPE_p_svn_fs_id_t swig_types[95]
 #define SWIGTYPE_p_svn_fs_info_placeholder_t swig_types[96]
-#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[97]
-#define SWIGTYPE_p_svn_fs_node_relation_t swig_types[98]
-#define SWIGTYPE_p_svn_fs_pack_notify_action_t swig_types[99]
-#define SWIGTYPE_p_svn_fs_path_change2_t swig_types[100]
-#define SWIGTYPE_p_svn_fs_path_change3_t swig_types[101]
-#define SWIGTYPE_p_svn_fs_path_change_iterator_t swig_types[102]
-#define SWIGTYPE_p_svn_fs_path_change_kind_t swig_types[103]
-#define SWIGTYPE_p_svn_fs_path_change_t swig_types[104]
-#define SWIGTYPE_p_svn_fs_root_t swig_types[105]
-#define SWIGTYPE_p_svn_fs_t swig_types[106]
-#define SWIGTYPE_p_svn_fs_txn_t swig_types[107]
-#define SWIGTYPE_p_svn_fs_upgrade_notify_action_t swig_types[108]
-#define SWIGTYPE_p_svn_io_dirent2_t swig_types[109]
-#define SWIGTYPE_p_svn_io_dirent_t swig_types[110]
-#define SWIGTYPE_p_svn_io_file_del_t swig_types[111]
-#define SWIGTYPE_p_svn_location_segment_t swig_types[112]
-#define SWIGTYPE_p_svn_lock_t swig_types[113]
-#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[114]
-#define SWIGTYPE_p_svn_log_changed_path_t swig_types[115]
-#define SWIGTYPE_p_svn_log_entry_t swig_types[116]
-#define SWIGTYPE_p_svn_merge_range_t swig_types[117]
-#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[118]
-#define SWIGTYPE_p_svn_node_kind_t swig_types[119]
-#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[120]
-#define SWIGTYPE_p_svn_opt_revision_t swig_types[121]
-#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[122]
-#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[123]
-#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[124]
-#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[125]
-#define SWIGTYPE_p_svn_patch_file_t swig_types[126]
-#define SWIGTYPE_p_svn_patch_t swig_types[127]
-#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[128]
-#define SWIGTYPE_p_svn_prop_kind swig_types[129]
-#define SWIGTYPE_p_svn_prop_patch_t swig_types[130]
-#define SWIGTYPE_p_svn_repos_authz_access_t swig_types[131]
-#define SWIGTYPE_p_svn_repos_log_entry_t swig_types[132]
-#define SWIGTYPE_p_svn_repos_node_t swig_types[133]
-#define SWIGTYPE_p_svn_repos_notify_action_t swig_types[134]
-#define SWIGTYPE_p_svn_repos_notify_t swig_types[135]
-#define SWIGTYPE_p_svn_repos_notify_warning_t swig_types[136]
-#define SWIGTYPE_p_svn_repos_parse_fns2_t swig_types[137]
-#define SWIGTYPE_p_svn_repos_parse_fns3_t swig_types[138]
-#define SWIGTYPE_p_svn_repos_parse_fns_t swig_types[139]
-#define SWIGTYPE_p_svn_repos_revision_access_level_t swig_types[140]
-#define SWIGTYPE_p_svn_repos_t swig_types[141]
-#define SWIGTYPE_p_svn_stream_mark_t swig_types[142]
-#define SWIGTYPE_p_svn_stream_t swig_types[143]
-#define SWIGTYPE_p_svn_string_t swig_types[144]
-#define SWIGTYPE_p_svn_stringbuf_t swig_types[145]
-#define SWIGTYPE_p_svn_tristate_t swig_types[146]
-#define SWIGTYPE_p_svn_txdelta_op_t swig_types[147]
-#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[148]
-#define SWIGTYPE_p_svn_txdelta_window_t swig_types[149]
-#define SWIGTYPE_p_svn_version_checklist_t swig_types[150]
-#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[151]
-#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[152]
-#define SWIGTYPE_p_svn_version_extended_t swig_types[153]
-#define SWIGTYPE_p_svn_version_t swig_types[154]
-#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[155]
-#define SWIGTYPE_p_unsigned_long swig_types[156]
-#define SWIGTYPE_p_void swig_types[157]
-static swig_type_info *swig_types[159];
-static swig_module_info swig_module = {swig_types, 158, 0, 0, 0, 0};
+#define SWIGTYPE_p_svn_fs_ioctl_code_t swig_types[97]
+#define SWIGTYPE_p_svn_fs_lock_target_t swig_types[98]
+#define SWIGTYPE_p_svn_fs_node_relation_t swig_types[99]
+#define SWIGTYPE_p_svn_fs_pack_notify_action_t swig_types[100]
+#define SWIGTYPE_p_svn_fs_path_change2_t swig_types[101]
+#define SWIGTYPE_p_svn_fs_path_change3_t swig_types[102]
+#define SWIGTYPE_p_svn_fs_path_change_iterator_t swig_types[103]
+#define SWIGTYPE_p_svn_fs_path_change_kind_t swig_types[104]
+#define SWIGTYPE_p_svn_fs_path_change_t swig_types[105]
+#define SWIGTYPE_p_svn_fs_root_t swig_types[106]
+#define SWIGTYPE_p_svn_fs_t swig_types[107]
+#define SWIGTYPE_p_svn_fs_txn_t swig_types[108]
+#define SWIGTYPE_p_svn_fs_upgrade_notify_action_t swig_types[109]
+#define SWIGTYPE_p_svn_io_dirent2_t swig_types[110]
+#define SWIGTYPE_p_svn_io_dirent_t swig_types[111]
+#define SWIGTYPE_p_svn_io_file_del_t swig_types[112]
+#define SWIGTYPE_p_svn_location_segment_t swig_types[113]
+#define SWIGTYPE_p_svn_lock_t swig_types[114]
+#define SWIGTYPE_p_svn_log_changed_path2_t swig_types[115]
+#define SWIGTYPE_p_svn_log_changed_path_t swig_types[116]
+#define SWIGTYPE_p_svn_log_entry_t swig_types[117]
+#define SWIGTYPE_p_svn_merge_range_t swig_types[118]
+#define SWIGTYPE_p_svn_mergeinfo_inheritance_t swig_types[119]
+#define SWIGTYPE_p_svn_node_kind_t swig_types[120]
+#define SWIGTYPE_p_svn_opt_revision_range_t swig_types[121]
+#define SWIGTYPE_p_svn_opt_revision_t swig_types[122]
+#define SWIGTYPE_p_svn_opt_revision_value_t swig_types[123]
+#define SWIGTYPE_p_svn_opt_subcommand_desc2_t swig_types[124]
+#define SWIGTYPE_p_svn_opt_subcommand_desc3_t swig_types[125]
+#define SWIGTYPE_p_svn_opt_subcommand_desc_t swig_types[126]
+#define SWIGTYPE_p_svn_patch_file_t swig_types[127]
+#define SWIGTYPE_p_svn_patch_t swig_types[128]
+#define SWIGTYPE_p_svn_prop_inherited_item_t swig_types[129]
+#define SWIGTYPE_p_svn_prop_kind swig_types[130]
+#define SWIGTYPE_p_svn_prop_patch_t swig_types[131]
+#define SWIGTYPE_p_svn_repos_authz_access_t swig_types[132]
+#define SWIGTYPE_p_svn_repos_log_entry_t swig_types[133]
+#define SWIGTYPE_p_svn_repos_node_t swig_types[134]
+#define SWIGTYPE_p_svn_repos_notify_action_t swig_types[135]
+#define SWIGTYPE_p_svn_repos_notify_t swig_types[136]
+#define SWIGTYPE_p_svn_repos_notify_warning_t swig_types[137]
+#define SWIGTYPE_p_svn_repos_parse_fns2_t swig_types[138]
+#define SWIGTYPE_p_svn_repos_parse_fns3_t swig_types[139]
+#define SWIGTYPE_p_svn_repos_parse_fns_t swig_types[140]
+#define SWIGTYPE_p_svn_repos_revision_access_level_t swig_types[141]
+#define SWIGTYPE_p_svn_repos_t swig_types[142]
+#define SWIGTYPE_p_svn_stream_mark_t swig_types[143]
+#define SWIGTYPE_p_svn_stream_t swig_types[144]
+#define SWIGTYPE_p_svn_string_t swig_types[145]
+#define SWIGTYPE_p_svn_stringbuf_t swig_types[146]
+#define SWIGTYPE_p_svn_tristate_t swig_types[147]
+#define SWIGTYPE_p_svn_txdelta_op_t swig_types[148]
+#define SWIGTYPE_p_svn_txdelta_stream_t swig_types[149]
+#define SWIGTYPE_p_svn_txdelta_window_t swig_types[150]
+#define SWIGTYPE_p_svn_version_checklist_t swig_types[151]
+#define SWIGTYPE_p_svn_version_ext_linked_lib_t swig_types[152]
+#define SWIGTYPE_p_svn_version_ext_loaded_lib_t swig_types[153]
+#define SWIGTYPE_p_svn_version_extended_t swig_types[154]
+#define SWIGTYPE_p_svn_version_t swig_types[155]
+#define SWIGTYPE_p_svn_wc_external_item2_t swig_types[156]
+#define SWIGTYPE_p_unsigned_long swig_types[157]
+#define SWIGTYPE_p_void swig_types[158]
+static swig_type_info *swig_types[160];
+static swig_module_info swig_module = {swig_types, 159, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -22794,6 +22795,7 @@ static swig_type_info _swigt__p_svn_fs_fsx_info_t = {"_p_svn_fs_fsx_info_t", "st
 static swig_type_info _swigt__p_svn_fs_history_t = {"_p_svn_fs_history_t", "struct svn_fs_history_t *|svn_fs_history_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_id_t = {"_p_svn_fs_id_t", "struct svn_fs_id_t *|svn_fs_id_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_info_placeholder_t = {"_p_svn_fs_info_placeholder_t", "struct svn_fs_info_placeholder_t *|svn_fs_info_placeholder_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_fs_ioctl_code_t = {"_p_svn_fs_ioctl_code_t", "struct svn_fs_ioctl_code_t *|svn_fs_ioctl_code_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_lock_target_t = {"_p_svn_fs_lock_target_t", "struct svn_fs_lock_target_t *|svn_fs_lock_target_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_node_relation_t = {"_p_svn_fs_node_relation_t", "enum svn_fs_node_relation_t *|svn_fs_node_relation_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_pack_notify_action_t = {"_p_svn_fs_pack_notify_action_t", "enum svn_fs_pack_notify_action_t *|svn_fs_pack_notify_action_t *", 0, 0, (void*)0, 0};
@@ -22954,6 +22956,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_svn_fs_history_t,
   &_swigt__p_svn_fs_id_t,
   &_swigt__p_svn_fs_info_placeholder_t,
+  &_swigt__p_svn_fs_ioctl_code_t,
   &_swigt__p_svn_fs_lock_target_t,
   &_swigt__p_svn_fs_node_relation_t,
   &_swigt__p_svn_fs_pack_notify_action_t,
@@ -23114,6 +23117,7 @@ static swig_cast_info _swigc__p_svn_fs_fsx_info_t[] = {  {&_swigt__p_svn_fs_fsx_
 static swig_cast_info _swigc__p_svn_fs_history_t[] = {  {&_swigt__p_svn_fs_history_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_id_t[] = {  {&_swigt__p_svn_fs_id_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_info_placeholder_t[] = {  {&_swigt__p_svn_fs_info_placeholder_t, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_svn_fs_ioctl_code_t[] = {  {&_swigt__p_svn_fs_ioctl_code_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_lock_target_t[] = {  {&_swigt__p_svn_fs_lock_target_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_node_relation_t[] = {  {&_swigt__p_svn_fs_node_relation_t, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_svn_fs_pack_notify_action_t[] = {  {&_swigt__p_svn_fs_pack_notify_action_t, 0, 0, 0},{0, 0, 0, 0}};
@@ -23274,6 +23278,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_svn_fs_history_t,
   _swigc__p_svn_fs_id_t,
   _swigc__p_svn_fs_info_placeholder_t,
+  _swigc__p_svn_fs_ioctl_code_t,
   _swigc__p_svn_fs_lock_target_t,
   _swigc__p_svn_fs_node_relation_t,
   _swigc__p_svn_fs_pack_notify_action_t,

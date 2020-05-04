@@ -46,7 +46,7 @@
 #    under the License.
 # ====================================================================
 #
-# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.12.x/tools/server-side/fsfs-reshard.py $
+# $HeadURL: https://svn.apache.org/repos/asf/subversion/branches/1.13.x/tools/server-side/fsfs-reshard.py $
 # $LastChangedDate: 2016-04-30 08:16:53 +0000 (Sat, 30 Apr 2016) $
 # $LastChangedBy: stefan2 $
 # $LastChangedRevision: 1741723 $
