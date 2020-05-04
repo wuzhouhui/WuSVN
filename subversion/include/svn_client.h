@@ -736,15 +736,10 @@ typedef svn_error_t *(*svn_client_get_commit_log_t)(
  * @{
  */
 
-/** Callback type used by svn_client_blame5() to notify the caller
+/** Callback type used by svn_client_blame6() to notify the caller
  * that line @a line_no of the blamed file was last changed in @a revision
  * which has the revision properties @a rev_props, and that the contents were
  * @a line.
- *
- * @a start_revnum and @a end_revnum contain the start and end revision
- * number of the entire blame operation, as determined from the repository
- * inside svn_client_blame5(). This can be useful for the blame receiver
- * to format the blame output.
  *
  * If svn_client_blame5() was called with @a include_merged_revisions set to
  * TRUE, @a merged_revision, @a merged_rev_props and @a merged_path will be
@@ -757,6 +752,49 @@ typedef svn_error_t *(*svn_client_get_commit_log_t)(
  * invalid and @a rev_props will be NULL. In this case @a local_change
  * will be true if the reason there is no blame information is that the line
  * was modified locally. In all other cases @a local_change will be false.
+ *
+ * Character Encoding and Line Splitting:
+ *
+ * It is up to the client to determine the character encoding. The @a line
+ * content is delivered without any encoding conversion. The line splitting
+ * is designed to work with ASCII-compatible encodings including UTF-8. Any
+ * of the byte sequences LF ("\n"), CR ("\n"), CR LF ("\r\n") ends a line
+ * and is not included in @a line. The @a line content can include all other
+ * byte values including zero (ASCII NUL).
+ * 
+ * @note That is how line splitting is done on the final file content, from
+ * which this callback is driven. It is not entirely clear whether the line
+ * splitting used to calculate diffs between each revision and assign a
+ * revision number to each line is exactly compatible with this in all cases.
+ *
+ * Blaming files that have <tt>svn:mime-type</tt> set to something other
+ * than <tt>text/...</tt> requires the @a ignore_mime_type flag to be set to
+ * true when calling the svn_client_blame6 function.
+ *
+ * @since New in 1.12.
+ */
+typedef svn_error_t *(*svn_client_blame_receiver4_t)(
+  void *baton,
+  apr_int64_t line_no,
+  svn_revnum_t revision,
+  apr_hash_t *rev_props,
+  svn_revnum_t merged_revision,
+  apr_hash_t *merged_rev_props,
+  const char *merged_path,
+  const svn_string_t *line,
+  svn_boolean_t local_change,
+  apr_pool_t *pool);
+
+/**
+ * Similar to #svn_client_blame_receiver4_t, but with the @a line parameter
+ * as a (const char*) instead of an svn_string_t, and the parameters
+ * @a start_revnum and @a end_revnum contain the start and end revision
+ * number of the entire blame operation, as resolved from the repository
+ * inside svn_client_blame6().
+ *
+ * @deprecated Provided for backward compatibility with the 1.11 API.
+ * To replace @a start_revnum and @a end_revnum, see the corresponding
+ * output parameters in svn_client_blame6().
  *
  * @since New in 1.7.
  */
@@ -2920,6 +2958,12 @@ svn_client_log(const apr_array_header_t *targets,
  * #SVN_RA_CAPABILITY_GET_FILE_REVS_REVERSE) and the client is 1.9.0 or
  * newer.
  *
+ * Before the first call to @a receiver, set @a *start_revnum_p and
+ * @a *end_revnum_p to the start and end revision number of the entire
+ * blame operation, as resolved from the repository. This can be useful
+ * for the blame receiver to format the blame output. Any or both of these
+ * arguments may be @c NULL.
+ *
  * Use @a diff_options to determine how to compare different revisions of the
  * target.
  *
@@ -2928,8 +2972,33 @@ svn_client_log(const apr_array_header_t *targets,
  *
  * Use @a pool for any temporary allocation.
  *
+ * @since New in 1.12.
+ */
+svn_error_t *
+svn_client_blame6(svn_revnum_t *start_revnum_p,
+                  svn_revnum_t *end_revnum_p,
+                  const char *path_or_url,
+                  const svn_opt_revision_t *peg_revision,
+                  const svn_opt_revision_t *start,
+                  const svn_opt_revision_t *end,
+                  const svn_diff_file_options_t *diff_options,
+                  svn_boolean_t ignore_mime_type,
+                  svn_boolean_t include_merged_revisions,
+                  svn_client_blame_receiver4_t receiver,
+                  void *receiver_baton,
+                  svn_client_ctx_t *ctx,
+                  apr_pool_t *pool);
+
+
+/**
+ * Similar to svn_client_blame6(), but with #svn_client_blame_receiver3_t
+ * as the receiver.
+ *
+ * @deprecated Provided for backwards compatibility with the 1.11 API.
+ *
  * @since New in 1.7.
  */
+SVN_DEPRECATED
 svn_error_t *
 svn_client_blame5(const char *path_or_url,
                   const svn_opt_revision_t *peg_revision,
@@ -2943,9 +3012,8 @@ svn_client_blame5(const char *path_or_url,
                   svn_client_ctx_t *ctx,
                   apr_pool_t *pool);
 
-
 /**
- * Similar to svn_client_blame5(), but with #svn_client_blame_receiver3_t
+ * Similar to svn_client_blame5(), but with #svn_client_blame_receiver2_t
  * as the receiver.
  *
  * @deprecated Provided for backwards compatibility with the 1.6 API.
@@ -4565,6 +4633,11 @@ typedef enum svn_client_conflict_option_id_t {
   svn_client_conflict_option_sibling_move_file_text_merge, /**< @since New in 1.11. */
   svn_client_conflict_option_sibling_move_dir_merge, /**< @since New in 1.11. */
 
+  /* Options for local move vs incoming move on merge. */
+  svn_client_conflict_option_both_moved_file_merge, /*< @since New in 1.12 */
+  svn_client_conflict_option_both_moved_file_move_merge, /*< @since New in 1.12 */
+  svn_client_conflict_option_both_moved_dir_merge, /*< @since New in 1.12 */
+  svn_client_conflict_option_both_moved_dir_move_merge, /*< @since New in 1.12 */
 } svn_client_conflict_option_id_t;
 
 /**
@@ -6761,7 +6834,7 @@ svn_client_list2(const char *path_or_url,
 
 /**
  * Similar to svn_client_list2(), but with @a recurse instead of @a depth.
- * If @a recurse is TRUE, pass #svn_depth_files for @a depth; else
+ * If @a recurse is FALSE, pass #svn_depth_immediates for @a depth; else
  * pass #svn_depth_infinity.
  *
  * @since New in 1.4.
@@ -6941,12 +7014,12 @@ typedef struct svn_client__shelf_t
 {
     /* Public fields (read-only for public use) */
     const char *name;
-    int max_version;  /** @deprecated */
+    int max_version;  /**< @deprecated */
 
     /* Private fields */
     const char *wc_root_abspath;
     const char *shelves_dir;
-    apr_hash_t *revprops;  /* non-null; allocated in POOL */
+    apr_hash_t *revprops;  /**< non-null; allocated in POOL */
     svn_client_ctx_t *ctx;
     apr_pool_t *pool;
 } svn_client__shelf_t;
@@ -6959,11 +7032,11 @@ typedef struct svn_client__shelf_version_t
 {
   /* Public fields (read-only for public use) */
   svn_client__shelf_t *shelf;
-  apr_time_t mtime;  /** time-stamp of this version */
+  apr_time_t mtime;  /**< time-stamp of this version */
 
   /* Private fields */
-  const char *files_dir_abspath;  /** abspath of the storage area */
-  int version_number;  /** version number starting from 1 */
+  const char *files_dir_abspath;  /**< abspath of the storage area */
+  int version_number;  /**< version number starting from 1 */
 } svn_client__shelf_version_t;
 
 /** Open an existing shelf or create a new shelf.
@@ -7026,6 +7099,20 @@ svn_client__shelf_delete(const char *name,
                         svn_client_ctx_t *ctx,
                         apr_pool_t *scratch_pool);
 
+/** Get an editor that, when driven, will store changes in @a shelf_version.
+ *
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client__shelf_mods_editor(const svn_delta_editor_t **editor_p,
+                              void **edit_baton_p,
+                              svn_client__shelf_version_t *shelf_version,
+                              svn_wc_notify_func2_t notify_func,
+                              void *notify_baton,
+                              svn_client_ctx_t *ctx,
+                              apr_pool_t *result_pool);
+
 /** Save the local modifications found by @a paths, @a depth,
  * @a changelists as a new version of @a shelf.
  *
@@ -7069,7 +7156,7 @@ svn_client__shelf_save_new_version3(svn_client__shelf_version_t **new_version_p,
  *
  * Leave the shelf's log message and other revprops unchanged.
  *
- * Any #svn_client_shelf_version_t object that refers to a deleted version
+ * Any #svn_client__shelf_version_t object that refers to a deleted version
  * will become invalid: attempting to use it will give undefined behaviour.
  * The given @a shelf_version will remain valid.
  *
@@ -7082,7 +7169,7 @@ svn_client__shelf_delete_newer_versions(svn_client__shelf_t *shelf,
                                        apr_pool_t *scratch_pool);
 
 /** Return in @a shelf_version an existing version of @a shelf, given its
- * @a version_number. Error if that version doesn't exist.
+ * @a version_number (starting from 1). Error if that version doesn't exist.
  *
  * There is no need to "close" it after use.
  *
@@ -7109,7 +7196,7 @@ svn_client__shelf_get_newest_version(svn_client__shelf_version_t **shelf_version
                                     apr_pool_t *result_pool,
                                     apr_pool_t *scratch_pool);
 
-/** Return in @a versions_p an array of (#svn_client_shelf_version_t *)
+/** Return in @a versions_p an array of (#svn_client__shelf_version_t *)
  * containing all versions of @a shelf.
  *
  * The versions will be in chronological order, oldest to newest.
@@ -7177,6 +7264,23 @@ SVN_EXPERIMENTAL
 svn_error_t *
 svn_client__shelf_unapply(svn_client__shelf_version_t *shelf_version,
                          svn_boolean_t dry_run,
+                         apr_pool_t *scratch_pool);
+
+/** Send committable changes found in a shelf to a delta-editor.
+ *
+ * Push changes from the @a shelf_version subtree at @a top_relpath
+ * to @a editor : @a edit_baton.
+ *
+ * @warning EXPERIMENTAL.
+ */
+SVN_EXPERIMENTAL
+svn_error_t *
+svn_client__shelf_replay(svn_client__shelf_version_t *shelf_version,
+                         const char *top_relpath,
+                         const svn_delta_editor_t *editor,
+                         void *edit_baton,
+                         svn_wc_notify_func2_t notify_func,
+                         void *notify_baton,
                          apr_pool_t *scratch_pool);
 
 /** Set @a *affected_paths to a hash with one entry for each path affected
@@ -7292,7 +7396,7 @@ svn_client__shelf_get_log_message(char **log_message,
  */
 typedef struct svn_client__shelf_info_t
 {
-  apr_time_t mtime;  /* mtime of the latest change */
+  apr_time_t mtime;  /**< mtime of the latest change */
 } svn_client__shelf_info_t;
 
 /** Set @a *shelf_infos to a hash, keyed by shelf name, of pointers to
@@ -7311,8 +7415,8 @@ svn_client__shelf_list(apr_hash_t **shelf_infos,
                       apr_pool_t *result_pool,
                       apr_pool_t *scratch_pool);
 
-/* Report the shelved status of all the shelved paths in SHELF_VERSION
- * via WALK_FUNC(WALK_BATON, ...).
+/** Report the shelved status of all the shelved paths in @a shelf_version
+ * via @a walk_func(@a walk_baton, ...).
  *
  * @warning EXPERIMENTAL.
  */

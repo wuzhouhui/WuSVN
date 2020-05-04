@@ -3046,13 +3046,12 @@ def mergeinfo_update_elision(sbox):
 
   # Make a branch A/B_COPY
   expected_stdout =  verify.UnorderedOutput([
-     "A    " + sbox.ospath('A/B_COPY/lambda') + "\n",
-     "A    " + sbox.ospath('A/B_COPY/E') + "\n",
-     "A    " + sbox.ospath('A/B_COPY/E/alpha') + "\n",
-     "A    " + sbox.ospath('A/B_COPY/E/beta') + "\n",
-     "A    " + sbox.ospath('A/B_COPY/F') + "\n",
-     "Checked out revision 1.\n",
      "A         " + B_COPY_path + "\n",
+     "A         " + sbox.ospath('A/B_COPY/lambda') + "\n",
+     "A         " + sbox.ospath('A/B_COPY/E') + "\n",
+     "A         " + sbox.ospath('A/B_COPY/E/alpha') + "\n",
+     "A         " + sbox.ospath('A/B_COPY/E/beta') + "\n",
+     "A         " + sbox.ospath('A/B_COPY/F') + "\n",
     ])
   svntest.actions.run_and_verify_svn(expected_stdout, [], 'copy',
                                      sbox.repo_url + "/A/B", B_COPY_path)
@@ -6856,6 +6855,48 @@ def update_add_missing_local_add(sbox):
   
   sbox.simple_update()
 
+# Verify that deleting an unmodified directory leaves behind any unversioned
+# items on disk
+def update_keeps_unversioned_items_in_deleted_dir(sbox):
+  "update keeps unversioned items in deleted dir"
+  sbox.build()
+  wc_dir = sbox.wc_dir
+
+  sbox.simple_rm('A/D/G')
+  sbox.simple_commit()
+
+  sbox.simple_update('', revision='1')
+
+  os.mkdir(sbox.ospath('A/D/G/unversioned-dir'))
+  svntest.main.file_write(sbox.ospath('A/D/G/unversioned.txt'),
+                          'unversioned file', 'wb')
+
+  expected_output = svntest.wc.State(wc_dir, {
+    'A/D/G' : Item(status='D '),
+    })
+
+  expected_disk = svntest.main.greek_state.copy()
+  # The unversioned items should be left behind on disk
+  expected_disk.add({
+    'A/D/G/unversioned-dir' : Item(),
+    'A/D/G/unversioned.txt' : Item('unversioned file'),
+    })
+  expected_disk.remove('A/D/G/pi')
+  expected_disk.remove('A/D/G/rho')
+  expected_disk.remove('A/D/G/tau')
+
+  expected_status = svntest.actions.get_virginal_state(wc_dir, 2)
+  expected_status.remove('A/D/G')
+  expected_status.remove('A/D/G/pi')
+  expected_status.remove('A/D/G/rho')
+  expected_status.remove('A/D/G/tau')
+
+  svntest.actions.run_and_verify_update(wc_dir,
+                                        expected_output,
+                                        expected_disk,
+                                        expected_status,
+                                        [], True)
+
 #######################################################################
 # Run the tests
 
@@ -6947,6 +6988,7 @@ test_list = [ None,
               missing_tmp_update,
               update_delete_switched,
               update_add_missing_local_add,
+              update_keeps_unversioned_items_in_deleted_dir,
              ]
 
 if __name__ == '__main__':

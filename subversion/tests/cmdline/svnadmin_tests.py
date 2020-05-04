@@ -59,7 +59,8 @@ def read_rep_cache(repo_dir):
   db_path = os.path.join(repo_dir, 'db', 'rep-cache.db')
   db1 = svntest.sqlite3.connect(db_path)
   schema1 = db1.execute("pragma user_version").fetchone()[0]
-  # Can't test newer rep-cache schemas with an old built-in SQLite.
+  # Can't test newer rep-cache schemas with an old built-in SQLite; see the
+  # documentation of STMT_CREATE_SCHEMA_V2 in ../../libsvn_fs_fs/rep-cache-db.sql
   if schema1 >= 2 and svntest.sqlite3.sqlite_version_info < (3, 8, 2):
     raise svntest.Failure("Can't read rep-cache schema %d using old "
                           "Python-SQLite version %s < (3,8,2)" %
@@ -3872,14 +3873,17 @@ def check_recover_prunes_rep_cache(sbox, enable_rep_sharing):
   sbox.simple_append('iota', 'New line.\n')
   sbox.simple_commit()
   rep_cache_r2 = read_rep_cache(sbox.repo_dir)
-  assert len(rep_cache_r2) == len(rep_cache_r1) + 1
+  if not (len(rep_cache_r2) == len(rep_cache_r1) + 1):
+    raise svntest.Failure
 
-  # To test 'recover' while rep-sharing is disabled, disable it now.
-  if not enable_rep_sharing:
-    fsfs_conf = svntest.main.get_fsfs_conf_file_path(sbox.repo_dir)
-    svntest.main.file_append(fsfs_conf,
-                             "[rep-sharing]\n"
-                             "enable-rep-sharing = false\n")
+  fsfs_conf = svntest.main.get_fsfs_conf_file_path(sbox.repo_dir)
+  svntest.main.file_append(fsfs_conf,
+                           # Add a newline in case the existing file doesn't
+                           # end with one.
+                           "\n"
+                           "[rep-sharing]\n"
+                           "enable-rep-sharing = %s\n"
+                           % (('true' if enable_rep_sharing else 'false'),))
 
   # Break r2 in such a way that 'recover' will discard it
   head_rev_path = fsfs_file(sbox.repo_dir, 'revs', '2')
@@ -3890,10 +3894,13 @@ def check_recover_prunes_rep_cache(sbox, enable_rep_sharing):
   # Recover back to r1.
   svntest.actions.run_and_verify_svnadmin(None, [],
                                           "recover", sbox.repo_dir)
+  svntest.actions.run_and_verify_svnlook(['1\n'], [], 'youngest',
+                                         sbox.repo_dir)
 
   # Check the rep-cache is pruned.
   rep_cache_recovered = read_rep_cache(sbox.repo_dir)
-  assert rep_cache_recovered == rep_cache_r1
+  if not (rep_cache_recovered == rep_cache_r1):
+    raise svntest.Failure
 
 @Issue(4077)
 @SkipUnless(svntest.main.is_fs_type_fsfs)
@@ -3912,6 +3919,51 @@ def recover_prunes_rep_cache_when_disabled(sbox):
   sbox.build()
 
   check_recover_prunes_rep_cache(sbox, enable_rep_sharing=False)
+
+@Issue(4760)
+def dump_include_copied_directory(sbox):
+  "include copied directory with nested nodes"
+
+  sbox.build(create_wc=False)
+
+  svntest.actions.run_and_verify_svn(svntest.verify.AnyOutput, [], "copy",
+                                     sbox.repo_url + '/A/D',
+                                     sbox.repo_url + '/COPY',
+                                     "-m", "Create branch.")
+
+  # Dump repository with only /COPY path included.
+  _, dump, _ = svntest.actions.run_and_verify_svnadmin(None, [],
+                                                       'dump', '-q',
+                                                       '--include', '/COPY',
+                                                       sbox.repo_dir)
+
+  # Load repository from dump.
+  sbox2 = sbox.clone_dependent()
+  sbox2.build(create_wc=False, empty=True)
+  load_and_verify_dumpstream(sbox2, None, [], None, False, dump)
+
+  # Check log.
+  expected_output = svntest.verify.RegexListOutput([
+    '-+\\n',
+    'r2\ .*\n',
+    # Only '/COPY' is added
+    re.escape('Changed paths:\n'),
+    re.escape('   A /COPY'),
+    re.escape('   A /COPY/G'),
+    re.escape('   A /COPY/G/pi'),
+    re.escape('   A /COPY/G/rho'),
+    re.escape('   A /COPY/G/tau'),
+    re.escape('   A /COPY/H'),
+    re.escape('   A /COPY/H/chi'),
+    re.escape('   A /COPY/H/omega'),
+    re.escape('   A /COPY/H/psi'),
+    re.escape('   A /COPY/gamma'),
+    '-+\\n',
+    'r1\ .*\n',
+    '-+\\n'
+  ])
+  svntest.actions.run_and_verify_svn(expected_output, [],
+                                     'log', '-v', '-q', sbox2.repo_url)
 
 ########################################################################
 # Run the tests
@@ -3990,6 +4042,7 @@ test_list = [ None,
               dump_no_canonicalize_svndate,
               recover_prunes_rep_cache_when_enabled,
               recover_prunes_rep_cache_when_disabled,
+              dump_include_copied_directory,
              ]
 
 if __name__ == '__main__':

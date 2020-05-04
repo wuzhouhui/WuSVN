@@ -23,7 +23,7 @@ AC_PREREQ(2.59)
 dnl Get the version of Subversion, using m4's esyscmd() command to do this
 dnl at m4-time, since AC_INIT() requires it then.
 AC_INIT([subversion],
-     [esyscmd(python build/getversion.py SVN subversion/include/svn_version.h)],
+     [esyscmd($PYTHON build/getversion.py SVN subversion/include/svn_version.h)],
      [http://subversion.apache.org/])
 
 AC_CONFIG_SRCDIR(subversion/include/svn_types.h)
@@ -640,29 +640,6 @@ AC_SUBST(SVN_GNOME_KEYRING_LIBS)
 dnl LibSecret -------------------
 SVN_LIB_SECRET
 
-dnl Googlemock -----------------
-AC_ARG_ENABLE([googlemock],
-  AS_HELP_STRING([--disable-googlemock],
-                 [Do not use the Googlemock testing framework]),
-  [],
-  [enable_googlemock=yes])
-
-AC_SUBST([GOOGLEMOCK_SRCDIR], [$abs_srcdir/googlemock])
-AC_MSG_CHECKING([whether use Googlemock])
-if test "$enable_googlemock" != "no"; then
-  if test -d "$GOOGLEMOCK_SRCDIR"; then
-    AC_MSG_RESULT([yes])
-    SVN_USE_GOOGLEMOCK=true
-  else
-    AC_MSG_RESULT([no])
-    SVN_USE_GOOGLEMOCK=false
-  fi
-else
-  AC_MSG_RESULT([no])
-  SVN_USE_GOOGLEMOCK=false
-fi
-AC_SUBST([SVN_USE_GOOGLEMOCK])
-
 dnl Ev2 experimental features ----------------------
 dnl Note: The Ev2 implementations will be built unconditionally, but by
 dnl providing this flag, users can choose to use the currently-shimmed Ev2
@@ -867,18 +844,21 @@ fi
 
 dnl plaintext passwords -------------------
 AC_ARG_ENABLE(plaintext-password-storage,
-AS_HELP_STRING([--disable-plaintext-password-storage],
-               [Disable on-disk caching of plaintext passwords and passphrases.
-                (Leaving this functionality enabled will not force Subversion
+AS_HELP_STRING([--enable-plaintext-password-storage],
+               [Enable on-disk caching of plaintext passwords and passphrases.
+                (Enabling this functionality will not force Subversion
                 to store passwords in plaintext, but does permit users to
                 explicitly allow that behavior via runtime configuration.)]),
-[
-   if test "$enableval" = "no"; then
-      AC_MSG_NOTICE([Disabling plaintext password/passphrase storage])
-      AC_DEFINE(SVN_DISABLE_PLAINTEXT_PASSWORD_STORAGE, 1,
-                [Defined if plaintext password/passphrase storage is disabled])
-   fi
-])
+[plaintext_passwordd_storage="$enableval"],
+[plaintext_passwordd_storage="no"])
+
+if test "$plaintext_passwordd_storage" = "yes"; then
+  AC_MSG_WARN([Enabling plaintext password/passphrase storage])
+else
+  AC_MSG_NOTICE([Disabling plaintext password/passphrase storage])
+  AC_DEFINE(SVN_DISABLE_PLAINTEXT_PASSWORD_STORAGE, 1,
+            [Defined if plaintext password/passphrase storage is disabled])
+fi
 
 dnl Build and install rules -------------------
 
@@ -948,8 +928,9 @@ AC_FUNC_VPRINTF
 dnl check for functions needed in special file handling
 AC_CHECK_FUNCS(symlink readlink)
 
-dnl check for uname
+dnl check for uname and ELF headers
 AC_CHECK_HEADERS(sys/utsname.h, [AC_CHECK_FUNCS(uname)], [])
+AC_CHECK_HEADERS(elf.h)
 
 dnl check for termios
 AC_CHECK_HEADER(termios.h,[
@@ -1153,7 +1134,6 @@ if test "$enable_optimization" = "yes"; then
           SVN_CFLAGS_ADD_IFELSE([-O1],[],[
             SVN_CFLAGS_ADD_IFELSE([-O])])])])
       SVN_CFLAGS_ADD_IFELSE([-Wno-clobbered])
-      SVN_CFLAGS_ADD_IFELSE([-flto])
     fi
   fi
   if test -z ["`echo $CXXUSERFLAGS' ' | $EGREP -- '-O[^ ]* '`"]; then
@@ -1169,7 +1149,6 @@ if test "$enable_optimization" = "yes"; then
           SVN_CXXFLAGS_ADD_IFELSE([-O1],[],[
             SVN_CXXFLAGS_ADD_IFELSE([-O])])])])
       SVN_CXXFLAGS_ADD_IFELSE([-Wno-clobbered])
-      SVN_CXXFLAGS_ADD_IFELSE([-flto])
     fi
   fi
 elif test "$enable_optimization" = "no"; then
@@ -1183,9 +1162,11 @@ fi
 
 dnl Dump the current compiler options
 AC_MSG_NOTICE([C compiler flags: $CFLAGS])
+AC_MSG_NOTICE([  language-level: $CMODEFLAGS])
 AC_MSG_NOTICE([    user-defined: $CUSERFLAGS])
 AC_MSG_NOTICE([ maintainer-mode: $CMAINTAINERFLAGS])
 AC_MSG_NOTICE([C++ compiler flags: $CXXFLAGS])
+AC_MSG_NOTICE([    language-level: $CXXMODEFLAGS])
 AC_MSG_NOTICE([      user-defined: $CXXUSERFLAGS])
 AC_MSG_NOTICE([   maintainer-mode: $CXXMAINTAINERFLAGS])
 
@@ -1453,6 +1434,69 @@ AC_SUBST(SVN_RA_LIB_LINK)
 AC_SUBST(SVN_FS_LIB_DEPS)
 AC_SUBST(SVN_FS_LIB_INSTALL_DEPS)
 AC_SUBST(SVN_FS_LIB_LINK)
+
+# ==== SVN++ =================================================================
+
+dnl Possibly compile SVN++
+do_svnxx_build=no
+AC_ARG_ENABLE(svnxx,
+  AS_HELP_STRING([--enable-svnxx],
+      [Enable compilation of the C++ bindings (requires C++)]),
+  [ if test "$enableval" = "yes" ; then
+        AC_MSG_NOTICE([Enabling the C++ bindings])
+        do_svnxx_build=yes
+    fi
+  ])
+
+dnl Possibly compile SVN++ tests
+do_svnxx_test_build=no
+AC_ARG_ENABLE(svnxx-tests,
+  AS_HELP_STRING([--enable-svnxx-tests],
+      [Enable compilation of tests for the C++ bindings
+      (implies --enable-svnxx, requires Boost and Boost.Test)]),
+  [ if test "$enableval" = "yes" ; then
+        AC_MSG_NOTICE([Enabling tests for the C++ bindings])
+        do_svnxx_test_build=yes
+    fi
+  ])
+
+AX_BOOST_BASE([1.58],
+  [
+    if test "$do_svnxx_test_build" = "yes"; then
+        AX_BOOST_UNIT_TEST_FRAMEWORK
+    fi
+  ],
+  [
+    if test "$do_svnxx_test_build" = "yes"; then
+        AC_MSG_WARN([Tests for the C++ bindings require Boost and Boost.Test])
+        do_svnxx_test_build=no
+    fi
+  ])
+
+if test "$do_svnxx_test_build" = "yes"; then
+    if test "$want_boost" != "yes"; then
+        AC_MSG_WARN([Tests for the C++ bindings require Boost and Boost.Test])
+        do_svnxx_test_build=no
+        SVN_BUILD_SVNXX_TESTS=false
+    else
+        if test "$do_svnxx_build" != "yes"; then
+            AC_MSG_WARN([Enabling the C++ bindings because their tests are enabled])
+            do_svnxx_build=yes
+        fi
+        SVN_BUILD_SVNXX_TESTS=true
+    fi
+else
+    SVN_BUILD_SVNXX_TESTS=false
+fi
+
+if test "$do_svnxx_build" = "yes"; then
+    SVN_BUILD_SVNXX=true
+else
+    SVN_BUILD_SVNXX=false
+fi
+
+AC_SUBST(SVN_BUILD_SVNXX)
+AC_SUBST(SVN_BUILD_SVNXX_TESTS)
 
 # ==== JavaHL ================================================================
 

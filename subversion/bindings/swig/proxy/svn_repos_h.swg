@@ -20,7 +20,8 @@
   svn_repos_path_change_receiver_t,
   svn_repos_log_entry_receiver_t,
   svn_repos_file_rev_handler_t,
-  svn_repos_verify_callback_t
+  svn_repos_verify_callback_t,
+  svn_repos_authz_warning_func_t
 };
 %apply CALLABLE_CALLBACK * {
   svn_repos_authz_func_t *,
@@ -32,7 +33,8 @@
   svn_repos_path_change_receiver_t *,
   svn_repos_log_entry_receiver_t *,
   svn_repos_file_rev_handler_t *,
-  svn_repos_verify_callback_t *
+  svn_repos_verify_callback_t *,
+  svn_repos_authz_warning_func_t *
 };
 #endif
 
@@ -60,7 +62,8 @@
   void *filter_baton,
   void *parse_baton,
   void *revision_baton,
-  void *node_baton
+  void *node_baton,
+  void *warning_baton
 };
 #endif
 
@@ -250,6 +253,11 @@ static svn_error_t * svn_repos_invoke_verify_callback(
   return _obj(baton, revision, verify_err, scratch_pool);
 }
 
+static void svn_repos_invoke_authz_warning_func(
+  svn_repos_authz_warning_func_t _obj, void *baton, const svn_error_t *error, apr_pool_t *scratch_pool) {
+  _obj(baton, error, scratch_pool);
+}
+
 %}
 
 #ifdef SWIGPYTHON
@@ -286,5 +294,6 @@ static svn_error_t * svn_repos_invoke_verify_callback(
 %funcptr_proxy(svn_repos_log_entry_receiver_t, svn_repos_invoke_log_entry_receiver);
 %funcptr_proxy(svn_repos_file_rev_handler_t, svn_repos_invoke_file_rev_handler);
 %funcptr_proxy(svn_repos_verify_callback_t, svn_repos_invoke_verify_callback);
+%funcptr_proxy(svn_repos_authz_warning_func_t, svn_repos_invoke_authz_warning_func);
 
 #endif

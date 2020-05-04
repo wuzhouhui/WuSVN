@@ -5,6 +5,7 @@
 /* No default constructors for opaque structs */
 #ifdef SWIGPYTHON
 %nodefault svn_txdelta_stream_t;
+%nodefault svn_delta_path_driver_state_t;
 #endif
 
 /* Callback typemaps */
@@ -14,6 +15,7 @@
   svn_txdelta_next_window_fn_t,
   svn_txdelta_md5_digest_fn_t,
   svn_txdelta_stream_open_func_t,
+  svn_delta_path_driver_cb_func2_t,
   svn_delta_path_driver_cb_func_t,
   svn_file_rev_handler_t,
   svn_file_rev_handler_old_t
@@ -23,6 +25,7 @@
   svn_txdelta_next_window_fn_t *,
   svn_txdelta_md5_digest_fn_t *,
   svn_txdelta_stream_open_func_t *,
+  svn_delta_path_driver_cb_func2_t *,
   svn_delta_path_driver_cb_func_t *,
   svn_file_rev_handler_t *,
   svn_file_rev_handler_old_t *
@@ -58,6 +61,7 @@
 %proxy(svn_txdelta_window_t);
 %opaque_proxy(svn_txdelta_stream_t);
 %proxy(svn_delta_editor_t);
+%opaque_proxy(svn_delta_path_driver_state_t);
 #endif
 
 /* Callbacks */
@@ -168,6 +172,11 @@ static svn_error_t * svn_txdelta_invoke_stream_open_func(
   return _obj(txdelta_stream, baton, result_pool, scratch_pool);
 }
 
+static svn_error_t * svn_delta_invoke_path_driver_cb_func2(
+  svn_delta_path_driver_cb_func2_t _obj, void **dir_baton, const svn_delta_editor_t *editor, void *edit_baton, void *parent_baton, void *callback_baton, const char *relpath, apr_pool_t *pool) {
+  return _obj(dir_baton, editor, edit_baton, parent_baton, callback_baton, relpath, pool);
+}
+
 static svn_error_t * svn_delta_invoke_path_driver_cb_func(
   svn_delta_path_driver_cb_func_t _obj, void **dir_baton, void *parent_baton, void *callback_baton, const char *path, apr_pool_t *pool) {
   return _obj(dir_baton, parent_baton, callback_baton, path, pool);
@@ -207,6 +216,7 @@ static svn_error_t * svn_file_invoke_rev_handler_old(
 %funcptr_proxy(svn_txdelta_next_window_fn_t, svn_txdelta_invoke_next_window_fn);
 %funcptr_proxy(svn_txdelta_md5_digest_fn_t, svn_txdelta_invoke_md5_digest_fn);
 %funcptr_proxy(svn_txdelta_stream_open_func_t, svn_txdelta_invoke_stream_open_func);
+%funcptr_proxy(svn_delta_path_driver_cb_func2_t, svn_delta_invoke_path_driver_cb_func2);
 %funcptr_proxy(svn_delta_path_driver_cb_func_t, svn_delta_invoke_path_driver_cb_func);
 %funcptr_proxy(svn_file_rev_handler_t, svn_file_invoke_rev_handler);
 %funcptr_proxy(svn_file_rev_handler_old_t, svn_file_invoke_rev_handler_old);

@@ -422,6 +422,7 @@ SVN_ERR_INVALID_INPUT = _core.SVN_ERR_INVALID_INPUT
 SVN_ERR_SQLITE_ROLLBACK_FAILED = _core.SVN_ERR_SQLITE_ROLLBACK_FAILED
 SVN_ERR_LZ4_COMPRESSION_FAILED = _core.SVN_ERR_LZ4_COMPRESSION_FAILED
 SVN_ERR_LZ4_DECOMPRESSION_FAILED = _core.SVN_ERR_LZ4_DECOMPRESSION_FAILED
+SVN_ERR_CANONICALIZATION_FAILED = _core.SVN_ERR_CANONICALIZATION_FAILED
 SVN_ERR_CL_ARG_PARSING_ERROR = _core.SVN_ERR_CL_ARG_PARSING_ERROR
 SVN_ERR_CL_INSUFFICIENT_ARGS = _core.SVN_ERR_CL_INSUFFICIENT_ARGS
 SVN_ERR_CL_MUTUALLY_EXCLUSIVE_ARGS = _core.SVN_ERR_CL_MUTUALLY_EXCLUSIVE_ARGS
@@ -506,6 +507,20 @@ def svn_parse_date(*args):
 def svn_sleep_for_timestamps():
     """svn_sleep_for_timestamps()"""
     return _core.svn_sleep_for_timestamps()
+svn_node_none = _core.svn_node_none
+svn_node_file = _core.svn_node_file
+svn_node_dir = _core.svn_node_dir
+svn_node_unknown = _core.svn_node_unknown
+svn_node_symlink = _core.svn_node_symlink
+svn_tristate_false = _core.svn_tristate_false
+svn_tristate_true = _core.svn_tristate_true
+svn_tristate_unknown = _core.svn_tristate_unknown
+svn_depth_unknown = _core.svn_depth_unknown
+svn_depth_exclude = _core.svn_depth_exclude
+svn_depth_empty = _core.svn_depth_empty
+svn_depth_files = _core.svn_depth_files
+svn_depth_immediates = _core.svn_depth_immediates
+svn_depth_infinity = _core.svn_depth_infinity
 SVN_UNALIGNED_ACCESS_IS_OK = _core.SVN_UNALIGNED_ACCESS_IS_OK
 TRUE = _core.TRUE
 FALSE = _core.FALSE
@@ -582,11 +597,6 @@ class svn_error_t:
 svn_error_t_swigregister = _core.svn_error_t_swigregister
 svn_error_t_swigregister(svn_error_t)
 
-svn_node_none = _core.svn_node_none
-svn_node_file = _core.svn_node_file
-svn_node_dir = _core.svn_node_dir
-svn_node_unknown = _core.svn_node_unknown
-svn_node_symlink = _core.svn_node_symlink
 
 def svn_node_kind_to_word(kind):
     """svn_node_kind_to_word(svn_node_kind_t kind) -> char const *"""
@@ -595,9 +605,6 @@ def svn_node_kind_to_word(kind):
 def svn_node_kind_from_word(word):
     """svn_node_kind_from_word(char const * word) -> svn_node_kind_t"""
     return _core.svn_node_kind_from_word(word)
-svn_tristate_false = _core.svn_tristate_false
-svn_tristate_true = _core.svn_tristate_true
-svn_tristate_unknown = _core.svn_tristate_unknown
 
 def svn_tristate__to_word(tristate):
     """svn_tristate__to_word(svn_tristate_t tristate) -> char const *"""
@@ -613,12 +620,6 @@ def svn_revnum_parse(str):
 SVN_REVNUM_T_FMT = _core.SVN_REVNUM_T_FMT
 svn_nonrecursive = _core.svn_nonrecursive
 svn_recursive = _core.svn_recursive
-svn_depth_unknown = _core.svn_depth_unknown
-svn_depth_exclude = _core.svn_depth_exclude
-svn_depth_empty = _core.svn_depth_empty
-svn_depth_files = _core.svn_depth_files
-svn_depth_immediates = _core.svn_depth_immediates
-svn_depth_infinity = _core.svn_depth_infinity
 
 def svn_depth_to_word(depth):
     """svn_depth_to_word(svn_depth_t depth) -> char const *"""
@@ -2333,6 +2334,14 @@ SVN_PROP_TXN_PREFIX = _core.SVN_PROP_TXN_PREFIX
 SVN_PROP_TXN_CLIENT_COMPAT_VERSION = _core.SVN_PROP_TXN_CLIENT_COMPAT_VERSION
 SVN_PROP_TXN_USER_AGENT = _core.SVN_PROP_TXN_USER_AGENT
 SVN_PROP_REVISION_PREFIX = _core.SVN_PROP_REVISION_PREFIX
+svn_opt_revision_unspecified = _core.svn_opt_revision_unspecified
+svn_opt_revision_number = _core.svn_opt_revision_number
+svn_opt_revision_date = _core.svn_opt_revision_date
+svn_opt_revision_committed = _core.svn_opt_revision_committed
+svn_opt_revision_previous = _core.svn_opt_revision_previous
+svn_opt_revision_base = _core.svn_opt_revision_base
+svn_opt_revision_working = _core.svn_opt_revision_working
+svn_opt_revision_head = _core.svn_opt_revision_head
 SVN_OPT_MAX_ALIASES = _core.SVN_OPT_MAX_ALIASES
 SVN_OPT_MAX_OPTIONS = _core.SVN_OPT_MAX_OPTIONS
 SVN_OPT_MAX_PARAGRAPHS = _core.SVN_OPT_MAX_PARAGRAPHS
@@ -2676,14 +2685,6 @@ def svn_opt_subcommand_help2(*args):
 def svn_opt_subcommand_help(*args):
     """svn_opt_subcommand_help(char const * subcommand, svn_opt_subcommand_desc_t table, apr_getopt_option_t const * options_table, apr_pool_t pool)"""
     return _core.svn_opt_subcommand_help(*args)
-svn_opt_revision_unspecified = _core.svn_opt_revision_unspecified
-svn_opt_revision_number = _core.svn_opt_revision_number
-svn_opt_revision_date = _core.svn_opt_revision_date
-svn_opt_revision_committed = _core.svn_opt_revision_committed
-svn_opt_revision_previous = _core.svn_opt_revision_previous
-svn_opt_revision_base = _core.svn_opt_revision_base
-svn_opt_revision_working = _core.svn_opt_revision_working
-svn_opt_revision_head = _core.svn_opt_revision_head
 class svn_opt_revision_value_t:
     """Proxy of C svn_opt_revision_value_t struct."""
 
@@ -5131,13 +5132,13 @@ def svn_dirent_internal_style(*args):
     """svn_dirent_internal_style(char const * dirent, apr_pool_t result_pool) -> char const *"""
     return _core.svn_dirent_internal_style(*args)
 
+def svn_dirent_internal_style_safe(*args):
+    """svn_dirent_internal_style_safe(char const * dirent, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _core.svn_dirent_internal_style_safe(*args)
+
 def svn_dirent_local_style(*args):
     """svn_dirent_local_style(char const * dirent, apr_pool_t result_pool) -> char const *"""
     return _core.svn_dirent_local_style(*args)
-
-def svn_relpath__internal_style(*args):
-    """svn_relpath__internal_style(char const * relpath, apr_pool_t result_pool) -> char const *"""
-    return _core.svn_relpath__internal_style(*args)
 
 def svn_dirent_join(*args):
     """svn_dirent_join(char const * base, char const * component, apr_pool_t result_pool) -> char *"""
@@ -5199,13 +5200,25 @@ def svn_dirent_canonicalize(*args):
     """svn_dirent_canonicalize(char const * dirent, apr_pool_t result_pool) -> char const *"""
     return _core.svn_dirent_canonicalize(*args)
 
+def svn_dirent_canonicalize_safe(*args):
+    """svn_dirent_canonicalize_safe(char const * dirent, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _core.svn_dirent_canonicalize_safe(*args)
+
 def svn_relpath_canonicalize(*args):
     """svn_relpath_canonicalize(char const * relpath, apr_pool_t result_pool) -> char const *"""
     return _core.svn_relpath_canonicalize(*args)
 
+def svn_relpath_canonicalize_safe(*args):
+    """svn_relpath_canonicalize_safe(char const * relpath, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _core.svn_relpath_canonicalize_safe(*args)
+
 def svn_uri_canonicalize(*args):
     """svn_uri_canonicalize(char const * uri, apr_pool_t result_pool) -> char const *"""
     return _core.svn_uri_canonicalize(*args)
+
+def svn_uri_canonicalize_safe(*args):
+    """svn_uri_canonicalize_safe(char const * uri, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _core.svn_uri_canonicalize_safe(*args)
 
 def svn_dirent_is_canonical(*args):
     """svn_dirent_is_canonical(char const * dirent, apr_pool_t scratch_pool) -> svn_boolean_t"""

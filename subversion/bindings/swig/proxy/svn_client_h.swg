@@ -16,6 +16,7 @@
   svn_client_get_commit_log3_t,
   svn_client_get_commit_log2_t,
   svn_client_get_commit_log_t,
+  svn_client_blame_receiver4_t,
   svn_client_blame_receiver3_t,
   svn_client_blame_receiver2_t,
   svn_client_blame_receiver_t,
@@ -36,6 +37,7 @@
   svn_client_get_commit_log3_t *,
   svn_client_get_commit_log2_t *,
   svn_client_get_commit_log_t *,
+  svn_client_blame_receiver4_t *,
   svn_client_blame_receiver3_t *,
   svn_client_blame_receiver2_t *,
   svn_client_blame_receiver_t *,
@@ -77,6 +79,7 @@
   void *conflict_walk_func_baton,
   void *shelved_baton,
   void *not_shelved_baton,
+  void *edit_baton,
   void *walk_baton,
   void *callback_baton,
   void *patch_baton
@@ -135,6 +138,11 @@ static svn_error_t * svn_client_invoke_get_commit_log2(
 static svn_error_t * svn_client_invoke_get_commit_log(
   svn_client_get_commit_log_t _obj, const char **log_msg, const char **tmp_file, apr_array_header_t *commit_items, void *baton, apr_pool_t *pool) {
   return _obj(log_msg, tmp_file, commit_items, baton, pool);
+}
+
+static svn_error_t * svn_client_invoke_blame_receiver4(
+  svn_client_blame_receiver4_t _obj, void *baton, apr_int64_t line_no, svn_revnum_t revision, apr_hash_t *rev_props, svn_revnum_t merged_revision, apr_hash_t *merged_rev_props, const char *merged_path, const svn_string_t *line, svn_boolean_t local_change, apr_pool_t *pool) {
+  return _obj(baton, line_no, revision, rev_props, merged_revision, merged_rev_props, merged_path, line, local_change, pool);
 }
 
 static svn_error_t * svn_client_invoke_blame_receiver3(
@@ -210,6 +218,7 @@ static svn_error_t * svn_client_invoke_patch_func(
 %funcptr_proxy(svn_client_get_commit_log3_t, svn_client_invoke_get_commit_log3);
 %funcptr_proxy(svn_client_get_commit_log2_t, svn_client_invoke_get_commit_log2);
 %funcptr_proxy(svn_client_get_commit_log_t, svn_client_invoke_get_commit_log);
+%funcptr_proxy(svn_client_blame_receiver4_t, svn_client_invoke_blame_receiver4);
 %funcptr_proxy(svn_client_blame_receiver3_t, svn_client_invoke_blame_receiver3);
 %funcptr_proxy(svn_client_blame_receiver2_t, svn_client_invoke_blame_receiver2);
 %funcptr_proxy(svn_client_blame_receiver_t, svn_client_invoke_blame_receiver);

@@ -2253,9 +2253,23 @@
   "LIMIT 1 " \
   ""
 
-#define STMT_CREATE_SCHEMA 208
-#define STMT_208_INFO {"STMT_CREATE_SCHEMA", NULL}
+#define STMT_SELECT_COPIES_OF_REPOS_RELPATH 208
+#define STMT_208_INFO {"STMT_SELECT_COPIES_OF_REPOS_RELPATH", NULL}
 #define STMT_208 \
+  "SELECT local_relpath " \
+  "FROM nodes n " \
+  "WHERE wc_id = ?1 AND repos_path = ?2 AND kind = ?3 " \
+  "  AND presence = 'normal' " \
+  "  AND op_depth = (SELECT MAX(op_depth) " \
+  "                  FROM NODES w " \
+  "                  WHERE w.wc_id = ?1 " \
+  "                    AND w.local_relpath = n.local_relpath) " \
+  "ORDER BY local_relpath ASC " \
+  ""
+
+#define STMT_CREATE_SCHEMA 209
+#define STMT_209_INFO {"STMT_CREATE_SCHEMA", NULL}
+#define STMT_209 \
   "CREATE TABLE REPOSITORY ( " \
   "  id INTEGER PRIMARY KEY AUTOINCREMENT, " \
   "  root  TEXT UNIQUE NOT NULL, " \
@@ -2396,9 +2410,9 @@
   "; " \
   ""
 
-#define STMT_INSTALL_SCHEMA_STATISTICS 209
-#define STMT_209_INFO {"STMT_INSTALL_SCHEMA_STATISTICS", NULL}
-#define STMT_209 \
+#define STMT_INSTALL_SCHEMA_STATISTICS 210
+#define STMT_210_INFO {"STMT_INSTALL_SCHEMA_STATISTICS", NULL}
+#define STMT_210 \
   "ANALYZE sqlite_master; " \
   "DELETE FROM sqlite_stat1 " \
   "WHERE tbl in ('NODES', 'ACTUAL_NODE', 'LOCK', 'WC_LOCK', 'EXTERNALS'); " \
@@ -2423,9 +2437,9 @@
   "ANALYZE sqlite_master; " \
   ""
 
-#define STMT_UPGRADE_TO_30 210
-#define STMT_210_INFO {"STMT_UPGRADE_TO_30", NULL}
-#define STMT_210 \
+#define STMT_UPGRADE_TO_30 211
+#define STMT_211_INFO {"STMT_UPGRADE_TO_30", NULL}
+#define STMT_211 \
   "CREATE UNIQUE INDEX IF NOT EXISTS I_NODES_MOVED " \
   "ON NODES (wc_id, moved_to, op_depth); " \
   "CREATE INDEX IF NOT EXISTS I_PRISTINE_MD5 ON PRISTINE (md5_checksum); " \
@@ -2433,9 +2447,9 @@
   "UPDATE nodes SET file_external=1 WHERE file_external IS NOT NULL; " \
   ""
 
-#define STMT_UPGRADE_30_SELECT_CONFLICT_SEPARATE 211
-#define STMT_211_INFO {"STMT_UPGRADE_30_SELECT_CONFLICT_SEPARATE", NULL}
-#define STMT_211 \
+#define STMT_UPGRADE_30_SELECT_CONFLICT_SEPARATE 212
+#define STMT_212_INFO {"STMT_UPGRADE_30_SELECT_CONFLICT_SEPARATE", NULL}
+#define STMT_212 \
   "SELECT wc_id, local_relpath, " \
   "  conflict_old, conflict_working, conflict_new, prop_reject, tree_conflict_data " \
   "FROM actual_node " \
@@ -2447,18 +2461,18 @@
   "ORDER by wc_id, local_relpath " \
   ""
 
-#define STMT_UPGRADE_30_SET_CONFLICT 212
-#define STMT_212_INFO {"STMT_UPGRADE_30_SET_CONFLICT", NULL}
-#define STMT_212 \
+#define STMT_UPGRADE_30_SET_CONFLICT 213
+#define STMT_213_INFO {"STMT_UPGRADE_30_SET_CONFLICT", NULL}
+#define STMT_213 \
   "UPDATE actual_node SET conflict_data = ?3, conflict_old = NULL, " \
   "  conflict_working = NULL, conflict_new = NULL, prop_reject = NULL, " \
   "  tree_conflict_data = NULL " \
   "WHERE wc_id = ?1 and local_relpath = ?2 " \
   ""
 
-#define STMT_UPGRADE_TO_31 213
-#define STMT_213_INFO {"STMT_UPGRADE_TO_31", NULL}
-#define STMT_213 \
+#define STMT_UPGRADE_TO_31 214
+#define STMT_214_INFO {"STMT_UPGRADE_TO_31", NULL}
+#define STMT_214 \
   "ALTER TABLE NODES ADD COLUMN inherited_props BLOB; " \
   "DROP INDEX IF EXISTS I_ACTUAL_CHANGELIST; " \
   "DROP INDEX IF EXISTS I_EXTERNALS_PARENT; " \
@@ -2471,9 +2485,9 @@
   "PRAGMA user_version = 31; " \
   ""
 
-#define STMT_UPGRADE_31_SELECT_WCROOT_NODES 214
-#define STMT_214_INFO {"STMT_UPGRADE_31_SELECT_WCROOT_NODES", NULL}
-#define STMT_214 \
+#define STMT_UPGRADE_31_SELECT_WCROOT_NODES 215
+#define STMT_215_INFO {"STMT_UPGRADE_31_SELECT_WCROOT_NODES", NULL}
+#define STMT_215 \
   "SELECT l.wc_id, l.local_relpath FROM nodes as l " \
   "LEFT OUTER JOIN nodes as r " \
   "ON l.wc_id = r.wc_id " \
@@ -2525,9 +2539,9 @@
   "DROP TABLE ACTUAL_NODE_BACKUP; " \
   ""
 
-#define STMT_VERIFICATION_TRIGGERS 215
-#define STMT_215_INFO {"STMT_VERIFICATION_TRIGGERS", NULL}
-#define STMT_215 \
+#define STMT_VERIFICATION_TRIGGERS 216
+#define STMT_216_INFO {"STMT_VERIFICATION_TRIGGERS", NULL}
+#define STMT_216 \
   "CREATE TEMPORARY TRIGGER no_repository_updates BEFORE UPDATE ON repository " \
   "BEGIN " \
   "  SELECT RAISE(FAIL, 'Updates to REPOSITORY are not allowed.'); " \
@@ -2566,9 +2580,9 @@
   "END; " \
   ""
 
-#define STMT_STATIC_VERIFY 216
-#define STMT_216_INFO {"STMT_STATIC_VERIFY", NULL}
-#define STMT_216 \
+#define STMT_STATIC_VERIFY 217
+#define STMT_217_INFO {"STMT_STATIC_VERIFY", NULL}
+#define STMT_217 \
   "SELECT local_relpath, op_depth, 1, 'Invalid parent relpath set in NODES' " \
   "FROM nodes n WHERE local_relpath != '' " \
   " AND (parent_relpath IS NULL " \
@@ -2958,6 +2972,7 @@
     STMT_214, \
     STMT_215, \
     STMT_216, \
+    STMT_217, \
     NULL \
   }
 
@@ -3180,5 +3195,6 @@
     STMT_214_INFO, \
     STMT_215_INFO, \
     STMT_216_INFO, \
+    STMT_217_INFO, \
     {NULL, NULL} \
   }

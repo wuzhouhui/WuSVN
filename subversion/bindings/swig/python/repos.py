@@ -1265,6 +1265,10 @@ def svn_repos_authz_initialize(*args):
     """svn_repos_authz_initialize(apr_pool_t pool) -> svn_error_t"""
     return _repos.svn_repos_authz_initialize(*args)
 
+def svn_repos_authz_read4(*args):
+    """svn_repos_authz_read4(char const * path, char const * groups_path, svn_boolean_t must_exist, svn_repos_t * repos_hint, svn_repos_authz_warning_func_t warning_func, void * warning_baton, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _repos.svn_repos_authz_read4(*args)
+
 def svn_repos_authz_read3(*args):
     """svn_repos_authz_read3(char const * path, char const * groups_path, svn_boolean_t must_exist, svn_repos_t * repos_hint, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
     return _repos.svn_repos_authz_read3(*args)
@@ -1276,6 +1280,10 @@ def svn_repos_authz_read2(*args):
 def svn_repos_authz_read(*args):
     """svn_repos_authz_read(char const * file, svn_boolean_t must_exist, apr_pool_t pool) -> svn_error_t"""
     return _repos.svn_repos_authz_read(*args)
+
+def svn_repos_authz_parse2(*args):
+    """svn_repos_authz_parse2(svn_stream_t * stream, svn_stream_t * groups_stream, svn_repos_authz_warning_func_t warning_func, void * warning_baton, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _repos.svn_repos_authz_parse2(*args)
 
 def svn_repos_authz_parse(*args):
     """svn_repos_authz_parse(svn_stream_t * stream, svn_stream_t * groups_stream, apr_pool_t pool) -> svn_error_t"""
@@ -1535,6 +1543,10 @@ def svn_repos_invoke_file_rev_handler(*args):
 def svn_repos_invoke_verify_callback(*args):
     """svn_repos_invoke_verify_callback(svn_repos_verify_callback_t _obj, void * baton, svn_revnum_t revision, svn_error_t verify_err, apr_pool_t scratch_pool) -> svn_error_t"""
     return _repos.svn_repos_invoke_verify_callback(*args)
+
+def svn_repos_invoke_authz_warning_func(*args):
+    """svn_repos_invoke_authz_warning_func(svn_repos_authz_warning_func_t _obj, void * baton, svn_error_t error, apr_pool_t scratch_pool)"""
+    return _repos.svn_repos_invoke_authz_warning_func(*args)
 class svn_repos_authz_func_t:
     """Proxy of C svn_repos_authz_func_t struct."""
 
@@ -2134,6 +2146,66 @@ class svn_repos_verify_callback_t:
 
 svn_repos_verify_callback_t_swigregister = _repos.svn_repos_verify_callback_t_swigregister
 svn_repos_verify_callback_t_swigregister(svn_repos_verify_callback_t)
+
+class svn_repos_authz_warning_func_t:
+    """Proxy of C svn_repos_authz_warning_func_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_repos_authz_warning_func_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_repos_authz_warning_func_t, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+
+    def __call__(self, *args):
+      return svn_repos_invoke_authz_warning_func(self, *args)
+
+svn_repos_authz_warning_func_t_swigregister = _repos.svn_repos_authz_warning_func_t_swigregister
+svn_repos_authz_warning_func_t_swigregister(svn_repos_authz_warning_func_t)
 
 
 

@@ -1024,6 +1024,10 @@ def svn_client_log(*args):
     """svn_client_log(apr_array_header_t targets, svn_opt_revision_t start, svn_opt_revision_t end, svn_boolean_t discover_changed_paths, svn_boolean_t strict_node_history, svn_log_message_receiver_t receiver, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_log(*args)
 
+def svn_client_blame6(*args):
+    """svn_client_blame6(char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t start, svn_opt_revision_t end, svn_diff_file_options_t const * diff_options, svn_boolean_t ignore_mime_type, svn_boolean_t include_merged_revisions, svn_client_blame_receiver4_t receiver, void * receiver_baton, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
+    return _client.svn_client_blame6(*args)
+
 def svn_client_blame5(*args):
     """svn_client_blame5(char const * path_or_url, svn_opt_revision_t peg_revision, svn_opt_revision_t start, svn_opt_revision_t end, svn_diff_file_options_t const * diff_options, svn_boolean_t ignore_mime_type, svn_boolean_t include_merged_revisions, svn_client_blame_receiver3_t receiver, void * receiver_baton, svn_client_ctx_t ctx, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_blame5(*args)
@@ -1253,6 +1257,10 @@ svn_client_conflict_option_local_move_file_text_merge = _client.svn_client_confl
 svn_client_conflict_option_local_move_dir_merge = _client.svn_client_conflict_option_local_move_dir_merge
 svn_client_conflict_option_sibling_move_file_text_merge = _client.svn_client_conflict_option_sibling_move_file_text_merge
 svn_client_conflict_option_sibling_move_dir_merge = _client.svn_client_conflict_option_sibling_move_dir_merge
+svn_client_conflict_option_both_moved_file_merge = _client.svn_client_conflict_option_both_moved_file_merge
+svn_client_conflict_option_both_moved_file_move_merge = _client.svn_client_conflict_option_both_moved_file_move_merge
+svn_client_conflict_option_both_moved_dir_merge = _client.svn_client_conflict_option_both_moved_dir_merge
+svn_client_conflict_option_both_moved_dir_move_merge = _client.svn_client_conflict_option_both_moved_dir_move_merge
 
 def svn_client_conflict_option_set_merged_propval(option, merged_propval):
     """svn_client_conflict_option_set_merged_propval(svn_client_conflict_option_t * option, svn_string_t const * merged_propval)"""
@@ -1859,6 +1867,10 @@ def svn_client__shelf_delete(*args):
     """svn_client__shelf_delete(char const * name, char const * local_abspath, svn_boolean_t dry_run, svn_client_ctx_t ctx, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client__shelf_delete(*args)
 
+def svn_client__shelf_mods_editor(*args):
+    """svn_client__shelf_mods_editor(svn_client__shelf_version_t shelf_version, svn_wc_notify_func2_t notify_func, svn_client_ctx_t ctx, apr_pool_t result_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_mods_editor(*args)
+
 def svn_client__shelf_save_new_version3(*args):
     """svn_client__shelf_save_new_version3(svn_client__shelf_t shelf, apr_array_header_t paths, svn_depth_t depth, apr_array_header_t changelists, svn_client_status_func_t shelved_func, void * shelved_baton, svn_client_status_func_t not_shelved_func, void * not_shelved_baton, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client__shelf_save_new_version3(*args)
@@ -1890,6 +1902,10 @@ def svn_client__shelf_test_apply_file(*args):
 def svn_client__shelf_unapply(*args):
     """svn_client__shelf_unapply(svn_client__shelf_version_t shelf_version, svn_boolean_t dry_run, apr_pool_t scratch_pool) -> svn_error_t"""
     return _client.svn_client__shelf_unapply(*args)
+
+def svn_client__shelf_replay(*args):
+    """svn_client__shelf_replay(svn_client__shelf_version_t shelf_version, char const * top_relpath, svn_delta_editor_t editor, void * edit_baton, svn_wc_notify_func2_t notify_func, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _client.svn_client__shelf_replay(*args)
 
 def svn_client__shelf_paths_changed(*args):
     """svn_client__shelf_paths_changed(svn_client__shelf_version_t shelf_version, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
@@ -2418,6 +2434,10 @@ def svn_client_invoke_get_commit_log(*args):
     """svn_client_invoke_get_commit_log(svn_client_get_commit_log_t _obj, apr_array_header_t commit_items, void * baton, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_invoke_get_commit_log(*args)
 
+def svn_client_invoke_blame_receiver4(*args):
+    """svn_client_invoke_blame_receiver4(svn_client_blame_receiver4_t _obj, void * baton, apr_int64_t line_no, svn_revnum_t revision, apr_hash_t rev_props, svn_revnum_t merged_revision, apr_hash_t merged_rev_props, char const * merged_path, svn_string_t const * line, svn_boolean_t local_change, apr_pool_t pool) -> svn_error_t"""
+    return _client.svn_client_invoke_blame_receiver4(*args)
+
 def svn_client_invoke_blame_receiver3(*args):
     """svn_client_invoke_blame_receiver3(svn_client_blame_receiver3_t _obj, void * baton, svn_revnum_t start_revnum, svn_revnum_t end_revnum, apr_int64_t line_no, svn_revnum_t revision, apr_hash_t rev_props, svn_revnum_t merged_revision, apr_hash_t merged_rev_props, char const * merged_path, char const * line, svn_boolean_t local_change, apr_pool_t pool) -> svn_error_t"""
     return _client.svn_client_invoke_blame_receiver3(*args)
@@ -2768,6 +2788,66 @@ class svn_client_get_commit_log_t:
 
 svn_client_get_commit_log_t_swigregister = _client.svn_client_get_commit_log_t_swigregister
 svn_client_get_commit_log_t_swigregister(svn_client_get_commit_log_t)
+
+class svn_client_blame_receiver4_t:
+    """Proxy of C svn_client_blame_receiver4_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_client_blame_receiver4_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_client_blame_receiver4_t, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+
+    def __call__(self, *args):
+      return svn_client_invoke_blame_receiver4(self, *args)
+
+svn_client_blame_receiver4_t_swigregister = _client.svn_client_blame_receiver4_t_swigregister
+svn_client_blame_receiver4_t_swigregister(svn_client_blame_receiver4_t)
 
 class svn_client_blame_receiver3_t:
     """Proxy of C svn_client_blame_receiver3_t struct."""

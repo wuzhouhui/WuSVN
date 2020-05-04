@@ -53,6 +53,8 @@ import subprocess
 import argparse       # standard in Python 2.7
 import io
 
+import backport.status
+
 # Find ezt, using Subversion's copy, if there isn't one on the system.
 try:
     import ezt
@@ -68,6 +70,14 @@ except ImportError:
 # Our required / recommended release tool versions by release branch
 tool_versions = {
   'trunk' : {
+            'autoconf' : ['2.69',
+            '954bd69b391edc12d6a4a51a2dd1476543da5c6bbf05a95b59dc0dd6fd4c2969'],
+            'libtool'  : ['2.4.6',
+            'e3bd4d5d3d025a36c21dd6af7ea818a2afcd4dfc1ea5a17b39d7854bcd0c06e3'],
+            'swig'     : ['3.0.12',
+            '7cf9f447ae7ed1c51722efc45e7f14418d15d7a1e143ac9f09a668999f4fc94d'],
+  },
+  '1.11' : {
             'autoconf' : ['2.69',
             '954bd69b391edc12d6a4a51a2dd1476543da5c6bbf05a95b59dc0dd6fd4c2969'],
             'libtool'  : ['2.4.6',
@@ -103,7 +113,9 @@ tool_versions = {
 
 # The version that is our current recommended release
 # ### TODO: derive this from svn_version.h; see ../../build/getversion.py
-recommended_release = '1.10'
+recommended_release = '1.11'
+# For clean-dist, a whitelist of artifacts to keep, by version.
+supported_release_lines = frozenset({"1.9", "1.10", "1.11", "1.12"})
 
 # Some constants
 repos = 'https://svn.apache.org/repos/asf/subversion'
@@ -894,7 +906,8 @@ def create_tag_and_bump_versions(args):
 # Clean dist
 
 def clean_dist(args):
-    'Clean the distribution directory of all but the most recent artifacts.'
+    '''Clean the distribution directory of release artifacts of
+    no-longer-supported minor lines.'''
 
     stdout = subprocess.check_output(['svn', 'list', dist_release_url])
 
@@ -906,15 +919,15 @@ def clean_dist(args):
     filenames = stdout.split('\n')
     filenames = filter(lambda x: x.startswith('subversion-'), filenames)
     versions = set(map(Version, filenames))
-    minor_lines = set(map(minor, versions))
     to_keep = set()
-    # Keep 3 minor lines: 1.10.0-alpha3, 1.9.7, 1.8.19.
     # TODO: When we release 1.A.0 GA we'll have to manually remove 1.(A-2).* artifacts.
-    for recent_line in sorted(minor_lines, reverse=True)[:3]:
-        to_keep.add(max(
+    for line_to_keep in [minor(Version(x + ".0")) for x in supported_release_lines]:
+        candidates = list(
             x for x in versions
-            if minor(x) == recent_line
-        ))
+            if minor(x) == line_to_keep
+        )
+        if candidates:
+            to_keep.add(max(candidates))
     for i in sorted(to_keep):
         logging.info("Saving release '%s'", i)
 
@@ -1023,10 +1036,12 @@ def get_fileinfo(args):
 
 def write_announcement(args):
     'Write the release announcement.'
-    siginfo = "\n".join(get_siginfo(args, True)) + "\n"
+    siginfo = get_siginfo(args, True)
+    if not siginfo:
+      raise RuntimeError("No signatures found for %s at %s" % (args.version, args.target))
 
     data = { 'version'              : str(args.version),
-             'siginfo'              : siginfo,
+             'siginfo'              : "\n".join(siginfo) + "\n",
              'major-minor'          : args.version.branch,
              'major-minor-patch'    : args.version.base,
              'anchor'               : args.version.get_download_anchor(),
@@ -1295,15 +1310,29 @@ def write_changelog(args):
     branch = secure_repos + '/' + args.branch
     previous = secure_repos + '/' + args.previous
     include_unlabeled = args.include_unlabeled
+    separator_line = ('-' * 72) + '\n'
     
     mergeinfo = subprocess.check_output(['svn', 'mergeinfo', '--show-revs',
-                    'eligible', '--log', branch, previous]).splitlines()
+                    'eligible', '--log', branch, previous])
+    log_messages_dict = {
+        # This is a dictionary mapping revision numbers to their respective
+        # log messages.  The expression in the "key:" part of the dict
+        # comprehension extracts the revision number, as integer, from the
+        # 'svn log' output.
+        int(log_message.splitlines()[0].split()[0][1:]): log_message
+        # The [1:-1] ignores the empty first and last element of the split().
+        for log_message in mergeinfo.split(separator_line)[1:-1]
+    }
+    mergeinfo = mergeinfo.splitlines()
     
     separator_pattern = re.compile('^-{72}$')
     revline_pattern = re.compile('^r(\d+) \| [^\|]+ \| [^\|]+ \| \d+ lines?$')
-    changes_prefix_pattern = re.compile('^\[(U|D)?:?([^\]]+)?\](.+)$')
-    changes_suffix_pattern = re.compile('^(.+)\[(U|D)?:?([^\]]+)?\]$')
-    
+    changes_prefix_pattern = re.compile(r'^\[(U|D)?:?([^\]]+)?\](.+)$')
+    changes_suffix_pattern = re.compile(r'^(.+)\[(U|D)?:?([^\]]+)?\]$')
+    # TODO: push this into backport.status as a library function
+    auto_merge_pattern = \
+        re.compile(r'^Merge (r\d+,? |the r\d+ group |the \S+ branch:)')
+
     changes_dict = dict()  # audience -> (section -> (change -> set(revision)))
     revision = -1
     got_firstline = False
@@ -1319,8 +1348,27 @@ def write_changelog(args):
             # If there's an unlabeled summary from a previous section, and
             # include_unlabeled is True, put it into uncategorized_changes.
             if include_unlabeled and unlabeled_summary and not changes_ignore:
-                add_to_changes_dict(changes_dict, None, None,
-                                    unlabeled_summary, revision)
+                if auto_merge_pattern.match(unlabeled_summary):
+                    # 1. Parse revision numbers from the first line
+                    merged_revisions = [
+                        int(x) for x in
+                        re.compile(r'(?<=\br)\d+\b').findall(unlabeled_summary)
+                    ]
+                    # TODO pass each revnum in MERGED_REVISIONS through this
+                    #      logic, in order to extract CHANGES_PREFIX_PATTERN
+                    #      and CHANGES_SUFFIX_PATTERN lines from the trunk log
+                    #      message.
+                    
+                    # 2. Parse the STATUS entry
+                    this_log_message = log_messages_dict[revision]
+                    status_paragraph = this_log_message.split('\n\n')[2]
+                    logsummary = \
+                        backport.status.StatusEntry(status_paragraph).logsummary
+                    add_to_changes_dict(changes_dict, None, None,
+                                        ' '.join(logsummary), revision)
+                else:
+                    add_to_changes_dict(changes_dict, None, None,
+                                        unlabeled_summary, revision)
             revision = -1
             got_firstline = False
             unlabeled_summary = None
@@ -1343,13 +1391,13 @@ def write_changelog(args):
 
         if not got_firstline:
             got_firstline = True
-            if (not re.search('status|changes|post-release housekeeping|follow-up|^\*',
+            if (not re.search(r'status|changes|post-release housekeeping|follow-up|^\*',
                               line, re.IGNORECASE)
                     and not changes_prefix_pattern.match(line)
                     and not changes_suffix_pattern.match(line)):
                 unlabeled_summary = line
 
-        if re.search('\[(c:)?(skip|ignore)\]', line, re.IGNORECASE):
+        if re.search(r'\[(c:)?(skip|ignore)\]', line, re.IGNORECASE):
             changes_ignore = True
             
         prefix_match = changes_prefix_pattern.match(line)
@@ -1501,8 +1549,7 @@ def main():
 
     # The clean-dist subcommand
     subparser = subparsers.add_parser('clean-dist',
-                    help='''Clean the distribution directory (and mirrors) of
-                            all but the most recent MAJOR.MINOR release.''')
+                    help=clean_dist.__doc__.split('\n\n')[0])
     subparser.set_defaults(func=clean_dist)
     subparser.add_argument('--dist-dir',
                     help='''The directory to clean.''')

@@ -61,7 +61,7 @@ extern "C" {
  * Modify when new functionality is added or new interfaces are
  * defined, but all changes are backward compatible.
  */
-#define SVN_VER_MINOR      11
+#define SVN_VER_MINOR      12
 
 /**
  * Patch number.
@@ -93,7 +93,7 @@ extern "C" {
  *
  * Always change this at the same time as SVN_VER_NUMTAG.
  */
-#define SVN_VER_TAG        " (r1845130)"
+#define SVN_VER_TAG        " (r1857323)"
 
 
 /** Number tag: a string describing the version.
@@ -117,7 +117,7 @@ extern "C" {
  * file version. Its value remains 0 in the repository except in release
  * tags where it is the revision from which the tag was created.
  */
-#define SVN_VER_REVISION   1845130
+#define SVN_VER_REVISION   1857323
 
 
 /* Version strings composed from the above definitions. */

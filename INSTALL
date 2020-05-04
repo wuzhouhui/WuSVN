@@ -3,7 +3,7 @@
                           A Quick Guide
                ======================================
 
-$LastChangedDate: 2018-04-15 19:04:31 +0000 (Sun, 15 Apr 2018) $
+$LastChangedDate: 2018-12-18 17:58:31 +0000 (Tue, 18 Dec 2018) $
 
 
 Contents:
@@ -160,11 +160,6 @@ I.    INTRODUCTION
          which are added to version control. Note that mime-types
          configured via auto-props or the mime-types-file option
          take precedence.
-
-      * Googlemock aka Gmock (OPTIONAL)
-
-         This optional package is used by the tests for Subversions'
-         C++ bindings.
 
 
   C. Dependencies in Detail
@@ -524,12 +519,6 @@ I.    INTRODUCTION
       the default locations should be searched, then use:
 
         --with-libmagic
-
-      21. Googlemock (OPTIONAL)
-
-      Googlemock can be installed and built in-tree by invoking
-
-      $ ./get-dep.sh gmock
 
       22. LZ4 (OPTIONAL)
 

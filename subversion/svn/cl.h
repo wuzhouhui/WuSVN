@@ -32,6 +32,7 @@
 #include <apr_tables.h>
 #include <apr_getopt.h>
 
+#include "svn_types.h"
 #include "svn_wc.h"
 #include "svn_client.h"
 #include "svn_string.h"
@@ -125,6 +126,16 @@ typedef enum svn_cl__show_revs_t {
 /* Return svn_cl__show_revs_t value corresponding to word. */
 svn_cl__show_revs_t
 svn_cl__show_revs_from_word(const char *word);
+
+
+/* Unit types for file size conversion. */
+typedef enum svn_cl__size_unit_t
+  {
+    SVN_CL__SIZE_UNIT_NONE = 0,       /* Default, no conversion. */
+    SVN_CL__SIZE_UNIT_XML = -1,       /* Conversion for XML output. */
+    SVN_CL__SIZE_UNIT_BASE_10 = 1000, /* Use base-10 SI units. */
+    SVN_CL__SIZE_UNIT_BASE_2 = 1024   /* Use base-2 SI units. */
+  } svn_cl__size_unit_t;
 
 
 /*** Command dispatch. ***/
@@ -250,6 +261,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t mergeinfo_log;     /* show log message in mergeinfo command */
   svn_boolean_t remove_unversioned;/* remove unversioned items */
   svn_boolean_t remove_ignored;    /* remove ignored items */
+  svn_boolean_t remove_added;      /* reverting added item also removes it */
   svn_boolean_t no_newline;        /* do not output the trailing newline */
   svn_boolean_t show_passwords;    /* show cached passwords */
   svn_boolean_t pin_externals;     /* pin externals to last-changed revisions */
@@ -257,6 +269,7 @@ typedef struct svn_cl__opt_state_t
   svn_boolean_t adds_as_modification; /* update 'add vs add' no tree conflict */
   svn_boolean_t vacuum_pristines; /* remove unreferenced pristines */
   svn_boolean_t drop;             /* drop shelf after successful unshelve */
+  svn_cl__size_unit_t file_size_unit; /* file size format */
   enum svn_cl__viewspec_t {
       svn_cl__viewspec_unspecified = 0 /* default */,
       svn_cl__viewspec_classic,
@@ -317,6 +330,7 @@ svn_opt_subcommand_t
   svn_cl__shelf_save,
   svn_cl__shelf_shelve,
   svn_cl__shelf_unshelve,
+  svn_cl__wc_copy_mods,
   svn_cl__status,
   svn_cl__switch,
   svn_cl__unlock,
@@ -720,6 +734,24 @@ svn_cl__node_kind_str_xml(svn_node_kind_t kind);
    "dir" or "file" or, in any other case, the empty string. */
 const char *
 svn_cl__node_kind_str_human_readable(svn_node_kind_t kind);
+
+/* Set *RESULT to the size of a file, formatted according to BASE.
+   For base-10 and base-2 units, the size is constrained to at most
+   three significant digits.
+
+   If LONG_UNITS is TRUE, any unit suffixes will be the whole SI symbol,
+   e.g., KiB, MiB, etc; otherwise only the first letters will be used.
+
+   File sizes are never negative, so we don't handle that case other than
+   making sure that the scale adjustment will work.
+
+   The result will be allocated from RESULT_POOL. */
+svn_error_t *
+svn_cl__format_file_size(const char **result,
+                         svn_filesize_t size,
+                         svn_cl__size_unit_t base,
+                         svn_boolean_t long_units,
+                         apr_pool_t *result_pool);
 
 
 /** Provides an XML name for a given OPERATION.

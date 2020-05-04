@@ -545,6 +545,10 @@ def svn_delta_depth_filter_editor(*args):
     """svn_delta_depth_filter_editor(svn_delta_editor_t wrapped_editor, void * wrapped_edit_baton, svn_depth_t requested_depth, svn_boolean_t has_target, apr_pool_t pool) -> svn_error_t"""
     return _delta.svn_delta_depth_filter_editor(*args)
 
+def svn_delta_path_driver3(*args):
+    """svn_delta_path_driver3(svn_delta_editor_t editor, void * edit_baton, apr_array_header_t relpaths, svn_boolean_t sort_paths, svn_delta_path_driver_cb_func2_t callback_func, void * callback_baton, apr_pool_t pool) -> svn_error_t"""
+    return _delta.svn_delta_path_driver3(*args)
+
 def svn_delta_path_driver2(*args):
     """svn_delta_path_driver2(svn_delta_editor_t editor, void * edit_baton, apr_array_header_t paths, svn_boolean_t sort_paths, svn_delta_path_driver_cb_func_t callback_func, apr_pool_t scratch_pool) -> svn_error_t"""
     return _delta.svn_delta_path_driver2(*args)
@@ -552,6 +556,18 @@ def svn_delta_path_driver2(*args):
 def svn_delta_path_driver(*args):
     """svn_delta_path_driver(svn_delta_editor_t editor, void * edit_baton, svn_revnum_t revision, apr_array_header_t paths, svn_delta_path_driver_cb_func_t callback_func, apr_pool_t scratch_pool) -> svn_error_t"""
     return _delta.svn_delta_path_driver(*args)
+
+def svn_delta_path_driver_start(*args):
+    """svn_delta_path_driver_start(svn_delta_editor_t editor, void * edit_baton, svn_delta_path_driver_cb_func2_t callback_func, void * callback_baton, apr_pool_t result_pool) -> svn_error_t"""
+    return _delta.svn_delta_path_driver_start(*args)
+
+def svn_delta_path_driver_step(*args):
+    """svn_delta_path_driver_step(svn_delta_path_driver_state_t * state, char const * relpath, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _delta.svn_delta_path_driver_step(*args)
+
+def svn_delta_path_driver_finish(*args):
+    """svn_delta_path_driver_finish(svn_delta_path_driver_state_t * state, apr_pool_t scratch_pool) -> svn_error_t"""
+    return _delta.svn_delta_path_driver_finish(*args)
 
 def svn_compat_wrap_file_rev_handler(*args):
     """svn_compat_wrap_file_rev_handler(svn_file_rev_handler_old_t handler, void * handler_baton, apr_pool_t pool)"""
@@ -611,6 +627,62 @@ class svn_txdelta_stream_t:
 
 svn_txdelta_stream_t_swigregister = _delta.svn_txdelta_stream_t_swigregister
 svn_txdelta_stream_t_swigregister(svn_txdelta_stream_t)
+
+class svn_delta_path_driver_state_t:
+    """Proxy of C svn_delta_path_driver_state_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_delta_path_driver_state_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_delta_path_driver_state_t, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+svn_delta_path_driver_state_t_swigregister = _delta.svn_delta_path_driver_state_t_swigregister
+svn_delta_path_driver_state_t_swigregister(svn_delta_path_driver_state_t)
 
 
 def svn_delta_editor_invoke_set_target_revision(*args):
@@ -696,6 +768,10 @@ def svn_txdelta_invoke_md5_digest_fn(_obj, baton):
 def svn_txdelta_invoke_stream_open_func(*args):
     """svn_txdelta_invoke_stream_open_func(svn_txdelta_stream_open_func_t _obj, void * baton, apr_pool_t result_pool, apr_pool_t scratch_pool) -> svn_error_t"""
     return _delta.svn_txdelta_invoke_stream_open_func(*args)
+
+def svn_delta_invoke_path_driver_cb_func2(*args):
+    """svn_delta_invoke_path_driver_cb_func2(svn_delta_path_driver_cb_func2_t _obj, svn_delta_editor_t editor, void * edit_baton, void * parent_baton, void * callback_baton, char const * relpath, apr_pool_t pool) -> svn_error_t"""
+    return _delta.svn_delta_invoke_path_driver_cb_func2(*args)
 
 def svn_delta_invoke_path_driver_cb_func(*args):
     """svn_delta_invoke_path_driver_cb_func(svn_delta_path_driver_cb_func_t _obj, void * parent_baton, void * callback_baton, char const * path, apr_pool_t pool) -> svn_error_t"""
@@ -947,6 +1023,66 @@ class svn_txdelta_stream_open_func_t:
 
 svn_txdelta_stream_open_func_t_swigregister = _delta.svn_txdelta_stream_open_func_t_swigregister
 svn_txdelta_stream_open_func_t_swigregister(svn_txdelta_stream_open_func_t)
+
+class svn_delta_path_driver_cb_func2_t:
+    """Proxy of C svn_delta_path_driver_cb_func2_t struct."""
+
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, svn_delta_path_driver_cb_func2_t, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, svn_delta_path_driver_cb_func2_t, name)
+
+    def __init__(self, *args, **kwargs):
+        raise AttributeError("No constructor defined")
+    __repr__ = _swig_repr
+    def set_parent_pool(self, parent_pool=None):
+      """Create a new proxy object for TYPE"""
+      import libsvn.core, weakref
+      self.__dict__["_parent_pool"] = \
+        parent_pool or libsvn.core.application_pool;
+      if self.__dict__["_parent_pool"]:
+        self.__dict__["_is_valid"] = weakref.ref(
+          self.__dict__["_parent_pool"]._is_valid)
+
+    def assert_valid(self):
+      """Assert that this object is using valid pool memory"""
+      if "_is_valid" in self.__dict__:
+        assert self.__dict__["_is_valid"](), "Variable has already been deleted"
+
+    def __getattr__(self, name):
+      """Get an attribute from this object"""
+      self.assert_valid()
+
+      value = _swig_getattr(self, self.__class__, name)
+
+    # If we got back a different object than we have, we need to copy all our
+    # metadata into it, so that it looks identical
+      members = self.__dict__.get("_members")
+      if members is not None:
+        _copy_metadata_deep(value, members.get(name))
+
+    # Verify that the new object is good
+      _assert_valid_deep(value)
+
+      return value
+
+    def __setattr__(self, name, value):
+      """Set an attribute on this object"""
+      self.assert_valid()
+
+    # Save a copy of the object, so that the garbage
+    # collector won't kill the object while it's in
+    # SWIG-land
+      self.__dict__.setdefault("_members",{})[name] = value
+
+      return _swig_setattr(self, self.__class__, name, value)
+
+
+    def __call__(self, *args):
+      return svn_delta_invoke_path_driver_cb_func2(self, *args)
+
+svn_delta_path_driver_cb_func2_t_swigregister = _delta.svn_delta_path_driver_cb_func2_t_swigregister
+svn_delta_path_driver_cb_func2_t_swigregister(svn_delta_path_driver_cb_func2_t)
 
 class svn_delta_path_driver_cb_func_t:
     """Proxy of C svn_delta_path_driver_cb_func_t struct."""

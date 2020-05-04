@@ -140,6 +140,7 @@ typedef enum svn_cl__longopt_t {
   opt_mergeinfo_log,
   opt_remove_unversioned,
   opt_remove_ignored,
+  opt_remove_added,
   opt_no_newline,
   opt_show_passwords,
   opt_pin_externals,
@@ -165,7 +166,8 @@ const apr_getopt_option_t svn_cl__options[] =
   {"message",       'm', 1, N_("specify log message ARG")},
   {"quiet",         'q', 0, N_("print nothing, or only summary information")},
   {"recursive",     'R', 0, N_("descend recursively, same as --depth=infinity")},
-  {"non-recursive", 'N', 0, N_("obsolete; try --depth=files or --depth=immediates")},
+  {"non-recursive", 'N', 0, N_("obsolete")},
+  {"human-readable",'H', 0, N_("show human-readable output")},
   {"change",        'c', 1,
                     N_("the change made by revision ARG (like -r ARG-1:ARG)\n"
                        "                             "
@@ -420,6 +422,8 @@ const apr_getopt_option_t svn_cl__options[] =
   {"remove-unversioned", opt_remove_unversioned, 0,
                        N_("remove unversioned items")},
   {"remove-ignored", opt_remove_ignored, 0, N_("remove ignored items")},
+  {"remove-added", opt_remove_added, 0,
+                       N_("reverting an added item will remove it from disk")},
   {"no-newline", opt_no_newline, 0, N_("do not output the trailing newline")},
   {"show-passwords", opt_show_passwords, 0, N_("show cached passwords")},
   {"pin-externals", opt_pin_externals, 0,
@@ -442,6 +446,10 @@ const apr_getopt_option_t svn_cl__options[] =
                           "                root URL of repository\n"
                           "                             "
                           "   'repos-uuid' UUID of repository\n"
+                          "                             "
+                          "   'repos-size' for files, the size of TARGET\n"
+                          "                             "
+                          "                in the repository\n"
                           "                             "
                           "   'revision'   specified or implied revision\n"
                           "                             "
@@ -533,18 +541,39 @@ const int svn_cl__global_options[] =
 const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
 {
   { "add", svn_cl__add, {0}, {N_(
-     "Put files and directories under version control, scheduling\n"
-     "them for addition to repository.  They will be added in next commit.\n"
+     "Put new files and directories under version control.\n"
      "usage: add PATH...\n"
+     "\n"), N_(
+     "  Schedule unversioned PATHs for addition, so they will become versioned and\n"
+     "  be added to the repository in the next commit. Recurse into directories by\n"
+     "  default (see the --depth option).\n"
+     "\n"), N_(
+     "  The 'svn add' command is only necessary for files and directories that are\n"
+     "  not yet under version control. Unversioned files and directories can be\n"
+     "  identified with 'svn status' (see 'svn help status').\n"
+     "\n"), N_(
+     "  The effects of 'svn add' can be undone with 'svn revert' before the addition\n"
+     "  has been committed. Once committed, a path can be removed from version\n"
+     "  control with 'svn delete', and in some circumstances by running a reverse-\n"
+     "  merge (see 'svn help merge' for details).\n"
+     "\n"), N_(
+     "  With --force, add all the unversioned paths found in PATHs and ignore the\n"
+     "  rest; otherwise, error out if any specified paths are already versioned.\n"
+     "\n"), N_(
+     "  The selection of items to add may be influenced by the 'ignores' feature.\n"
+     "  Properties may be attached to the items as configured by the 'auto-props'\n"
+     "  feature.\n"
     )},
     {opt_targets, 'N', opt_depth, 'q', opt_force, opt_no_ignore, opt_autoprops,
      opt_no_autoprops, opt_parents },
-     {{opt_parents, N_("add intermediate parents")}} },
+    {{opt_parents, N_("add intermediate parents")},
+     {'N', N_("obsolete; same as --depth=empty")},
+     {opt_force, N_("ignore already versioned paths")}} },
 
   { "auth", svn_cl__auth, {0}, {N_(
      "Manage cached authentication credentials.\n"
      "usage: 1. svn auth [PATTERN ...]\n"
-     "usage: 2. svn auth --remove PATTERN [PATTERN ...]\n"
+     "       2. svn auth --remove PATTERN [PATTERN ...]\n"
      "\n"), N_(
      "  With no arguments, list all cached authentication credentials.\n"
      "  Authentication credentials include usernames, passwords,\n"
@@ -635,7 +664,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "  See also 'svn help update' for a list of possible characters\n"
      "  reporting the action taken.\n"
     )},
-    {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals} },
+    {'r', 'q', 'N', opt_depth, opt_force, opt_ignore_externals},
+    {{'N', N_("obsolete; same as --depth=files")}} },
 
   { "cleanup", svn_cl__cleanup, {0}, {N_(
      "Either recover from an interrupted operation that left the working copy locked,\n"
@@ -684,7 +714,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "  fixed revision.\n"
     )},
     {'q', 'N', opt_depth, opt_targets, opt_no_unlock, SVN_CL__LOG_MSG_OPTIONS,
-     opt_changelist, opt_keep_changelists, opt_include_externals} },
+     opt_changelist, opt_keep_changelists, opt_include_externals},
+    {{'N', N_("obsolete; same as --depth=empty")}} },
 
   { "copy", svn_cl__copy, {"cp"}, {N_(
      "Copy files and directories in a working copy or repository.\n"
@@ -766,7 +797,9 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      opt_internal_diff, 'x', opt_no_diff_added, opt_no_diff_deleted,
      opt_ignore_properties, opt_properties_only,
      opt_show_copies_as_adds, opt_notice_ancestry, opt_summarize, opt_changelist,
-     opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible} },
+     opt_force, opt_xml, opt_use_git_diff_format, opt_patch_compatible},
+    {{'N', N_("obsolete; same as --depth=files")}} },
+
   { "export", svn_cl__export, {0}, {N_(
      "Create an unversioned copy of a tree.\n"
      "usage: 1. export [-r REV] URL[@PEGREV] [PATH]\n"
@@ -788,7 +821,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "  looked up.\n"
     )},
     {'r', 'q', 'N', opt_depth, opt_force, opt_native_eol, opt_ignore_externals,
-     opt_ignore_keywords} },
+     opt_ignore_keywords},
+    {{'N', N_("obsolete; same as --depth=files")}} },
 
   { "help", svn_cl__help, {"?", "h"}, {N_(
      "Describe the usage of this program or its subcommands.\n"
@@ -810,7 +844,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "  if --force is specified.\n"
     )},
     {'q', 'N', opt_depth, opt_autoprops, opt_force, opt_no_autoprops,
-     SVN_CL__LOG_MSG_OPTIONS, opt_no_ignore} },
+     SVN_CL__LOG_MSG_OPTIONS, opt_no_ignore},
+    {{'N', N_("obsolete; same as --depth=files")}} },
 
   { "info", svn_cl__info, {0}, {N_(
      "Display information about a local or remote item.\n"
@@ -827,13 +862,19 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "  EXPERIMENTAL:\n"
      "  With --x-viewspec, print the working copy layout.\n"
     )},
-    {'r', 'R', opt_depth, opt_targets, opt_incremental, opt_xml,
+    {'r', 'R', 'H', opt_depth, opt_targets, opt_incremental, opt_xml,
      opt_changelist, opt_include_externals, opt_show_item, opt_no_newline,
-     opt_viewspec}
+     opt_viewspec},
+    {{'H', N_("show file sizes with base-2 unit suffixes\n"
+              "                             "
+              "(Byte, Kilobyte, Megabyte, Gigabyte, Terabyte\n"
+              "                             "
+              "and Petabyte), limiting the number of digits\n"
+              "                             "
+              "to three or less")}}
   },
 
   { "list", svn_cl__list, {"ls"},
-#if defined(WIN32)
     {N_(
      "List directory entries in the repository.\n"
      "usage: list [TARGET[@REV]...]\n"
@@ -845,37 +886,22 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "\n"), N_(
      "  The default TARGET is '.', meaning the repository URL of the current\n"
      "  working directory.\n"
-     "\n"), N_(
+     "\n"),
+#if defined(WIN32)
+     N_(
      "  Multiple --search patterns may be specified and the output will be\n"
      "  reduced to those paths whose last segment - i.e. the file or directory\n"
      "  name - contains a sub-string matching at least one of these patterns\n"
      "  (Windows only).\n"
-     "\n"), N_(
-     "  With --verbose, the following fields will be shown for each item:\n"
-     "\n"), N_(
-     "    Revision number of the last commit\n"
-     "    Author of the last commit\n"
-     "    If locked, the letter 'O'.  (Use 'svn info URL' to see details)\n"
-     "    Size (in bytes)\n"
-     "    Date and time of the last commit\n"
-    )},
+     "\n"),
 #else
-    {N_(
-     "List directory entries in the repository.\n"
-     "usage: list [TARGET[@REV]...]\n"
-     "\n"), N_(
-     "  List each TARGET file and the contents of each TARGET directory as\n"
-     "  they exist in the repository.  If TARGET is a working copy path, the\n"
-     "  corresponding repository URL will be used. If specified, REV determines\n"
-     "  in which revision the target is first looked up.\n"
-     "\n"), N_(
-     "  The default TARGET is '.', meaning the repository URL of the current\n"
-     "  working directory.\n"
-     "\n"), N_(
+     N_(
      "  Multiple --search patterns may be specified and the output will be\n"
      "  reduced to those paths whose last segment - i.e. the file or directory\n"
      "  name - matches at least one of these patterns.\n"
-     "\n"), N_(
+     "\n"),
+#endif
+     N_(
      "  With --verbose, the following fields will be shown for each item:\n"
      "\n"), N_(
      "    Revision number of the last commit\n"
@@ -884,9 +910,15 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "    Size (in bytes)\n"
      "    Date and time of the last commit\n"
     )},
-#endif
-    {'r', 'v', 'R', opt_depth, opt_incremental, opt_xml,
-     opt_include_externals, opt_search}, },
+    {'r', 'v', 'R', 'H', opt_depth, opt_incremental, opt_xml,
+     opt_include_externals, opt_search},
+    {{'H', N_("with --verbose, show file sizes with base-2\n"
+              "                             "
+              "unit suffixes (Byte, Kilobyte, Megabyte,\n"
+              "                             "
+              "Gigabyte, Terabyte and Petabyte), limiting\n"
+              "                             "
+              "the number of digits to three or less")}} },
 
   { "lock", svn_cl__lock, {0}, {N_(
      "Lock working copy paths or URLs in the repository, so that\n"
@@ -1341,7 +1373,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
     {'r', 'c', 'N', opt_depth, 'q', opt_force, opt_dry_run, opt_merge_cmd,
      opt_record_only, 'x', opt_ignore_ancestry, opt_accept, opt_reintegrate,
      opt_allow_mixed_revisions, 'v'},
-    { { opt_force, N_("force deletions even if deleted contents don't match") } }
+    { { opt_force, N_("force deletions even if deleted contents don't match") },
+      {'N', N_("obsolete; same as --depth=files")} }
   },
 
   { "mergeinfo", svn_cl__mergeinfo, {0}, {N_(
@@ -1735,7 +1768,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      "  For information about undoing already committed changes, search\n"
      "  the output of 'svn help merge' for 'undo'.\n"
     )},
-    {opt_targets, 'R', opt_depth, 'q', opt_changelist} },
+    {opt_targets, 'R', opt_depth, 'q', opt_changelist,
+     opt_remove_added} },
 
   { "status", svn_cl__status, {"stat", "st"}, {N_(
      "Print the status of working copy files and directories.\n"
@@ -1832,7 +1866,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
     )},
     { 'u', 'v', 'N', opt_depth, 'r', 'q', opt_no_ignore, opt_incremental,
       opt_xml, opt_ignore_externals, opt_changelist},
-    {{'q', N_("don't print unversioned items")}} },
+    {{'q', N_("don't print unversioned items")},
+     {'N', N_("obsolete; same as --depth=immediates")}} },
 
   { "switch", svn_cl__switch, {"sw"}, {N_(
      "Update the working copy to a different URL within the same repository.\n"
@@ -1882,7 +1917,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      N_("allow switching to a node with no common ancestor")},
      {opt_force,
       N_("handle unversioned obstructions as changes")},
-     {opt_relocate,N_("deprecated; use 'svn relocate'")}}
+     {opt_relocate, N_("deprecated; use 'svn relocate'")},
+     {'N', N_("obsolete; same as --depth=files")}}
   },
 
   { "unlock", svn_cl__unlock, {0}, {N_(
@@ -1945,7 +1981,8 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
      opt_ignore_externals, opt_changelist, opt_editor_cmd, opt_accept,
      opt_parents, opt_adds_as_modification},
     { {opt_force,
-       N_("handle unversioned obstructions as changes")} } },
+       N_("handle unversioned obstructions as changes")},
+      {'N', N_("obsolete; same as --depth=files")} } },
 
   { "upgrade", svn_cl__upgrade, {0}, {N_(
      "Upgrade the metadata storage format for a working copy.\n"
@@ -2101,6 +2138,18 @@ const svn_opt_subcommand_desc3_t svn_cl__cmd_table[] =
     )},
     {opt_drop, 'q', opt_dry_run, opt_force} },
 
+  { "x-wc-copy-mods", svn_cl__wc_copy_mods, {0}, {N_(
+     "Copy local modifications from one WC to another.\n"
+     "usage: x-wc-copy-mods SRC_WC_PATH DST_WC_PATH\n"
+     "\n"), N_(
+     "  The source and destination WC paths may be in the same WC or in different"
+     "  WCs.\n"
+     "\n"), N_(
+     "  This feature is EXPERIMENTAL. This command is likely to change\n"
+     "  in the next release, and there is no promise of backward compatibility.\n"
+    )},
+  },
+
   { NULL, NULL, {0}, {NULL}, {0} }
 };
 
@@ -2248,6 +2297,7 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
   opt_state.set_depth = svn_depth_unknown;
   opt_state.accept_which = svn_cl__accept_unspecified;
   opt_state.show_revs = svn_cl__show_revs_invalid;
+  opt_state.file_size_unit = SVN_CL__SIZE_UNIT_NONE;
 
   /* No args?  Show usage. */
   if (argc <= 1)
@@ -2463,6 +2513,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
       case 'N':
         descend = FALSE;
         break;
+      case 'H':
+        opt_state.file_size_unit = SVN_CL__SIZE_UNIT_BASE_2;
+        break;
       case opt_depth:
         err = svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool);
         if (err)
@@ -2600,7 +2653,8 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         break;
       case opt_config_dir:
         SVN_ERR(svn_utf_cstring_to_utf8(&utf8_opt_arg, opt_arg, pool));
-        opt_state.config_dir = svn_dirent_internal_style(utf8_opt_arg, pool);
+        SVN_ERR(svn_dirent_internal_style_safe(&opt_state.config_dir, NULL,
+                                               utf8_opt_arg, pool, pool));
         break;
       case opt_config_options:
         if (!opt_state.config_options)
@@ -2768,6 +2822,9 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         break;
       case opt_remove_ignored:
         opt_state.remove_ignored = TRUE;
+        break;
+      case opt_remove_added:
+        opt_state.remove_added = TRUE;
         break;
       case opt_no_newline:
       case opt_strict:          /* ### DEPRECATED */
@@ -3183,7 +3240,10 @@ sub_main(int *exit_code, int argc, const char *argv[], apr_pool_t *pool)
         {
           svn_node_kind_t kind;
           const char *local_abspath;
-          const char *fname = svn_dirent_internal_style(dash_F_arg, pool);
+          const char *fname;
+
+          SVN_ERR(svn_dirent_internal_style_safe(&fname, NULL, dash_F_arg,
+                                                 pool, pool));
 
           err = svn_dirent_get_absolute(&local_abspath, fname, pool);
 

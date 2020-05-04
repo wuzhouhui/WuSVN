@@ -6113,7 +6113,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_unified4(PyObject *SWIGUNUSEDPAR
   arg13 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOsszzzzOOO|O:svn_diff_file_output_unified4",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&arg7,&arg8,&obj8,&obj9,&obj10,&obj11)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6202,7 +6210,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_unified3(PyObject *SWIGUNUSEDPAR
   arg10 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOsszzzzO|O:svn_diff_file_output_unified3",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&arg7,&arg8,&obj8,&obj9)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6278,7 +6294,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_unified2(PyObject *SWIGUNUSEDPAR
   arg8 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOsszzz|O:svn_diff_file_output_unified2",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&arg7,&obj7)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6347,7 +6371,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_unified(PyObject *SWIGUNUSEDPARM
   arg7 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOsszz|O:svn_diff_file_output_unified",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&obj6)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6424,7 +6456,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_merge3(PyObject *SWIGUNUSEDPARM(
   arg13 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOssszzzzOO|O:svn_diff_file_output_merge3",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&arg7,&arg8,&arg9,&obj9,&obj10,&obj11)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6508,7 +6548,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_merge2(PyObject *SWIGUNUSEDPARM(
   arg11 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOssszzzzO|O:svn_diff_file_output_merge2",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&arg7,&arg8,&arg9,&obj9,&obj10)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6590,7 +6638,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_file_output_merge(PyObject *SWIGUNUSEDPARM(s
   arg12 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOssszzzzOO|O:svn_diff_file_output_merge",&obj0,&obj1,&arg3,&arg4,&arg5,&arg6,&arg7,&arg8,&arg9,&obj9,&obj10,&obj11)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -6672,13 +6728,37 @@ SWIGINTERN PyObject *_wrap_svn_diff_output_binary(PyObject *SWIGUNUSEDPARM(self)
   arg6 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOOO|O:svn_diff_output_binary",&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
-    arg2 = svn_swig_py_make_stream (obj1, _global_pool);
+    if (obj1 == Py_None) {
+      arg2 = NULL;
+    }
+    else {
+      arg2 = svn_swig_py_make_stream (obj1, _global_pool);
+      if (arg2 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
-    arg3 = svn_swig_py_make_stream (obj2, _global_pool);
+    if (obj2 == Py_None) {
+      arg3 = NULL;
+    }
+    else {
+      arg3 = svn_swig_py_make_stream (obj2, _global_pool);
+      if (arg3 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg4 = (svn_cancel_func_t) svn_swig_py_cancel_func;
@@ -7109,7 +7189,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_mem_string_output_unified3(PyObject *SWIGUNU
   arg13 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOOszzzOOOO|O:svn_diff_mem_string_output_unified3",&obj0,&obj1,&obj2,&arg4,&arg5,&arg6,&arg7,&obj7,&obj8,&obj9,&obj10,&obj11)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -7228,7 +7316,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_mem_string_output_unified2(PyObject *SWIGUNU
   arg10 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOOszzzOO|O:svn_diff_mem_string_output_unified2",&obj0,&obj1,&obj2,&arg4,&arg5,&arg6,&arg7,&obj7,&obj8,&obj9)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -7334,7 +7430,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_mem_string_output_unified(PyObject *SWIGUNUS
   arg8 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOzzzOO|O:svn_diff_mem_string_output_unified",&obj0,&obj1,&arg3,&arg4,&arg5,&obj5,&obj6,&obj7)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -7443,7 +7547,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_mem_string_output_merge3(PyObject *SWIGUNUSE
   arg13 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOOOOzzzzOO|O:svn_diff_mem_string_output_merge3",&obj0,&obj1,&obj2,&obj3,&obj4,&arg6,&arg7,&arg8,&arg9,&obj9,&obj10,&obj11)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -7572,7 +7684,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_mem_string_output_merge2(PyObject *SWIGUNUSE
   arg11 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOOOOzzzzO|O:svn_diff_mem_string_output_merge2",&obj0,&obj1,&obj2,&obj3,&obj4,&arg6,&arg7,&arg8,&arg9,&obj9,&obj10)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -7699,7 +7819,15 @@ SWIGINTERN PyObject *_wrap_svn_diff_mem_string_output_merge(PyObject *SWIGUNUSED
   arg12 = _global_pool;
   if (!PyArg_ParseTuple(args,(char *)"OOOOOzzzzOO|O:svn_diff_mem_string_output_merge",&obj0,&obj1,&obj2,&obj3,&obj4,&arg6,&arg7,&arg8,&arg9,&obj9,&obj10,&obj11)) SWIG_fail;
   {
-    arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+    if (obj0 == Py_None) {
+      arg1 = NULL;
+    }
+    else {
+      arg1 = svn_swig_py_make_stream (obj0, _global_pool);
+      if (arg1 == NULL) {
+        SWIG_fail;
+      }
+    }
   }
   {
     arg2 = (svn_diff_t *)svn_swig_py_must_get_ptr(obj1, SWIGTYPE_p_svn_diff_t, svn_argnum_obj1);
@@ -10922,16 +11050,16 @@ static swig_type_info _swigt__p_apr_off_t = {"_p_apr_off_t", "apr_off_t *", 0, 0
 static swig_type_info _swigt__p_apr_pool_t = {"_p_apr_pool_t", "apr_pool_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_apr_uint32_t = {"_p_apr_uint32_t", "apr_uint32_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_char = {"_p_char", "char *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t = {"_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t", "svn_opt_subcommand_t *|struct svn_error_t *(*)(apr_getopt_t *,void *,apr_pool_t *)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_apr_uint32_t_p_p_void_p_void_svn_diff_datasource_e__p_svn_error_t = {"_p_f_p_apr_uint32_t_p_p_void_p_void_svn_diff_datasource_e__p_svn_error_t", "struct svn_error_t *(*)(apr_uint32_t *,void **,void *,svn_diff_datasource_e)|svn_error_t *(*)(apr_uint32_t *,void **,void *,svn_diff_datasource_e)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_void__p_svn_error_t = {"_p_f_p_void__p_svn_error_t", "svn_cancel_func_t|struct svn_error_t *(*)(void *)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t = {"_p_f_p_apr_getopt_t_p_void_p_apr_pool_t__p_svn_error_t", "svn_opt_subcommand_t *|svn_error_t *(*)(apr_getopt_t *,void *,apr_pool_t *)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_apr_uint32_t_p_p_void_p_void_svn_diff_datasource_e__p_svn_error_t = {"_p_f_p_apr_uint32_t_p_p_void_p_void_svn_diff_datasource_e__p_svn_error_t", "svn_error_t *(*)(apr_uint32_t *,void **,void *,svn_diff_datasource_e)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void__p_svn_error_t = {"_p_f_p_void__p_svn_error_t", "svn_cancel_func_t|svn_error_t *(*)(void *)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void__void = {"_p_f_p_void__void", "void (*)(void *)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t__p_svn_error_t = {"_p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t__p_svn_error_t", "struct svn_error_t *(*)(void *,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t)|svn_error_t *(*)(void *,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_p_svn_diff_t__p_svn_error_t = {"_p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_p_svn_diff_t__p_svn_error_t", "struct svn_error_t *(*)(void *,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,svn_diff_t *)|svn_error_t *(*)(void *,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,svn_diff_t *)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_void_p_apr_off_t_p_apr_off_t_p_q_const__svn_diff_datasource_e_apr_size_t__p_svn_error_t = {"_p_f_p_void_p_apr_off_t_p_apr_off_t_p_q_const__svn_diff_datasource_e_apr_size_t__p_svn_error_t", "svn_error_t *(*)(void *,apr_off_t *,apr_off_t *,svn_diff_datasource_e const *,apr_size_t)|struct svn_error_t *(*)(void *,apr_off_t *,apr_off_t *,svn_diff_datasource_e const *,apr_size_t)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t__p_svn_error_t = {"_p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t__p_svn_error_t", "svn_error_t *(*)(void *,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_p_svn_diff_t__p_svn_error_t = {"_p_f_p_void_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_apr_off_t_p_svn_diff_t__p_svn_error_t", "svn_error_t *(*)(void *,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,apr_off_t,svn_diff_t *)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void_p_apr_off_t_p_apr_off_t_p_q_const__svn_diff_datasource_e_apr_size_t__p_svn_error_t = {"_p_f_p_void_p_apr_off_t_p_apr_off_t_p_q_const__svn_diff_datasource_e_apr_size_t__p_svn_error_t", "svn_error_t *(*)(void *,apr_off_t *,apr_off_t *,svn_diff_datasource_e const *,apr_size_t)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_f_p_void_p_void__void = {"_p_f_p_void_p_void__void", "void (*)(void *,void *)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_void_p_void_p_void_p_int__p_svn_error_t = {"_p_f_p_void_p_void_p_void_p_int__p_svn_error_t", "svn_error_t *(*)(void *,void *,void *,int *)|struct svn_error_t *(*)(void *,void *,void *,int *)", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_f_p_void_svn_diff_datasource_e__p_svn_error_t = {"_p_f_p_void_svn_diff_datasource_e__p_svn_error_t", "struct svn_error_t *(*)(void *,svn_diff_datasource_e)|svn_error_t *(*)(void *,svn_diff_datasource_e)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void_p_void_p_void_p_int__p_svn_error_t = {"_p_f_p_void_p_void_p_void_p_int__p_svn_error_t", "svn_error_t *(*)(void *,void *,void *,int *)", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_f_p_void_svn_diff_datasource_e__p_svn_error_t = {"_p_f_p_void_svn_diff_datasource_e__p_svn_error_t", "svn_error_t *(*)(void *,svn_diff_datasource_e)", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_int = {"_p_int", "int *|svn_boolean_t *|apr_status_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long = {"_p_long", "long *|svn_revnum_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
@@ -10970,7 +11098,7 @@ static swig_type_info _swigt__p_svn_diff_output_fns_t = {"_p_svn_diff_output_fns
 static swig_type_info _swigt__p_svn_diff_t = {"_p_svn_diff_t", "struct svn_diff_t *|svn_diff_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_dirent_t = {"_p_svn_dirent_t", "struct svn_dirent_t *|svn_dirent_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_errno_t = {"_p_svn_errno_t", "enum svn_errno_t *|svn_errno_t *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_svn_error_t = {"_p_svn_error_t", "struct svn_error_t *|svn_error_t *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_svn_error_t = {"_p_svn_error_t", "svn_error_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_fs_lock_target_t = {"_p_svn_fs_lock_target_t", "svn_fs_lock_target_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_io_dirent2_t = {"_p_svn_io_dirent2_t", "struct svn_io_dirent2_t *|svn_io_dirent2_t *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_svn_io_dirent_t = {"_p_svn_io_dirent_t", "struct svn_io_dirent_t *|svn_io_dirent_t *", 0, 0, (void*)0, 0};
