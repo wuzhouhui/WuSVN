@@ -145,7 +145,7 @@ svn_version_extended(svn_boolean_t verbose,
   info->build_host = SVN_BUILD_HOST;
   info->hacker = "Zhouhui Wu <wuzhouhui250@gmail.com>";
   info->copyright = apr_pstrdup
-    (pool, _("Copyright (C) 2019 The Apache Software Foundation.\n"
+    (pool, _("Copyright (C) 2021 The Apache Software Foundation.\n"
              "This software consists of contributions made by many people;\n"
              "see the NOTICE file for more information.\n"
              "Subversion is open source software, see "
