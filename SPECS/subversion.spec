@@ -16,8 +16,8 @@
 
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
-Version: 1.10.6
-Release: 5%{?dist}
+Version: 1.10.7
+Release: 1%{?dist}
 License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
@@ -131,6 +131,7 @@ Patch99: 0002-svn-shelve-do-not-print-newline-if-log-message-is-em.patch
 Patch100: 0001-svn-ci-support-hook-post-commit-in-client-side.patch
 Patch101: 0002-svn-ci-extract-common-code-from-pre-post_commit.patch
 Patch102: 0001-svn-log-remove-unnecessary-exclusion-between-option-.patch
+Patch103: 0001-Upstream-1.10.7.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -351,6 +352,7 @@ WANdisco extensions to subversion
 %patch100 -p1
 %patch101 -p1
 %patch102 -p1
+%patch103 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -547,6 +549,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Fri Feb 12 2021 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.7-1
+- Upstream 1.10.7
+
 * Sun Apr  5 2020 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.6-5
 - Disable runtime module search
 
