@@ -3205,7 +3205,9 @@ verbose_output(const apr_array_header_t *commit_items,
       const char *target;
 
       svn_pool_clear(iterpool);
-      target = svn_dirent_join("", item->diff_relpath, iterpool);
+      target = item->diff_relpath;
+      if (!svn_relpath_is_canonical(target))
+        target = svn_relpath_canonicalize(target, iterpool);
       SVN_ERR(svn_client_diff6(
                options,
                target,
