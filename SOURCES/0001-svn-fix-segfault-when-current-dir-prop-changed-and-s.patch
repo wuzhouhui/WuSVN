@@ -1,0 +1,37 @@
+From c4d95e257008791e6454c3dc489c9fbea37265e7 Mon Sep 17 00:00:00 2001
+From: wuzhouhui <wuzhouhui250@gmail.com>
+Date: Sun, 22 Aug 2021 10:33:04 +0800
+Subject: [PATCH] svn: fix segfault when current dir prop changed and svn ci -v
+
+Reproduce steps:
+
+    1. Change current dir's properties
+    2. execute 'svn ci -v'
+
+Then we will get a failed assertion:
+
+    svn: subversion/libsvn_subr/dirent_uri.c:979: svn_dirent_join: Assertion `svn_dirent_is_canonical(component, pool)' failed.
+
+(cherry picked from commit fe6aa3099f075cb1fd07071344a3ab2b2737fbea)
+---
+ subversion/libsvn_client/diff.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/subversion/libsvn_client/diff.c b/subversion/libsvn_client/diff.c
+index 4b8ff5693aee..d2cdff6163e3 100644
+--- a/subversion/libsvn_client/diff.c
++++ b/subversion/libsvn_client/diff.c
+@@ -3205,7 +3205,9 @@ verbose_output(const apr_array_header_t *commit_items,
+       const char *target;
+ 
+       svn_pool_clear(iterpool);
+-      target = svn_dirent_join("", item->diff_relpath, iterpool);
++      target = item->diff_relpath;
++      if (!svn_relpath_is_canonical(target))
++        target = svn_relpath_canonicalize(target, iterpool);
+       SVN_ERR(svn_client_diff6(
+                options,
+                target,
+-- 
+2.22.0
+

@@ -17,7 +17,7 @@
 Summary: A Modern Concurrent Versioning system.
 Name: subversion
 Version: 1.10.7
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: Apache 2.0
 Group: Utilities/System
 URL: http://www.wandisco.com
@@ -132,6 +132,7 @@ Patch100: 0001-svn-ci-support-hook-post-commit-in-client-side.patch
 Patch101: 0002-svn-ci-extract-common-code-from-pre-post_commit.patch
 Patch102: 0001-svn-log-remove-unnecessary-exclusion-between-option-.patch
 Patch103: 0001-Upstream-1.10.7.patch
+Patch104: 0001-svn-fix-segfault-when-current-dir-prop-changed-and-s.patch
 
 Vendor: WANdisco Inc
 Packager: WANdisco Inc <opensource@wandisco.com>
@@ -353,6 +354,7 @@ WANdisco extensions to subversion
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 
 echo "Putting SQLite in to place"
 rm -rf sqlite-amalgamation
@@ -549,6 +551,9 @@ rm -rf $RPM_BUILD_ROOT
 %endif
 
 %changelog
+* Sun Aug 22 2021 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.7-2
+- svn: fix segfault when current dir prop changed and svn ci -v
+
 * Fri Feb 12 2021 Wu Zhouhui <wuzhouhui250@gmail.com> - 1.10.7-1
 - Upstream 1.10.7
 
